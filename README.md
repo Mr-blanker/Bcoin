@@ -1,4 +1,4 @@
-# project-0602
+# Bcoin
 
 > A Vue.js project
 
