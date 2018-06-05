@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import routes from './routes.config'
+import store from '../store'
 
 Vue.use(Router)
 
@@ -10,7 +11,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-
+  next()
 })
 export default router
 

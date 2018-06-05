@@ -1,0 +1,76 @@
+@import "./public.scss";
+
+//login
+.login-box {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.btn-submit {
+  margin: 0 auto;
+  width: 90%;
+  color: $hc;
+  background: $bg;
+  font-size: .4rem;
+}
+
+.register-forget {
+  margin-right: 10px;
+  margin-bottom: 20px;
+  text-align: right;
+  span {
+    font-size: $wfs;
+    margin: 0 5px;
+  }
+}
+
+//mine
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  background: $bg;
+  font-size: $wfs;
+  padding: 0 10px;
+  color: $hc;
+  &-left {
+    display: flex;
+    align-items: center;
+    i {
+      display: inline-flex;
+      font-size: 1rem;
+    }
+    span {
+      margin-left: 5px;
+    }
+  }
+}
+
+//search
+.search {
+  display: flex;
+  &-return {
+    color: $hc;
+    width: 35px;
+    line-height:50px;
+    background: $bg;
+  }
+  &-text{
+    flex:1;
+    background:$bg;
+    font-size: $wfs;
+  }
+}
+
+
+//ydUI
+.yd-cell-item {
+  height: 50px;
+}
+.yd-search-input{
+  background:$bg !important;
+}
+.cancel-text{
+  color: $hc !important;
+}

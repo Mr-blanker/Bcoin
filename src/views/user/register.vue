@@ -11,10 +11,7 @@
         <yd-input slot="right" type="password" v-model="input2" placeholder="请输入密码"></yd-input>
       </yd-cell-item>
     </yd-cell-group>
-    <div class="register-forget">
-      <span>注册</span>
-      <span>忘记密码？</span>
-    </div>
+
     <yd-button class="btn-submit" size="large" shape="circle" bgcolor="#06adf7" @click.native="submit">登录</yd-button>
   </div>
 </template>
