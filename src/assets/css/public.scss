@@ -1,0 +1,86 @@
+$bg: #06adf7;//header   背景颜色   主色调
+$hc: #fff; //header里面的颜色
+$hf:.45rem; //header字体大小
+$fbg:#f7f7f7; //footer 背景颜色
+$ftb:#efefef;//footer 上边框颜色
+$fws:.3rem;//footer 字体大小
+$wfs:.32rem;  //字体大小  全局
+//header
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  padding: 0 10px;
+  background: $bg;
+  .header-left,
+  .header-right {
+    width: 25px;
+    i {
+      display: inline-flex;
+      justify-content: center;
+      justify-items: center;
+      color: $hc;
+      font-size: .5rem;
+    }
+  }
+  .header-main {
+    flex: 1;
+    position: relative;
+    .center-input {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 90%;
+      background: $hc;
+      height: 25px;
+      border-radius: 15px;
+      font-size: .32rem;
+    }
+    .center-title{
+      font-size:.45rem;
+      color: $hc;
+    }
+    i{
+      //position: absolute;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  }
+
+}
+
+//footer
+.footer{
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  justify-content: center;
+  bottom: 0;
+  height: 59px;
+  background: $fbg;
+  width: 100%;
+  border-top: 1px solid $ftb;
+  &-box{
+    height: 100%;
+    width: 100%;
+    font-size: 0;
+  }
+  &-item{
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 25%;
+    height: 100%;
+    font-size:$fws;
+    i{
+      font-size: .5rem;
+    }
+    &:hover{
+      color: $bg;
+    }
+  }
+}
+
+
+
