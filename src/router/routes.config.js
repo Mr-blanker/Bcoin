@@ -6,6 +6,8 @@ import login from '@/views/user/login'
 import register from '@/views/user/register'
 import person from '@/views/user/person'
 import personMessage from '@/views/user/personMessage'
+import Information from '@/views/information/Information'
+import InformationDetail from '@/views/information/InformationDetail'
 
 //搜索
 import search from '@/views/search'
@@ -45,5 +47,14 @@ export default [
     name: 'search',
     path: '/search',
     component: search,
+  },
+  {
+    name: 'Information',
+    path: '/Information',
+    component: Information,
+  }, {
+    name: 'InformationDetail',
+    path: '/InformationDetail',
+    component: InformationDetail,
   }
 ]
