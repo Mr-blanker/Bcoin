@@ -116,13 +116,47 @@
     .flash-content {
       font-size: .35rem;
     }
-    .flash-comment{
+    .flash-comment {
       padding-top: .1rem;
       color: $wdc;
       font-size: $wfs;
     }
   }
 }
+  .person-item{
+    height: 4rem;
+    background: #fff;
+    padding: 0 10px;
+    text-align: left;
+    font-size: .3rem;
+    border-bottom: 1px solid $fbb;
+    &:last-child{
+      border: 0;
+    }
+    .person-img{
+      img{
+        display: inline-block;
+      }
+      height: 2.5rem;
+      background: rebeccapurple;
+    }
+    .person-title{
+      font-weight: bold;
+      font-size: .32rem;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+    }
+    .person-content{
+      font-size: .25rem;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+    }
+  }
+
 
 //informationDetail
 .informationDetail-box {

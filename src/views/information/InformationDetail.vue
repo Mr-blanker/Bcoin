@@ -10,6 +10,7 @@
         文章来源：{{dataList.befrom}}
       </span>
         <span class="informationDetail-message-time">
+
        <i class="icon iconfont icon-clock"></i>{{dataList.t*1000|moment('MM-DD:HH:mm')}}
       </span>
       </div>
@@ -17,10 +18,13 @@
         <li v-for="item in keywords">{{item}}</li>
       </ul>
       <div class="informationDetail-images"><img src="" alt=""></div>
-      <p class="informationDetail-content">
-      {{dataList.description}}
+      <p class="informationDetail-content" v-if="aid">
+        {{dataList.description}}
       </p>
+      <!--<p  v-html="dataList.content" v-if="id"></p>-->
+<p v-html="dataList.content"></p>
     </div>
+
   </div>
 </template>
 
@@ -33,22 +37,35 @@
     data() {
       return {
         dataList: {},
-        keywords:[]
+        keywords: [],
+        aid: '',
+        id: ''
       }
     },
     components: {
       Header
     },
     mounted() {
-      let aid = this.$route.query.aid
-      this.$store.dispatch(types.INFORMATION_DETAIL, aid).then(res => {
-        console.log(res)
-        if (res.code != 0) return
-        this.keywords = res.data.keywords.split(',')
-        console.log(this.keywords)
-        this.dataList = res.data
+      this.aid = this.$route.query.aid
+      this.id = this.$route.query.id
+      if (this.aid) {
+        this.$store.dispatch(types.INFORMATION_DETAIL, this.aid).then(res => {
+          console.log(res)
+          if (res.code != 0) return
+          this.keywords = res.data.keywords.split(',')
+          console.log(this.keywords)
+          this.dataList = res.data
+        })
+      } else {
+        this.$store.dispatch(types.PERSON_CONTENT, this.id).then(res => {
+          console.log(res)
+          if (res.code != 0) return
+          this.keywords = res.data.keywords.split(',')
+          console.log(this.keywords)
+          this.dataList = res.data
+        })
+      }
 
-      })
     }
   }
 </script>

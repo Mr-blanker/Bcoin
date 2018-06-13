@@ -36,11 +36,29 @@ const actions = {
   //点评快讯
   [types.FLASH_COMMENT]({}, view) {
     return new Promise((resolve) => {
-      http.get('/news.flash.comment', {params:view}).then(res => {
+      http.get('/api/news.flash.comment', {params: view}).then(res => {
         return resolve(res.data)
       })
     })
-  }
+  },
+  /*名人库*/
+  //列表
+  [types.PERSON_LIST]({}) {
+    return new Promise((resolve) => {
+      http.get('/api/person.lists').then(res => {
+        return resolve(res.data)
+      })
+    })
+  },
+  //文章内容
+  [types.PERSON_CONTENT]({}, id) {
+    return new Promise((resolve) => {
+      http.get('/api/person.content', {params:{id}}).then(res => {
+        return resolve(res.data)
+      })
+    })
+  },
+
 }
 
 const mutations = {}
