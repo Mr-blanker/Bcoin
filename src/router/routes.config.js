@@ -9,6 +9,9 @@ import personMessage from '@/views/user/personMessage'
 import Information from '@/views/information/Information'
 import InformationDetail from '@/views/information/InformationDetail'
 
+//行情
+import marketIndex from '@/views/quotation/marketIndex'
+
 //搜索
 import search from '@/views/search'
 
@@ -49,6 +52,7 @@ export default [
     component: search,
   },
   {
+<<<<<<< HEAD
     name: 'Information',
     path: '/Information',
     component: Information,
@@ -56,5 +60,10 @@ export default [
     name: 'InformationDetail',
     path: '/InformationDetail',
     component: InformationDetail,
+=======
+    name: 'marketIndex',
+    path: '/marketIndex',
+    component: marketIndex,
+>>>>>>> master
   }
 ]

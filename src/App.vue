@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <header></header>
     <router-view></router-view>
     <Foot></Foot>
   </div>
@@ -7,16 +8,20 @@
 
 <script>
   import Foot from "./components/Footer"
-
+  import header from "./components/Header.vue"
+  
   export default {
     name: 'App',
     components: {
-      Foot
+      Foot,
+      header
     },
     mounted() {
       console.log(1)
       console.log(this.$store.state)
-    }
+
+    },
+    
   }
 </script>
 
