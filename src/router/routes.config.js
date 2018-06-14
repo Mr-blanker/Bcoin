@@ -7,6 +7,9 @@ import register from '@/views/user/register'
 import person from '@/views/user/person'
 import personMessage from '@/views/user/personMessage'
 
+//行情
+import marketIndex from '@/views/quotation/marketIndex'
+
 //搜索
 import search from '@/views/search'
 
@@ -45,5 +48,10 @@ export default [
     name: 'search',
     path: '/search',
     component: search,
+  },
+  {
+    name: 'marketIndex',
+    path: '/marketIndex',
+    component: marketIndex,
   }
 ]

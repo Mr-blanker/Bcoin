@@ -1,7 +1,8 @@
 const mixin = {
   data() {
     return {
-      hh: 123
+      hh: 123,
+      themeColor:'#06adf7'
     }
   },
   mounted() {
