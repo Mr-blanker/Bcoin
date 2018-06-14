@@ -15,11 +15,11 @@
           </div>
           <div class="box-right flex flex-between">
             <div class="tr mark-box">
-              <div class="mark-sum">42445.22</div>
+              <div class="mark-sum rise-color">42445.22</div>
               <div class="mark-percent">+5.30%</div>
             </div>
             <div class="tr circulation-box">
-              <div class="circulation-sum">7243亿</div>
+              <div class="circulation-sum fall-color">7243亿</div>
               <div class="circulation-percent">+372亿</div>
             </div>
           </div>
@@ -148,9 +148,9 @@
     display: none;
   }
   .rise-color {
-    color:#eb4236;
+    color:#eb4236 !important;
   }
   .fall-color {
-    color:#32a853
+    color:#32a853 !important;
   }
 </style>

@@ -13,7 +13,7 @@
           <span>行情</span>
         </li>
       </router-link>
-      <router-link to="/login" active-class="tab-active">
+      <router-link to="/Information" active-class="tab-active">
         <li class="footer-item">
           <i class="icon iconfont icon-wanggediqiu"></i>
           <span>资讯</span>

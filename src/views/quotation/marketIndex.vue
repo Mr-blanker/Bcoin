@@ -1,12 +1,6 @@
 <template>
   <div>
-    <div class="market-tab ">
-      <yd-icon name="type" size="20px" color="#fff"></yd-icon>
-      <div class="tab-contianer">
-        <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index" @click="tabChange(index+1)">{{item}}</span>
-      </div>
-      <yd-icon name="search" size="20px" color="#fff"></yd-icon>
-    </div>
+    <sommonHeader></sommonHeader>
     <div class="coin-header flex flex-between">
       <div class="header-left">名称</div>
       <div class="header-right flex flex-between">
@@ -17,6 +11,9 @@
     <div class="market-container">
       <scroll></scroll>
     </div>
+    <yd-popup v-model="show" position="left" width="80%">
+            <yd-button type="danger" style="margin: 30px;" @click.native="show3 = false">Close Left Popup</yd-button>
+        </yd-popup>
   </div>
 </template>
 <script>
@@ -26,19 +23,22 @@
     mapActions
   } from 'vuex'
   import scroll from '@/components/Scroll'
+  import sommonHeader from '@/components/CommonHeader'
   export default {
     name: 'marketIndex',
     data() {
       return {
         activeTab: 1,
-        tabName: ['综合', '币种', '平台']
+        tabName: ['综合', '币种', '平台'],
+        show:false
       }
     },
     mounted() {
       // this.getCoinLists()
     },
     components: {
-      scroll
+      scroll,
+      sommonHeader
     },
     methods: {
       ...mapActions(['getCoinLists']),
