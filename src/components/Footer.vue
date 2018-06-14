@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <ul class="footer-box">
-      <router-link to="/register" active-class="tab-active">
+      <router-link to="/Information" active-class="tab-active">
         <li class="footer-item">
           <i class="icon iconfont icon-home1"></i>
           <span>首页</span>
