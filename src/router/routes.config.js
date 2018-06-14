@@ -52,18 +52,18 @@ export default [
     component: search,
   },
   {
-<<<<<<< HEAD
     name: 'Information',
     path: '/Information',
     component: Information,
-  }, {
+  },
+  {
     name: 'InformationDetail',
     path: '/InformationDetail',
-    component: InformationDetail,
-=======
+    component: InformationDetail
+  },
+  {
     name: 'marketIndex',
     path: '/marketIndex',
-    component: marketIndex,
->>>>>>> master
+    component: marketIndex
   }
 ]
