@@ -58,6 +58,39 @@ const actions = {
       })
     })
   },
+  /*专栏*/
+  //一级分类
+  [types.COLUMN_CATE]({}) {
+    return new Promise((resolve) => {
+      http.get('/api/column.cate').then(res => {
+        return resolve(res.data)
+      })
+    })
+  },
+  //二级分类
+  [types.COLUMN_CATESECOND]({}, pid) {
+    return new Promise((resolve) => {
+      http.get('/api/column.cate2nd', {params:{pid}}).then(res => {
+        return resolve(res.data)
+      })
+    })
+  },
+  //专栏文章列表
+  [types.PERSON_CONTENT]({}, id) {
+    return new Promise((resolve) => {
+      http.get('/api/column.lists', {params:{id}}).then(res => {
+        return resolve(res.data)
+      })
+    })
+  },
+  //专栏文章内容
+  [types.PERSON_CONTENT]({}, id) {
+    return new Promise((resolve) => {
+      http.get('/api/column.content', {params:{id}}).then(res => {
+        return resolve(res.data)
+      })
+    })
+  },
 
 }
 

@@ -33,11 +33,23 @@
         </div>
       </div>
       <!--名人库-->
-      <div class="person-list">
-        <div class="person-item" v-for="item in personList" @click="$router.push({path:'InformationDetail',query:{id: item.aid}})">
+      <div class="person-list" v-if="index===3">
+        <div class="person-item" v-for="item in personList"
+             @click="$router.push({path:'InformationDetail',query:{id: item.aid}})">
           <div class="person-img"><img :src="item.thumbnail" alt=""></div>
           <p class="person-title">{{item.title}}</p>
           <p class="person-content">{{item.description}}</p>
+        </div>
+      </div>
+      <!--专栏-->
+      <div class="column-list" v-if="index===2">
+        <div class="column-bar" v-for="item in columnList">
+          <div class="column-item">
+            <div class="item-content">
+              <div class="content-top"></div>
+              <span class="content-bottom"></span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -58,7 +70,8 @@
         list: [],
         flashList: [],
         personList: [],
-        index: 0,
+        columnList: [],
+        index: 0
       }
     },
     components: {
@@ -103,6 +116,9 @@
         if (key == 1) {
           console.log(key)
           this.getFlashList()
+        } else if (key == 2) {
+          this.getColumnCate()
+
         } else if (key == 3) {
           this.getPersonList()
         }
@@ -132,6 +148,20 @@
         })
       },
 
+      //专栏一级分类
+      getColumnCate() {
+        this.$store.dispatch(types.COLUMN_CATE).then(res => {
+          console.log(res)
+          if (res.code !== 0) return
+          this.columnList = res.data
+          for (let i in this.columnList) {
+            console.log(i)
+            this.$store.dispatch(types.COLUMN_CATESECOND, this.columnList[i].id).then(res => {
+              console.log(res)
+            })
+          }
+        })
+      },
       //时间转换
       mo(val) {
         return moment(moment(val).format('YYYYMMDDHHmmss'), "YYYYMMDD-HH:mm:ss").fromNow()

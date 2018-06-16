@@ -22,7 +22,7 @@
         {{dataList.description}}
       </p>
       <!--<p  v-html="dataList.content" v-if="id"></p>-->
-<p v-html="dataList.content"></p>
+      <div v-html="dataList.content"></div>
     </div>
 
   </div>
