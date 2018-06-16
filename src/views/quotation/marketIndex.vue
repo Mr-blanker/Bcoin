@@ -4,16 +4,13 @@
     <div class="coin-header flex flex-between">
       <div class="header-left">名称</div>
       <div class="header-right flex flex-between">
-        <div>全球指数(￥)</div>
-        <div>流通币值(￥)</div>
+        <div>最新价(￥)</div>
+        <div>24H涨幅</div>
       </div>
     </div>
     <div class="market-container">
-      <scroll></scroll>
+      <scroll :scrollData="tickerList"></scroll>
     </div>
-    <yd-popup v-model="show" position="left" width="80%">
-            <yd-button type="danger" style="margin: 30px;" @click.native="show3 = false">Close Left Popup</yd-button>
-        </yd-popup>
   </div>
 </template>
 <script>
@@ -24,27 +21,37 @@
   } from 'vuex'
   import scroll from '@/components/Scroll'
   import sommonHeader from '@/components/CommonHeader'
+  import * as types from "../../store/mutations-type"
   export default {
     name: 'marketIndex',
     data() {
       return {
         activeTab: 1,
         tabName: ['综合', '币种', '平台'],
-        show:false
+        tickerList:''
       }
     },
     mounted() {
-      // this.getCoinLists()
+      this.getTicker()
+      setInterval(()=>{
+        this.getTicker()
+      },10000)
     },
     components: {
       scroll,
       sommonHeader
     },
     methods: {
-      ...mapActions(['getCoinLists']),
-      tabChange(index) {
-        this.activeTab = index
+      ...mapActions(['TICKER_LIST']),
+      getTicker(){
+        this.TICKER_LIST().then(res=>{
+          console.log('res')
+          console.dir(res)
+          this.tickerList = res.data
+          console.log(this.tickerList)
+        })
       }
+      
     }
   }
 </script>
@@ -103,9 +110,7 @@
   .flex-between {
     justify-content: space-between;
   }
-  .tab-active {
-    background-color: #1464cc;
-  }
+ 
   .market-container {
     height: calc(100vh - 45px - 28px - 40px);
     overflow: auto;

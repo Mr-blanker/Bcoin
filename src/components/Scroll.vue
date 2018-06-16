@@ -2,15 +2,15 @@
   <div id="mescroll" class="mescroll">
     <div>
       <slot>
-        <div class="scroll-item flex" v-for="(item,index) in 20" :key="index">
+        <div class="scroll-item flex" v-for="(item,index) in scrollData" :key="index" v-show="false">
           <div class="box-left">
             <div>
-              <span class="coin-symbol">BTC</span>
-              <span class="coin-name">比特币</span>
+              <span class="coin-symbol">{{item.symbol}}</span>
+              <span class="coin-name">{{item.name}}</span>
             </div>
             <div class="coin-issue">
               <span>发行总量:</span>
-              <span>2000万</span>
+              <span>{{item['24h_volume_usd']|formatMoney}}</span>
             </div>
           </div>
           <div class="box-right flex flex-between">
@@ -19,11 +19,33 @@
               <div class="mark-percent">+5.30%</div>
             </div>
             <div class="tr circulation-box">
-              <div class="circulation-sum fall-color">7243亿</div>
+              <div class="circulation-sum fall-color">{{item.market_cap_cny|formatMoney}}</div>
               <div class="circulation-percent">+372亿</div>
             </div>
           </div>
         </div>
+        <div class="scroll-item flex" v-for="(item,index) in scrollData" :key="index">
+          <div class="box-left">
+            <div>
+              <span class="coin-symbol">{{item.symbol}}</span>
+              <span class="coin-name">{{item.name}}</span>
+            </div>
+            <div class="coin-issue">
+              <span>量/额:</span>
+              <span>{{item['24h_volume_cny']|formatMoney}}/{{item.market_cap_cny|formatMoney}}</span>
+            </div>
+          </div>
+          <div class="box-right flex flex-between">
+            <div class="tr mark-box">
+              <div class="mark-sum rise-color">{{item.price_cny.toPrecision(7)}}</div>
+              <div class="mark-percent">${{item.price_usd}}</div>
+            </div>
+            <div class="tr circulation-box">
+              <div :class="{'percent-box':true,'percentrise-color':item.percent_change_24h>0,'percentfall-color':item.percent_change_24h<0}">{{item.percent_change_24h}}%</div>
+            </div>
+          </div>
+        </div>
+        
       </slot>
     </div>
   </div>
@@ -58,6 +80,12 @@
       },
       downCallback() {
         this.mescroll.endErr();
+      }
+    },
+    props:{
+      scrollData:{
+        type:Array,
+        default:()=>[]
       }
     }
   }
@@ -129,6 +157,17 @@
        }
     }
   }
+  .percent-box {
+    width:65px;
+    height:25px;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    border-radius:3px;
+    color:#fff;
+    background-color:$fcolor;
+
+  }
   .flex {
     display: flex;
   }
@@ -152,5 +191,11 @@
   }
   .fall-color {
     color:#32a853 !important;
+  }
+  .percentrise-color {
+    background-color:#eb4236 !important;
+  }
+  .percentfall-color {
+    background-color:#32a853 !important;
   }
 </style>

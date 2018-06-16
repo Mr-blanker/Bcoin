@@ -15,13 +15,16 @@ import "./assets/css/public.scss"
 import "./assets/css/style.scss"
 import Header from "./components/Header"
 import moment from 'moment'
-
+import filters from './filters/index'
 window.MeScroll = mescrollJs
 Vue.mixin(mixins)
 Vue.use(YDUI)
 Vue.use(Header)
 Vue.config.productionTip = false
 
+for(let key in filters[0]){
+    Vue.filter(key,filters[0][key])
+}
 
 Vue.filter('moment', function (value, formatString) {
   formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
