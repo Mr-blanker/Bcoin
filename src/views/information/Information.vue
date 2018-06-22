@@ -23,12 +23,32 @@
       </div>
       <!--快讯-->
       <div class="flash-list" v-if="index===1">
-        <div class="flash-item" v-for="item in flashList">
+        <div class="flash-item" v-for="(item,key) in flashList">
           <p class="flash-time">{{item.k_time*1000|moment('MM-DD HH:mm')}}</p>
           <p class="flash-content">{{item.k_content}}</p>
           <div class="flash-comment">
-            <span class="flash-duo" @click="comment(item.k_id,'duo')">看多（{{item.duo}}）</span>
-            <span class="flash-kong" @click="comment(item.k_id,'kong')">看空（{{item.kong}}）</span>
+            <span class="flash-duo" @click="comment(item,'duo',key)">看多（{{item.duo}}）</span>
+            <span class="flash-kong" @click="comment(item,'kong',key)">看空（{{item.kong}}）</span>
+          </div>
+        </div>
+      </div>
+      <!--名人库-->
+      <div class="person-list" v-if="index===3">
+        <div class="person-item" v-for="item in personList"
+             @click="$router.push({path:'InformationDetail',query:{id: item.aid}})">
+          <div class="person-img"><img :src="item.thumbnail" alt=""></div>
+          <p class="person-title">{{item.title}}</p>
+          <p class="person-content">{{item.description}}</p>
+        </div>
+      </div>
+      <!--专栏-->
+      <div class="column-list" v-if="index===2">
+        <div class="column-bar" v-for="item in columnList">
+          <div class="column-item">
+            <div class="item-content">
+              <div class="content-top"></div>
+              <span class="content-bottom"></span>
+            </div>
           </div>
         </div>
       </div>
@@ -40,6 +60,7 @@
   import Header from "@/components/Header"
   import * as types from "../../store/mutations-type"
   import moment from 'moment'
+  import Vue from "vue"
 
   export default {
     name: "Information",
@@ -48,7 +69,9 @@
         titleList: ['新闻资讯', '快讯', '专栏', '名人库'],
         list: [],
         flashList: [],
-        index: 0,
+        personList: [],
+        columnList: [],
+        index: 0
       }
     },
     components: {
@@ -74,6 +97,7 @@
           this.list = res.data
         })
       },
+      //快讯列表
       getFlashList() {
         this.$store.dispatch(types.FLASH_LIST).then(res => {
           console.log(res)
@@ -85,22 +109,59 @@
         console.log(aid)
         this.$router.push({path: 'InformationDetail', query: {aid: aid}})
       },
+      //选择bar
       clickItem(key) {
         console.log(key)
         this.index = key
         if (key == 1) {
           console.log(key)
           this.getFlashList()
+        } else if (key == 2) {
+          this.getColumnCate()
+
+        } else if (key == 3) {
+          this.getPersonList()
         }
+
       },
-      comment(id, val) {
-        console.log(id, val)
-        // this.$store.dispatch(types.FLASH_COMMENT, {k_id: id, view: val}).then(res => {
-        //   if (res.code !== 0) return
-        //   console.log(res)
-        // })
+      //快讯点评
+      comment(item, val, key) {
+        this.$store.dispatch(types.FLASH_COMMENT, {k_id: item.k_id, view: val}).then(res => {
+          if (res.code !== 0) return
+          console.log(res)
+          console.log(key)
+          console.log(this.flashList)
+          if (val == 'duo') {
+            this.flashList[key].duo = res.num
+          } else {
+            this.flashList[key].kong = res.num
+          }
+        })
       },
 
+      //名人库列表
+      getPersonList() {
+        this.$store.dispatch(types.PERSON_LIST).then(res => {
+          if (res.code !== 0) return
+          console.log(res)
+          this.personList = res.data
+        })
+      },
+
+      //专栏一级分类
+      getColumnCate() {
+        this.$store.dispatch(types.COLUMN_CATE).then(res => {
+          console.log(res)
+          if (res.code !== 0) return
+          this.columnList = res.data
+          for (let i in this.columnList) {
+            console.log(i)
+            this.$store.dispatch(types.COLUMN_CATESECOND, this.columnList[i].id).then(res => {
+              console.log(res)
+            })
+          }
+        })
+      },
       //时间转换
       mo(val) {
         return moment(moment(val).format('YYYYMMDDHHmmss'), "YYYYMMDD-HH:mm:ss").fromNow()

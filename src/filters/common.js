@@ -21,3 +21,17 @@ export const formatDollar=(num)=>{
     return result.join('');
 }
 
+export const formatDigit=(num)=>{
+    let money = num.toString()
+    let _index = money.indexOf('.')
+    if(_index==-1){
+        return money.substring(0,6)
+    }else {
+        let numArr = money.split('.')
+        if(numArr[0]>=7){
+            return numArr[0]
+        }else {
+            return numArr[0]+'.'+numArr[1].substring(0,1)
+        }
+    }
+}

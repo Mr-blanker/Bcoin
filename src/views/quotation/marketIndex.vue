@@ -1,15 +1,9 @@
 <template>
   <div>
-    <sommonHeader></sommonHeader>
-    <div class="coin-header flex flex-between">
-      <div class="header-left">名称</div>
-      <div class="header-right flex flex-between">
-        <div>最新价(￥)</div>
-        <div>24H涨幅</div>
-      </div>
-    </div>
+    <common-header :activeTab.sync="activeTab" :tabList="tabData" :tabClick="tabChange" :scrollTabClick="scrollTabChange"></common-header>
     <div class="market-container">
-      <scroll :scrollData="tickerList"></scroll>
+      <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :downCb="getData" :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
+      </scroll>
     </div>
   </div>
 </template>
@@ -20,38 +14,108 @@
     mapActions
   } from 'vuex'
   import scroll from '@/components/Scroll'
-  import sommonHeader from '@/components/CommonHeader'
+  import commonHeader from '@/components/CommonHeader'
   import * as types from "../../store/mutations-type"
   export default {
     name: 'marketIndex',
     data() {
       return {
         activeTab: 1,
-        tabName: ['综合', '币种', '平台'],
-        tickerList:''
+        scrollList: '',
+        len: 0,
+        cid: 1,
+        meInstance: '',
+        tabData: ''
       }
     },
     mounted() {
-      this.getTicker()
-      setInterval(()=>{
-        this.getTicker()
-      },10000)
+      this.getCoin()
+      // this.initScroll()
+      // setInterval(() => {
+      //   this.TICKER_LIST({
+      //     len: this.len
+      //   }).then(res => {
+      //     this.scrollList = res.data.data
+      //   })
+      // }, 10000)
     },
     components: {
       scroll,
-      sommonHeader
+      commonHeader
     },
     methods: {
-      ...mapActions(['TICKER_LIST']),
-      getTicker(){
-        this.TICKER_LIST().then(res=>{
-          console.log('res')
-          console.dir(res)
-          this.tickerList = res.data
-          console.log(this.tickerList)
+      ...mapActions(['TICKER_LIST', 'PLATFORM_LIST', 'LIST_BY_CID', 'COIN_LIST']),
+      getCoin() {
+        this.COIN_LIST().then(res => {
+          this.tabData = res.data.data
+          this.tabData.unshift({
+            "cid": -2,
+            "id": "all",
+            "name": "全部",
+            "symbol": "全部"
+          })
         })
+      },
+      getListByCID() {
+        let param = {
+          cid: this.cid,
+          len: this.len
+        }
+        this.LIST_BY_CID(param).then(res => {
+          this.scrollList = res.data.data
+          this.meInstance.endSuccess()
+        }).catch(err => {
+          this.meInstance.endErr()
+        })
+      },
+      getTicker() {
+        this.TICKER_LIST({
+          len: this.len
+        }).then(res => {
+          this.scrollList = res.data.data
+          console.log('this.scrollList')
+          console.dir(this.scrollList)
+          this.meInstance.endSuccess()
+        }).catch(err => {
+          this.meInstance.endErr()
+        })
+      },
+      getPlatform() {
+        this.PLATFORM_LIST({
+          len: this.len
+        }).then(res => {
+          this.scrollList = res.data.data
+          this.meInstance.endSuccess()
+        }).catch(err => {
+          this.meInstance.endErr()
+        })
+      },
+      getData(increase = false, len) {
+        if (increase) {
+          this.len = len
+        }
+        if (this.activeTab == 1) {
+          this.getTicker()
+        } else if (this.activeTab == 2) {
+          this.getListByCID()
+        } else if (this.activeTab == 3) {
+          this.getPlatform()
+        }
+      },
+      tabChange(index) {
+        this.activeTab = index
+        this.len = 0
+        this.initScroll()
+      },
+      scrollTabChange(index) {
+        this.cid = this.tabData[index].cid
+        this.initScroll()
+      },
+      initScroll() {
+        this.meInstance.resetUpScroll()
+        // this.meInstance.scrollTo(0, 0)
+        this.meInstance.triggerDownScroll()
       }
-      
     }
   }
 </script>
@@ -88,34 +152,17 @@
       }
     }
   }
-  .coin-header {
-    width: 100%;
-    height: 28px;
-    background-color: #fff;
-    align-items: center;
-    color: $fcolor;
-    padding: 0 10px;
-    .header-left {
-      width: 40%;
-      text-align: left;
-    }
-    .header-right {
-      width: 60%;
-      text-align: right;
-    }
-  }
   .flex {
     display: flex;
   }
   .flex-between {
     justify-content: space-between;
   }
- 
   .market-container {
     height: calc(100vh - 45px - 28px - 40px);
     overflow: auto;
   }
   .market-container::-webkit-scrollbar {
     display: none;
-}
+  }
 </style>

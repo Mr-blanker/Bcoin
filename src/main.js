@@ -8,7 +8,7 @@ import mixins from "./mixins"
 import YDUI from "vue-ydui"
 import "vue-ydui/dist/ydui.rem.css";
 import "./assets/css/base.scss"
-// import "./assets/css/font/iconfont.css"
+import "./assets/css/font/iconfont.css"
 import "../static/mescroll.js/mescroll.min.css"
 import mescrollJs from "../static/mescroll.js/mescroll.min.js"
 import "./assets/css/public.scss"
@@ -17,6 +17,7 @@ import Header from "./components/Header"
 import moment from 'moment'
 import filters from './filters/index'
 window.MeScroll = mescrollJs
+
 Vue.mixin(mixins)
 Vue.use(YDUI)
 Vue.use(Header)

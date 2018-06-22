@@ -7,49 +7,107 @@
             </div>
             <yd-icon :name="rightIcon" size="20px" color="#fff"></yd-icon>
         </div>
+        <van-tabs v-model="active" @click="onClick" v-show="activeTab==1||activeTab==2">
+            <van-tab v-for="(item,index) in tabList" :title="item.symbol" :key="index">
+            </van-tab>
+        </van-tabs>
+        <div class="coin-header flex flex-between" v-show="activeTab==1||activeTab==2">
+            <div class="header-left">名称</div>
+            <div class="header-right flex flex-between">
+                <div>最新价(￥)</div>
+                <div v-show="activeTab==1">24H涨幅</div>
+                <div v-show="activeTab==2">占比</div>
+            </div>
+        </div>
+        <div class="coin-header flex flex-between" v-show="activeTab==3">
+            <div>名称</div>
+            <div>成交量</div>
+        </div>
         <yd-popup v-model="show" position="left" width="80%">
             <yd-button type="danger" style="margin: 30px;" @click.native="show = false">Close Left Popup</yd-button>
         </yd-popup>
     </div>
 </template>
 <script>
+    import {
+        tabs,
+        tab
+    } from 'vant';
+    import {
+        mapActions
+    } from 'vuex'
     export default {
         name: 'CommonHeader',
         data() {
             return {
                 activeTab: 1,
-                show: false
+                show: false,
+                active: 0,
+            }
+        },
+        mounted() {},
+        watch: {
+            activeTab(val) {
+                this.$emit('update:activeTab', val)
             }
         },
         methods: {
             tabChange(index) {
                 this.activeTab = index
                 this.tabClick(index)
+                if (index == 1) {
+                    this.active = 0
+                }
+                if (index == 2) {
+                    this.onClick(1)
+                }
+            },
+            onClick(index) {
+                this.active = index
+                this.scrollTabClick(index)
+                if (index > 0) {
+                    this.activeTab = 2
+                } 
             }
+        },
+        components: {
+            'vanTabs': tabs,
+            'vanTab': tab
         },
         props: {
             tabName: {
                 type: Array,
                 default: () => ['综合', '币种', '平台']
             },
-            leftIcon:{
-                type:String,
-                default:'type'
+            leftIcon: {
+                type: String,
+                default: 'type'
             },
-            rightIcon:{
-                type:String,
-                default:'search'
+            rightIcon: {
+                type: String,
+                default: 'search'
             },
-            tabClick:{
-                type:Function,
-                default:(index)=>{
-                    console.log(index+'被点击')
+            tabClick: {
+                type: Function,
+                default: (index) => {
+                    console.log(index + '被点击')
                 }
+            },
+            scrollTabClick: {
+                type: Function,
+                default: (index) => {
+                    console.log(index + '被点击')
+                }
+            },
+            tabList: {
+                type: Array,
+                default: () => []
             }
         }
     }
 </script>
 <style lang="scss" scoped>
+    $fcolor:#8a8d99;
     $bg: #208de3; //header   背景颜色   主色调
     .market-tab {
         width: 100%;
@@ -83,5 +141,30 @@
     }
     .tab-active {
         background-color: #1464cc;
+    }
+    .coin-header {
+        width: 100%;
+        height: 28px;
+        background-color: #fff;
+        align-items: center;
+        color: $fcolor;
+        padding: 0 10px;
+        .header-left {
+            width: 50%;
+            text-align: left;
+        }
+        .header-right {
+            width: 50%;
+            text-align: right;
+            div {
+                width: 50%;
+            }
+        }
+    }
+    .flex {
+        display: flex;
+    }
+    .flex-between {
+        justify-content: space-between;
     }
 </style>

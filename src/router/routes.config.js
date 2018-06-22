@@ -65,5 +65,9 @@ export default [
     name: 'marketIndex',
     path: '/marketIndex',
     component: marketIndex
+  }, {
+    name: 'InformationDetail',
+    path: '/InformationDetail',
+    component: InformationDetail,
   }
 ]
