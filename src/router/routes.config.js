@@ -8,6 +8,8 @@ import person from '@/views/user/person'
 import personMessage from '@/views/user/personMessage'
 import Information from '@/views/information/Information'
 import InformationDetail from '@/views/information/InformationDetail'
+import contentList from '@/views/information/contentList'
+import acView from '@/views/information/acView'
 
 //搜索
 import search from '@/views/search'
@@ -52,9 +54,20 @@ export default [
     name: 'Information',
     path: '/Information',
     component: Information,
+    meta: {
+      // keepalive: true
+    }
   }, {
     name: 'InformationDetail',
     path: '/InformationDetail',
     component: InformationDetail,
+  }, {
+    name: 'contentList',
+    path: '/contentList',
+    component: contentList,
+  }, {
+    name: 'acView',
+    path: '/acView',
+    component: acView,
   }
 ]

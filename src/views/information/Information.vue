@@ -1,23 +1,24 @@
 <template>
   <div>
-    <Header v-bind="{left:1,right:1,centerValue:'登录',center:3,list:titleList}" @clickItem="clickItem"></Header>
-    <div>
+    <Header v-bind="{left:1,right:1,center:3,list:titleList,liKey:index}" @clickItem="clickItem"></Header>
+    <div style="margin-top: 45px;margin-bottom:50px">
+      <yd-slider autoplay="3000" v-if="index==0">
+        <yd-slider-item v-for="(item,index) in broadcastAdList" :key="index">
+          <a :href="item.url">
+            <img :src="item.pic">
+          </a>
+        </yd-slider-item>
+      </yd-slider>
       <!--新闻资讯-->
-      <div v-if="index===0">
-        <div class="swiper-container">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">slider1</div>
-            <div class="swiper-slide">slider2</div>
-            <div class="swiper-slide">slider3</div>
-          </div>
-        </div>
+      <div v-if="index==0">
+
         <ul class="information-list">
           <li class="information-item" v-for="(item,key) in list" @click="informationDetail(item.aid)">
+            <img :src="item.thumbnail" alt="">
             <div class="information-text">
               <span>{{item.title}}</span>
               <p>{{mo(item.t*1000)}}</p>
             </div>
-            <img :src="item.thumbnail" alt="">
           </li>
         </ul>
       </div>
@@ -43,13 +44,30 @@
       </div>
       <!--专栏-->
       <div class="column-list" v-if="index===2">
-        <div class="column-bar" v-for="item in columnList">
-          <div class="column-item">
-            <div class="item-content">
-              <div class="content-top"></div>
-              <span class="content-bottom"></span>
+        <div class="column-bar" v-for="(item,index) in columnList">
+          <div class="bg">
+            <!--<span>{{item.name}}</span>-->
+            <img :src="item.thumbnail" alt="">
+          </div>
+          <div class="column-item-box" ref="imgPosition">
+            <div class="column-item">
+              <div class="item-content" v-for="attr in columnCateList[index]"
+                   @click="$router.push({path:'acView',query:{val:JSON.stringify(attr)}})">
+                <div class="content-top">
+                  <img :src="attr.thumbnail" alt="">
+                  <span>{{attr.title}}</span>
+                </div>
+                <span class="content-bottom">查看</span>
+              </div>
+              <div class="item-content" @click="$router.push({path:'contentList',query:{pid:item.id}})">
+                <div class="content-top more">
+                  <span>更多</span>
+                </div>
+                <span class="content-bottom">查看</span>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -60,6 +78,7 @@
   import Header from "@/components/Header"
   import * as types from "../../store/mutations-type"
   import moment from 'moment'
+  import {mapGetters} from "vuex"
   import Vue from "vue"
 
   export default {
@@ -71,24 +90,34 @@
         flashList: [],
         personList: [],
         columnList: [],
-        index: 0
+        columnCateList: [],
+        index: 0,
+        broadcastAdList: []
       }
     },
     components: {
       Header
     },
-    fliters: {
-      dataTime: function (el) {
-        return moment(el).format('YYYY')
-      }
+    computed: {
+      ...mapGetters(['informationActive'])
     },
     mounted() {
-      var mySwiper = new Swiper('.swiper-container', {
-        autoplay: true,//可选选项，自动滑动
-      })
-      this.getInformationList()
+      if (this.informationActive) {
+        this.clickItem(parseInt(this.informationActive))
+        this.index = parseInt(this.informationActive)
+      } else {
+        this.clickItem(0)
+        this.index = 0
+      }
     },
     methods: {
+      //轮播图
+      getBroadcastAd() {
+        this.$store.dispatch(types.BROADCAST_AD).then(res => {
+          console.log(res)
+          this.broadcastAdList = res
+        })
+      },
       //获取新闻快讯列表
       getInformationList() {
         this.$store.dispatch(types.INFORMATION_LIST).then(res => {
@@ -112,13 +141,16 @@
       //选择bar
       clickItem(key) {
         console.log(key)
+        this.$store.commit('SET_INFORMATION_ACTIVE', key)
         this.index = key
-        if (key == 1) {
+        if (key == 0) {
+          this.getInformationList()
+          this.getBroadcastAd()
+        } else if (key == 1) {
           console.log(key)
           this.getFlashList()
         } else if (key == 2) {
           this.getColumnCate()
-
         } else if (key == 3) {
           this.getPersonList()
         }
@@ -148,17 +180,23 @@
         })
       },
 
-      //专栏一级分类
+      //专栏一级分类/二级分类
       getColumnCate() {
         this.$store.dispatch(types.COLUMN_CATE).then(res => {
           console.log(res)
           if (res.code !== 0) return
           this.columnList = res.data
-          for (let i in this.columnList) {
-            console.log(i)
+          let arr = []
+          console.log(this.columnList)
+          for (let i = 0; i < this.columnList.length; i++) {
             this.$store.dispatch(types.COLUMN_CATESECOND, this.columnList[i].id).then(res => {
-              console.log(res)
-            })
+              if (res.code !== 0) return;
+              if(res.data.length>10){
+                res.data = res.data.splice(0,10)
+              }
+              this.columnCateList.push(res.data)
+              // console.log(this.columnCateList)
+            });
           }
         })
       },
@@ -174,5 +212,15 @@
   .swiper-slide {
     height: 180px;
     background: red;
+  }
+
+  .swiper-pagination {
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%);
+  }
+
+  ::-webkit-scrollbar {
+    display: none
   }
 </style>

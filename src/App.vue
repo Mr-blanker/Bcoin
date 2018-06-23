@@ -1,22 +1,33 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <!--<Foot></Foot>-->
+    <Footer :showFooterNav="isShowFooterNav"></Footer>
   </div>
 </template>
 
 <script>
-  import Foot from "./components/Footer"
+  import Footer from "./components/Footer"
 
   export default {
     name: 'App',
-    components: {
-      Foot
+    data() {
+      return {
+        isShowFooterNav: true
+      }
     },
-    mounted() {
-      console.log(1)
-      console.log(this.$store.state)
-    }
+    components: {
+      Footer
+    },
+    watch: {
+      $route(to) {
+        console.log(to)
+        if (to.name == 'Information') {
+          this.isShowFooterNav = true
+        } else {
+          this.isShowFooterNav = false
+        }
+      }
+    },
   }
 </script>
 
@@ -29,6 +40,6 @@
     color: #2c3e50;
     /*margin-top: 60px;*/
     height: 100%;
-    background:#f2f5f7;
+    background: #f2f5f7;
   }
 </style>

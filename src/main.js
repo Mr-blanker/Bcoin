@@ -7,6 +7,7 @@ import store from "./store"
 import mixins from "./mixins"
 import YDUI from "vue-ydui"
 import "vue-ydui/dist/ydui.rem.css";
+import {Slider, SliderItem} from 'vue-ydui/dist/lib.rem/slider';
 import "./assets/css/base.scss"
 import "./assets/css/font/iconfont.css"
 import "./assets/css/public.scss"
@@ -18,7 +19,8 @@ Vue.mixin(mixins)
 Vue.use(YDUI)
 Vue.use(Header)
 Vue.config.productionTip = false
-
+Vue.component(Slider.name, Slider);
+Vue.component(SliderItem.name, SliderItem);
 
 Vue.filter('moment', function (value, formatString) {
   formatString = formatString || 'YYYY-MM-DD HH:mm:ss';

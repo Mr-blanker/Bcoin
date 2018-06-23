@@ -26,3 +26,16 @@ export const COLUMN_CATESECOND = 'COLUMN_CATESECOND'
 export const COLUMN_LIST = 'COLUMN_LIST'
 //专栏文章
 export const COLUMN_CONTENT = 'COLUMN_CONTENT'
+export const SET_INFORMATION_ACTIVE = 'SET_INFORMATION_ACTIVE'
+
+//轮播
+export const BROADCAST_AD = 'BROADCAST_AD'
+
+
+/*用户相关*/
+//用户登录
+export const USER_LOGIN = 'USER_LOGIN'
+//用户登出
+export const USER_LOGOUT = 'USER_LOGOUT'
+//获取用户信息
+export const USER_USERINFO = 'USER_USERINFO'
