@@ -3,7 +3,7 @@
 //login
 .login-box {
   padding-top: 45px;
-  padding-bottom: 50px;
+  //padding-bottom: 50px;
 }
 
 .btn-submit {
@@ -25,6 +25,10 @@
 }
 
 //mine
+.mine {
+  padding-top: 45px;
+}
+
 .head {
   display: flex;
   justify-content: space-between;
@@ -37,9 +41,10 @@
   &-left {
     display: flex;
     align-items: center;
-    i {
-      display: inline-flex;
-      font-size: 1rem;
+    img {
+      height: 50px;
+      width: 50px;
+      border-radius: 1rem;
     }
     span {
       margin-left: 5px;
@@ -185,17 +190,17 @@
     height: 200px;
     left: 0;
     width: 100%;
-    img{
+    img {
       height: 100%;
       width: 100%;
     }
-    span{
+    span {
       position: absolute;
     }
   }
-  .column-item-box{
+  .column-item-box {
     position: absolute;
-    left:0;
+    left: 0;
     top: 50%;
     transform: translate(0, -50%);
     height: 100%;
@@ -232,7 +237,7 @@
           overflow: hidden;
         }
       }
-      .more span{
+      .more span {
         width: 1.3rem;
         height: 1.3rem;
         line-height: 1.3rem;
@@ -240,7 +245,7 @@
         background: #e2dede;
         border-radius: 1.3rem;
       }
-      .more-text{
+      .more-text {
         display: inline-flex;
         padding: .1rem .4rem;
         margin-top: .3rem;
@@ -373,8 +378,9 @@
   font-size: .32rem;
   text-align: left;
 }
-.v-html{
-  img{
+
+.v-html {
+  img {
     width: 100%;
   }
 }
@@ -482,6 +488,182 @@
   }
 }
 
-.yd-slider-pagination-item-active {
-  background: $bg !important;
+//addressList
+.address-box {
+  font-size: .3rem;
+  .address-list {
+    .address-item {
+      display: flex;
+      flex-direction: column;
+      height: 115px;
+      padding: 0 10px;
+      background: $hc;
+      margin-bottom: 5px;
+      .address-main {
+        height: 80px;
+        padding: 5px 0;
+        border-bottom: 1px solid $fbb;
+        .main-top {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 5px;
+          color: #000;
+        }
+        .main-text {
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          overflow: hidden;
+          text-align: left;
+        }
+      }
+      .address-operate {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .recent {
+          color: $bg;
+        }
+        .operate-box {
+          color: $wdc;
+          span {
+            padding: 0 5px;
+            i {
+              padding-right: 3px;
+            }
+          }
+        }
+      }
+    }
+  }
 }
+
+//addressDetail
+.content_main {
+  background: #f4f4f4;
+  .address-box {
+    width: 100%;
+    position: relative;
+  }
+  .address-box ul {
+    background-color: #fff;
+    margin-bottom: .8rem;
+  }
+  .address-box ul li {
+    margin-left: 12px;
+    position: relative;
+    font-size: $wfs;
+    background-color: #fff;
+    padding: 12px 0;
+    font-family: "微软雅黑";
+    border-bottom: 1px solid #e4e4e4;
+    display: block;
+    zoom: 1;
+  }
+  .address-box ul li:after {
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+  .address-box ul li span.mr {
+    margin-right: 10px;
+    color: #999;
+    font-size: $wfs;
+  }
+  .address-box ul li span.mr i {
+    margin-left: .2rem;
+  }
+  .address-box ul li:last-child {
+    border-bottom: none;
+  }
+  .address-box ul li.radio_box {
+    display: block;
+    zoom: 1;
+  }
+  .address-box ul li.radio_box:after {
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+  .address-box ul li.radio_box .fr {
+    margin-right: 12px;
+  }
+  .address-box ul li.radio_box .fr .u-rb {
+    float: left;
+    margin-right: 10px;
+    margin-left: 3rem;
+  }
+  .address-box ul li.radio_box .fr .u-rb label {
+    font-size: $wfs;
+    color: #cc292e;
+    top: .1rem;
+    left: 0;
+    width: 18px;
+    height: 18px;
+  }
+  .address-box ul li.radio_box .fr .u-rb label:before {
+    left: 6px;
+  }
+  .address-box ul li.radio_box .fr > label {
+    float: left;
+    font-size: $wfs;
+    height: 18px;
+    line-height: 18px;
+    margin-top: 3px;
+  }
+  .address-box ul li input {
+    float: right;
+    width: 60%;
+    border: none;
+    text-align: right;
+    margin-right: 12px;
+    color: #333;
+    font-size: $wfs;
+  }
+  .address-box ul li .lab-tittle {
+    float: left;
+    display: inline-block;
+    margin-right: .8rem;
+    color: #333;
+    font-size: $wfs;
+  }
+  .address-box ul li .lab-tittle em {
+    color: #cc292e;
+  }
+}
+
+.detail_address {
+  height: 100%;
+  flex: 1;
+  BORDER-BOTTOM: 0px solid;
+  BORDER-LEFT: 0px solid;
+  BORDER-RIGHT: 0px solid;
+  BORDER-TOP: 0px solid;
+  text-align: right
+}
+.btn_box {
+  padding: 12px;
+}
+.btn_box a {
+  display: block;
+  background: $bg;
+  text-decoration: none;
+  color: #fff;
+  text-align: center;
+  font-size: $wfs;
+  border-radius: 3px;
+  height: 48px;
+  line-height: 48px;
+}
+.btn_box a.no-link {
+  background: #e5d9b2;
+}
+
+

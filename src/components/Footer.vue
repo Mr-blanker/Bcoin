@@ -1,41 +1,49 @@
 <template>
-  <div class="footer">
+  <div class="footer" v-if="isShowFooterNav">
     <ul class="footer-box">
-      <router-link to="/register" active-class="tab-active">
-        <li class="footer-item">
-          <i class="icon iconfont icon-home1"></i>
-          <span>首页</span>
-        </li>
-      </router-link>
-      <router-link to="/marketIndex" active-class="tab-active">
-        <li class="footer-item">
-          <i class="icon iconfont icon-gupiao1"></i>
-          <span>行情</span>
-        </li>
-      </router-link>
-      <router-link to="/login" active-class="tab-active">
-        <li class="footer-item">
-          <i class="icon iconfont icon-wanggediqiu"></i>
-          <span>资讯</span>
-        </li>
-      </router-link>
-      <router-link to="/person" active-class="tab-active">
-        <li class="footer-item">
-          <i class="icon iconfont icon-yonghu1"></i>
-          <span>个人</span>
-        </li>
-      </router-link>
+      <li class="footer-item" @click="$router.push()">
+        <i class="icon iconfont icon-home1"></i>
+        <span>首页</span>
+      </li>
+      <li class="footer-item" @click="$router.push({path:'marketIndex'})">
+        <i class="icon iconfont icon-gupiao1"></i>
+        <span>行情</span>
+      </li>
+      <li class="footer-item" @click="$router.push({path:'Information'})"
+          :class="{'footer-active':$route.name=='Information'}">
+        <i class="icon iconfont icon-wanggediqiu"></i>
+        <span>资讯</span>
+      </li>
+      <li class="footer-item" @click="$router.push({path:'Person'})" :class="{'footer-active':$route.name=='person'}">
+        <i class="icon iconfont icon-yonghu1"></i>
+        <span>个人</span>
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
-  export default {}
+  export default {
+    data() {
+      return {
+        isShowFooterNav: true,
+      }
+    },
+    watch: {
+      '$route'(to) {
+        console.log(to)
+        if (to.name == 'Information' || to.name == 'person') {
+          this.isShowFooterNav = true
+        } else {
+          this.isShowFooterNav = false
+        }
+      }
+    },
+    mounted(){
+    }
+  }
 </script>
 
-<style lang="scss" scoped>
-  $bg: #06adf7;
-  .tab-active {
-    color: $bg
-  }
+<style scoped>
+
 </style>

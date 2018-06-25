@@ -33,9 +33,13 @@ export const BROADCAST_AD = 'BROADCAST_AD'
 
 
 /*用户相关*/
+//用户注册
+export const USER_REGISTER = 'USER_REGISTER'
 //用户登录
 export const USER_LOGIN = 'USER_LOGIN'
+export const SET_USER_SID = 'SET_USER_SID'
 //用户登出
 export const USER_LOGOUT = 'USER_LOGOUT'
 //获取用户信息
 export const USER_USERINFO = 'USER_USERINFO'
+export const SET_USER_USERINFO='SET_USER_USERINFO'

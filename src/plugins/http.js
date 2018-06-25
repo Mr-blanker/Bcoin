@@ -4,9 +4,7 @@ import qs from 'qs'
 import store from '../store'
 import * as types from '../store/mutations-type'
 import router from '../router'
-// import {
-//   Indicator
-// } from 'mint-ui';
+import {Loading, Confirm} from 'vue-ydui/dist/lib.rem/dialog';
 
 // axios 配置
 axios.defaults.timeout = 5000;
@@ -18,19 +16,16 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 
 axios.interceptors.request.use(
   config => {
-    if (store.getters.token) {
-      config.headers['token'] = store.getters.token
+    if (store.getters.userSid) {
+      config.headers['sid'] = store.getters.userSid
     }
     config.data = qs.stringify(config.data);
-    // Indicator.open({
-    //   text: '加载中...',
-    //   spinnerType: 'fading-circle'
-    // });
+    Loading.open('加载中');
     return config;
   },
   error => {
     console.log(error)
-    // Indicator.close();
+    Loading.close();
 
     return Promise.reject(error);
   }
@@ -39,24 +34,31 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     switch (response.data.code) {
-      case 1000:
+      case 401:
         //如果token过期则清空本地缓存
         window.localStorage.clear();
-        // store.dispatch(types.LOGIN_OUT).then(() => {
-        //   utils.dialog.confirm({
-        //     content: "登录过期，是否跳转到登陆页？",
-        //     confirm: function () {
-        //       router.push({
-        //         name: 'login'
-        //       });
-        //     }
-        //   });
-        // });
+        store.dispatch(types.USER_LOGOUT).then(() => {
+          // utils.dialog.confirm({
+          //   content: "登录过期，是否跳转到登陆页？",
+          //   confirm: function () {
+          //     router.push({
+          //       name: 'login'
+          //     });
+          //   }
+          // });
+          Confirm({
+            title: '登录过期',
+            mes: '是否跳转到登陆？',
+            opts: () => {
+              this.$router.push({path: 'Login'})
+            }
+          })
+        });
 
         break;
     }
     ;
-    // Indicator.close();
+    Loading.close();
     return response;
   },
 
@@ -77,7 +79,7 @@ axios.interceptors.response.use(
 
     console.log(error);
 
-    // Indicator.close();
+    Loading.close();
     return Promise.rejects(error)
   }
 )

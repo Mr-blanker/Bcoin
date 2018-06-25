@@ -8,6 +8,9 @@ $wfs: .32rem; //字体大小  全局
 $fbb: #e2dede; //下边框颜色
 $smallws:.25rem;//字体  小
 $wdc:#909090; //字体颜色
+.pt{
+  padding-top: 45px;
+}
 //header
 .header {
   position: fixed;
@@ -99,9 +102,6 @@ $wdc:#909090; //字体颜色
     i {
       font-size: .5rem;
     }
-    &:hover {
-      //color: $bg;
-    }
   }
   .footer-active{
     color: $bg;
@@ -120,7 +120,24 @@ $wdc:#909090; //字体颜色
 .cancel-text {
   color: $hc !important;
 }
+.yd-cell:after{
+  border-bottom: 0 !important;
+}
 
-
+.yd-slider-pagination-item-active {
+  background: $bg !important;
+}
+.yd-cell-left{
+  display: inline-block;
+}
+.yd-cell-item{
+  border-bottom: 1px solid #d9d9d9;
+}
+.yd-cell-item:not(:last-child):after{
+  border-bottom: 0;
+}
+.yd-cell{
+  padding: 0 10px !important;
+}
 
 

@@ -2,7 +2,7 @@ const mixin = {
   data() {
     return {
       hh: 123,
-      themeColor:'#06adf7'
+      themeColor: '#06adf7'
     }
   },
   mounted() {
@@ -83,20 +83,25 @@ const mixin = {
       }
     },
     //成功提示
-    success(msg, duration = 500) {
-      console.log(duration)
-      this.$toast({
-        message: msg,
-        duration: duration
+    success(msg, path, duration = 500) {
+      console.log(msg, duration)
+      this.$dialog.toast({
+        mes: msg,
+        timeout: duration,
+        icon: 'success',
+        callback: () => {
+          console.log(123)
+          this.$router.push({path: path})
+        }
       })
     },
 
     //失败提示
     fail(msg, duration = 500) {
-      this.$toast({
-        message: msg,
-        duration: duration
-        // iconClass:'icon icon-fail'
+      this.$dialog.toast({
+        mes: msg,
+        timeout: duration,
+        icon: 'error'
       })
     }
 

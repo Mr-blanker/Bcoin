@@ -1,12 +1,13 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <Footer :showFooterNav="isShowFooterNav"></Footer>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
   import Footer from "./components/Footer"
+  import * as types from "./store/mutations-type"
 
   export default {
     name: 'App',
@@ -19,15 +20,20 @@
       Footer
     },
     watch: {
-      $route(to) {
-        console.log(to)
-        if (to.name == 'Information') {
-          this.isShowFooterNav = true
-        } else {
-          this.isShowFooterNav = false
-        }
-      }
+      // $route(to) {
+      //   console.log(to)
+      //   if (to.name == 'Information') {
+      //     this.isShowFooterNav = true
+      //   } else {
+      //     this.isShowFooterNav = false
+      //   }
+      // }
     },
+    mounted() {
+      console.log(window.localStorage.userInfo)
+      this.$store.dispatch(types.USER_USERINFO)
+
+    }
   }
 </script>
 

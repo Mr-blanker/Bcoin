@@ -6,6 +6,8 @@ import login from '@/views/user/login'
 import register from '@/views/user/register'
 import person from '@/views/user/person'
 import personMessage from '@/views/user/personMessage'
+import addressList from '@/views/user/addressList'
+import addressDetail from '@/views/user/addressDetail'
 import Information from '@/views/information/Information'
 import InformationDetail from '@/views/information/InformationDetail'
 import contentList from '@/views/information/contentList'
@@ -69,5 +71,13 @@ export default [
     name: 'acView',
     path: '/acView',
     component: acView,
+  }, {
+    name: 'addressList',
+    path: '/addressList',
+    component: addressList,
+  }, {
+    name: 'addressDetail',
+    path: '/addressDetail',
+    component: addressDetail,
   }
 ]

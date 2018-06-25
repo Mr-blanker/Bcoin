@@ -5,7 +5,7 @@ import getters from './getters'
 import mutations from './mutations'
 import state from './state'
 import information from './modules/information'
-// import message from './modules/message'
+import user from './modules/user'
 // import work from './modules/work'
 // import equipment from './modules/equipment'
 
@@ -19,6 +19,7 @@ export default new Vuex.Store({
   actions,
   mutations,
   modules: {
-    information
+    information,
+    user
   }
 });
