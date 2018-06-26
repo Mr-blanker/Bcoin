@@ -127,17 +127,8 @@ $wdc:#909090; //字体颜色
 .yd-slider-pagination-item-active {
   background: $bg !important;
 }
-.yd-cell-left{
-  display: inline-block;
-}
-.yd-cell-item{
-  border-bottom: 1px solid #d9d9d9;
-}
-.yd-cell-item:not(:last-child):after{
-  border-bottom: 0;
-}
-.yd-cell{
-  padding: 0 10px !important;
+.yd-confirm-ft>a.primary{
+  color: $bg;
 }
 
 

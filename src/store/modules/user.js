@@ -56,7 +56,46 @@ const actions = {
       })
     })
   },
-
+  //获取用户地址
+  [types.USER_ADDRESSLIST]({}) {
+    return new Promise((resolve) => {
+      http.get('/api/user/addr.lists').then(res => {
+        return resolve(res.data)
+      })
+    })
+  },
+  //添加用户地址
+  [types.USER_ADDADDRESS]({}, addressInfo) {
+    return new Promise((resolve) => {
+      http.get('/api/user/addr.add', {params: addressInfo}).then(res => {
+        return resolve(res.data)
+      })
+    })
+  },
+  //编辑用户地址
+  [types.USER_EDITRESSLIST]({},addressInfo) {
+    return new Promise((resolve) => {
+      http.get('/api/user/addr.edit', {params: addressInfo}).then(res => {
+        return resolve(res.data)
+      })
+    })
+  },
+//删除用户地址
+  [types.USER_DELRESSLIST]({}, id) {
+    return new Promise((resolve) => {
+      http.get('/api/user/addr.del', {params: id}).then(res => {
+        return resolve(res.data)
+      })
+    })
+  },
+  //最近使用的地址
+  [types.USER_GETLASTADDR]({}) {
+    return new Promise((resolve) => {
+      http.get('/api/user/addr.getLastAddr').then(res => {
+        return resolve(res.data)
+      })
+    })
+  },
 }
 
 const mutations = {

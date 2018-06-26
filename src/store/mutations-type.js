@@ -43,3 +43,14 @@ export const USER_LOGOUT = 'USER_LOGOUT'
 //获取用户信息
 export const USER_USERINFO = 'USER_USERINFO'
 export const SET_USER_USERINFO='SET_USER_USERINFO'
+//获取用户地址
+export const USER_ADDRESSLIST = 'USER_ADDRESSLIST'
+//添加用户地址
+export const USER_ADDADDRESS = 'USER_ADDADDRESS'
+//编辑用户地址
+export const USER_EDITRESSLIST = 'USER_EDITRESSLIST'
+//编辑用户地址
+export const USER_DELRESSLIST = 'USER_DELRESSLIST'
+//最近使用的地址
+export const USER_GETLASTADDR= 'USER_GETLASTADDR'
+

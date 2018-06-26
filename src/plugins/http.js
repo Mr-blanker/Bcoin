@@ -48,7 +48,7 @@ axios.interceptors.response.use(
           // });
           Confirm({
             title: '登录过期',
-            mes: '是否跳转到登陆？',
+            mes: '是否跳转到登录？',
             opts: () => {
               this.$router.push({path: 'Login'})
             }
