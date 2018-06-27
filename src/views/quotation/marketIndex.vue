@@ -1,6 +1,6 @@
 <template>
   <div>
-    <common-header :activeTab.sync="activeTab" :tabList="tabData" :tabClick="tabChange" :scrollTabClick="scrollTabChange"></common-header>
+    <common-header :activeTab.sync="activeTab" :active.sync="active" :tabList="tabData" :tabKey="tabIndex" :tabClick="tabChange"></common-header>
     <div class="market-container">
       <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :downCb="getData" :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
       </scroll>
@@ -21,33 +21,49 @@
     data() {
       return {
         activeTab: 1,
+        active: 0,
         scrollList: '',
         len: 0,
         cid: 1,
         meInstance: '',
-        tabData: ''
+        tabData: '',
+        tabIndex: 'symbol',
+        eid: ''
+      }
+    },
+    watch: {
+      activeTab(index) {
+        if (index == 3) {
+          this.getPlatform()
+        } else {
+          this.getCoin()
+        }
+      },
+      active(index) {
+        if (index > 0 && this.activeTab != 3 && this.activeTab != 2) {
+          this.activeTab = 2
+        }
+        if (this.activeTab == 3) {
+          this.eid = this.tabData[index].eid
+        } else {
+          this.cid = this.tabData[index].cid
+        }
+        this.initScroll()
       }
     },
     mounted() {
       this.getCoin()
-      // this.initScroll()
-      // setInterval(() => {
-      //   this.TICKER_LIST({
-      //     len: this.len
-      //   }).then(res => {
-      //     this.scrollList = res.data.data
-      //   })
-      // }, 10000)
     },
     components: {
       scroll,
       commonHeader
     },
     methods: {
-      ...mapActions(['TICKER_LIST', 'PLATFORM_LIST', 'LIST_BY_CID', 'COIN_LIST']),
+      ...mapActions(['TICKER_LIST', 'PLATFORM_LIST', 'LIST_BY_CID', 'COIN_LIST', 'LIST_BY_PLAT']),
       getCoin() {
         this.COIN_LIST().then(res => {
           this.tabData = res.data.data
+          this.tabIndex = 'symbol'
           this.tabData.unshift({
             "cid": -2,
             "id": "all",
@@ -73,8 +89,6 @@
           len: this.len
         }).then(res => {
           this.scrollList = res.data.data
-          console.log('this.scrollList')
-          console.dir(this.scrollList)
           this.meInstance.endSuccess()
         }).catch(err => {
           this.meInstance.endErr()
@@ -83,6 +97,15 @@
       getPlatform() {
         this.PLATFORM_LIST({
           len: this.len
+        }).then(res => {
+          this.tabData = res.data.data
+          this.tabIndex = 'eid'
+        })
+      },
+      getListByPlat() {
+        this.LIST_BY_PLAT({
+          len: this.len,
+          eid: this.eid
         }).then(res => {
           this.scrollList = res.data.data
           this.meInstance.endSuccess()
@@ -99,16 +122,12 @@
         } else if (this.activeTab == 2) {
           this.getListByCID()
         } else if (this.activeTab == 3) {
-          this.getPlatform()
+          this.getListByPlat()
         }
       },
       tabChange(index) {
         this.activeTab = index
         this.len = 0
-        this.initScroll()
-      },
-      scrollTabChange(index) {
-        this.cid = this.tabData[index].cid
         this.initScroll()
       },
       initScroll() {

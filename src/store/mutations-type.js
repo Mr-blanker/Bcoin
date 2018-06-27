@@ -17,6 +17,8 @@ export const TICKER_LIST = 'TICKER_LIST'
 export const PLATFORM_LIST = 'PLATFORM_LIST'
 //币种
 export const COIN_LIST = 'COIN_LIST'
+//指定平台交易列表
+export const LIST_BY_PLAT = 'LIST_BY_PLAT'
 //指定货币的各平台行情
 export const LIST_BY_CID = 'LIST_BY_CID'
 //名人库

@@ -22,6 +22,10 @@ const actions = {
   [types.LIST_BY_CID]({},params) {
     return http.get('/api/coin.plat',{params})
   },
+  //指定平台交易列表
+  [types.LIST_BY_PLAT]({},params){
+    return http.get('/api/platform.ticker',{params})
+  }
 }
 
 const mutations = {}

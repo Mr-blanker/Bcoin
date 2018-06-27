@@ -3,27 +3,27 @@
     <div>
       <slot>
         <!--<div class="scroll-item flex" v-for="(item,index) in scrollData" :key="index" v-if="false">
-                                  <div class="box-left">
-                                    <div>
-                                      <span class="coin-symbol">{{item.symbol}}</span>
-                                      <span class="coin-name">{{item.name}}</span>
+                                    <div class="box-left">
+                                      <div>
+                                        <span class="coin-symbol">{{item.symbol}}</span>
+                                        <span class="coin-name">{{item.name}}</span>
+                                      </div>
+                                      <div class="coin-issue">
+                                        <span>发行总量:</span>
+                                        <span>{{item['24h_volume_usd']|formatMoney}}</span>
+                                      </div>
                                     </div>
-                                    <div class="coin-issue">
-                                      <span>发行总量:</span>
-                                      <span>{{item['24h_volume_usd']|formatMoney}}</span>
+                                    <div class="box-right flex flex-between">
+                                      <div class="tr mark-box">
+                                        <div class="mark-sum rise-color">42445.22</div>
+                                        <div class="mark-percent">+5.30%</div>
+                                      </div>
+                                      <div class="tr circulation-box">
+                                        <div class="circulation-sum fall-color">{{item.market_cap_cny|formatMoney}}</div>
+                                        <div class="circulation-percent">+372亿</div>
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div class="box-right flex flex-between">
-                                    <div class="tr mark-box">
-                                      <div class="mark-sum rise-color">42445.22</div>
-                                      <div class="mark-percent">+5.30%</div>
-                                    </div>
-                                    <div class="tr circulation-box">
-                                      <div class="circulation-sum fall-color">{{item.market_cap_cny|formatMoney}}</div>
-                                      <div class="circulation-percent">+372亿</div>
-                                    </div>
-                                  </div>
-                                </div>-->
+                                  </div>-->
         <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1">
           <div class="box-left">
             <div>
@@ -68,13 +68,23 @@
         </div>
         <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==3">
           <div class="box-left">
-            <div class="flex flex-m">
-              <img :src="item.plogo" class="platform-icon">
-              <span class="coin-symbol ml20">{{item.pname?item.pname:'-'}}</span>
+            <div>
+              <span class="coin-symbol">{{item.name}}</span>
+              <span class="coin-name">{{item.dui}}</span>
+            </div>
+            <div class="coin-issue">
+              <span>成交量:</span>
+              <span>{{item.cheng|formatMoney}}</span>
             </div>
           </div>
-          <div class="box-right tr">
-            <div class="mark-sum">{{item.cheng?item.cheng:0|formatMoney}}</div>
+          <div class="box-right flex flex-between">
+            <div class="tr mark-box">
+              <div class="mark-sum ">{{item.price?item.price.toPrecision(7):'-'}}</div>
+              <div class="mark-percent">${{item.price_usd}}</div>
+            </div>
+            <div class="tr circulation-box">
+              <div :class="{'percent-box':true,'percentrise-color':item.zhang>0,'percentfall-color':item.zhang<0}">{{item.zhang?item.zhang:'-'}}%</div>
+            </div>
           </div>
         </div>
       </slot>

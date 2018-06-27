@@ -3,23 +3,30 @@
         <div class="market-tab ">
             <yd-icon :name="leftIcon" size="20px" color="#fff" @click.native="show=true"></yd-icon>
             <div class="tab-contianer">
-                <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index" @click="tabChange(index+1)">{{item}}</span>
+                <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index" @click="activeTab=index+1">{{item}}</span>
             </div>
             <yd-icon :name="rightIcon" size="20px" color="#fff"></yd-icon>
         </div>
-        <van-tabs v-model="active" @click="onClick" v-show="activeTab==1||activeTab==2">
-            <van-tab v-for="(item,index) in tabList" :title="item.symbol" :key="index">
-            </van-tab>
-        </van-tabs>
-        <div class="coin-header flex flex-between" v-show="activeTab==1||activeTab==2">
+        <div class="flex flex-m tab-box">
+            <div style="width:92%">
+                <van-tabs v-model="active" >
+                    <van-tab v-for="(item,index) in tabList" :title="item[tabKey]" :key="index">
+                    </van-tab>
+                </van-tabs>
+            </div>
+            <div style="width:8%" class="add-tab">
+                <i class="icon iconfont icon-tianjia"></i>
+            </div>
+        </div>
+        <div class="coin-header flex flex-between">
             <div class="header-left">名称</div>
             <div class="header-right flex flex-between">
                 <div>最新价(￥)</div>
                 <div v-show="activeTab==1">24H涨幅</div>
-                <div v-show="activeTab==2">占比</div>
+                <div v-show="activeTab==2||activeTab==3">占比</div>
             </div>
         </div>
-        <div class="coin-header flex flex-between" v-show="activeTab==3">
+        <div class="coin-header flex flex-between" v-show="false">
             <div>名称</div>
             <div>成交量</div>
         </div>
@@ -49,26 +56,12 @@
         watch: {
             activeTab(val) {
                 this.$emit('update:activeTab', val)
+            },
+            active(val) {
+                this.$emit('update:active', val)
             }
         },
         methods: {
-            tabChange(index) {
-                this.activeTab = index
-                this.tabClick(index)
-                if (index == 1) {
-                    this.active = 0
-                }
-                if (index == 2) {
-                    this.onClick(1)
-                }
-            },
-            onClick(index) {
-                this.active = index
-                this.scrollTabClick(index)
-                if (index > 0) {
-                    this.activeTab = 2
-                } 
-            }
         },
         components: {
             'vanTabs': tabs,
@@ -102,6 +95,10 @@
             tabList: {
                 type: Array,
                 default: () => []
+            },
+            tabKey: {
+                type: String,
+                default: 'symbol'
             }
         }
     }
@@ -166,5 +163,15 @@
     }
     .flex-between {
         justify-content: space-between;
+    }
+    .flex-m {
+        align-items: center;
+    }
+    .tab-box {
+        background-color: #fff;
+        padding: 0 5px;
+    }
+    .add-tab {
+        line-height: 28px;
     }
 </style>
