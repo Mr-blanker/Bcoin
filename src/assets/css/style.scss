@@ -133,10 +133,10 @@
     }
   }
 }
-
-.person-list {
-  //padding-bottom: 50px;
+.column-bar:last-child{
+  margin-bottom: 0;
 }
+
 
 .person-item {
   height: 4rem;
@@ -382,6 +382,9 @@
 .v-html {
   img {
     width: 100%;
+  }
+  p{
+    text-align: left!important;
   }
 }
 

@@ -54,7 +54,6 @@ axios.interceptors.response.use(
             }
           })
         });
-
         break;
     }
     ;

@@ -37,9 +37,6 @@
       'list',
       'liKey'
     ],
-    updated(){
-      console.log(this.liKey)
-    },
     methods: {
       leftClick() {
         // console.log('left')

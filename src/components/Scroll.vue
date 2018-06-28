@@ -1,11 +1,11 @@
 <template>
   <div id="mescroll" class="mescroll">
     <div>
-      <slot>
-        <div class="scroll-item" v-for="(item,index) in 10" :key="index">
+      <!--<slot>-->
+        <div class="scroll-item" v-for="(item,index) in 30" :key="index">
           <div>{{index}}</div>
         </div>
-      </slot>
+      <!--</slot>-->
     </div>
   </div>
 </template>
@@ -26,7 +26,8 @@
           callback: this.downCallback //下拉刷新的回调,别写成downCallback(),多了括号就自动执行方法了
         },
         up: {
-          htmlLoading: '<p class="upwarp-progress mescroll-rotate"></p><p class="upwarp-tip">加载中..</p>',
+        // <p class="upwarp-progress mescroll-rotate"></p><p class="upwarp-tip">加载中..</p>
+          htmlContent: 'sss',
           callback: this.upCallback, //上拉加载的回调
           isBounce: false //如果您的项目是在iOS的微信,QQ,Safari等浏览器访问的,建议配置此项.解析(必读)
         }
@@ -34,8 +35,8 @@
     },
     methods: {
       upCallback() {
-        this.mescroll.endErr();
-        // alert(111111)
+        console.log(2123)
+
       },
       downCallback() {
         this.mescroll.endErr();

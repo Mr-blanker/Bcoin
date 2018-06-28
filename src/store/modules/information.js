@@ -11,9 +11,9 @@ const actions = {
   /*资讯*/
   /*新闻*/
   //列表
-  [types.INFORMATION_LIST]({}) {
+  [types.INFORMATION_LIST]({}, len) {
     return new Promise((resolve) => {
-      http.post('/api/news.lists').then(res => {
+      http.get('/api/news.lists', {params: len}).then(res => {
         return resolve(res.data)
       })
     })
@@ -28,9 +28,9 @@ const actions = {
   },
   /*快讯*/
   //列表
-  [types.FLASH_LIST]({}) {
+  [types.FLASH_LIST]({}, len) {
     return new Promise((resolve) => {
-      http.post('/api/news.flash').then(res => {
+      http.get('/api/news.flash', {params: len}).then(res => {
         return resolve(res.data)
       })
     })
@@ -45,9 +45,9 @@ const actions = {
   },
   /*名人库*/
   //列表
-  [types.PERSON_LIST]({}) {
+  [types.PERSON_LIST]({}, len) {
     return new Promise((resolve) => {
-      http.get('/api/person.lists').then(res => {
+      http.get('/api/person.lists', {params: len}).then(res => {
         return resolve(res.data)
       })
     })
@@ -117,7 +117,6 @@ export default {
   mutations,
   getters: {
     informationActive(state) {
-      console.log(window.sessionStorage.getItem('informationActive'))
       if (!state.informationActive && window.sessionStorage) {
         state.informationActive = window.sessionStorage.getItem('informationActive')
       }

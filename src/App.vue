@@ -30,8 +30,8 @@
       // }
     },
     mounted() {
-      console.log(window.localStorage.userInfo)
-      this.$store.dispatch(types.USER_USERINFO)
+      // console.log(window.localStorage.userInfo)
+      // this.$store.dispatch(types.USER_USERINFO)
 
     }
   }
