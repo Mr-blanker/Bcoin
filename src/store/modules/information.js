@@ -26,6 +26,13 @@ const actions = {
       })
     })
   },
+  [types.INFORMATION_CATES]({}) {
+    return new Promise((resolve) => {
+      http.get('/api/news.cates').then(res => {
+        return resolve(res.data)
+      })
+    })
+  },
   /*快讯*/
   //列表
   [types.FLASH_LIST]({}, len) {

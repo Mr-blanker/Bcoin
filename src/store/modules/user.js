@@ -32,11 +32,12 @@ const actions = {
   },
 
   //用户登出
-  [types.USER_LOGOUT]({}) {
+  [types.USER_LOGOUT]({commit}) {
     return new Promise((resolve) => {
-      http.get('/api/user/logout').then(res => {
+      http.post('/api/user/logout').then(res => {
         if (res.data.code === 0) {
           commit(types.SET_USER_SID, '')
+          commit(types.SET_USER_USERINFO, '')
         }
         return resolve(res.data)
       })
@@ -73,7 +74,7 @@ const actions = {
     })
   },
   //编辑用户地址
-  [types.USER_EDITRESSLIST]({},addressInfo) {
+  [types.USER_EDITRESSLIST]({}, addressInfo) {
     return new Promise((resolve) => {
       http.get('/api/user/addr.edit', {params: addressInfo}).then(res => {
         return resolve(res.data)
@@ -123,7 +124,7 @@ export default {
       return state.userSid ? state.userSid : ''
     },
     userInfo(state) {
-      if (!state.userInfo && window.localStorage.userInfo) {
+      if (!state.userInfo.length && window.localStorage.userInfo) {
         state.userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
       }
       return state.userInfo ? state.userInfo : ''

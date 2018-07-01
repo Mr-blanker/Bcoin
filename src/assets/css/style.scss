@@ -47,7 +47,7 @@
       border-radius: 1rem;
     }
     span {
-      margin-left: 5px;
+      margin-left: 10px;
     }
   }
 
@@ -70,6 +70,31 @@
 }
 
 //information
+.new-box {
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid $fbb;
+  overflow-x: auto;
+  padding: 0 .2rem;
+}
+
+.new-bar {
+  white-space: nowrap;
+
+}
+
+.new-bar-item {
+  display: inline-block;
+  padding: 0.1rem 0;
+  margin-right: .3rem;
+  font-size: $wfs;
+}
+
+.new-bar-item-active {
+  color: $bg;
+  border-bottom: 1px solid $bg;
+}
+
 .information-list {
   //padding-bottom: 50px;
   .information-item {
@@ -133,10 +158,10 @@
     }
   }
 }
-.column-bar:last-child{
+
+.column-bar:last-child {
   margin-bottom: 0;
 }
-
 
 .person-item {
   height: 4rem;
@@ -383,8 +408,8 @@
   img {
     width: 100%;
   }
-  p{
-    text-align: left!important;
+  p {
+    text-align: left !important;
   }
 }
 
@@ -498,12 +523,12 @@
     .address-item {
       display: flex;
       flex-direction: column;
-      height: 108px;
+      height: 120px;
       padding: 0 10px;
       background: $hc;
       margin-bottom: 5px;
       .address-main {
-        height: 72px;
+        height: 80px;
         padding: 5px 0;
         border-bottom: 1px solid $fbb;
         .main-top {
@@ -540,7 +565,7 @@
       }
     }
   }
-  .addAddress-btn{
+  .addAddress-btn {
     position: fixed;
     left: 0;
     right: 0;
@@ -658,9 +683,11 @@
   BORDER-TOP: 0px solid;
   text-align: right
 }
+
 .btn_box {
   padding: 12px;
 }
+
 .btn_box a {
   display: block;
   background: $bg;
@@ -672,21 +699,34 @@
   height: 48px;
   line-height: 48px;
 }
+
 .btn_box a.no-link {
   background: #e5d9b2;
 }
-.address-gengduo{
+
+.address-gengduo {
   position: absolute;
   right: 12px;
   top: 50%;
-  transform: translate(0,-50%);
+  transform: translate(0, -50%);
 
 }
-.detali-address{
+
+.detali-address {
   flex: 1;
   text-align: right;
   margin-right: 25px !important;
   color: #333 !important;
 }
 
-
+//personMessage
+.avatar {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  img {
+    height: .7rem;
+    width: .7rem;
+    background-size: cover;
+  }
+}

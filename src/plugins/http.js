@@ -20,6 +20,10 @@ axios.interceptors.request.use(
       config.headers['sid'] = store.getters.userSid
     }
     config.data = qs.stringify(config.data);
+    if (config.url === '/api/news.lists' || config.url === '/api/flash.lists' || config.url === '/api/news.flash' || config.url === '/api/column.cate' ||
+      config.url == '/api/person.lists') {
+      return config;
+    }
     Loading.open('加载中');
     return config;
   },

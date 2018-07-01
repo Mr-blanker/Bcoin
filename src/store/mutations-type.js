@@ -4,6 +4,8 @@
 export const INFORMATION_LIST = 'INFORMATION_LIST'
 //详情
 export const INFORMATION_DETAIL = 'INFORMATION_DETAIL'
+//分类
+export const INFORMATION_CATES='INFORMATION_CATES'
 
 //快讯
 //列表

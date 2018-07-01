@@ -2,17 +2,26 @@
   <div>
     <Header v-bind="{left:1,right:1,center:3,list:titleList,liKey:index}" @clickItem="clickItem"></Header>
     <div style="padding-top: 45px;padding-bottom:50px" class="pullScroll">
+      <div class="new-box" v-if="index===0">
+        <ul class="new-bar">
+          <li class="new-bar-item " :class="{'new-bar-item-active':newCateId===0}" @click="chooseNewCate(0)">全部</li>
+          <li class="new-bar-item" v-for="item in newCateList" :class="{'new-bar-item-active':newCateId===item.id}"
+              @click="chooseNewCate(item.id)">
+            <span class="new-bar-item-content">{{item.name}}</span>
+          </li>
+        </ul>
+      </div>
       <div id="scroll">
-
         <yd-slider autoplay="3000" v-if="index==0">
           <yd-slider-item v-for="(item,index) in broadcastAdList" :key="index">
-            <a :href="item.url">
-              <img :src="item.pic">
+            <a :href="item.url" style="height: 200px;">
+              <img :src="item.pic" style="height: 100%;">
             </a>
           </yd-slider-item>
         </yd-slider>
+
         <!--新闻资讯-->
-        <div v-show="index===0">
+        <div v-if="index===0">
           <ul class="information-list">
             <li class="information-item" v-for="(item,key) in list" @click="informationDetail(item.aid)">
               <img :src="item.thumbnail" alt="">
@@ -24,7 +33,7 @@
           </ul>
         </div>
         <!--快讯-->
-        <div class=" flash-list" v-show="index===1">
+        <div class=" flash-list" v-if="index===1">
           <div>
             <div class="flash-item" v-for="(item,key) in flashList">
               <p class="flash-time">{{item.k_time*1000|moment('MM-DD HH:mm')}}</p>
@@ -80,7 +89,6 @@
 </template>
 
 <script>
-  import Hello from "@/components/HelloWorld"
   import * as types from "../../store/mutations-type"
   import moment from 'moment'
   import {mapGetters} from "vuex"
@@ -103,26 +111,19 @@
         aaa: true,
         flashLen: 0,
         newLen: 0,
-        personLen: 0
+        personLen: 0,
+        newCateList: [],
+        newCateId: 0
       }
-    },
-    components: {
-      Hello
     },
     computed: {
       ...mapGetters(['informationActive'])
     },
     mounted() {
-      if(this.informationActive){
+      this.getNewCate()
+      if (this.informationActive) {
         this.index = parseInt(this.informationActive)
       }
-      // if (this.informationActive) {
-      //   this.clickItem(parseInt(this.informationActive))
-      //   this.index = parseInt(this.informationActive)
-      // } else {
-      //   this.clickItem(0)
-      //   this.index = 0
-      // }
       let that = this;
       this.scroll = new PullScroll("scroll", {
         refresh: function (pullScroll) {
@@ -136,6 +137,20 @@
       this.clickItem(this.index)
     },
     methods: {
+      //获取新闻分类
+      getNewCate() {
+        this.$store.dispatch(types.INFORMATION_CATES).then(res => {
+          console.log(res)
+          if (res.code !== 0) return
+          this.newCateList = res.data
+        })
+      },
+      //选择新闻分类
+      chooseNewCate(id) {
+        console.log(id)
+        this.newCateId = id
+        this.scroll.triggerRefresh();
+      },
       initDataList(pullScroll) {
         console.log(this.index)
         // 重复请求处理
@@ -149,42 +164,38 @@
         this.loadDataList(pullScroll);
       },
       loadDataList(pullScroll) {
-        pullScroll.finish(true)
         //快讯列表
         if (this.index === 1) {
-          console.log('快讯')
-          this.flashLen += 5
+          this.flashLen += 20
           this.$store.dispatch(types.FLASH_LIST, {len: this.flashLen}).then(res => {
-            console.log(res)
             this.flashList = res
             pullScroll.finish(false);
           })
         } else if (this.index === 0) {
-          console.log('新闻')
           //获取新闻资讯列表
-          this.newLen += 5
-          this.$store.dispatch(types.INFORMATION_LIST, {len: this.newLen}).then(res => {
+          this.newLen += 20
+          this.$store.dispatch(types.INFORMATION_LIST, {len: this.newLen, cateID: this.newCateId}).then(res => {
             if (res.code !== 0) return
-            console.log(res)
             this.list = res.data
             pullScroll.finish(false);
           })
         } else if (this.index === 3) {
-          console.log('名人')
           //名人库列表
-          this.personLen += 5
+          this.personLen += 20
           this.$store.dispatch(types.PERSON_LIST, {len: this.personLen}).then(res => {
             if (res.code !== 0) return
             this.personList = res.data
             pullScroll.finish(false);
-
           })
         } else if (this.index === 2) {
+          //专栏
           this.$store.dispatch(types.COLUMN_CATE).then(res => {
             if (res.code !== 0) return
             this.columnList = res.data
+            pullScroll.finish(true);
           })
         }
+
       },
       //选择bar
       clickItem(key) {
@@ -195,6 +206,8 @@
         if (key == 0) {
           this.getBroadcastAd()
         }
+        this.scroll.triggerRefresh();
+
       },
       //轮播图
       getBroadcastAd() {

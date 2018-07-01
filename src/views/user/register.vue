@@ -12,7 +12,7 @@
       </yd-cell-item>
     </yd-cell-group>
 
-    <yd-button class="btn-submit" size="large" shape="circle" bgcolor="#06adf7" @click.native="submit">登录</yd-button>
+    <yd-button class="btn-submit" size="large" shape="circle" bgcolor="#06adf7" @click.native="submit">注册</yd-button>
   </div>
 </template>
 <script>
