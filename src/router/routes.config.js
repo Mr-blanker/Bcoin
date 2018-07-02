@@ -39,6 +39,11 @@ export default [
     component: register,
   },
   {
+    name: 'marketIndex',
+    path: '/marketIndex',
+    component: marketIndex,
+  },
+  {
     name: 'person',
     path: '/person',
     component: person,
