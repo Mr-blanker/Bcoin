@@ -1,6 +1,6 @@
 <template>
   <div>
-    <common-header :activeTab.sync="activeTab" :active.sync="active" :tabList="tabData" :tabKey="tabIndex" :tabClick="tabChange"></common-header>
+    <common-header :currentTab.sync="activeTab" :tabClick="tabIndexChange"></common-header>
     <div class="market-container">
       <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :downCb="getData" :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
       </scroll>
@@ -21,45 +21,21 @@
     data() {
       return {
         activeTab: 1,
-        active: 0,
         scrollList: '',
         len: 0,
         cid: 1,
+        eid: '',
         meInstance: '',
-        tabData: '',
-        tabIndex: 'symbol',
-        eid: ''
       }
     },
-    watch: {
-      activeTab(index) {
-        if (index == 3) {
-          this.getPlatform()
-        } else {
-          this.getCoin()
-        }
-      },
-      active(index) {
-        if (index > 0 && this.activeTab != 3 && this.activeTab != 2) {
-          this.activeTab = 2
-        }
-        if (this.activeTab == 3) {
-          this.eid = this.tabData[index].eid
-        } else {
-          this.cid = this.tabData[index].cid
-        }
-        this.initScroll()
-      }
-    },
-    mounted() {
-      this.getCoin()
-    },
+    mounted() {},
     components: {
       scroll,
       commonHeader
     },
     methods: {
       ...mapActions(['TICKER_LIST', 'PLATFORM_LIST', 'LIST_BY_CID', 'COIN_LIST', 'LIST_BY_PLAT']),
+      //获取币种
       getCoin() {
         this.COIN_LIST().then(res => {
           this.tabData = res.data.data
@@ -72,6 +48,7 @@
           })
         })
       },
+      //指定货币的各平台行情
       getListByCID() {
         let param = {
           cid: this.cid,
@@ -84,6 +61,7 @@
           this.meInstance.endErr()
         })
       },
+      //获取所有货币的综合行情
       getTicker() {
         this.TICKER_LIST({
           len: this.len
@@ -94,6 +72,7 @@
           this.meInstance.endErr()
         })
       },
+      //获取所有交易平台
       getPlatform() {
         this.PLATFORM_LIST({
           len: this.len
@@ -102,6 +81,7 @@
           this.tabIndex = 'eid'
         })
       },
+      //指定平台交易列表
       getListByPlat() {
         this.LIST_BY_PLAT({
           len: this.len,
@@ -113,6 +93,7 @@
           this.meInstance.endErr()
         })
       },
+      //滚动容器获取数据方法
       getData(increase = false, len) {
         if (increase) {
           this.len = len
@@ -125,15 +106,21 @@
           this.getListByPlat()
         }
       },
-      tabChange(index) {
-        this.activeTab = index
-        this.len = 0
-        this.initScroll()
-      },
+      //初始化滚动条
       initScroll() {
         this.meInstance.resetUpScroll()
-        // this.meInstance.scrollTo(0, 0)
+        this.meInstance.scrollTo(0, 0)
         this.meInstance.triggerDownScroll()
+      },
+      tabIndexChange(obj, isTicker = false) {
+        if (!isTicker) {
+          if (obj.cid) {
+            this.cid = obj.cid
+          } else if (obj.eid) {
+            this.eid = obj.eid
+          }
+        }
+        this.initScroll()
       }
     }
   }

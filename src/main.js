@@ -6,6 +6,7 @@ import router from "./router"
 import store from "./store"
 import mixins from "./mixins"
 import YDUI from "vue-ydui"
+import echarts from 'echarts'
 import "vue-ydui/dist/ydui.rem.css";
 import "./assets/css/base.scss"
 import "./assets/css/font/iconfont.css"
@@ -17,7 +18,7 @@ import Header from "./components/Header"
 import moment from 'moment'
 import filters from './filters/index'
 window.MeScroll = mescrollJs
-
+Vue.prototype.$echarts = echarts 
 Vue.mixin(mixins)
 Vue.use(YDUI)
 Vue.use(Header)

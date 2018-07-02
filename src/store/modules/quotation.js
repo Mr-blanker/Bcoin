@@ -25,6 +25,10 @@ const actions = {
   //指定平台交易列表
   [types.LIST_BY_PLAT]({},params){
     return http.get('/api/platform.ticker',{params})
+  },
+  //指定平台交易列表
+  [types.TREND]({},params){
+    return http.get('/api/coin.trend',{params})
   }
 }
 

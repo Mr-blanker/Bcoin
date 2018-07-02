@@ -11,6 +11,8 @@ import InformationDetail from '@/views/information/InformationDetail'
 
 //行情
 import marketIndex from '@/views/quotation/marketIndex'
+//走势
+import trend from '@/views/quotation/trend'
 
 //搜索
 import search from '@/views/search'
@@ -65,9 +67,10 @@ export default [
     name: 'marketIndex',
     path: '/marketIndex',
     component: marketIndex
-  }, {
-    name: 'InformationDetail',
-    path: '/InformationDetail',
-    component: InformationDetail,
+  }, 
+  {
+    name: 'trend',
+    path: '/trend',
+    component: trend,
   }
 ]

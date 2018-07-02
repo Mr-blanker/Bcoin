@@ -3,13 +3,13 @@
         <div class="market-tab ">
             <yd-icon :name="leftIcon" size="20px" color="#fff" @click.native="show=true"></yd-icon>
             <div class="tab-contianer">
-                <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index" @click="activeTab=index+1">{{item}}</span>
+                <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index" @click="tabChange(index+1)">{{item}}</span>
             </div>
             <yd-icon :name="rightIcon" size="20px" color="#fff"></yd-icon>
         </div>
         <div class="flex flex-m tab-box">
             <div style="width:92%">
-                <van-tabs v-model="active" >
+                <van-tabs v-model="active" @click="vantTabClick">
                     <van-tab v-for="(item,index) in tabList" :title="item[tabKey]" :key="index">
                     </van-tab>
                 </van-tabs>
@@ -50,18 +50,9 @@
                 activeTab: 1,
                 show: false,
                 active: 0,
+                tabList: '',
+                tabKey: ''
             }
-        },
-        mounted() {},
-        watch: {
-            activeTab(val) {
-                this.$emit('update:activeTab', val)
-            },
-            active(val) {
-                this.$emit('update:active', val)
-            }
-        },
-        methods: {
         },
         components: {
             'vanTabs': tabs,
@@ -91,15 +82,73 @@
                 default: (index) => {
                     console.log(index + '被点击')
                 }
-            },
-            tabList: {
-                type: Array,
-                default: () => []
-            },
-            tabKey: {
-                type: String,
-                default: 'symbol'
             }
+        },
+        mounted() {
+            this.tabChange(1)
+        },
+        methods: {
+            ...mapActions(['PLATFORM_LIST', 'COIN_LIST']),
+            vantTabClick(index) {
+                if (index == 0 && this.activeTab != 3) {
+                    this.activeTab = 1
+                    this.$emit('update:currentTab', 1)
+                } else if (index >= 1 && this.activeTab != 3) {
+                    this.activeTab = 2
+                    this.$emit('update:currentTab', 2)
+                }
+                console.log('vantTabClick=>comeHome')
+                if (this.activeTab == 1) {
+                    this.tabClick(this.tabList[index], true)
+                } else {
+                    this.tabClick(this.tabList[index])
+                }
+            },
+            tabChange(index) {
+                this.activeTab = index
+                this.$emit('update:currentTab', index)
+                if (index == 1 || index == 2) {
+                    this.getCoin()
+                } else {
+                    this.getPlatform()
+                }
+            },
+            //获取币种
+            getCoin() {
+                this.COIN_LIST({
+                    len: 20
+                }).then(res => {
+                    this.tabKey = 'symbol'
+                    let tempArr = res.data.data
+                    tempArr.unshift({
+                        "cid": -2,
+                        "id": "all",
+                        "name": "全部",
+                        "symbol": "全部"
+                    })
+                    this.tabList = tempArr
+                    console.log('getCoin=>comeHome')                                
+                    if (this.activeTab == 2) {
+                        this.active = 1
+                        this.vantTabClick(1)
+                    } else {
+                        this.active = 0
+                        this.vantTabClick(0)
+                    }
+                })
+            },
+            //获取所有交易平台
+            getPlatform() {
+                this.PLATFORM_LIST({
+                    len: 20
+                }).then(res => {
+                    this.tabKey = 'eid'
+                    this.tabList = res.data.data
+                    console.log('getPlatform=>comeHome')
+                    this.active = 0
+                    this.vantTabClick(0)
+                })
+            },
         }
     }
 </script>
