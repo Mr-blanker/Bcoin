@@ -1,57 +1,38 @@
 <template>
   <div>
-    <Header v-bind="{left:1,centerValue:'我的',center:2}"></Header>
+    <Header v-bind="{left:1,centerValue:'个人',center:2}"></Header>
     <div class="mine">
-      <div class="head">
-        <!--<img src="" alt="">-->
+      <div class="head"  @click="userInfo? $router.push({path:'personMessage'}): $router.push({path:'login'})">
         <div class="head-left">
-          <i class="icon iconfont icon-yonghu"></i>
-          <span>18059094333</span>
+          <img :src="userInfo.avatar" alt="" v-if="userInfo.avatar">
+          <img src="../../assets/default_avatar_male.jpg" alt="" v-else>
+          <span>{{userInfo.name?userInfo.name:'点击登录'}}</span>
         </div>
         <i class="icon iconfont icon-gengduo"></i>
       </div>
-      <yd-cell-group style="margin-top:10px;">
-        <yd-cell-item arrow type="a" href="tel:400-888-8888">
-          <span slot="left">这里是一个A链接</span>
-          <span slot="right">href不会解析</span>
+      <yd-cell-group style="margin-top:10px;border: 0;">
+        <yd-cell-item arrow type="a" @click.native="userInfo?$router.push({path:'addressList'}):$router.push({path:'login'})">
+          <span slot="left">地址</span>
+          <span slot="right"></span>
         </yd-cell-item>
-        <yd-cell-item arrow type="link" href="#">
-          <span slot="left">这里是一个Router-Link链接</span>
-          <span slot="right">href会解析为路由</span>
+        <yd-cell-item arrow type="a" @click.native="userInfo? $router.push({path:'personMessage'}): $router.push({path:'login'})">
+          <span slot="left">个人信息</span>
+          <span slot="right"></span>
         </yd-cell-item>
-        <yd-cell-item arrow type="label">
-          <span slot="left">这里是一个Label</span>
-        </yd-cell-item>
-        <yd-cell-item arrow>
-          <span slot="left">这里是一个普通DIV</span>
-        </yd-cell-item>
+
       </yd-cell-group>
     </div>
-
   </div>
 </template>
 <script>
-  import Header from "@/components/Header"
-
+  import {mapGetters} from "vuex"
   export default {
-    name: "login",
-    data() {
-      return {
-        input1: "",
-        input2: ""
-      }
+    name: "person",
+    computed: {
+      ...mapGetters(['userInfo'])
     },
-    components: {
-      Header
-    },
-    methods: {
-      submit() {
-        console.log(12)
-      }
-    }
   }
 </script>
 
 <style scoped>
-
 </style>

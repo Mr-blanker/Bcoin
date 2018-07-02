@@ -1,27 +1,39 @@
 <template>
   <div id="app">
-    <header></header>
     <router-view></router-view>
-    <!--<Foot></Foot>-->
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
-  import Foot from "./components/Footer"
-  import header from "./components/Header.vue"
-  
+  import Footer from "./components/Footer"
+  import * as types from "./store/mutations-type"
+
   export default {
     name: 'App',
+    data() {
+      return {
+        isShowFooterNav: true
+      }
+    },
     components: {
-      Foot,
-      header
+      Footer
+    },
+    watch: {
+      // $route(to) {
+      //   console.log(to)
+      //   if (to.name == 'Information') {
+      //     this.isShowFooterNav = true
+      //   } else {
+      //     this.isShowFooterNav = false
+      //   }
+      // }
     },
     mounted() {
-      console.log(1)
-      console.log(this.$store.state)
+      // console.log(window.localStorage.userInfo)
+      // this.$store.dispatch(types.USER_USERINFO)
 
-    },
-    
+    }
   }
 </script>
 
@@ -34,6 +46,6 @@
     color: #2c3e50;
     /*margin-top: 60px;*/
     height: 100%;
-    background:#f2f5f7;
+    background: #f2f5f7;
   }
 </style>

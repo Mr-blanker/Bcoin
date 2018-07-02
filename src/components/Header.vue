@@ -5,8 +5,8 @@
       <i class="icon iconfont icon-gengduo-" @click="leftClick" v-if="left===2" style="font-size:.55rem"></i>
     </div>
     <div class="header-main">
-      <span class="center-input" v-if="center===1"><i class="icon iconfont icon-search"
-                                                      style="font-size: 0.3rem;margin-right: -5px;"></i>{{centerValue}}</span>
+      <span class="center-input" v-if="center===1">
+        <i class="icon iconfont icon-search" style="font-size: 0.3rem;margin-right: -5px;"></i>{{centerValue}}</span>
       <span class="center-title" v-if="center===2">{{centerValue}}</span>
       <ul class="center-ul" v-if="center===3">
         <li v-for="(item,key) in list" @click="clickItem(key)" :class="{active:liKey ===key}">{{item}}</li>
@@ -27,7 +27,6 @@
     name: "Header",
     data() {
       return {
-        liKey: 0
       }
     },
     props: [
@@ -35,7 +34,8 @@
       "right",
       'center',
       'centerValue',
-      'list'
+      'list',
+      'liKey'
     ],
     methods: {
       leftClick() {
@@ -47,7 +47,6 @@
       },
       clickItem(key) {
         this.$emit('clickItem', key)
-        this.liKey = key
       }
 
     }

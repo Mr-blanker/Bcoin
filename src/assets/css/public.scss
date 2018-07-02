@@ -1,6 +1,6 @@
 $bg: #06adf7; //header   背景颜色   主色调
 $hc: #fff; //header里面的颜色
-$hf: .45rem; //header字体大小
+$hf: .4rem; //header字体大小
 $fbg: #f7f7f7; //footer 背景颜色
 $ftb: #efefef; //footer 上边框颜色
 $fws: .3rem; //footer 字体大小
@@ -8,14 +8,22 @@ $wfs: .32rem; //字体大小  全局
 $fbb: #e2dede; //下边框颜色
 $smallws:.25rem;//字体  小
 $wdc:#909090; //字体颜色
+.pt{
+  padding-top: 45px;
+}
 //header
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
+  height: 45px;
   padding: 0 10px;
   background: $bg;
+  z-index: 9999;
   .header-left,
   .header-right {
     width: 25px;
@@ -30,8 +38,8 @@ $wdc:#909090; //字体颜色
   .header-main {
     flex: 1;
     position: relative;
-    height: 50px;
-    line-height: 50px;
+    height: 45px;
+    line-height: 45px;
     .center-input {
       display: inline-flex;
       justify-content: center;
@@ -43,12 +51,12 @@ $wdc:#909090; //字体颜色
       font-size: .32rem;
     }
     .center-title {
-      font-size: .45rem;
+      font-size: $hf;
       color: $hc;
     }
     .center-ul {
       display: inline-flex;
-      height: 50px;
+      height: 45px;
       li {
         display: inline-flex;
         font-size: $wfs;
@@ -74,8 +82,8 @@ $wdc:#909090; //字体颜色
   display: flex;
   justify-content: space-between;
   justify-content: center;
-  bottom: 0;
-  height: 40px;
+  bottom: -1px;
+  height: 50px;
   background: $fbg;
   width: 100%;
   border-top: 1px solid $ftb;
@@ -94,11 +102,40 @@ $wdc:#909090; //字体颜色
     i {
       font-size: .5rem;
     }
-    &:hover {
-      color: $bg;
-    }
+  }
+  .footer-active{
+    color: $bg;
   }
 }
 
+//ydUI
+.yd-cell-item {
+  height: 50px;
+}
 
+.yd-search-input {
+  background: $bg !important;
+}
 
+.cancel-text {
+  color: $hc !important;
+}
+.yd-cell:after{
+  border-bottom: 0 !important;
+}
+
+.yd-slider-pagination-item-active {
+  background: $bg !important;
+}
+.yd-confirm-ft>a.primary{
+  color: $bg;
+}
+.yd-cell-right{
+  min-height: 100% !important;
+}
+.yd-btn-block{
+  height: .9rem !important;
+}
+.yd-cell-right{
+  font-size: .3rem !important;
+}

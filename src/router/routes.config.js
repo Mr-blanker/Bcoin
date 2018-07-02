@@ -6,15 +6,17 @@ import login from '@/views/user/login'
 import register from '@/views/user/register'
 import person from '@/views/user/person'
 import personMessage from '@/views/user/personMessage'
+import addressList from '@/views/user/addressList'
+import addressDetail from '@/views/user/addressDetail'
 import Information from '@/views/information/Information'
 import InformationDetail from '@/views/information/InformationDetail'
-
-//行情
-import marketIndex from '@/views/quotation/marketIndex'
+import contentList from '@/views/information/contentList'
+import acView from '@/views/information/acView'
 
 //搜索
 import search from '@/views/search'
-
+//行情
+import marketIndex from '@/views/quotation/marketIndex'
 
 export default [
   {
@@ -57,11 +59,31 @@ export default [
     component: marketIndex
   },
   { name: 'Information',
+    name: 'Information',
     path: '/Information',
     component: Information,
+    meta: {
+      // keepalive: true
+    }
   }, {
     name: 'InformationDetail',
     path: '/InformationDetail',
     component: InformationDetail,
+  }, {
+    name: 'contentList',
+    path: '/contentList',
+    component: contentList,
+  }, {
+    name: 'acView',
+    path: '/acView',
+    component: acView,
+  }, {
+    name: 'addressList',
+    path: '/addressList',
+    component: addressList,
+  }, {
+    name: 'addressDetail',
+    path: '/addressDetail',
+    component: addressDetail,
   }
 ]

@@ -6,7 +6,7 @@
         {{dataList.title}}
       </div>
       <div class="informationDetail-message">
-      <span class="informationDetail-message-source">
+      <span class="informationDetail-message-source" v-if="dataList.befrom">
         文章来源：{{dataList.befrom}}
       </span>
         <span class="informationDetail-message-time">
@@ -17,12 +17,14 @@
       <ul class="informationDetail-keywords">
         <li v-for="item in keywords">{{item}}</li>
       </ul>
-      <div class="informationDetail-images"><img src="" alt=""></div>
-      <p class="informationDetail-content" v-if="aid">
+      <div class="informationDetail-images" v-if="dataList.thumbnail">
+        <img :src="dataList.thumbnail" alt="">
+      </div>
+      <p class="informationDetail-content" v-if="dataList.description">
         {{dataList.description}}
       </p>
       <!--<p  v-html="dataList.content" v-if="id"></p>-->
-      <div v-html="dataList.content"></div>
+      <div v-html="dataList.content" style="width: 100%;" class="v-html"></div>
     </div>
 
   </div>
@@ -47,22 +49,36 @@
     },
     mounted() {
       this.aid = this.$route.query.aid
+      console.log(this.aid)
       this.id = this.$route.query.id
+      this.wid = this.$route.query.wid
       if (this.aid) {
         this.$store.dispatch(types.INFORMATION_DETAIL, this.aid).then(res => {
           console.log(res)
-          if (res.code != 0) return
+          if (res.code !== 0) return
           this.keywords = res.data.keywords.split(',')
           console.log(this.keywords)
           this.dataList = res.data
         })
-      } else {
+      } else if (this.id) {
         this.$store.dispatch(types.PERSON_CONTENT, this.id).then(res => {
           console.log(res)
-          if (res.code != 0) return
-          this.keywords = res.data.keywords.split(',')
-          console.log(this.keywords)
-          this.dataList = res.data
+          if (res.code !== 0) return
+          if (res.data !== null) {
+            this.keywords = res.data.keywords.split(',')
+            console.log(this.keywords)
+            this.dataList = res.data
+          }
+        })
+      } else {
+        this.$store.dispatch(types.COLUMN_CONTENT, this.wid).then(res => {
+          console.log(res)
+          if (res.code !== 0) return
+          if (res.data !== null) {
+            this.keywords = res.data.keywords.split(',')
+            console.log(this.keywords)
+            this.dataList = res.data
+          }
         })
       }
 
@@ -71,5 +87,7 @@
 </script>
 
 <style scoped>
-
+  p img {
+    width: 100%;
+  }
 </style>
