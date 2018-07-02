@@ -5,7 +5,7 @@
         <i class="icon iconfont icon-home1"></i>
         <span>首页</span>
       </li>
-      <li class="footer-item" @click="$router.push({path:'marketIndex'})">
+      <li class="footer-item" @click="$router.push({path:'marketIndex'})"  :class="{'footer-active':$route.name=='marketIndex'}">
         <i class="icon iconfont icon-gupiao1"></i>
         <span>行情</span>
       </li>
