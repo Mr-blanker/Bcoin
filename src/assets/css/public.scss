@@ -1,4 +1,4 @@
-$bg: #06adf7; //header   背景颜色   主色调
+$bg: #208de3; //header   背景颜色   主色调
 $hc: #fff; //header里面的颜色
 $hf: .4rem; //header字体大小
 $fbg: #f7f7f7; //footer 背景颜色
@@ -30,7 +30,7 @@ $wdc:#909090; //字体颜色
     i {
       display: inline-flex;
       justify-content: center;
-      justify-items: center;
+      align-items: center;
       color: $hc;
       font-size: .5rem;
     }
@@ -82,8 +82,8 @@ $wdc:#909090; //字体颜色
   display: flex;
   justify-content: space-between;
   justify-content: center;
-  bottom: -1px;
-  height: 50px;
+  bottom: 0;
+  height: 45px;
   background: $fbg;
   width: 100%;
   border-top: 1px solid $ftb;
@@ -100,7 +100,7 @@ $wdc:#909090; //字体颜色
     height: 100%;
     font-size: $fws;
     i {
-      font-size: .5rem;
+      font-size: .45rem;
     }
   }
   .footer-active{

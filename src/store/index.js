@@ -6,6 +6,8 @@ import mutations from './mutations'
 import state from './state'
 import information from './modules/information'
 import user from './modules/user'
+import quotation from './modules/quotation'
+// import message from './modules/message'
 // import work from './modules/work'
 // import equipment from './modules/equipment'
 
@@ -20,6 +22,7 @@ export default new Vuex.Store({
   mutations,
   modules: {
     information,
-    user
+    user,
+    quotation
   }
 });

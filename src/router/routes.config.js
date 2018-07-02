@@ -13,10 +13,13 @@ import InformationDetail from '@/views/information/InformationDetail'
 import contentList from '@/views/information/contentList'
 import acView from '@/views/information/acView'
 
-//搜索
-import search from '@/views/search'
 //行情
 import marketIndex from '@/views/quotation/marketIndex'
+//走势
+import trend from '@/views/quotation/trend'
+
+//搜索
+import search from '@/views/search'
 
 export default [
   {
@@ -90,5 +93,23 @@ export default [
     name: 'addressDetail',
     path: '/addressDetail',
     component: addressDetail,
+    name: 'Information',
+    path: '/Information',
+    component: Information,
+  },
+  {
+    name: 'InformationDetail',
+    path: '/InformationDetail',
+    component: InformationDetail
+  },
+  {
+    name: 'marketIndex',
+    path: '/marketIndex',
+    component: marketIndex
+  }, 
+  {
+    name: 'trend',
+    path: '/trend',
+    component: trend,
   }
 ]

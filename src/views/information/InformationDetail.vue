@@ -10,7 +10,6 @@
         文章来源：{{dataList.befrom}}
       </span>
         <span class="informationDetail-message-time">
-
        <i class="icon iconfont icon-clock"></i>{{dataList.t*1000|moment('MM-DD:HH:mm')}}
       </span>
       </div>

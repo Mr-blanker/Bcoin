@@ -730,3 +730,33 @@
     background-size: cover;
   }
 }
+.van-tabs__line{
+  background-color:$bg !important;
+  display: none;
+}
+
+.van-tabs--line {
+  padding-top: 28px !important;
+}
+
+.van-tabs--line .van-tabs__wrap {
+  height: 28px !important;
+}
+
+.van-tab {
+  line-height: 28px !important;
+  color:#8a8d99 !important;
+  padding: 0 !important;
+}
+
+.van-tab--active {
+  color:$bg !important;
+}
+
+.van-tabs__wrap--scrollable .van-tab {
+  flex:0 0 19% !important;
+}
+
+.yd-datetime-head>a:last-child {
+  color:#208de3 !important;
+}

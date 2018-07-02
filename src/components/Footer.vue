@@ -9,8 +9,7 @@
         <i class="icon iconfont icon-gupiao1"></i>
         <span>行情</span>
       </li>
-      <li class="footer-item" @click="$router.push({path:'Information'})"
-          :class="{'footer-active':$route.name=='Information'}">
+      <li class="footer-item" @click="$router.push({path:'Information'})" :class="{'footer-active':$route.name=='Information'}">
         <i class="icon iconfont icon-wanggediqiu"></i>
         <span>资讯</span>
       </li>
@@ -30,17 +29,16 @@
       }
     },
     watch: {
-      '$route'(to) {
+      '$route' (to) {
         console.log(to)
-        if (to.name == 'Information' || to.name == 'person') {
+        if (to.name == 'Information' || to.name == 'person' ||to.name == 'marketIndex') {
           this.isShowFooterNav = true
         } else {
           this.isShowFooterNav = false
         }
       }
     },
-    mounted(){
-    }
+    mounted() {}
   }
 </script>
 

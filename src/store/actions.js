@@ -5,5 +5,10 @@ export default {
         http.get('/api/coin.lists').then(res=>{
             console.log(res)
         })
+    },
+    getTickers({commit}){
+        http.get('/api/coin.ticker').then(res=>{
+            
+        })
     }
 }
