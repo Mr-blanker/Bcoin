@@ -15,7 +15,7 @@ import acView from '@/views/information/acView'
 
 //搜索
 import search from '@/views/search'
-
+import marketIndex from '@/views/quotation/marketIndex'
 
 export default [
   {
@@ -36,6 +36,11 @@ export default [
     name: 'register',
     path: '/register',
     component: register,
+  },
+  {
+    name: 'marketIndex',
+    path: '/marketIndex',
+    component: marketIndex,
   },
   {
     name: 'person',
