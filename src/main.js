@@ -13,12 +13,20 @@ import "../static/mescroll.js/mescroll.min.css"
 import mescrollJs from "../static/mescroll.js/mescroll.min.js"
 import "./assets/css/public.scss"
 import "./assets/css/style.scss"
+import Header from "./components/Header"
+import moment from 'moment'
 
 window.MeScroll = mescrollJs
 Vue.mixin(mixins)
 Vue.use(YDUI)
+Vue.use(Header)
 Vue.config.productionTip = false
 
+
+Vue.filter('moment', function (value, formatString) {
+  formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
+  return moment(value).format(formatString);
+});
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -6,6 +6,8 @@ import login from '@/views/user/login'
 import register from '@/views/user/register'
 import person from '@/views/user/person'
 import personMessage from '@/views/user/personMessage'
+import Information from '@/views/information/Information'
+import InformationDetail from '@/views/information/InformationDetail'
 
 //行情
 import marketIndex from '@/views/quotation/marketIndex'
@@ -52,6 +54,14 @@ export default [
   {
     name: 'marketIndex',
     path: '/marketIndex',
-    component: marketIndex,
+    component: marketIndex
+  },
+  { name: 'Information',
+    path: '/Information',
+    component: Information,
+  }, {
+    name: 'InformationDetail',
+    path: '/InformationDetail',
+    component: InformationDetail,
   }
 ]
