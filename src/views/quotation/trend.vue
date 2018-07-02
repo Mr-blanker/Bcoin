@@ -6,7 +6,7 @@
                 <div>{{coin.name}}</div>
                 <div>{{coin.dui}}</div>
             </div>
-            <yd-icon name="refresh" size="20px" color="#fff"></yd-icon>
+            <yd-icon name="refresh" size="20px" color="#fff" @click.native="getTrends"></yd-icon>
         </div>
         <div class="coin-info">
             <div>
@@ -17,19 +17,19 @@
                     </div>
                     <div>
                         <div><span>$</span>{{coin.price_usd}}</div>
-                        <div><span>$</span>{{coin.cheng_usd}}</div>
+                        <div><span>$</span>{{coin.cheng_usd||coin['24h_volume_usd']}}</div>
                     </div>
                 </div>
             </div>
             <div>
-                <div>￥{{coin.price}}</div>
-                <div>￥{{coin.cheng}}</div>
+                <div>￥{{coin.price||coin.price_cny}}</div>
+                <div>￥{{coin.cheng||coin['24h_volume_cny']}}</div>
             </div>
         </div>
         <div class="date-check">
-            <div>
+            <div class="start-time">
                 <span>范围:</span>
-                <yd-datetime type="datetime" v-model="beginTime" :callback="startCB"></yd-datetime>
+                <yd-datetime type="datetime" v-model="beginTime" ></yd-datetime>
             </div>
             <div>
                 <span>至:</span>
@@ -72,6 +72,7 @@
         methods: {
             ...mapActions(['TREND']),
             getTrends() {
+                this.$dialog.loading.open('加载中...');
                 this.TREND({
                     coin: 'bitcoin',
                     start: 1527782400000,
@@ -80,6 +81,12 @@
                     this.formatterRes(res.data)
                     console.log(this.dates)
                     this.initCharts()
+                    this.$dialog.loading.close();
+                    this.$dialog.toast({
+                        mes: '已加载',
+                        icon: 'success',
+                        timeout: 1500
+                    });
                 })
             },
             formatterRes(data) {
@@ -109,7 +116,7 @@
             },
             endCB() {
                 console.log('end')
-                // this.getTrends()
+                this.getTrends()
             },
             stampToDate(stamp) {
                 let d = new Date(stamp);
@@ -425,9 +432,9 @@
                     justify-content: center;
                     align-items: flex-start;
                     flex-direction: column;
-                     &>div:first-child{
-                         margin:0 10px 0 0 ;
-                     }
+                    &>div:first-child {
+                        margin: 0 10px 0 0;
+                    }
                 }
             }
         }
