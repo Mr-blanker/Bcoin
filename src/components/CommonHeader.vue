@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="market-tab ">
-            <yd-icon :name="leftIcon" size="20px" color="#fff" @click.native="show=true"></yd-icon>
+            <i :class ="['icon','iconfont','icon-fanhui']" @click="$router.go(-1)" style="color:#fff"></i>
             <div class="tab-contianer">
                 <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index" @click="tabChange(index+1)">{{item}}</span>
             </div>
@@ -30,9 +30,6 @@
             <div>名称</div>
             <div>成交量</div>
         </div>
-        <yd-popup v-model="show" position="left" width="80%">
-            <yd-button type="danger" style="margin: 30px;" @click.native="show = false">Close Left Popup</yd-button>
-        </yd-popup>
     </div>
 </template>
 <script>
@@ -65,7 +62,7 @@
             },
             leftIcon: {
                 type: String,
-                default: 'type'
+                default: 'icon iconfont icon-fanhui'
             },
             rightIcon: {
                 type: String,

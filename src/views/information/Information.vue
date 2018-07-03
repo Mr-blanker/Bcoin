@@ -90,10 +90,8 @@
 
 <script>
   import * as types from "../../store/mutations-type"
-  import moment from 'moment'
+  // import moment from 'moment'
   import {mapGetters} from "vuex"
-  import Vue from "vue"
-
   export default {
     name: "Information",
     data() {
@@ -128,6 +126,8 @@
       this.scroll = new PullScroll("scroll", {
         refresh: function (pullScroll) {
           that.initDataList(pullScroll)
+          console.log('pullScroll=>')
+          console.log(pullScroll)
         },
         loading: function (pullScroll) {
           that.loadDataList(pullScroll);
