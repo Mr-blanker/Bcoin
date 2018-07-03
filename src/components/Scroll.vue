@@ -1,93 +1,91 @@
 <template>
-  <div id="mescroll" class="mescroll">
-    <div>
-      <slot>
-        <!--<div class="scroll-item flex" v-for="(item,index) in scrollData" :key="index" v-if="false">
-                                    <div class="box-left">
-                                      <div>
-                                        <span class="coin-symbol">{{item.symbol}}</span>
-                                        <span class="coin-name">{{item.name}}</span>
-                                      </div>
-                                      <div class="coin-issue">
-                                        <span>发行总量:</span>
-                                        <span>{{item['24h_volume_usd']|formatMoney}}</span>
-                                      </div>
-                                    </div>
-                                    <div class="box-right flex flex-between">
-                                      <div class="tr mark-box">
-                                        <div class="mark-sum rise-color">42445.22</div>
-                                        <div class="mark-percent">+5.30%</div>
-                                      </div>
-                                      <div class="tr circulation-box">
-                                        <div class="circulation-sum fall-color">{{item.market_cap_cny|formatMoney}}</div>
-                                        <div class="circulation-percent">+372亿</div>
-                                      </div>
-                                    </div>
-                                  </div>-->
-        <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="$router.push(`/trend?coin=${JSON.stringify(item)}`)">
-          <div class="box-left">
-            <div>
-              <span class="coin-symbol">{{item.symbol}}</span>
-              <span class="coin-name">{{item.name}}</span>
-            </div>
-            <div class="coin-issue">
-              <span>量/值:</span>
-              <span>{{item['24h_volume_cny']|formatMoney}}/{{item.market_cap_cny|formatMoney}}</span>
-            </div>
+  <div class="pullScroll">
+    <div id="scroll">
+      <!--<div class="scroll-item flex" v-for="(item,index) in scrollData" :key="index" v-if="false">
+                                            <div class="box-left">
+                                              <div>
+                                                <span class="coin-symbol">{{item.symbol}}</span>
+                                                <span class="coin-name">{{item.name}}</span>
+                                              </div>
+                                              <div class="coin-issue">
+                                                <span>发行总量:</span>
+                                                <span>{{item['24h_volume_usd']|formatMoney}}</span>
+                                              </div>
+                                            </div>
+                                            <div class="box-right flex flex-between">
+                                              <div class="tr mark-box">
+                                                <div class="mark-sum rise-color">42445.22</div>
+                                                <div class="mark-percent">+5.30%</div>
+                                              </div>
+                                              <div class="tr circulation-box">
+                                                <div class="circulation-sum fall-color">{{item.market_cap_cny|formatMoney}}</div>
+                                                <div class="circulation-percent">+372亿</div>
+                                              </div>
+                                            </div>
+                                          </div>-->
+      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="$router.push(`/trend?coin=${JSON.stringify(item)}`)">
+        <div class="box-left">
+          <div>
+            <span class="coin-symbol">{{item.symbol}}</span>
+            <span class="coin-name">{{item.name}}</span>
           </div>
-          <div class="box-right flex flex-between">
-            <div class="tr mark-box">
-              <div class="mark-sum ">{{item.price_cny?item.price_cny.toPrecision(7):'-'}}</div>
-              <div class="mark-percent">${{item.price_usd}}</div>
-            </div>
-            <div class="tr circulation-box">
-              <div :class="{'percent-box':true,'percentrise-color':item.percent_change_24h>0,'percentfall-color':item.percent_change_24h<0}">{{item.percent_change_24h}}%</div>
-            </div>
+          <div class="coin-issue">
+            <span>量/值:</span>
+            <span>{{item['24h_volume_cny']|formatMoney}}/{{item.market_cap_cny|formatMoney}}</span>
           </div>
         </div>
-        <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==2" @click="$router.push(`/trend?coin=${JSON.stringify(item)}`)">
-          <div class="box-left">
-            <div>
-              <span class="coin-symbol">{{item.name}}</span>
-              <span class="coin-name">{{item.dui}}</span>
-            </div>
-            <div class="coin-issue">
-              <span>成交量:</span>
-              <span>{{item.cheng|formatMoney}}</span>
-            </div>
+        <div class="box-right flex flex-between">
+          <div class="tr mark-box">
+            <div class="mark-sum ">{{item.price_cny?item.price_cny.toPrecision(7):'-'}}</div>
+            <div class="mark-percent">${{item.price_usd}}</div>
           </div>
-          <div class="box-right flex flex-between">
-            <div class="tr mark-box">
-              <div class="mark-sum ">{{item.price?item.price.toPrecision(7):'-'}}</div>
-              <div class="mark-percent">${{item.price_usd}}</div>
-            </div>
-            <div class="tr circulation-box">
-              <div :class="{'percent-box':true,'percentrise-color':item.zhan>0,'percentfall-color':item.zhan<0}">{{item.zhan?item.zhan:'-'}}%</div>
-            </div>
+          <div class="tr circulation-box">
+            <div :class="{'percent-box':true,'percentrise-color':item.percent_change_24h>0,'percentfall-color':item.percent_change_24h<0}">{{item.percent_change_24h}}%</div>
           </div>
         </div>
-        <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==3"  @click="$router.push(`/trend?coin=${JSON.stringify(item)}`)">
-          <div class="box-left">
-            <div>
-              <span class="coin-symbol">{{item.name}}</span>
-              <span class="coin-name">{{item.dui}}</span>
-            </div>
-            <div class="coin-issue">
-              <span>成交量:</span>
-              <span>{{item.cheng|formatMoney}}</span>
-            </div>
+      </div>
+      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==2" @click="$router.push(`/trend?coin=${JSON.stringify(item)}`)">
+        <div class="box-left">
+          <div>
+            <span class="coin-symbol">{{item.name}}</span>
+            <span class="coin-name">{{item.dui}}</span>
           </div>
-          <div class="box-right flex flex-between">
-            <div class="tr mark-box">
-              <div class="mark-sum ">{{item.price?item.price.toPrecision(7):'-'}}</div>
-              <div class="mark-percent">${{item.price_usd}}</div>
-            </div>
-            <div class="tr circulation-box">
-              <div :class="{'percent-box':true,'percentrise-color':item.zhang>0,'percentfall-color':item.zhang<0}">{{item.zhang?item.zhang:'-'}}%</div>
-            </div>
+          <div class="coin-issue">
+            <span>成交量:</span>
+            <span>{{item.cheng|formatMoney}}</span>
           </div>
         </div>
-      </slot>
+        <div class="box-right flex flex-between">
+          <div class="tr mark-box">
+            <div class="mark-sum ">{{item.price?item.price.toPrecision(7):'-'}}</div>
+            <div class="mark-percent">${{item.price_usd}}</div>
+          </div>
+          <div class="tr circulation-box">
+            <div :class="{'percent-box':true,'percentrise-color':item.zhan>0,'percentfall-color':item.zhan<0}">{{item.zhan?item.zhan:'-'}}%</div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==3" @click="$router.push(`/trend?coin=${JSON.stringify(item)}`)">
+        <div class="box-left">
+          <div>
+            <span class="coin-symbol">{{item.name}}</span>
+            <span class="coin-name">{{item.dui}}</span>
+          </div>
+          <div class="coin-issue">
+            <span>成交量:</span>
+            <span>{{item.cheng|formatMoney}}</span>
+          </div>
+        </div>
+        <div class="box-right flex flex-between">
+          <div class="tr mark-box">
+            <div class="mark-sum ">{{item.price?item.price.toPrecision(7):'-'}}</div>
+            <div class="mark-percent">${{item.price_usd}}</div>
+          </div>
+          <div class="tr circulation-box">
+            <div :class="{'percent-box':true,'percentrise-color':item.zhang>0,'percentfall-color':item.zhang<0}">{{item.zhang?item.zhang:'-'}}%</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -96,7 +94,8 @@
     name: 'Scroll',
     data() {
       return {
-        mescroll: ''
+        mescroll: '',
+        len: 0
       }
     },
     watch: {
@@ -105,33 +104,24 @@
       }
     },
     mounted() {
-      this.mescroll = new MeScroll("mescroll", { //第一个参数"mescroll"对应上面布局结构div的id
-        //如果您的下拉刷新是重置列表数据,那么down完全可以不用配置,具体用法参考第一个基础案例
-        //解析: down.callback默认调用mescroll.resetUpScroll(),而resetUpScroll会将page.num=1,再触发up.callback
-        down: {
-          // htmlContent: '加载中...',
-          callback: this.downCallback //下拉刷新的回调,别写成downCallback(),多了括号就自动执行方法了
+      let that = this;
+      this.mescroll = new PullScroll("scroll", {
+        refresh: function(pullScroll) {
+          that.downCallback(pullScroll)
         },
-        up: {
-        // <p class="upwarp-progress mescroll-rotate"></p><p class="upwarp-tip">加载中..</p>
-          htmlContent: 'sss',
-          callback: this.upCallback, //上拉加载的回调
-          isBounce: false, //如果您的项目是在iOS的微信,QQ,Safari等浏览器访问的,建议配置此项.解析(必读)
-          page: {
-            num: 0,
-            size: 20,
-            time: null
-          }
+        loading: function(pullScroll) {
+          that.upCallback(pullScroll);
         }
       });
     },
     methods: {
-      upCallback(page) {
-        let len = 20 * page.num
-        this.upCb(true, len)
+      upCallback(pullScroll) {
+        this.len += 20
+        this.upCb(true, this.len)
       },
-      downCallback() {
-        this.downCb()
+      downCallback(pullScroll) {
+        this.len = 20
+        this.upCb(true, this.len)
       },
     },
     props: {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <common-header :currentTab.sync="activeTab" :tabClick="tabIndexChange"></common-header>
-    <div class="market-container">
+    <div class="market-container" ref="marketBox">
       <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :downCb="getData" :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
       </scroll>
     </div>
@@ -56,9 +56,7 @@
         }
         this.LIST_BY_CID(param).then(res => {
           this.scrollList = res.data.data
-          this.meInstance.endSuccess()
-        }).catch(err => {
-          this.meInstance.endErr()
+          this.meInstance.finish(false);
         })
       },
       //获取所有货币的综合行情
@@ -67,9 +65,7 @@
           len: this.len
         }).then(res => {
           this.scrollList = res.data.data
-          this.meInstance.endSuccess()
-        }).catch(err => {
-          this.meInstance.endErr()
+          this.meInstance.finish(false);
         })
       },
       //获取所有交易平台
@@ -88,9 +84,7 @@
           eid: this.eid
         }).then(res => {
           this.scrollList = res.data.data
-          this.meInstance.endSuccess()
-        }).catch(err => {
-          this.meInstance.endErr()
+          this.meInstance.finish(false);
         })
       },
       //滚动容器获取数据方法
@@ -108,9 +102,7 @@
       },
       //初始化滚动条
       initScroll() {
-        this.meInstance.resetUpScroll()
-        this.meInstance.scrollTo(0, 0)
-        this.meInstance.triggerDownScroll()
+        this.meInstance.triggerRefresh()
       },
       tabIndexChange(obj, isTicker = false) {
         if (!isTicker) {
@@ -120,6 +112,8 @@
             this.eid = obj.eid
           }
         }
+        this.$refs.marketBox.scrollTop  = 0
+        console.log(this.meInstance.getScrollTop())
         this.initScroll()
       }
     }
@@ -165,7 +159,7 @@
     justify-content: space-between;
   }
   .market-container {
-    height: calc(100vh - 45px - 28px - 40px);
+    height: calc(100vh - 45px - 28px - 75px);
     overflow: auto;
   }
   .market-container::-webkit-scrollbar {

@@ -16,7 +16,7 @@ import mescrollJs from "../static/mescroll.js/mescroll.min.js"
 import "./assets/css/public.scss"
 import "./assets/css/style.scss"
 import Header from "./components/Header"
-// import moment from 'moment'
+import moment from 'moment'
 import filters from './filters/index'
 window.MeScroll = mescrollJs
 Vue.prototype.$echarts = echarts 
@@ -31,10 +31,10 @@ for(let key in filters[0]){
     Vue.filter(key,filters[0][key])
 }
 
-// Vue.filter('moment', function (value, formatString) {
-//   formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
-//   return moment(value).format(formatString);
-// });
+Vue.filter('moment', function (value, formatString) {
+  formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
+  return moment(value).format(formatString);
+});
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
