@@ -11,11 +11,11 @@
         <i class="icon iconfont icon-gengduo"></i>
       </div>
       <yd-cell-group style="margin-top:10px;border: 0;">
-        <yd-cell-item arrow type="a" @click.native="userInfo?$router.push({path:'addressList'}):$router.push({path:'login'})">
+        <yd-cell-item arrow type="a" @click.native="userInfo.name?$router.push({path:'addressList'}):$router.push({path:'login'})">
           <span slot="left">地址</span>
           <span slot="right"></span>
         </yd-cell-item>
-        <yd-cell-item arrow type="a" @click.native="userInfo? $router.push({path:'personMessage'}): $router.push({path:'login'})">
+        <yd-cell-item arrow type="a" @click.native="userInfo.name? $router.push({path:'personMessage'}): $router.push({path:'login'})">
           <span slot="left">个人信息</span>
           <span slot="right"></span>
         </yd-cell-item>
@@ -31,6 +31,14 @@
     computed: {
       ...mapGetters(['userInfo'])
     },
+    mounted(){
+      console.log(this.userInfo)
+      if(this.userInfo.name){
+        console.log(1)
+      }else{
+        console.log(2)
+      }
+    }
   }
 </script>
 

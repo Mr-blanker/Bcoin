@@ -37,7 +37,7 @@
           <div>
             <div class="flash-item" v-for="(item,key) in flashList">
               <p class="flash-time">{{item.k_time*1000|moment('MM-DD HH:mm')}}</p>
-              <p class="flash-content">{{item.k_content}}</p>
+              <p class="flash-content" v-html="item.k_content"></p>
               <div class="flash-comment">
                 <span class="flash-duo" @click="comment(item,'duo',key)">看多（{{item.duo}}）</span>
                 <span class="flash-kong" @click="comment(item,'kong',key)">看空（{{item.kong}}）</span>
@@ -106,9 +106,7 @@
         columnCateList: [],
         index: 0,
         broadcastAdList: [],
-        mescroll: "",
         len: 1,
-        aaa: true,
         flashLen: 0,
         newLen: 0,
         personLen: 0,
@@ -126,7 +124,7 @@
       }
       let that = this;
       this.scroll = new PullScroll("scroll", {
-        refresh: function (pullScroll) {
+        refresh: function (pullScroll){
           that.initDataList(pullScroll)
         },
         loading: function (pullScroll) {
@@ -195,14 +193,12 @@
             pullScroll.finish(true);
           })
         }
-
       },
       //选择bar
       clickItem(key) {
         console.log(key)
         this.$store.commit('SET_INFORMATION_ACTIVE', key)
         this.index = key
-        // this.initDataList(pullScroll)
         if (key == 0) {
           this.getBroadcastAd()
         }
