@@ -92,7 +92,8 @@ export default [
   }, {
     name: 'addressDetail',
     path: '/addressDetail',
-    component: addressDetail,
+    component: addressDetail
+  },{
     name: 'Information',
     path: '/Information',
     component: Information,
