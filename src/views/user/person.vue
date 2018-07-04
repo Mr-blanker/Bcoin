@@ -2,7 +2,7 @@
   <div>
     <Header v-bind="{left:1,centerValue:'个人',center:2}"></Header>
     <div class="mine">
-      <div class="head"  @click="userInfo? $router.push({path:'personMessage'}): $router.push({path:'login'})">
+      <div class="head"  @click="userInfo.name? $router.push({path:'personMessage'}): $router.push({path:'login'})">
         <div class="head-left">
           <img :src="userInfo.avatar" alt="" v-if="userInfo.avatar">
           <img src="../../assets/default_avatar_male.jpg" alt="" v-else>

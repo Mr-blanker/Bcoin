@@ -1,20 +1,40 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <link rel="stylesheet" href="//unpkg.com/vue-ydui/dist/ydui.rem.css">
-  <script src="//unpkg.com/vue-ydui/dist/ydui.flexible.js"></script>
-  <!-- 引入Vue2.x -->
-  <!-- 引入组件库 -->
-  <!--<script src="//unpkg.com/vue-ydui/dist/ydui.rem.js"></script>-->
+  <link rel="stylesheet" href="static/css/ydui.rem.css">
+  <script src="static/js/ydui.flexible.js"></script>
   <script type="text/javascript" src="static/js/swiper-4.3.2.min.js"></script>
   <link rel="stylesheet" href="static/css/swiper-4.3.2.min.css">
   <script type="text/javascript" src="static/js/rScroll.min.js"></script>
   <title>Bcoin</title>
+  <script type="text/javascript">
+    function setStatusbarRed() {
+      plus.navigator.setStatusBarBackground("#208de3");
+    }
 
+    document.addEventListener('plusready', function () {
+      setStatusbarRed();
+      var webview = plus.webview.currentWebview();
+      plus.key.addEventListener('backbutton', function () {
+        webview.canBack(function (e) {
+          if (e.canBack) {
+            webview.back();
+          } else {
+            webview.close(); //hide,quit
+            //plus.runtime.quit();
+          }
+        })
+      });
+    }, false);
+
+  </script>
 </head>
+
 <body>
-<div id="app"></div>
+  <div id="app"></div>
 </body>
+
 </html>

@@ -202,7 +202,7 @@
         if (key == 0) {
           this.getBroadcastAd()
         }
-        // this.scroll.triggerRefresh();
+        this.scroll.triggerRefresh();
 
       },
       //轮播图

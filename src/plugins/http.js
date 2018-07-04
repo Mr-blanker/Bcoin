@@ -13,15 +13,17 @@ axios.defaults.baseURL = "http://ssl.pandawork.vip";
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
 
 // http request 拦截器
-
+let notLoading = ['/api/news.lists','/api/flash.lists','/api/news.flash',
+                  '/api/column.cate','/api/person.lists','/api/coin.lists',
+                  '/api/coin.ticker','api/platform.lists','/api/platform.ticker',
+                  '/api/coin.plat']
 axios.interceptors.request.use(
   config => {
     if (store.getters.userSid) {
       config.headers['sid'] = store.getters.userSid
     }
     config.data = qs.stringify(config.data);
-    if (config.url === '/api/news.lists' || config.url === '/api/flash.lists' || config.url === '/api/news.flash' || config.url === '/api/column.cate' ||
-      config.url == '/api/person.lists') {
+    if (notLoading.includes(config.url)) {
       return config;
     }
     Loading.open('加载中');

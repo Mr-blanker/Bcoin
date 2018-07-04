@@ -24,7 +24,7 @@ import search from '@/views/search'
 export default [
   {
     path: '/',
-    redirect: '/HelloWorld',
+    redirect: '/marketIndex',
   },
   {
     name: 'HelloWorld',

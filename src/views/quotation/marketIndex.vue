@@ -1,10 +1,9 @@
 <template>
   <div>
     <common-header :currentTab.sync="activeTab" :tabClick="tabIndexChange"></common-header>
-    <div class="market-container" ref="marketBox">
       <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :downCb="getData" :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
       </scroll>
-    </div>
+
   </div>
 </template>
 <script>
@@ -68,7 +67,7 @@
           this.meInstance.finish(false);
         })
       },
-      //获取所有交易平台
+      //获取所有交易平�?
       getPlatform() {
         this.PLATFORM_LIST({
           len: this.len
@@ -112,8 +111,8 @@
             this.eid = obj.eid
           }
         }
-        this.$refs.marketBox.scrollTop  = 0
-        console.log(this.meInstance.getScrollTop())
+        this.$refs.scroller.goTop()
+        // this.meInstance.setScrollTop(0)
         this.initScroll()
       }
     }
@@ -121,7 +120,7 @@
 </script>
 <style lang="scss" scoped>
   $fcolor:#8a8d99;
-  $bg: #208de3; //header   背景颜色   主色调
+  $bg: #208de3; //header   背景颜色   主色
   .market-tab {
     width: 100%;
     height: 45px;

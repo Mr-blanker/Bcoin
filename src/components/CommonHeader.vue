@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="header-box">
         <div class="market-tab ">
-            <i :class ="['icon','iconfont','icon-fanhui']" @click="$router.go(-1)" style="color:#fff"></i>
+            <i :class="['icon','iconfont','icon-fanhui']" @click="$router.go(-1)" style="color:#fff"></i>
             <div class="tab-contianer">
                 <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index" @click="tabChange(index+1)">{{item}}</span>
             </div>
@@ -124,7 +124,7 @@
                         "symbol": "全部"
                     })
                     this.tabList = tempArr
-                    console.log('getCoin=>comeHome')                                
+                    console.log('getCoin=>comeHome')
                     if (this.activeTab == 2) {
                         this.active = 1
                         this.vantTabClick(1)
@@ -204,6 +204,7 @@
             }
         }
     }
+    
     .flex {
         display: flex;
     }
@@ -219,5 +220,12 @@
     }
     .add-tab {
         line-height: 28px;
+    }
+    .header-box {
+        position:fixed;
+        left:0;
+        top:0;
+        right:0;
+        z-index:9999;
     }
 </style>

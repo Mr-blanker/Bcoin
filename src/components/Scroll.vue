@@ -1,28 +1,6 @@
 <template>
-  <div class="pullScroll">
-    <div id="scroll">
-      <!--<div class="scroll-item flex" v-for="(item,index) in scrollData" :key="index" v-if="false">
-                                            <div class="box-left">
-                                              <div>
-                                                <span class="coin-symbol">{{item.symbol}}</span>
-                                                <span class="coin-name">{{item.name}}</span>
-                                              </div>
-                                              <div class="coin-issue">
-                                                <span>发行总量:</span>
-                                                <span>{{item['24h_volume_usd']|formatMoney}}</span>
-                                              </div>
-                                            </div>
-                                            <div class="box-right flex flex-between">
-                                              <div class="tr mark-box">
-                                                <div class="mark-sum rise-color">42445.22</div>
-                                                <div class="mark-percent">+5.30%</div>
-                                              </div>
-                                              <div class="tr circulation-box">
-                                                <div class="circulation-sum fall-color">{{item.market_cap_cny|formatMoney}}</div>
-                                                <div class="circulation-percent">+372亿</div>
-                                              </div>
-                                            </div>
-                                          </div>-->
+  <div class="pullScroll" ref="scrollObj" style="padding-top:104px;padding-bottom:50px;">
+    <div id="scroll" >
       <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="$router.push(`/trend?coin=${JSON.stringify(item)}`)">
         <div class="box-left">
           <div>
@@ -123,6 +101,9 @@
         this.len = 20
         this.upCb(true, this.len)
       },
+      goTop(top=0){
+        this.$refs.scrollObj.scrollTop = top
+      }
     },
     props: {
       scrollData: {
@@ -261,4 +242,8 @@
   .percentfall-color {
     background-color: #32a853 !important;
   }
+  #scroll::-webkit-scrollbar {
+    display: none;
+  }
+
 </style>

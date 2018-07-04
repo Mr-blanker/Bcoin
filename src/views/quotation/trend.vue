@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="trend-box">
         <div class="market-tab ">
             <i class="icon iconfont icon-fanhui" @click="$router.go(-1)"></i>
             <div class="tab-contianer">
@@ -72,7 +72,6 @@
         methods: {
             ...mapActions(['TREND']),
             getTrends() {
-                this.$dialog.loading.open('加载中...');
                 this.TREND({
                     coin: 'bitcoin',
                     start: 1527782400000,
@@ -81,7 +80,6 @@
                     this.formatterRes(res.data)
                     console.log(this.dates)
                     this.initCharts()
-                    this.$dialog.loading.close();
                     this.$dialog.toast({
                         mes: '已加载',
                         icon: 'success',
@@ -104,7 +102,6 @@
                 for (let item of data.volume) {
                     this.volume.push(item[1])
                 }
-                console.log(111111111111111111111)
             },
             getTimeStamp(day = 0) {
                 let timeStamp = Date.parse(new Date())
@@ -455,5 +452,11 @@
                 width: 50px;
             }
         }
+    }
+    .trend-box {
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
     }
 </style>
