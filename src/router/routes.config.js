@@ -20,6 +20,9 @@ import trend from '@/views/quotation/trend'
 
 //搜索
 import search from '@/views/search'
+//社群
+import community from '@/views/community/community'
+
 
 export default [
   {
@@ -112,5 +115,10 @@ export default [
     name: 'trend',
     path: '/trend',
     component: trend,
+  },{
+    name: 'community',
+    path: '/community',
+    component: community,
   }
+
 ]

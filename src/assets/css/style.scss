@@ -71,6 +71,9 @@
 
 //information
 .new-box {
+  position: fixed;
+  z-index: 999;
+  top: 44px;
   width: 100%;
   background: #fff;
   border-bottom: 1px solid $fbb;
@@ -731,6 +734,39 @@
     background-size: cover;
   }
 }
+
+//community
+.community-box{
+}
+.community-list{
+  margin-bottom: .2rem;
+}
+.build-community{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 55px;
+  background: #fff;
+  font-size: $wfs;
+  & i{
+    color: #797979;
+  }
+  .add-box{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    background: #f3f3f3;
+    border-radius: 2px;
+    margin-right: .1rem;
+    border: 1px solid #dad3d3;
+  }
+}
+
+
+
+
 .van-tabs__line{
   background-color:$bg !important;
   display: none;

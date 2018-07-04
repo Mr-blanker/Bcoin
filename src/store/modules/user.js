@@ -1,5 +1,6 @@
 import * as types from '../mutations-type'
 import http from '../../plugins/http'
+import md5 from 'md5'
 
 const state = {
   informationActive: '',
@@ -11,6 +12,7 @@ const state = {
 const actions = {
   //用户注册
   [types.USER_REGISTER]({}, userInfo) {
+    userInfo.pwd = md5(userInfo.pwd)
     return new Promise((resolve) => {
       http.get('/api/user.register', {params: userInfo}).then(res => {
         return resolve(res.data)
@@ -20,6 +22,7 @@ const actions = {
 
   //用户登录
   [types.USER_LOGIN]({commit, dispatch}, userInfo) {
+    userInfo.pwd = md5(userInfo.pwd)
     return new Promise((resolve) => {
       http.get('/api/user.login', {params: userInfo}).then(res => {
         if (res.data.code === 0) {

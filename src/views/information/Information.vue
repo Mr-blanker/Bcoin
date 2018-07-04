@@ -11,7 +11,7 @@
           </li>
         </ul>
       </div>
-      <div id="scroll">
+      <div id="scroll" style="padding-top: 35px;">
         <yd-slider autoplay="3000" v-if="index==0">
           <yd-slider-item v-for="(item,index) in broadcastAdList" :key="index">
             <a :href="item.url" style="height: 200px;">
