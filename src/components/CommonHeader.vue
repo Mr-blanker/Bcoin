@@ -92,9 +92,6 @@
         mounted() {
             this.tabChange(1)
             let that = this
-            document.addEventListener('plusready', function() {
-                that.plus = plus
-            })
         },
         methods: {
             ...mapActions(['PLATFORM_LIST', 'COIN_LIST']),
@@ -104,9 +101,6 @@
                     query: {
                         index: this.activeTab,
                     }
-                })
-                this.plus.runtime.openURL('http://www.baidu.com', function(err) {
-                    console.log(err)
                 })
             },
             vantTabClick(index) {
