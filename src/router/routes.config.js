@@ -24,6 +24,10 @@ import addTag from '@/views/quotation/addTag'
 
 //搜索
 import search from '@/views/search'
+//社群
+import community from '@/views/community/community'
+import communityAdd from '@/views/community/communityAdd'
+
 
 export default [
   {
@@ -106,6 +110,9 @@ export default [
     name: 'Information',
     path: '/Information',
     component: Information,
+    meta:{
+      keepalive:true
+    }
   },
   {
     name: 'InformationDetail',
@@ -121,5 +128,14 @@ export default [
     name: 'addTag',
     path: '/addTag',
     component: addTag,
+  },{
+    name: 'community',
+    path: '/community',
+    component: community,
+  },{
+    name: 'communityAdd',
+    path: '/communityAdd',
+    component: communityAdd,
   }
+
 ]

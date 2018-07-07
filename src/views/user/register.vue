@@ -18,7 +18,6 @@
 <script>
   import Header from "@/components/Header"
   import * as types from "../../store/mutations-type"
-
   export default {
     name: "login",
     data() {
@@ -33,6 +32,7 @@
       Header
     },
     methods: {
+
       submit() {
         console.log(this.userInfo)
         this.$store.dispatch(types.USER_REGISTER, this.userInfo).then(res => {

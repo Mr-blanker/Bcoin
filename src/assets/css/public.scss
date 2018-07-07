@@ -11,6 +11,10 @@ $wdc:#909090; //字体颜色
 .pt{
   padding-top: 45px;
 }
+.padlr02{
+  padding-left: .2rem;
+  padding-right: .2rem;
+}
 //header
 .header {
   position: fixed;
@@ -138,4 +142,11 @@ $wdc:#909090; //字体颜色
 }
 .yd-cell-right{
   font-size: .3rem !important;
+}
+.yd-textarea textarea{
+  text-align: right;
+  height: 100%;
+}
+.yd-switch{
+  color: $bg !important;
 }
