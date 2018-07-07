@@ -15,7 +15,7 @@
         <yd-slider autoplay="3000" v-if="index==0">
           <yd-slider-item v-for="(item,index) in broadcastAdList" :key="index">
             <!--<a :href="item.url" class="slider-img">-->
-              <a :href="item.url" style="height: 3.5rem;">
+              <a  style="height: 3.5rem;" @click="sliderRouter(item.url)">
               <img :src="item.pic" style="height: 100%;">
             </a>
           </yd-slider-item>
@@ -60,7 +60,7 @@
           </div>
         </div>
         <!--专栏-->
-        <yd-accordion>
+        <yd-accordion v-if="index===2">
           <yd-accordion-item :title="item.name" v-for="item in columnList">
             <div style="padding: .24rem;" class="c-list">
               <ul class="c-list-box" style="width: 100%;">
@@ -107,12 +107,15 @@
     computed: {
       ...mapGetters(['informationActive'])
     },
-    mounted() {
+  mounted() {
+    let that = this;
+    document.addEventListener('plusready', function() {
+        that.plus = plus
+      })
       this.getNewCate()
       if (this.informationActive) {
         this.index = parseInt(this.informationActive)
       }
-      let that = this;
         this.scroll = new PullScroll("scroll", {
           refresh: function (pullScroll) {
             that.initDataList(pullScroll)
@@ -127,6 +130,12 @@
       this.clickItem(this.index)
     },
     methods: {
+    sliderRouter(url){
+      console.log(url)
+        this.plus.runtime.openURL(url, function(err) {
+          console.log(err)
+        })
+      },
       //获取新闻分类
       getNewCate() {
         this.$store.dispatch(types.INFORMATION_CATES).then(res => {
