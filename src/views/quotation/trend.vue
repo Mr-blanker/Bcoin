@@ -80,11 +80,6 @@
                     this.formatterRes(res.data)
                     console.log(this.dates)
                     this.initCharts()
-                    this.$dialog.toast({
-                        mes: '已加载',
-                        icon: 'success',
-                        timeout: 1500
-                    });
                 })
             },
             formatterRes(data) {
@@ -109,7 +104,6 @@
             },
             startCB() {
                 console.log('start')
-                // this.getTrends()
             },
             endCB() {
                 console.log('end')

@@ -17,6 +17,10 @@ import acView from '@/views/information/acView'
 import marketIndex from '@/views/quotation/marketIndex'
 //走势
 import trend from '@/views/quotation/trend'
+//标签管理
+import tagManange from '@/views/quotation/tagManange'
+//标签添加
+import addTag from '@/views/quotation/addTag'
 
 //搜索
 import search from '@/views/search'
@@ -66,6 +70,11 @@ export default [
     path: '/marketIndex',
     component: marketIndex
   },
+  {
+    name: 'tagManange',
+    path: '/tagManange',
+    component: tagManange
+  },
   { name: 'Information',
     name: 'Information',
     path: '/Information',
@@ -104,13 +113,13 @@ export default [
     component: InformationDetail
   },
   {
-    name: 'marketIndex',
-    path: '/marketIndex',
-    component: marketIndex
-  }, 
-  {
     name: 'trend',
     path: '/trend',
     component: trend,
+  },
+  {
+    name: 'addTag',
+    path: '/addTag',
+    component: addTag,
   }
 ]

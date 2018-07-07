@@ -761,3 +761,7 @@
 .yd-datetime-head>a:last-child {
   color:#208de3 !important;
 }
+
+[class*=van-hairline]::after {
+  border: none !important;
+}

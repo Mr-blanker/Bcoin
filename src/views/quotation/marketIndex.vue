@@ -1,9 +1,8 @@
 <template>
   <div>
     <common-header :currentTab.sync="activeTab" :tabClick="tabIndexChange"></common-header>
-      <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :downCb="getData" :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
-      </scroll>
-
+    <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :downCb="getData" :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
+    </scroll>
   </div>
 </template>
 <script>
@@ -67,7 +66,7 @@
           this.meInstance.finish(false);
         })
       },
-      //获取所有交易平�?
+      //获取所有交易平台
       getPlatform() {
         this.PLATFORM_LIST({
           len: this.len
@@ -111,9 +110,10 @@
             this.eid = obj.eid
           }
         }
+        setTimeout(() => {
+          this.initScroll()
+        }, 10)
         this.$refs.scroller.goTop()
-        // this.meInstance.setScrollTop(0)
-        this.initScroll()
       }
     }
   }
