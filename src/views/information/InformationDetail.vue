@@ -9,8 +9,8 @@
       <span class="informationDetail-message-source" v-if="dataList.befrom">
         文章来源：{{dataList.befrom}}
       </span>
-        <span class="informationDetail-message-time">
-       <i class="icon iconfont icon-clock"></i>{{dataList.t*1000|moment('MM-DD:HH:mm')}}
+        <span class="informationDetail-message-time" v-if="a">
+        <i class="icon iconfont icon-clock"></i>{{dataList.t*1000|moment('MM-DD:HH:mm')}}
       </span>
       </div>
       <ul class="informationDetail-keywords">
@@ -40,7 +40,8 @@
         dataList: {},
         keywords: [],
         aid: '',
-        id: ''
+        id: '',
+        a:''
       }
     },
     components: {
@@ -58,6 +59,7 @@
           this.keywords = res.data.keywords.split(',')
           console.log(this.keywords)
           this.dataList = res.data
+          this.a =1
         })
       } else if (this.id) {
         this.$store.dispatch(types.PERSON_CONTENT, this.id).then(res => {
@@ -67,6 +69,7 @@
             this.keywords = res.data.keywords.split(',')
             console.log(this.keywords)
             this.dataList = res.data
+            this.a = 1
           }
         })
       } else {
@@ -77,6 +80,7 @@
             this.keywords = res.data.keywords.split(',')
             console.log(this.keywords)
             this.dataList = res.data
+            this.a = 1
           }
         })
       }

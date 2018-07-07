@@ -68,3 +68,6 @@ export const USER_DELRESSLIST = 'USER_DELRESSLIST'
 //最近使用的地址
 export const USER_GETLASTADDR= 'USER_GETLASTADDR'
 
+//公共
+//图片上传
+export const UPLOAD_IMAGE ='UPLOAD_IMAGE'

@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div >
     <Header v-bind="{left:1,right:1,center:3,list:titleList,liKey:index}" @clickItem="clickItem"></Header>
-    <div style="padding-top: 45px;padding-bottom:50px" class="pullScroll">
+    <div style="padding-top: 45px;padding-bottom:50px" class="pullScroll" >
       <div class="new-box" v-if="index===0">
         <ul class="new-bar">
           <li class="new-bar-item " :class="{'new-bar-item-active':newCateId===0}" @click="chooseNewCate(0)">全部</li>
@@ -11,10 +11,11 @@
           </li>
         </ul>
       </div>
-      <div id="scroll" style="padding-top: 35px;">
+      <div id="scroll" :class="{newTop:index===0}">
         <yd-slider autoplay="3000" v-if="index==0">
           <yd-slider-item v-for="(item,index) in broadcastAdList" :key="index">
-            <a :href="item.url" style="height: 200px;">
+            <!--<a :href="item.url" class="slider-img">-->
+              <a :href="item.url" style="height: 3.5rem;">
               <img :src="item.pic" style="height: 100%;">
             </a>
           </yd-slider-item>
@@ -50,41 +51,31 @@
         <div class="person-list" v-if="index===3">
           <div class="person-item" v-for="item in personList"
                @click="$router.push({path:'InformationDetail',query:{id: item.aid}})">
-            <div class="person-img"><img :src="item.thumbnail" alt=""></div>
-            <p class="person-title">{{item.title}}</p>
-            <p class="person-content">{{item.description}}</p>
+            <div class="person-item-box">
+
+              <div class="person-img"><img :src="item.thumbnail" alt=""></div>
+              <span class="person-title">{{item.title}}</span>
+              <span class="person-content">{{item.description}}</span>
+            </div>
           </div>
         </div>
         <!--专栏-->
-        <div class="column-list" v-if="index===2">
-          <div class="column-bar" v-for="(item,index) in columnList">
-            <div class="bg">
-              <!--<span>{{item.name}}</span>-->
-              <img :src="item.thumbnail" alt="">
+        <yd-accordion>
+          <yd-accordion-item :title="item.name" v-for="item in columnList">
+            <div style="padding: .24rem;" class="c-list">
+              <ul class="c-list-box" style="width: 100%;">
+                <yd-grids-group :rows="3"  item-height="2rem">
+                  <yd-grids-item v-for="n in item.items" class="ccc" @click.native="$router.push({path:'acView',query:{val:JSON.stringify(n)}})">
+                    <span slot="text">{{n.title}}</span>
+                    <img slot="icon" :src="n.thumbnail" alt="">
+                  </yd-grids-item>
+                </yd-grids-group>
+              </ul>
             </div>
-            <div class="column-item-box" ref="imgPosition">
-              <div class="column-item">
-                <div class="item-content" v-for="attr in item.items"
-                     @click="$router.push({path:'acView',query:{val:JSON.stringify(attr)}})">
-                  <div class="content-top">
-                    <img :src="attr.thumbnail" alt="">
-                    <span>{{attr.title}}</span>
-                  </div>
-                  <span class="content-bottom">查看</span>
-                </div>
-                <div class="item-content" @click="$router.push({path:'contentList',query:{pid:item.id}})">
-                  <div class="content-top more">
-                    <span>更多</span>
-                  </div>
-                  <span class="content-bottom">查看</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+          </yd-accordion-item>
+        </yd-accordion>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -92,6 +83,7 @@
   import * as types from "../../store/mutations-type"
   import moment from 'moment'
   import {mapGetters} from "vuex"
+
   export default {
     name: "Information",
     data() {
@@ -121,17 +113,17 @@
         this.index = parseInt(this.informationActive)
       }
       let that = this;
-      this.scroll = new PullScroll("scroll", {
-        refresh: function (pullScroll){
-          that.initDataList(pullScroll)
-          console.log('pullScroll=>')
-          console.log(pullScroll)
-        },
-        loading: function (pullScroll) {
-          that.loadDataList(pullScroll);
-        }
-      });
-      this.scroll.triggerRefresh();
+        this.scroll = new PullScroll("scroll", {
+          refresh: function (pullScroll) {
+            that.initDataList(pullScroll)
+            console.log('pullScroll=>')
+            console.log(pullScroll)
+          },
+          loading: function (pullScroll) {
+            that.loadDataList(pullScroll);
+          }
+        });
+        this.scroll.triggerRefresh();
       this.clickItem(this.index)
     },
     methods: {
@@ -185,7 +177,8 @@
             this.personList = res.data
             pullScroll.finish(false);
           })
-        } else if (this.index === 2) {
+        }
+        else if (this.index === 2) {
           //专栏
           this.$store.dispatch(types.COLUMN_CATE).then(res => {
             if (res.code !== 0) return
@@ -199,11 +192,16 @@
         console.log(key)
         this.$store.commit('SET_INFORMATION_ACTIVE', key)
         this.index = key
+        this.$store.dispatch(types.COLUMN_CATE).then(res => {
+          if (res.code !== 0) return
+          this.columnList = res.data
+          console.log(res)
+          // pullScroll.finish(true);
+        })
         if (key == 0) {
           this.getBroadcastAd()
         }
-        this.scroll.triggerRefresh();
-
+          this.scroll.triggerRefresh();
       },
       //轮播图
       getBroadcastAd() {
@@ -251,5 +249,61 @@
 
   ::-webkit-scrollbar {
     display: none
+  }
+
+  .newTop {
+    padding-top: 30px;
+  }
+  @media screen and (min-width: 415px) {
+    .slider-img {
+      height: 220px !important;
+    }
+    .c-list .c-list-box .c-item{
+      width: 24%;
+      height: 93px;
+    }
+  }
+  @media screen and (max-width: 414px) {
+    .slider-img {
+      height: 220px;
+    }
+    .c-list .c-list-box .c-item{
+      width: 93px;
+      height: 93px;
+    }
+  }
+  @media screen and (max-width: 413px)and (min-width: 375px){
+    .c-list .c-list-box .c-item{
+      width: 24%;
+      height: 88px;
+    }
+  }
+
+
+  @media screen and (max-width: 375px) {
+    .slider-img {
+      height: 198px;
+    }
+    .c-list .c-list-box .c-item{
+      width: 32%;
+      height: 110px;
+    }
+  }
+
+  @media screen and (max-width: 350px) {
+    .slider-img {
+      height: 180px;
+    }
+    .c-list .c-list-box .c-item{
+      width: 32%;
+      height: 105px;
+    }
+  }
+  @media screen and (max-width: 330px) {
+
+    .c-list .c-list-box .c-item{
+      width: 32%;
+      height: 95px;
+    }
   }
 </style>

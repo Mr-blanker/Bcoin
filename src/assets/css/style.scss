@@ -88,9 +88,9 @@
 
 .new-bar-item {
   display: inline-block;
-  padding: 0.1rem 0;
+  padding: 0.15rem 0;
   margin-right: .3rem;
-  font-size: $wfs;
+  font-size:.28rem;
 }
 
 .new-bar-item-active {
@@ -110,10 +110,11 @@
     border-bottom: 1px solid $ftb;
   }
   .information-item div {
+    flex: 1;
+    height: 100%;
     display: inline-flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 100%;
     padding: .1rem 0;
     span {
       display: -webkit-box;
@@ -167,13 +168,20 @@
 }
 
 .person-item {
-  height: 4rem;
+  display: flex;
+  height: 4.2rem;
   background: #fff;
   padding: 0 10px;
   text-align: left;
-  margin-bottom: 5px;
   font-size: .3rem;
   border-bottom: 1px solid $fbb;
+  .person-item-box{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
   &:last-child {
     border: 0;
   }
@@ -187,6 +195,7 @@
     height: 2.8rem;
   }
   .person-title {
+    margin-top: 5px;
     font-weight: bold;
     font-size: .32rem;
     display: -webkit-box;
@@ -202,7 +211,11 @@
     overflow: hidden;
   }
 }
-
+@media screen and (max-width: 350px) {
+  .person-item{
+    height: 4.4rem !important;
+  }
+}
 .column-bar {
   display: flex;
   position: relative;
@@ -354,6 +367,7 @@
 }
 
 .informationDetail-title {
+  padding-top: 10px;
   font-size: .38rem;
   font-weight: bold;
   text-align: left;
@@ -700,8 +714,8 @@
   text-align: center;
   font-size: $wfs;
   border-radius: 3px;
-  height: 48px;
-  line-height: 48px;
+  height: 40px;
+  line-height: 40px;
 }
 
 .btn_box a.no-link {
@@ -763,9 +777,84 @@
     border: 1px solid #dad3d3;
   }
 }
+.recommend-box{
+  display: flex;
+  flex-direction: column;
+  font-size: $fws;
+}
+.recommend-text{
+  display: flex;
+  align-items: center;
+  height: 44px;
+  background: #fff;
+  padding: 0 10px;
+
+}
+.recommend-item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  padding: 10px;
+  background: #fff;
+
+}
+.recommend-content{
+  flex: 1;
+  display:flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.recommend-content span{
+  font-size: .25rem;
+  color: #848080;
+
+}
+.recommend-content h4{
+  font-weight: normal;
+}
+.recommend-item img{
+  height: 40px;
+  width: 40px;
+  margin-right: 5px;
+  border-radius: 2px;
+}
+.recommend-member{
+  display: flex;
+  height: 100%;
+  font-size: .25rem;
+  padding-top: .2rem;
+  color: #848080;
+}
 
 
-
+.community-logo-box{
+  display: flex;
+  height: 50px;
+  padding-left: 12px;
+  font-size: .3rem;
+  .community-logo-main{
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid  #eae9e9;
+    padding-right: 12px;
+    img{
+      height: 40px;
+      width: 40px;
+    }
+    .add-icon{
+      width: 40px;
+      height: 40px;
+      background: #f3f3f3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
 
 .van-tabs__line{
   background-color:$bg !important;
@@ -796,4 +885,57 @@
 
 .yd-datetime-head>a:last-child {
   color:#208de3 !important;
+}
+.yd-grids-txt{
+  margin-top: .3rem !important;
+}
+.yd-grids-txt {
+  width: 100%;
+}
+.c-list{
+  background: #fff;
+  padding: 0!important;
+  .c-list-box{
+    display: flex;
+    flex-wrap: wrap;
+    &>div{
+      width: 100%;
+    }
+    .c-item{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      width: 32%;
+      height: 100px;
+      img{
+        height: 60%;
+        width: 60%;
+        border-radius: 100%;
+      }
+      span{
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+      }
+    }
+    .ccc{
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      span{
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+      }
+      img{
+        height:1rem;
+        width: 1rem;
+        border-radius: 1rem;
+      }
+    }
+  }
 }

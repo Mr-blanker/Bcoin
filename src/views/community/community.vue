@@ -7,17 +7,26 @@
         <li class="build-community padlr02">
           <div class="build-community-left">
             <span class="add-box">
-            <i class="icon iconfont icon-tianjia" ></i>
+            <i class="icon iconfont icon-tianjia"></i>
             </span>
             <span>创建社群</span>
           </div>
           <i class="icon iconfont icon-gengduo"></i>
         </li>
       </ul>
-      <ul class="recommend-list">
-        <span>推荐</span>
-        <li class="recommend-item" v-for="item in 5">{{item}}</li>
-      </ul>
+      <div class="recommend-box">
+        <span class="recommend-text">推荐</span>
+        <ul class="recommend-list">
+          <li class="recommend-item" v-for="item in 5">
+            <img src="../../assets/default_avatar_male.jpg" alt="">
+            <div class="recommend-content">
+              <h4>币快报</h4>
+              <span>币快报</span>
+            </div>
+            <span class="recommend-member">成员1111</span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>

@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+
+    <keep-alive include="Information">
+      <router-view></router-view>
+    </keep-alive>
     <Footer></Footer>
   </div>
 </template>
