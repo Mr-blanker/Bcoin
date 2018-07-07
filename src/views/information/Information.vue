@@ -14,7 +14,7 @@
         <yd-slider autoplay="3000" v-if="index==0">
           <yd-slider-item v-for="(item,index) in broadcastAdList" :key="index" @click.native="goBrower(item)">
             <!--<a :href="item.url" class="slider-img">-->
-            <div style="height: 3.5rem;">
+              <div  style="height: 3.5rem;" @click="sliderRouter(item.url)">
               <img :src="item.pic" style="height: 100%;">
             </div>
           </yd-slider-item>
@@ -55,8 +55,8 @@
           </div>
         </div>
         <!--专栏-->
-        <yd-accordion>
-          <yd-accordion-item :title="item.name" v-for="item in columnList" :key="index" v-if="index==2">
+        <yd-accordion v-if="index===2">
+          <yd-accordion-item :title="item.name" v-for="item in columnList">
             <div style="padding: .24rem;" class="c-list">
               <ul class="c-list-box" style="width: 100%;">
                 <yd-grids-group :rows="3" item-height="2rem">
@@ -104,34 +104,34 @@
     computed: {
       ...mapGetters(['informationActive'])
     },
-    mounted() {
+  mounted() {
+    let that = this;
+    document.addEventListener('plusready', function() {
+        that.plus = plus
+      })
       this.getNewCate()
       if (this.informationActive) {
         this.index = parseInt(this.informationActive)
       }
-      let that = this;
-      this.scroll = new PullScroll("scroll", {
-        refresh: function(pullScroll) {
-          that.initDataList(pullScroll)
-          console.log('pullScroll=>')
-          console.log(pullScroll)
-        },
-        loading: function(pullScroll) {
-          that.loadDataList(pullScroll);
-        }
-      });
-      this.scroll.triggerRefresh();
+        this.scroll = new PullScroll("scroll", {
+          refresh: function (pullScroll) {
+            that.initDataList(pullScroll)
+            console.log('pullScroll=>')
+            console.log(pullScroll)
+          },
+          loading: function (pullScroll) {
+            that.loadDataList(pullScroll);
+          }
+        });
+        this.scroll.triggerRefresh();
       this.clickItem(this.index)
-      document.addEventListener('plusready', function() {
-        that.plus = plus
-      })
     },
     methods: {
-      goBrower(item) {
-        console.log(item.url)
-        // this.plus.runtime.openURL(item.url, function(err) {
-        //   console.log(err)
-        // })
+    sliderRouter(url){
+      console.log(url)
+        this.plus.runtime.openURL(url, function(err) {
+          console.log(err)
+        })
       },
       //获取新闻分类
       getNewCate() {

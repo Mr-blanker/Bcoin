@@ -195,13 +195,13 @@
     height: 2.8rem;
   }
   .person-title {
-    margin-top: 5px;
     font-weight: bold;
     font-size: .32rem;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
     overflow: hidden;
+    height: .5rem;
   }
   .person-content {
     font-size: .25rem;
@@ -209,6 +209,7 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
+    height: .8rem;
   }
 }
 @media screen and (max-width: 350px) {
