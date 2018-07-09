@@ -26,7 +26,7 @@
 
 //mine
 .mine {
-  padding-top: 45px;
+  padding-top: 31px;
 }
 
 .head {
@@ -90,7 +90,7 @@
   display: inline-block;
   padding: 0.15rem 0;
   margin-right: .3rem;
-  font-size:.28rem;
+  font-size: .28rem;
 }
 
 .new-bar-item-active {
@@ -175,7 +175,7 @@
   text-align: left;
   font-size: .3rem;
   border-bottom: 1px solid $fbb;
-  .person-item-box{
+  .person-item-box {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -212,11 +212,13 @@
     height: .8rem;
   }
 }
+
 @media screen and (max-width: 350px) {
-  .person-item{
+  .person-item {
     height: 4.4rem !important;
   }
 }
+
 .column-bar {
   display: flex;
   position: relative;
@@ -751,22 +753,24 @@
 }
 
 //community
-.community-box{
+.community-box {
 }
-.community-list{
+
+.community-list {
   margin-bottom: .2rem;
 }
-.build-community{
+
+.build-community {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 55px;
   background: #fff;
   font-size: $wfs;
-  & i{
+  & i {
     color: #797979;
   }
-  .add-box{
+  .add-box {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -778,12 +782,14 @@
     border: 1px solid #dad3d3;
   }
 }
-.recommend-box{
+
+.recommend-box {
   display: flex;
   flex-direction: column;
   font-size: $fws;
 }
-.recommend-text{
+
+.recommend-text {
   display: flex;
   align-items: center;
   height: 44px;
@@ -791,7 +797,8 @@
   padding: 0 10px;
 
 }
-.recommend-item{
+
+.recommend-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -800,27 +807,32 @@
   background: #fff;
 
 }
-.recommend-content{
+
+.recommend-content {
   flex: 1;
-  display:flex;
+  display: flex;
   align-items: flex-start;
   flex-direction: column;
 }
-.recommend-content span{
+
+.recommend-content span {
   font-size: .25rem;
   color: #848080;
 
 }
-.recommend-content h4{
+
+.recommend-content h4 {
   font-weight: normal;
 }
-.recommend-item img{
+
+.recommend-item img {
   height: 40px;
   width: 40px;
   margin-right: 5px;
   border-radius: 2px;
 }
-.recommend-member{
+
+.recommend-member {
   display: flex;
   height: 100%;
   font-size: .25rem;
@@ -828,25 +840,25 @@
   color: #848080;
 }
 
-
-.community-logo-box{
+.community-logo-box {
   display: flex;
   height: 50px;
   padding-left: 12px;
   font-size: .3rem;
-  .community-logo-main{
+  .community-logo-main {
     flex: 1;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid  #eae9e9;
+    border-bottom: 1px solid #eae9e9;
     padding-right: 12px;
-    img{
+    img {
       height: 40px;
       width: 40px;
     }
-    .add-icon{
+    .add-icon {
+      position: relative;
       width: 40px;
       height: 40px;
       background: #f3f3f3;
@@ -857,86 +869,252 @@
   }
 }
 
-.van-tabs__line{
-  background-color:$bg !important;
-  display: none;
-}
-
-.van-tabs--line {
-  padding-top: 28px !important;
-}
-
-.van-tabs--line .van-tabs__wrap {
-  height: 28px !important;
-}
-
-.van-tab {
-  line-height: 28px !important;
-  color:#8a8d99 !important;
-  padding: 0 !important;
-}
-
-.van-tab--active {
-  color:$bg !important;
-}
-
-.van-tabs__wrap--scrollable .van-tab {
-  flex:0 0 19% !important;
-}
-
-.yd-datetime-head>a:last-child {
-  color:#208de3 !important;
-}
-.yd-grids-txt{
-  margin-top: .3rem !important;
-}
-.yd-grids-txt {
-  width: 100%;
-}
-.c-list{
+.c-list {
   background: #fff;
-  padding: 0!important;
-  .c-list-box{
+  padding: 0 !important;
+  .c-list-box {
     display: flex;
     flex-wrap: wrap;
-    &>div{
+    & > div {
       width: 100%;
     }
-    .c-item{
+    .c-item {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-around;
       width: 32%;
       height: 100px;
-      img{
+      img {
         height: 60%;
         width: 60%;
         border-radius: 100%;
       }
-      span{
+      span {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 1;
         overflow: hidden;
       }
     }
-    .ccc{
+    .ccc {
       display: flex;
       justify-content: center;
       flex-direction: column;
       align-items: center;
-      span{
+      span {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 1;
         overflow: hidden;
       }
-      img{
-        height:1rem;
+      img {
+        height: 1rem;
         width: 1rem;
         border-radius: 1rem;
       }
     }
+  }
+}
+
+//communityDynamic
+
+.cd-box {
+  padding-bottom: 45px;
+  .cd-header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 5rem;
+    background: #fff;
+    &-top {
+      height: 2rem;
+    }
+    &-logo {
+      position: absolute;
+      top: 35%;
+      left: 50%;
+      transform: translate(-50%, -100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 1.2rem;
+      width: 1.2rem;
+      border-radius: 1.2rem;
+      background: #000;
+      img {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        background: red;
+        border-radius: 100%;
+      }
+    }
+    &-info {
+      flex: 1;
+      .cd-header-title {
+        font-size: .4rem;
+        padding: .1rem 0;
+      }
+      .cd-header-author {
+        font-size: .35rem;
+        padding-bottom: 0.1rem;
+        display: flex;
+        justify-content: center;
+      }
+      ul {
+        display: flex;
+        justify-content: space-around;
+        .cd-header-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: .8rem;
+            width: .8rem;
+            background: red;
+            border-radius: 100%;
+            color: #fff;
+            font-size: .5rem;
+          }
+          .zhuti {
+            font-size: .4rem;
+          }
+          span {
+            padding-top: .1rem;
+            font-size: $smallws;
+          }
+        }
+      }
+    }
+  }
+  .cd-ind {
+    padding: 0 .2rem;
+    margin-top: 10px;
+    background: #fff;
+    h3 {
+      display: flex;
+      font-size: .35rem;
+      padding: .2rem 0;
+      border-bottom: 1px solid $fbb;
+    }
+    span {
+      display: flex;
+      font-size: .28rem;
+      text-align: left;
+      padding: .2rem 0;
+    }
+  }
+  .cd-men {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h3 {
+      border: 0;
+    }
+  }
+  .cd-add {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $wfs;
+    height: 44px;
+    background: red;
+
+  }
+}
+
+.cd-dynamic {
+  padding: 55px 10px 0;
+  background: #fff;
+  flex: 1;
+  .cd-dynamic-item{
+    padding: 10px 0;
+    border-bottom: 1px solid $fbb;
+    .cd-dynamic-user {
+      display: flex;
+      height: .8rem;
+      img {
+        height: 100%;
+        border-radius: 100%;
+      }
+      .cd-dynamic-user-info {
+        display: flex;
+        flex-direction: column;
+        align-items: self-start;
+        padding-left: 5px;
+        .cd-dynamic-title {
+          font-size: .32rem;
+          color: $bg;
+          i {
+            display: inline-flex;
+            font-size: .28rem;
+            border: 1px solid $bg;
+            padding: 0 5px;
+            border-radius: 2px;
+            margin-left: 1rem;
+            color: $bg;
+          }
+        }
+        .cd-dynamic-time{
+          font-size: .25rem;
+          color: #666;
+        }
+      }
+    }
+    .cd-dynamic-content{
+      padding: 10px 0 0 .8rem;
+      .cd-dynamic-text{
+        display: flex;
+        text-align: left;
+        font-size: .32rem;
+      }
+      img{
+        display: inline-flex;
+        width: 32%;
+      }
+      .cd-dynamic-icon{
+        display: flex;
+        align-items: center;
+        i{
+          font-size: .5rem;
+          padding-right: 20px;
+        }
+      }
+    }
+    .cd-dynamic-zan{
+      padding: 10px 0 0 .8rem ;
+      font-size: .3rem;
+      display: flex;
+      align-items: center;
+      color: $bg;
+      i{
+        font-size: .35rem;
+
+      }
+    }
+    .cd-dynamic-comment{
+      display: flex;
+      padding: 10px 0 0 .8rem ;
+      font-size: .3rem;
+    }
+  }
+
+}
+#form1{
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  opacity: 0;
+  input{
+    height: 100%;
+    width: 100%;
   }
 }

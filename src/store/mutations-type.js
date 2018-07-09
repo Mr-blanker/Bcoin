@@ -71,3 +71,7 @@ export const USER_GETLASTADDR= 'USER_GETLASTADDR'
 //公共
 //图片上传
 export const UPLOAD_IMAGE ='UPLOAD_IMAGE'
+
+/*社群*/
+// 创建社群
+export const COMMUNITY_ADD = 'COMMUNITY_ADD'

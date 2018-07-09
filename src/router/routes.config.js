@@ -23,6 +23,7 @@ import search from '@/views/search'
 //社群
 import community from '@/views/community/community'
 import communityAdd from '@/views/community/communityAdd'
+import communityDynamic from '@/views/community/communityDynamic'
 
 
 export default [
@@ -127,6 +128,10 @@ export default [
     name: 'communityAdd',
     path: '/communityAdd',
     component: communityAdd,
+  },{
+    name: 'communityDynamic',
+    path: '/communityDynamic',
+    component: communityDynamic,
   }
 
 ]
