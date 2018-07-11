@@ -74,4 +74,26 @@ export const UPLOAD_IMAGE ='UPLOAD_IMAGE'
 
 /*社群*/
 // 创建社群
+export const COMMUNITY_CREATE = 'COMMUNITY_CREATE'
+//获取社群列表
+export const COMMUNITY_LIST = 'COMMUNITY_LIST'
+//获取社群详细信息
+export const COMMUNITY_DETAIL = 'COMMUNITY_DETAIL'
+//加入社群
 export const COMMUNITY_ADD = 'COMMUNITY_ADD'
+//发布文章
+export const COMMUNITY_PUBLISH= 'COMMUNITY_PUBLISH'
+//获取社群文章列表
+export const COMMUNITY_DIANZAN_LIST= 'COMMUNITY_DIANZAN_LIST'
+//获取社群文章点赞列表
+export const COMMUNITY_ARTICLE_LIST= 'COMMUNITY_ARTICLE_LIST'
+//获取社群文章评论列表
+export const COMMUNITY_PINGLUN_LIST= 'COMMUNITY_PINGLUN_LIST'
+//社群文章点赞
+export const COMMUNITY_DIANZAN= 'COMMUNITY_DIANZAN'
+//社群文章评论
+export const COMMUNITY_PINGLUN= 'COMMUNITY_PINGLUN'
+//置顶文章
+export const COMMUNITY_TOP= 'COMMUNITY_TOP'
+//禁言用户
+export const COMMUNITY_FORBID= 'COMMUNITY_FORBID'

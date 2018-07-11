@@ -24,6 +24,7 @@ import search from '@/views/search'
 import community from '@/views/community/community'
 import communityAdd from '@/views/community/communityAdd'
 import communityDynamic from '@/views/community/communityDynamic'
+import Release from '@/views/community/Release'
 
 
 export default [
@@ -132,6 +133,10 @@ export default [
     name: 'communityDynamic',
     path: '/communityDynamic',
     component: communityDynamic,
+  },{
+    name: 'Release',
+    path: '/Release',
+    component: Release,
   }
 
 ]

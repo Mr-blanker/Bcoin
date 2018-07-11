@@ -11,8 +11,7 @@ axios.defaults.timeout = 5000;
 //配置请求的地址
 axios.defaults.baseURL = "http://ssl.pandawork.vip";
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
-axios.defaults.headers.post['Content-Type'] = 'multipart/form-data; charset=UTF-8';
-
+axios.defaults.headers.post['Content-Type'] = 'application/json; charset=UTF-8';
 // http request 拦截器
 let notLoading = ['/api/news.lists','/api/flash.lists','/api/news.flash',
                   '/api/column.cate','/api/person.lists','/api/coin.lists',

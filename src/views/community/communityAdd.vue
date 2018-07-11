@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header v-bind="{center:2,centerValue:'创建社群'}"></Header>
+    <Header v-bind="{center:2,centerValue:'创建社群',left:1}"></Header>
     <div class="communityAdd-box pt">
       <yd-cell-group>
         <yd-cell-item>
@@ -44,6 +44,7 @@
 <script>
   import Upload from "../../components/upload/Upload"
   import * as types from "../../store/mutations-type"
+  import {mapGetters} from "vuex"
 
   export default {
     name: "communityAdd",
@@ -62,6 +63,9 @@
     components: {
       Upload
     },
+    computed:{
+      ...mapGetters(['userSid'])
+    },
     methods: {
       //上传图片
       upload_img(event) {
@@ -73,7 +77,7 @@
           type: 'POST',
           data: data,
           headers: {
-            sid: '1531142037647-Gs2GNH7zjnsgGHctXnpVslgoSNMfzZqB'
+            sid: that.userSid
           },
           dataType: 'JSON',
           cache: false,
@@ -111,8 +115,15 @@
         } else {
           this.communityInfo.charge = 0
         }
-        this.$store.dispatch(types.COMMUNITY_ADD, this.communityInfo).then(res => {
+        this.$store.dispatch(types.COMMUNITY_CREATE, this.communityInfo).then(res => {
           console.log(res)
+          console.log(res.code)
+          if (res.code == 0) {
+            this.success('创建成功', 'community')
+            console.log(2)
+          } else {
+            this.fail(res.msg)
+          }
         })
       },
     }

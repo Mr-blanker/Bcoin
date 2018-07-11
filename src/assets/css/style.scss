@@ -770,17 +770,17 @@
   & i {
     color: #797979;
   }
-  .add-box {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
-    width: 40px;
-    background: #f3f3f3;
-    border-radius: 2px;
-    margin-right: .1rem;
-    border: 1px solid #dad3d3;
-  }
+}
+.add-box {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  background: #f3f3f3;
+  border-radius: 2px;
+  margin-right: .1rem;
+  border: 1px solid #dad3d3;
 }
 
 .recommend-box {
@@ -941,12 +941,10 @@
       height: 1.2rem;
       width: 1.2rem;
       border-radius: 1.2rem;
-      background: #000;
       img {
         display: flex;
         width: 100%;
         height: 100%;
-        background: red;
         border-radius: 100%;
       }
     }
@@ -975,13 +973,19 @@
             justify-content: center;
             height: .8rem;
             width: .8rem;
-            background: red;
+            background: $bg;
             border-radius: 100%;
             color: #fff;
             font-size: .5rem;
           }
           .zhuti {
             font-size: .4rem;
+          }
+          .dianzan {
+            background: #f78211;
+          }
+          .pinglun {
+            background: #40d479;
           }
           span {
             padding-top: .1rem;
@@ -1016,28 +1020,33 @@
       border: 0;
     }
   }
-  .cd-add {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: $wfs;
-    height: 44px;
-    background: red;
+}
 
-  }
+.cd-add {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $wfs;
+  height: 44px;
+  color: $bg;
+  background: #fff;
+  border-top: 1px solid $fbb;
 }
 
 .cd-dynamic {
-  padding: 55px 10px 0;
+  padding: 55px 10px 44px;
   background: #fff;
   flex: 1;
-  .cd-dynamic-item{
+  .cd-dynamic-item {
     padding: 10px 0;
     border-bottom: 1px solid $fbb;
+    &:last-child {
+      border-bottom: 0;
+    }
     .cd-dynamic-user {
       display: flex;
       height: .8rem;
@@ -1063,58 +1072,95 @@
             color: $bg;
           }
         }
-        .cd-dynamic-time{
+        .cd-dynamic-time {
           font-size: .25rem;
           color: #666;
         }
       }
     }
-    .cd-dynamic-content{
+    .cd-dynamic-content {
       padding: 10px 0 0 .8rem;
-      .cd-dynamic-text{
+      .cd-dynamic-text {
         display: flex;
         text-align: left;
         font-size: .32rem;
       }
-      img{
+      img {
         display: inline-flex;
         width: 32%;
       }
-      .cd-dynamic-icon{
+      .cd-dynamic-icon {
         display: flex;
         align-items: center;
-        i{
+        i {
           font-size: .5rem;
-          padding-right: 20px;
+          margin-right: 20px;
         }
       }
     }
-    .cd-dynamic-zan{
-      padding: 10px 0 0 .8rem ;
+    .cd-dynamic-zan {
+      padding: 10px 0 0 .8rem;
       font-size: .3rem;
       display: flex;
       align-items: center;
       color: $bg;
-      i{
+      i {
         font-size: .35rem;
 
       }
     }
-    .cd-dynamic-comment{
+    .cd-dynamic-comment {
       display: flex;
-      padding: 10px 0 0 .8rem ;
+      padding: 10px 0 0 .8rem;
       font-size: .3rem;
     }
   }
 
 }
-#form1{
+
+#form1 {
   width: 40px;
   height: 40px;
   position: absolute;
   opacity: 0;
-  input{
+  input {
     height: 100%;
     width: 100%;
+  }
+}
+
+//Release
+.re-box{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.re-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 44px;
+  border-bottom: 1px solid $fbb;
+  background: #fff;
+  padding: 0 .2rem;
+  font-size: .3rem;
+  &-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    p{
+      color: #999;
+      font-size: .28rem;
+    }
+  }
+}
+.re-text{
+  flex: 1;
+  textarea{
+    height: 100%;
+    width: 100%;
+    border: 0;
+    font-size: .32rem;
+    padding: 0 .2rem;
   }
 }
