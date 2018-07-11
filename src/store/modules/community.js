@@ -57,25 +57,16 @@ const actions = {
   },
   // 社群文章点赞
   [types.COMMUNITY_DIANZAN]({}, info) {
-    let inf = JSON.stringify(info)
-    console.log(inf)
-    let ii = {
-      aid: 1,
-      like: false
-    }
-
     return new Promise((resolve) => {
-      http.post('/api/user/group.like', JSON.stringify(inf)).then(res => {
+      http.post('/api/user/group.like', info).then(res => {
         return resolve(res.data)
       })
     })
   },
   // 社群文章评论
   [types.COMMUNITY_PINGLUN]({}, info) {
-    let inf = JSON.stringify(info)
-    console.log(inf)
     return new Promise((resolve) => {
-      http.get('/api/user/group.comment', {params: inf}).then(res => {
+      http.get('/api/user/group.comment', {params: info}).then(res => {
         return resolve(res.data)
       })
     })

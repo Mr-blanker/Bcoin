@@ -39,7 +39,7 @@
     </div>
     <!--动态-->
     <ul class="cd-dynamic" v-else>
-      <li class="cd-dynamic-item" v-for="item in articleList">
+      <li class="cd-dynamic-item" v-for="(item,index) in articleList">
         <div class="cd-dynamic-user">
           <img :src="item.u_pic" alt="">
           <!--i是否置顶-->
@@ -54,9 +54,9 @@
           <img :src="attr" alt="" v-for="attr in item.imgs">
 
           <div class="cd-dynamic-icon">
-            <i class="icon iconfont icon-dianzan dianzan " @click="dianzan(item)"
+            <i class="icon iconfont icon-dianzan dianzan " @click="dianzan(item,index)"
                :class="{'is-dianzan':item.likes.items.toString().indexOf(item.u_name)!=-1}"></i>
-            <i class="icon iconfont icon-web-icon- pinglun" @click="show2 = true"></i>
+            <i class="icon iconfont icon-web-icon- pinglun" @click="comment(item.id)"></i>
           </div>
         </div>
         <div class="cd-dynamic-zan">
@@ -64,27 +64,24 @@
           <span style="padding-left: .1rem;">{{item.likes.items.toString()}} <span v-if="item.likes.num>20">等{{item.likes.num}}人点赞</span></span>
         </div>
         <div class="cd-dynamic-comment">
-          <span>币券飞跃币券飞跃币券飞跃币券飞跃</span>
+          <span></span>
         </div>
       </li>
-      <yd-button size="large" type="warning" @click.native="show2 = true">下部弹出</yd-button>
-
     </ul>
-    <yd-popup v-model="show2" position="center" height="60%">
-      <input type="text" autofocus="autofocus">
-    </yd-popup>
     <!--<div class="cd-add" v-if="!detailInfo.isIn" @click="add">-->
-      <!--<span v-if="detailInfo.charge">{{detailInfo.charge}}积分加入本群</span>-->
-      <!--<span v-else>免费加入本群</span>-->
+    <!--<span v-if="detailInfo.charge">{{detailInfo.charge}}积分加入本群</span>-->
+    <!--<span v-else>免费加入本群</span>-->
     <!--</div>-->
     <span class="add-box" @click="$router.push({path:'Release',query:{gid:id,name:detailInfo.name}})">
       <i class="icon iconfont icon-tianjia"></i>
     </span>
+
   </div>
 </template>
 
 <script>
   import * as types from "../../store/mutations-type"
+  import {mapGetters} from "vuex"
 
   export default {
     name: "communityDynamic",
@@ -99,9 +96,13 @@
         show2: false,
       }
     },
+    computed: {
+      ...mapGetters(['userSid'])
+    },
     mounted() {
       this.getDetail()
       this.getArticleList()
+
     },
     methods: {
       getDetail() {
@@ -120,8 +121,6 @@
           console.log(res)
           if (res.code === 0) {
             this.articleList = res.data
-            // this.dianzanList = res.data.likes.items.toString()
-            // console.log(this.dianzanList)
           }
         })
       },
@@ -133,22 +132,79 @@
       },
 
       //文章点赞
-      dianzan(item) {
-        console.log(item.likes.items.toString().indexOf(item.u_name) != -1)
+      dianzan(item, index) {
+        console.log(item)
         let like = true
         if (item.likes.items.toString().indexOf(item.u_name) != -1) {
           like = false
+          console.log(123)
         }
-        this.$store.dispatch(types.COMMUNITY_DIANZAN, {aid: item.id, like: like}).then(res => {
-          console.log(res)
-          this.getArticleList()
+        let that = this
+        console.log(that.info)
+        let info = {aid: item.id, like: like}
+        $.ajax({
+          contentType: 'application/json',
+          url: "http://ssl.pandawork.vip/api/user/group.like",
+          type: 'POST',
+          data: JSON.stringify(info),
+          headers: {
+            sid: that.userSid
+          },
+          dataType: 'JSON',
+          cache: false,
+          processData: false,
+          success: (res) => {
+            console.log(res)
+            if (res.code === 0) {
+              if (like) {
+                that.articleList[index].likes.items.push(item.u_name)
+              } else {
+                let str
+                str = that.articleList[index].likes.items.toString().replace(item.u_name, '')
+                that.articleList[index].likes.items = str.split(',')
+                for (let i in that.articleList[index].likes.items) {
+                  if (that.articleList[index].likes.items[i] == '') {
+                    that.articleList[index].likes.items.splice(i, 1)
+                  }
+                }
+              }
+            }
+          }
         })
+        return false;
+
       },
       //文章评论
       comment(id) {
-        this.$store.dispatch(types.COMMUNITY_DIANZAN, {aid: id}).then(res => {
-          console.log(res)
-        })
+        let that = this
+        console.log(id)
+        utils.dialog.prompt('写下你的观点', (value) => {
+          console.log(value);''
+          if (value == '') {
+            return
+          }
+          let info = {
+            aid: id,
+            content: value
+          }
+          console.log(info)
+          $.ajax({
+            contentType: 'application/json',
+            url: "http://ssl.pandawork.vip/api/user/group.comment",
+            type: 'POST',
+            data: JSON.stringify(info),
+            headers: {
+              sid: that.userSid
+            },
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            success: (r) => {
+              console.log(r)
+            }
+          })
+        });
+
       },
       //加入社群
       add() {
@@ -170,7 +226,7 @@
     background: #208de3;
     position: fixed;
     bottom: 2rem;
-    right: .2rem;
+    right: .5rem;
     border: 0;
     border-radius: 40px;
     i {
