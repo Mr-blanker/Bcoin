@@ -39,7 +39,8 @@
     </div>
     <!--动态-->
     <ul class="cd-dynamic" v-else>
-      <li class="cd-dynamic-item" v-for="(item,index) in articleList">
+      <li class="cd-dynamic-item" v-for="(item,index) in articleList"
+          @click.stop="$router.push({path:'/articleDetail',query:{item:JSON.stringify(item)}})">
         <div class="cd-dynamic-user">
           <img :src="item.u_pic" alt="">
           <!--i是否置顶-->
@@ -56,22 +57,24 @@
           <div class="cd-dynamic-icon">
             <i class="icon iconfont icon-dianzan dianzan " @click="dianzan(item,index)"
                :class="{'is-dianzan':item.likes.items.toString().indexOf(item.u_name)!=-1}"></i>
-            <i class="icon iconfont icon-web-icon- pinglun" @click="comment(item.id)"></i>
+            <i class="icon iconfont icon-web-icon- pinglun" @click.stop="comment(item.id)"></i>
           </div>
         </div>
         <div class="cd-dynamic-zan">
           <i class="icon iconfont icon-dianzan dianzan zan"></i>
           <span style="padding-left: .1rem;">{{item.likes.items.toString()}} <span v-if="item.likes.num>20">等{{item.likes.num}}人点赞</span></span>
         </div>
-        <div class="cd-dynamic-comment">
-          <span></span>
-        </div>
+        <ul class="cd-dynamic-comment">
+          <li v-for="attr in item.comments.items">
+            <span> <a>{{attr.u_name}}</a>：{{attr.content}}</span>
+          </li>
+        </ul>
       </li>
     </ul>
-    <!--<div class="cd-add" v-if="!detailInfo.isIn" @click="add">-->
-    <!--<span v-if="detailInfo.charge">{{detailInfo.charge}}积分加入本群</span>-->
-    <!--<span v-else>免费加入本群</span>-->
-    <!--</div>-->
+    <div class="cd-add" v-if="!detailInfo.isIn" @click="add">
+      <span v-if="detailInfo.charge">{{detailInfo.charge}}积分加入本群</span>
+      <span v-else>免费加入本群</span>
+    </div>
     <span class="add-box" @click="$router.push({path:'Release',query:{gid:id,name:detailInfo.name}})">
       <i class="icon iconfont icon-tianjia"></i>
     </span>
@@ -131,6 +134,9 @@
         }
       },
 
+      //文章详情
+      articleDetail() {
+      },
       //文章点赞
       dianzan(item, index) {
         console.log(item)
@@ -140,8 +146,8 @@
           console.log(123)
         }
         let that = this
-        console.log(that.info)
         let info = {aid: item.id, like: like}
+        console.log(info)
         $.ajax({
           contentType: 'application/json',
           url: "http://ssl.pandawork.vip/api/user/group.like",
@@ -168,6 +174,8 @@
                   }
                 }
               }
+            } else if (res.code === 401) {
+              that.$router.push({path: 'Login'})
             }
           }
         })
@@ -179,7 +187,8 @@
         let that = this
         console.log(id)
         utils.dialog.prompt('写下你的观点', (value) => {
-          console.log(value);''
+          console.log(value);
+          ''
           if (value == '') {
             return
           }
@@ -199,8 +208,11 @@
             dataType: 'JSON',
             cache: false,
             processData: false,
-            success: (r) => {
-              console.log(r)
+            success: (res) => {
+              console.log(res)
+              if (res.code === 401) {
+                that.$router.push({path: 'Login'})
+              }
             }
           })
         });

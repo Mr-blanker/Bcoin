@@ -39,30 +39,14 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
+    console.log(response)
     switch (response.data.code) {
       case 401:
         //如果token过期则清空本地缓存
         window.localStorage.clear();
-        store.dispatch(types.USER_LOGOUT).then(() => {
-          // utils.dialog.confirm({
-          //   content: "登录过期，是否跳转到登陆页？",
-          //   confirm: function () {
-          //     router.push({
-          //       name: 'login'
-          //     });
-          //   }
-          // });
-          Confirm({
-            title: '登录过期',
-            mes: '是否跳转到登录？',
-            opts: () => {
-              this.$router.push({path: 'Login'})
-            }
-          })
-        });
-        break;
+        this.$router.push({path:'Login'})
+        break
     }
-    ;
     Loading.close();
     return response;
   },

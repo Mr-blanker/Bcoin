@@ -4,7 +4,7 @@
     <keep-alive include="Information">
       <router-view></router-view>
     </keep-alive>
-    <!--<Footer></Footer>-->
+    <Footer></Footer>
   </div>
 </template>
 

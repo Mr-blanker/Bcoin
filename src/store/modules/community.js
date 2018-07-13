@@ -71,6 +71,14 @@ const actions = {
       })
     })
   },
+  //获取社群文章评论列表
+  [types.COMMUNITY_PINGLUN_LIST]({}, info) {
+    return new Promise((resolve) => {
+      http.get('/api/group.comments', {params: info}).then(res => {
+        return resolve(res.data)
+      })
+    })
+  },
 }
 
 const mutations = {

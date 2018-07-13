@@ -25,6 +25,7 @@ import community from '@/views/community/community'
 import communityAdd from '@/views/community/communityAdd'
 import communityDynamic from '@/views/community/communityDynamic'
 import Release from '@/views/community/Release'
+import articleDetail from '@/views/community/articleDetail'
 
 
 export default [
@@ -116,7 +117,7 @@ export default [
     name: 'marketIndex',
     path: '/marketIndex',
     component: marketIndex
-  }, 
+  },
   {
     name: 'trend',
     path: '/trend',
@@ -137,6 +138,10 @@ export default [
     name: 'Release',
     path: '/Release',
     component: Release,
+  },{
+    name: 'articleDetail',
+    path: '/articleDetail',
+    component: articleDetail,
   }
 
 ]
