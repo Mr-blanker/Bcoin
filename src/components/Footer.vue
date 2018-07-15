@@ -2,15 +2,18 @@
   <div class="footer" v-if="isShowFooterNav">
     <ul class="footer-box">
 
-      <li class="footer-item" @click="$router.push({path:'Information'})" :class="{'footer-active':$route.name=='Information'}">
+      <li class="footer-item" @click="$router.push({path:'Information'})"
+          :class="{'footer-active':$route.name=='Information'}">
         <i class="icon iconfont icon-wanggediqiu"></i>
         <span>资讯</span>
       </li>
-      <li class="footer-item" @click="$router.push({path:'marketIndex'})"  :class="{'footer-active':$route.name=='marketIndex'}">
+      <li class="footer-item" @click="$router.push({path:'marketIndex'})"
+          :class="{'footer-active':$route.name=='marketIndex'}">
         <i class="icon iconfont icon-gupiao1"></i>
         <span>行情</span>
       </li>
-      <li class="footer-item" @click="$router.push({path:'community'})" :class="{'footer-active':$route.name=='community'}">
+      <li class="footer-item" @click="$router.push({path:'community'})"
+          :class="{'footer-active':$route.name=='community'}">
         <i class="icon iconfont icon-zixun"></i>
         <span>社群</span>
       </li>
@@ -30,21 +33,22 @@
       }
     },
     watch: {
-      '$route' (to) {
+      '$route'(to) {
         console.log(to)
-        if (to.name == 'Information' || to.name == 'person' ||to.name == 'marketIndex') {
+        if (to.name == 'Information' || to.name == 'person' || to.name == 'marketIndex' || to.name == 'community') {
           this.isShowFooterNav = true
         } else {
           this.isShowFooterNav = false
         }
       }
     },
-    mounted() {}
+    mounted() {
+    }
   }
 </script>
 
 <style scoped>
-.footer-box li{
-  font-size: .25rem !important;
-}
+  .footer-box li {
+    font-size: .25rem !important;
+  }
 </style>

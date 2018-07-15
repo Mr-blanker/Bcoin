@@ -39,12 +39,12 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
-    console.log(response)
+    console.log(response.data)
     switch (response.data.code) {
       case 401:
         //如果token过期则清空本地缓存
         window.localStorage.clear();
-        this.$router.push({path:'Login'})
+        router.push({path:'/login'})
         break
     }
     Loading.close();

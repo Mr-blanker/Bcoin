@@ -26,7 +26,7 @@
 
 //mine
 .mine {
-  padding-top: 31px;
+  padding-top: .9rem;
 }
 
 .head {
@@ -36,7 +36,7 @@
   height: 100px;
   background: $bg;
   font-size: $wfs;
-  padding: 0 10px;
+  padding: 0 .2rem;
   color: $hc;
   &-left {
     display: flex;
@@ -153,12 +153,12 @@
       font-size: $smallws;
     }
     .flash-content {
-      font-size: .35rem;
+      font-size: $wfs;
     }
     .flash-comment {
       padding-top: .1rem;
       color: $wdc;
-      font-size: $wfs;
+      font-size: $fws;
     }
   }
 }
@@ -1049,11 +1049,13 @@
       border-bottom: 0;
     }
     .cd-dynamic-user {
+      position: relative;
       display: flex;
       height: .8rem;
       img {
         height: 100%;
         border-radius: 100%;
+        width: .8rem;
       }
       .cd-dynamic-user-info {
         display: flex;
@@ -1065,10 +1067,10 @@
           color: $bg;
           i {
             display: inline-flex;
-            font-size: .28rem;
+            font-size: .2rem;
             border: 1px solid $bg;
-            padding: 0 5px;
-            border-radius: 2px;
+            height: .3rem;
+            align-items: center;
             margin-left: 1rem;
             color: $bg;
           }
@@ -1076,6 +1078,12 @@
         .cd-dynamic-time {
           font-size: .25rem;
           color: #666;
+        }
+        .istop {
+          position: absolute;
+          right: 0;
+          top: 0;
+          color: $bg;
         }
       }
     }
@@ -1145,7 +1153,7 @@
 
 .ad-comment-item {
   min-height: 1rem;
-  padding: .5rem 0 !important;
+  padding: .3rem 0 !important;
   border-bottom: 1px solid #dadada;
   flex-wrap: wrap;
   &:last-child {
@@ -1153,6 +1161,7 @@
   }
   img {
     height: .8rem;
+    width: .8rem;
     border-radius: 100%;
   }
   .ad-comment-content {
@@ -1165,10 +1174,10 @@
       width: 100%;
       color: $bg;
     }
-    span{
+    span {
       display: flex;
     }
-    i{
+    i {
       position: absolute;
       top: 0;
       right: 0;
@@ -1263,4 +1272,57 @@
 
 .comment-box {
   width: 100%;
+}
+
+.zl-header {
+  position: relative;
+  height: .9rem;
+  background: #fff;
+  color: #000;
+  border-bottom: 1px solid $fbb;
+  font-size: .35rem;
+  i {
+    position: absolute;
+    top: 50%;
+    left: .2rem;
+    transform: translate(0, -50%);
+    font-size: .4rem;
+
+  }
+  span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.zl-item {
+  display: flex;
+  align-items: center;
+  height: 1.2rem;
+  padding-left: .2rem;
+  img {
+    height: .8rem;
+    width: .8rem;
+    border-radius: 100%;
+  }
+  span {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    border-bottom: 1px solid $fbb;
+    padding-left: .1rem;
+    padding-right: .2rem;
+    font-size: .3rem;
+    i {
+      position: absolute;
+      right: .2rem;
+      top: 50%;
+      transform: translate(0, -50%);
+      font-size: .25rem;
+    }
+  }
 }

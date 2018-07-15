@@ -79,6 +79,14 @@ const actions = {
       })
     })
   },
+  //获取社群文章点赞列表
+  [types.COMMUNITY_DIANZAN_LIST]({}, info) {
+    return new Promise((resolve) => {
+      http.get('/api/group.likes', {params: info}).then(res => {
+        return resolve(res.data)
+      })
+    })
+  },
 }
 
 const mutations = {

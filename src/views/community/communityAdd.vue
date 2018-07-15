@@ -120,7 +120,6 @@
           console.log(res.code)
           if (res.code == 0) {
             this.success('创建成功', 'community')
-            console.log(2)
           } else {
             this.fail(res.msg)
           }
