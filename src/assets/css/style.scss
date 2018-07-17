@@ -26,7 +26,7 @@
 
 //mine
 .mine {
-  padding-top: .9rem;
+  padding-top: .8rem;
 }
 
 .head {
@@ -1132,6 +1132,7 @@
     display: flex;
     width: 100%;
     padding-bottom: .1rem;
+    overflow: hidden;
     span {
       text-align: left;
     }

@@ -56,7 +56,7 @@
               <div class="ad-comment-content">
                 <a>{{attr.name}}：</a>
                 <span> {{attr.content}}</span>
-                <i @click="forbid(attr.uid)">禁言</i>
+                <i @click="forbid(attr.uid)" v-if="userInfo.uid===list.uid">禁言</i>
               </div>
             </li>
           </ul>
@@ -70,6 +70,7 @@
 
 <script>
   import * as types from "../../store/mutations-type"
+  import {mapGetters} from 'vuex'
 
   export default {
     name: "articleDetail",
@@ -84,6 +85,9 @@
         commentCount: 1,
         zanCount: 1
       }
+    },
+    computed: {
+      ...mapGetters(['userSid', 'userInfo'])
     },
     mounted() {
       console.log(this.list)

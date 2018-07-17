@@ -170,6 +170,9 @@
         console.log(key)
         this.index = key
         if (key === 1) {
+          console.log(this.scroll)
+          // this.scroll = ''
+          // console.log(this.scroll)
         }
       },
       //文章点赞
@@ -274,14 +277,17 @@
       //是否置顶
       isTop(id, aid) {
         let that = this
+        let content = '确定取消置顶该文章吗？'
         let info = {
           aid: aid,
           isTop: false
         }
         if (id) {
+          console.log(1)
           info.isTop = true
+          content = '确定置顶该文章吗？'
         }
-        utils.dialog.confirm('确定置顶该文章吗?', () => {
+        utils.dialog.confirm(content, () => {
           $.ajax({
             contentType: 'application/json',
             url: "http://ssl.pandawork.vip/api/user/group.top",

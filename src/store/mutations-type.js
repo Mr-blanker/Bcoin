@@ -12,6 +12,8 @@ export const INFORMATION_CATES='INFORMATION_CATES'
 export const FLASH_LIST = 'FLASH_LIST'
 //点评快讯
 export const FLASH_COMMENT = 'FLASH_COMMENT'
+//新闻评论列表
+export const NEWS_LIST = 'NEWS_LIST'
 
 //行情走势
 export const TICKER_LIST = 'TICKER_LIST'

@@ -33,6 +33,14 @@ const actions = {
       })
     })
   },
+  //新闻评论列表
+  [types.NEWS_LIST]({},newID) {
+    return new Promise((resolve) => {
+      http.get('/api/comment.lists',newID).then(res => {
+        return resolve(res.data)
+      })
+    })
+  },
   /*快讯*/
   //列表
   [types.FLASH_LIST]({}, len) {
