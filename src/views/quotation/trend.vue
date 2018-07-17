@@ -29,7 +29,7 @@
         <div class="date-check">
             <div class="start-time">
                 <span>范围:</span>
-                <yd-datetime type="datetime" v-model="beginTime" ></yd-datetime>
+                <yd-datetime type="datetime" v-model="beginTime"></yd-datetime>
             </div>
             <div>
                 <span>至:</span>
@@ -43,6 +43,7 @@
     import {
         mapActions
     } from 'vuex'
+    import utils from 'utility'
     export default {
         name: 'trend',
         data() {
@@ -58,8 +59,16 @@
                 market_cap: [],
                 volume: [],
                 price: [],
-                coin: ''
+                coin: '',
+                trendArr: ''
             }
+        },
+        mounted() {
+            this.coin = JSON.parse(this.$route.query.coin)
+            this.trendParam.coin = this.coin.name
+            this.initDateTime()
+            this.getTrends()
+            console.log(utils.timestamp())
         },
         watch: {
             beginTime(val) {
@@ -71,20 +80,21 @@
         },
         methods: {
             ...mapActions(['TREND']),
+            initDateTime() {
+                let start = this.getTimeStamp(10)
+                let end = this.getTimeStamp()
+                this.beginTime = this.stampToDate(start),
+                this.endTime = this.stampToDate(end),
+                this.trendParam.start = start
+                this.trendParam.end = end
+            },
             getTrends() {
-                this.TREND({
-                    coin: 'bitcoin',
-                    start: 1527782400000,
-                    end: 1527785674000
-                }).then(res => {
+                this.TREND(this.trendParam).then(res => {
+                    this.trendArr = res.data
+                    if (res.data.price.length == 0 && res.data.market_cap.length == 0 && res.data.volume.length == 0)
+                        return
                     this.formatterRes(res.data)
-                    console.log(this.dates)
                     this.initCharts()
-                    this.$dialog.toast({
-                        mes: '已加载',
-                        icon: 'success',
-                        timeout: 1500
-                    });
                 })
             },
             formatterRes(data) {
@@ -104,12 +114,11 @@
                 }
             },
             getTimeStamp(day = 0) {
-                let timeStamp = Date.parse(new Date())
-                return (timeStamp - 86400 * day)
+                let timeStamp = new Date().valueOf()
+                return (timeStamp - (86400000 * day))
             },
             startCB() {
                 console.log('start')
-                // this.getTrends()
             },
             endCB() {
                 console.log('end')
@@ -339,14 +348,6 @@
                 let myChart = this.$echarts.init(document.getElementById('myChart'))
                 myChart.setOption(option)
             }
-        },
-        mounted() {
-            this.coin = JSON.parse(this.$route.query.coin)
-            this.trendParam.coin = this.coin.name
-            console.log(this.coin)
-            this.trendParam.start = this.getTimeStamp()
-            this.trendParam.end = this.getTimeStamp(1000)
-            this.getTrends()
         }
     }
 </script>
@@ -454,9 +455,9 @@
         }
     }
     .trend-box {
-        position:fixed;
-        top:0;
-        left:0;
-        right:0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
     }
 </style>

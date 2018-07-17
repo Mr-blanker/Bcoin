@@ -3,7 +3,7 @@
     <Header v-bind="{left:1,centerValue:'地址',center:2}"></Header>
     <div class="address-box pt">
       <ul class="address-list">
-        <li class="address-item" v-for="item in addressList">
+        <li class="address-item" v-for="item in addressList" @click="checkAddress(item)">
           <div class="address-main">
             <div class="main-top">
               <span class="name">{{item.name}}</span>
@@ -17,7 +17,7 @@
             <div class="recent" v-else></div>
             <div class="operate-box">
               <span class="edit" @click="$router.push({path:'addressDetail',query:{info:JSON.stringify(item)}})"><i
-                class="icon iconfont icon-edit"></i>编辑</span>
+                    class="icon iconfont icon-edit"></i>编辑</span>
               <span class="del" @click="delAddress(item.id)"><i class="icon iconfont icon-delete"></i>删除</span>
             </div>
           </div>
@@ -32,27 +32,39 @@
 
 <script>
   import * as types from "../../store/mutations-type"
-
   export default {
     name: "addressList",
     data() {
       return {
         addressList: [],
-        lastAddr:''
+        lastAddr: '',
+        from: 'addressList'
       }
     },
     mounted() {
+      if (this.$route.query) {
+        this.from = this.$route.query.from
+      }
       this.getAddressList()
       this.getLastAddr()
     },
     methods: {
+      checkAddress(item) {
+        if (this.from == 'createOrder') {
+          this.$router.push({
+            path: '/createOrder',
+            query: {
+              address: JSON.stringify(item)
+            }
+          })
+        }
+      },
       //最近使用地址
       getLastAddr() {
         this.$store.dispatch(types.USER_GETLASTADDR).then(res => {
-          if(res.code!==0)return
+          if (res.code !== 0) return
           console.log(res)
           this.lastAddr = res.data.id
-
         })
       },
       //地址列表
@@ -68,7 +80,9 @@
           title: '',
           mes: '确定要删除该地址吗？',
           opts: () => {
-            this.$store.dispatch(types.USER_DELRESSLIST, {id: id}).then(res => {
+            this.$store.dispatch(types.USER_DELRESSLIST, {
+              id: id
+            }).then(res => {
               console.log(res)
               if (res.code !== 0) {
                 this.fail('删除失败')
@@ -80,8 +94,6 @@
           }
         });
       }
-
-
     }
   }
 </script>

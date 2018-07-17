@@ -30,12 +30,13 @@
     data() {
       return {
         isShowFooterNav: true,
+        showURL:['Information','person','marketIndex','community']
       }
     },
     watch: {
       '$route'(to) {
         console.log(to)
-        if (to.name == 'Information' || to.name == 'person' || to.name == 'marketIndex' || to.name == 'community') {
+        if (this.showURL.includes(to.name)) {
           this.isShowFooterNav = true
         } else {
           this.isShowFooterNav = false

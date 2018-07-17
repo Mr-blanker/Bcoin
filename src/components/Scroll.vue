@@ -1,6 +1,6 @@
 <template>
   <div class="pullScroll" ref="scrollObj" style="padding-top:104px;padding-bottom:50px;">
-    <div id="scroll" >
+    <div id="scroll">
       <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="$router.push(`/trend?coin=${JSON.stringify(item)}`)">
         <div class="box-left">
           <div>
@@ -101,13 +101,16 @@
         this.len = 20
         this.upCb(true, this.len)
       },
-      goTop(top=0){
+      goTop(top = 0) {
+        console.log(this.$refs.scrollObj.scrollTop)
         this.$refs.scrollObj.scrollTop = top
+        console.log(this.$refs.scrollObj.scrollTop)
       }
     },
     props: {
       scrollData: {
-        type: Array
+        type: Array,
+        default:()=>[]
       },
       downCb: {
         type: Function
@@ -245,5 +248,4 @@
   #scroll::-webkit-scrollbar {
     display: none;
   }
-
 </style>

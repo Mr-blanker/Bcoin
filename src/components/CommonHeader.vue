@@ -5,7 +5,7 @@
             <div class="tab-contianer">
                 <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index" @click="tabChange(index+1)">{{item}}</span>
             </div>
-            <yd-icon :name="rightIcon" size="20px" color="#fff"></yd-icon>
+            <yd-icon :name="rightIcon" size="20px" color="#fff" style="visibility:hidden;"></yd-icon>
         </div>
         <div class="flex flex-m tab-box">
             <div style="width:92%">
@@ -14,7 +14,7 @@
                     </van-tab>
                 </van-tabs>
             </div>
-            <div style="width:8%" class="add-tab">
+            <div style="width:8%" class="add-tab" @click="goTagManange">
                 <i class="icon iconfont icon-tianjia"></i>
             </div>
         </div>
@@ -28,7 +28,7 @@
         </div>
         <div class="coin-header flex flex-between" v-show="false">
             <div>名称</div>
-            <div>成交量</div>
+            <div>成交�?</div>
         </div>
     </div>
 </template>
@@ -40,6 +40,7 @@
     import {
         mapActions
     } from 'vuex'
+    import * as storage from '@/utils/storage'
     export default {
         name: 'CommonHeader',
         data() {
@@ -48,7 +49,14 @@
                 show: false,
                 active: 0,
                 tabList: '',
-                tabKey: ''
+                tabKey: '',
+                mult: [{
+                    "cid": -2,
+                    "id": "all",
+                    "name": "全部",
+                    "symbol": "全部"
+                }],
+                plus: ''
             }
         },
         components: {
@@ -71,21 +79,30 @@
             tabClick: {
                 type: Function,
                 default: (index) => {
-                    console.log(index + '被点击')
+                    console.log(index + '被点击了！')
                 }
             },
             scrollTabClick: {
                 type: Function,
                 default: (index) => {
-                    console.log(index + '被点击')
+                    console.log(index + '被点击了！')
                 }
             }
         },
         mounted() {
             this.tabChange(1)
+            let that = this
         },
         methods: {
             ...mapActions(['PLATFORM_LIST', 'COIN_LIST']),
+            goTagManange() {
+                this.$router.push({
+                    path: '/tagManange',
+                    query: {
+                        index: this.activeTab,
+                    }
+                })
+            },
             vantTabClick(index) {
                 if (index == 0 && this.activeTab != 3) {
                     this.activeTab = 1
@@ -104,27 +121,22 @@
             tabChange(index) {
                 this.activeTab = index
                 this.$emit('update:currentTab', index)
-                if (index == 1 || index == 2) {
+                if (index == 1) {
+                    this.getMult()
+                } else if (index == 2) {
                     this.getCoin()
                 } else {
                     this.getPlatform()
                 }
             },
-            //获取币种
-            getCoin() {
-                this.COIN_LIST({
-                    len: 20
-                }).then(res => {
+            //获取综合
+            getMult() {
+                let coin = JSON.parse(storage.getStore('coinTabList'))
+                if (coin && this.activeTab == 1) {
+                    let tempArr = this.mult
                     this.tabKey = 'symbol'
-                    let tempArr = res.data.data
-                    tempArr.unshift({
-                        "cid": -2,
-                        "id": "all",
-                        "name": "全部",
-                        "symbol": "全部"
-                    })
+                    tempArr.push(...coin)
                     this.tabList = tempArr
-                    console.log('getCoin=>comeHome')
                     if (this.activeTab == 2) {
                         this.active = 1
                         this.vantTabClick(1)
@@ -132,26 +144,82 @@
                         this.active = 0
                         this.vantTabClick(0)
                     }
-                })
+                } else {
+                    this.COIN_LIST({
+                        len: 20
+                    }).then(res => {
+                        this.tabKey = 'symbol'
+                        let tempArr = res.data.data
+                        tempArr.unshift(...this.mult)
+                        this.tabList = tempArr
+                        if (this.activeTab == 2) {
+                            this.active = 1
+                            this.vantTabClick(1)
+                        } else {
+                            this.active = 0
+                            this.vantTabClick(0)
+                        }
+                    })
+                }
+            },
+            //获取币种
+            getCoin() {
+                let coin = JSON.parse(storage.getStore('coinTabList'))
+                if (coin && this.activeTab == 2) {
+                    let tempArr = coin
+                    this.tabKey = 'symbol'
+                    tempArr.unshift(...this.mult)
+                    this.tabList = tempArr
+                    if (this.activeTab == 2) {
+                        this.active = 1
+                        this.vantTabClick(1)
+                    } else {
+                        this.active = 0
+                        this.vantTabClick(0)
+                    }
+                } else {
+                    this.COIN_LIST({
+                        len: 20
+                    }).then(res => {
+                        this.tabKey = 'symbol'
+                        let tempArr = res.data.data
+                        tempArr.unshift(...this.mult)
+                        this.tabList = tempArr
+                        if (this.activeTab == 2) {
+                            this.active = 1
+                            this.vantTabClick(1)
+                        } else {
+                            this.active = 0
+                            this.vantTabClick(0)
+                        }
+                    })
+                }
             },
             //获取所有交易平台
             getPlatform() {
-                this.PLATFORM_LIST({
-                    len: 20
-                }).then(res => {
+                let platform = JSON.parse(storage.getStore('platformList'))
+                if (platform && this.activeTab == 3) {
                     this.tabKey = 'eid'
-                    this.tabList = res.data.data
-                    console.log('getPlatform=>comeHome')
+                    this.tabList = platform
                     this.active = 0
                     this.vantTabClick(0)
-                })
-            },
+                } else {
+                    this.PLATFORM_LIST({
+                        len: 20
+                    }).then(res => {
+                        this.tabKey = 'eid'
+                        this.tabList = res.data.data
+                        this.active = 0
+                        this.vantTabClick(0)
+                    })
+                }
+            }
         }
     }
 </script>
 <style lang="scss" scoped>
     $fcolor:#8a8d99;
-    $bg: #208de3; //header   背景颜色   主色调
+    $bg: #208de3; //header   背景颜色   主色�?
     .market-tab {
         width: 100%;
         height: 45px;
@@ -204,7 +272,6 @@
             }
         }
     }
-    
     .flex {
         display: flex;
     }
@@ -217,15 +284,16 @@
     .tab-box {
         background-color: #fff;
         padding: 0 5px;
+        border-bottom: 1px solid #e5e5e5;
     }
     .add-tab {
         line-height: 28px;
     }
     .header-box {
-        position:fixed;
-        left:0;
-        top:0;
-        right:0;
-        z-index:9999;
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        z-index: 9999;
     }
 </style>

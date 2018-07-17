@@ -19,6 +19,18 @@
           <span slot="left">个人信息</span>
           <span slot="right"></span>
         </yd-cell-item>
+        <yd-cell-item arrow type="a" @click.native="userInfo.name? $router.push({path:'mallIndex'}): $router.push({path:'login'})">
+          <span slot="left">积分商城</span>
+          <span slot="right"></span>
+        </yd-cell-item>
+        <yd-cell-item arrow type="a" @click.native="userInfo.name? $router.push({path:'ownAuction'}): $router.push({path:'login'})">
+          <span slot="left">我的竞拍</span>
+          <span slot="right"></span>
+        </yd-cell-item>
+        <yd-cell-item arrow type="a" @click.native="userInfo.name? $router.push({path:'ownOrder'}): $router.push({path:'login'})">
+          <span slot="left">我的订单</span>
+          <span slot="right"></span>
+        </yd-cell-item>
 
       </yd-cell-group>
     </div>

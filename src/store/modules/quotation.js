@@ -15,8 +15,8 @@ const actions = {
     return http.get('/api/platform.lists',{params})
   },
   //获取币种
-  [types.COIN_LIST]({}) {
-    return http.get('/api/coin.lists',)
+  [types.COIN_LIST]({},params) {
+    return http.get('/api/coin.lists',{params})
   },
   //指定货币的各平台行情
   [types.LIST_BY_CID]({},params) {
@@ -29,7 +29,8 @@ const actions = {
   //指定平台交易列表
   [types.TREND]({},params){
     return http.get('/api/coin.trend',{params})
-  }
+  },
+
 }
 
 const mutations = {}
