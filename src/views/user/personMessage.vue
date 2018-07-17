@@ -6,9 +6,9 @@
         <yd-cell-item arrow>
           <span slot="left">头像</span>
           <span slot="right" class="avatar">
-            <img :src="userInfo.avatar" alt="" style="background-size: 100% 100% " v-if="userInfo.avatar">
-            <img src="../../assets/default_avatar_male.jpg" alt="" style="background-size: 100% 100% " v-else>
-          </span>
+              <img :src="userInfo.avatar" alt="" style="background-size: 100% 100% " v-if="userInfo.avatar">
+              <img src="../../assets/default_avatar_male.jpg" alt="" style="background-size: 100% 100% " v-else>
+            </span>
         </yd-cell-item>
         <yd-cell-item arrow>
           <span slot="left">昵称</span>
@@ -33,9 +33,10 @@
   </div>
 </template>
 <script>
-  import {mapGetters} from "vuex"
+  import {
+    mapGetters
+  } from "vuex"
   import * as types from "../../store/mutations-type"
-
   export default {
     name: "personMessage",
     computed: {

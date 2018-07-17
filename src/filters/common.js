@@ -35,3 +35,9 @@ export const formatDigit=(num)=>{
         }
     }
 }
+
+export const formatStatus=(index)=>{
+    let status = ['未开始','拍卖中','已结束']
+    return status[index]
+}
+

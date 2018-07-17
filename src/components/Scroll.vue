@@ -109,7 +109,8 @@
     },
     props: {
       scrollData: {
-        type: Array
+        type: Array,
+        default:()=>[]
       },
       downCb: {
         type: Function

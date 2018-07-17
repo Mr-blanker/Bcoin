@@ -29,7 +29,8 @@ const actions = {
   //指定平台交易列表
   [types.TREND]({},params){
     return http.get('/api/coin.trend',{params})
-  }
+  },
+
 }
 
 const mutations = {}

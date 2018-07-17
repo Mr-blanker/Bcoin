@@ -28,6 +28,14 @@ import search from '@/views/search'
 import community from '@/views/community/community'
 import communityAdd from '@/views/community/communityAdd'
 
+//积分商城
+import mallIndex from '@/views/integralMall/index'
+import shopDetail from '@/views/integralMall/shopDetail'
+import ownAuction from '@/views/integralMall/ownAuction'
+import ownOrder from '@/views/integralMall/ownOrder'
+import createOrder from '@/views/integralMall/createOrder'
+import userAddressList from '@/views/integralMall/userAddressList'
+import orderDetail from '@/views/integralMall/orderDetail'
 
 export default [
   {
@@ -72,12 +80,23 @@ export default [
   {
     name: 'marketIndex',
     path: '/marketIndex',
-    component: marketIndex
+    component: marketIndex,
+
+  },
+  {
+    name:'mallIndex',
+    path:'/mallIndex',
+    component: mallIndex,
   },
   {
     name: 'tagManange',
     path: '/tagManange',
     component: tagManange
+  },
+  {
+    name: 'createOrder',
+    path: '/createOrder',
+    component: createOrder
   },
   { name: 'Information',
     name: 'Information',
@@ -136,6 +155,36 @@ export default [
     name: 'communityAdd',
     path: '/communityAdd',
     component: communityAdd,
+  },
+  {
+    name: 'shopDetail',
+    path: '/shopDetail',
+    component: shopDetail,
+  },
+  {
+    name: 'ownAuction',
+    path: '/ownAuction',
+    component: ownAuction,
+  }, 
+  {
+    name: 'ownOrder',
+    path: '/ownOrder',
+    component: ownOrder,
+  },
+  {
+    name: 'userAddressList',
+    path: '/userAddressList',
+    component: userAddressList,
+  },
+  {
+    name: 'orderDetail',
+    path: '/orderDetail',
+    component: orderDetail,
+  },
+  ,{
+    name: 'upload',
+    path: '/upload',
+    component: ()=>import('../components/upload/Upload'),
   }
 
 ]

@@ -56,7 +56,7 @@
         </div>
         <!--专栏-->
         <yd-accordion v-if="index===2">
-          <yd-accordion-item :title="item.name" v-for="item in columnList">
+          <yd-accordion-item :title="item.name" v-for="item in columnList" :key="index">
             <div style="padding: .24rem;" class="c-list">
               <ul class="c-list-box" style="width: 100%;">
                 <yd-grids-group :rows="3" item-height="2rem">

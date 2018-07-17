@@ -71,3 +71,17 @@ export const USER_GETLASTADDR= 'USER_GETLASTADDR'
 //公共
 //图片上传
 export const UPLOAD_IMAGE ='UPLOAD_IMAGE'
+
+export const PRD_LIST = 'PRD_LIST'
+
+export const PRD_DETAIL = 'PRD_DETAIL'
+
+export const PRD_AUCTION = 'PRD_AUCTION'
+
+export const USER_PRD_AUCTION = 'USER_PRD_AUCTION'
+
+export const PRD_EXCHANGE = 'PRD_EXCHANGE'
+
+export const USER_ORDER_LIST = 'USER_ORDER_LIST'
+
+export const CANCLE_ORDER = 'CANCLE_ORDER'

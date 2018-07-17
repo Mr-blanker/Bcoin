@@ -1,8 +1,10 @@
 <template>
   <div>
-    <common-header :currentTab.sync="activeTab" :tabClick="tabIndexChange"></common-header>
-    <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :downCb="getData" :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
-    </scroll>
+      <common-header :currentTab.sync="activeTab" :tabClick="tabIndexChange"></common-header>
+    <keep-alive>    
+      <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :downCb="getData" :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
+      </scroll>
+    </keep-alive>
   </div>
 </template>
 <script>
@@ -19,14 +21,15 @@
     data() {
       return {
         activeTab: 1,
-        scrollList: '',
+        scrollList: [],
         len: 0,
         cid: 1,
         eid: '',
         meInstance: '',
       }
     },
-    mounted() {},
+    mounted() {
+    },
     components: {
       scroll,
       commonHeader
@@ -113,7 +116,7 @@
         setTimeout(() => {
           this.initScroll()
         }, 10)
-        this.$refs.scroller.goTop()
+        // this.$refs.scroller.goTop()
       }
     }
   }
