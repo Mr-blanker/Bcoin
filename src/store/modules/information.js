@@ -34,9 +34,9 @@ const actions = {
     })
   },
   //新闻评论列表
-  [types.NEWS_LIST]({},newID) {
+  [types.NEWS_LIST]({}, newID) {
     return new Promise((resolve) => {
-      http.get('/api/comment.lists',newID).then(res => {
+      http.get('/api/comment.lists', {params: newID}).then(res => {
         return resolve(res.data)
       })
     })
