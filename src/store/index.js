@@ -5,6 +5,7 @@ import getters from './getters'
 import mutations from './mutations'
 import state from './state'
 import information from './modules/information'
+import community from './modules/community'
 import user from './modules/user'
 import quotation from './modules/quotation'
 import mall from './modules/mall'
@@ -25,6 +26,7 @@ export default new Vuex.Store({
     information,
     user,
     quotation,
-    mall
+    mall,
+    community
   }
 });

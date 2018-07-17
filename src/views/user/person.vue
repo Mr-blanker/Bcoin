@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header v-bind="{left:1,centerValue:'个人',center:2}"></Header>
+    <Header v-bind="{centerValue:'个人',center:2}"></Header>
     <div class="mine">
       <div class="head"  @click="userInfo.name? $router.push({path:'personMessage'}): $router.push({path:'login'})">
         <div class="head-left">

@@ -9,7 +9,7 @@ $fbb: #e2dede; //下边框颜色
 $smallws:.25rem;//字体  小
 $wdc:#909090; //字体颜色
 .pt{
-  padding-top: 45px;
+  padding-top:.9rem;
 }
 .padlr02{
   padding-left: .2rem;
@@ -24,13 +24,13 @@ $wdc:#909090; //字体颜色
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 45px;
+  height: .9rem;
   padding: 0 10px;
   background: $bg;
   z-index: 9999;
   .header-left,
   .header-right {
-    width: 25px;
+    width: .5rem;
     i {
       display: inline-flex;
       justify-content: center;
@@ -42,16 +42,16 @@ $wdc:#909090; //字体颜色
   .header-main {
     flex: 1;
     position: relative;
-    height: 45px;
-    line-height: 45px;
+    height: .9rem;
+    line-height: .9rem;
     .center-input {
       display: inline-flex;
       justify-content: center;
       align-items: center;
       width: 90%;
       background: $hc;
-      height: 25px;
-      border-radius: 15px;
+      height: .5rem;
+      border-radius: .3rem;
       font-size: .32rem;
     }
     .center-title {
@@ -60,12 +60,12 @@ $wdc:#909090; //字体颜色
     }
     .center-ul {
       display: inline-flex;
-      height: 45px;
+      height: .9rem;
       li {
         display: inline-flex;
         font-size: $wfs;
         color: $hc;
-        margin: 0 9px;
+        margin: 0 .18rem;
       }
       .active {
         border-bottom: 2px solid $hc;
@@ -87,7 +87,7 @@ $wdc:#909090; //字体颜色
   justify-content: space-between;
   justify-content: center;
   bottom: 0;
-  height: 45px;
+  height: .9rem;
   background: $fbg;
   width: 100%;
   border-top: 1px solid $ftb;
@@ -114,7 +114,7 @@ $wdc:#909090; //字体颜色
 
 //ydUI
 .yd-cell-item {
-  height: 50px;
+  height: 1rem;
 }
 
 .yd-search-input {
@@ -149,4 +149,45 @@ $wdc:#909090; //字体颜色
 }
 .yd-switch{
   color: $bg !important;
+}
+
+.van-tabs__line{
+  background-color:$bg !important;
+  display: none;
+}
+
+.van-tabs--line {
+  padding-top: .56rem !important;
+}
+
+.van-tabs--line .van-tabs__wrap {
+  height: .56rem !important;
+}
+
+.van-tab {
+  line-height: .56rem !important;
+  color:#8a8d99 !important;
+  padding: 0 !important;
+}
+
+.van-tab--active {
+  color:$bg !important;
+}
+
+.van-tabs__wrap--scrollable .van-tab {
+  flex:0 0 19% !important;
+}
+
+.yd-datetime-head>a:last-child {
+  color:#208de3 !important;
+}
+.yd-grids-txt{
+  margin-top: .3rem !important;
+}
+.yd-grids-txt {
+  width: 100%;
+}
+.yd-popup{
+  z-index: 9999;
+  width: 100% !important;
 }

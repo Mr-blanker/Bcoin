@@ -11,7 +11,7 @@ axios.defaults.timeout = 5000;
 //配置请求的地址
 axios.defaults.baseURL = "http://ssl.pandawork.vip";
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
-
+// axios.defaults.headers.post['Content-Type'] = 'application/json; charset=UTF-8';
 // http request 拦截器
 let notLoading = ['/api/news.lists','/api/flash.lists','/api/news.flash',
                   '/api/column.cate','/api/person.lists','/api/coin.lists',
@@ -39,30 +39,14 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
+    console.log(response.data)
     switch (response.data.code) {
       case 401:
         //如果token过期则清空本地缓存
         window.localStorage.clear();
-        store.dispatch(types.USER_LOGOUT).then(() => {
-          // utils.dialog.confirm({
-          //   content: "登录过期，是否跳转到登陆页？",
-          //   confirm: function () {
-          //     router.push({
-          //       name: 'login'
-          //     });
-          //   }
-          // });
-          Confirm({
-            title: '登录过期',
-            mes: '是否跳转到登录？',
-            opts: () => {
-              this.$router.push({path: 'Login'})
-            }
-          })
-        });
-        break;
+        router.push({path:'/login'})
+        break
     }
-    ;
     Loading.close();
     return response;
   },

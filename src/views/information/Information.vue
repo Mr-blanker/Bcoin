@@ -56,6 +56,7 @@
         </div>
         <!--专栏-->
         <yd-accordion v-if="index===2">
+<<<<<<< HEAD
           <yd-accordion-item :title="item.name" v-for="item in columnList" :key="index">
             <div style="padding: .24rem;" class="c-list">
               <ul class="c-list-box" style="width: 100%;">
@@ -68,6 +69,20 @@
               </ul>
             </div>
           </yd-accordion-item>
+=======
+          <!--<yd-accordion-item :title="item.name" v-for="item in columnList">-->
+            <!--<div style="padding: .24rem;" class="c-list">-->
+              <!--<ul class="c-list-box" style="width: 100%;">-->
+                <!--<yd-grids-group :rows="3"  item-height="2rem">-->
+                  <!--<yd-grids-item v-for="n in item.items" class="ccc" @click.native="$router.push({path:'acView',query:{val:JSON.stringify(n)}})">-->
+                    <!--<span slot="text">{{n.title}}</span>-->
+                    <!--<img slot="icon" :src="n.thumbnail" alt="">-->
+                  <!--</yd-grids-item>-->
+                <!--</yd-grids-group>-->
+              <!--</ul>-->
+            <!--</div>-->
+          <!--</yd-accordion-item>-->
+>>>>>>> user/hjx
         </yd-accordion>
       </div>
     </div>

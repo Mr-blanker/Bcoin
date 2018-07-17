@@ -27,6 +27,9 @@ import search from '@/views/search'
 //社群
 import community from '@/views/community/community'
 import communityAdd from '@/views/community/communityAdd'
+import communityDynamic from '@/views/community/communityDynamic'
+import Release from '@/views/community/Release'
+import articleDetail from '@/views/community/articleDetail'
 
 //积分商城
 import mallIndex from '@/views/integralMall/index'
@@ -139,6 +142,11 @@ export default [
     component: InformationDetail
   },
   {
+    name: 'marketIndex',
+    path: '/marketIndex',
+    component: marketIndex
+  },
+  {
     name: 'trend',
     path: '/trend',
     component: trend,
@@ -185,6 +193,18 @@ export default [
     name: 'upload',
     path: '/upload',
     component: ()=>import('../components/upload/Upload'),
+  },{
+    name: 'communityDynamic',
+    path: '/communityDynamic',
+    component: communityDynamic,
+  },{
+    name: 'Release',
+    path: '/Release',
+    component: Release,
+  },{
+    name: 'articleDetail',
+    path: '/articleDetail',
+    component: articleDetail,
   }
 
 ]

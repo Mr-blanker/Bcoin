@@ -26,6 +26,7 @@ const actions = {
     return new Promise((resolve) => {
       http.get('/api/user.login', {params: userInfo}).then(res => {
         if (res.data.code === 0) {
+          console.log(res.data)
           commit(types.SET_USER_SID, res.data.data.sid)
           dispatch(types.USER_USERINFO)
         }
