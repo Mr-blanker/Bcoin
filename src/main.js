@@ -12,7 +12,7 @@ import {Slider, SliderItem} from 'vue-ydui/dist/lib.rem/slider';
 import "./assets/css/base.scss"
 import "./assets/css/font/iconfont.css"
 import "./assets/css/public.scss"
-import "./assets/css/style.scss"
+// import "./assets/css/style.scss"
 import Header from "./components/Header"
 import moment from 'moment'
 import filters from './filters/index'

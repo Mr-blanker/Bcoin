@@ -35,7 +35,6 @@
     },
     watch: {
       '$route'(to) {
-        console.log(to)
         if (this.showURL.includes(to.name)) {
           this.isShowFooterNav = true
         } else {

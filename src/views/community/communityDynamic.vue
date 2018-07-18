@@ -38,46 +38,48 @@
 
     </div>
     <!--动态-->
-
-    <div class="cd-dynamic pullScroll" v-else>
-      <div id="scroll">
-        <div>
-          <div class="cd-dynamic-item" v-for="(item,index) in articleList"
-               @click.stop="$router.push({path:'/articleDetail',query:{item:JSON.stringify(item)}})">
-            <div class="cd-dynamic-user">
-              <img :src="item.u_pic" alt="">
-              <!--i是否置顶-->
-              <div class="cd-dynamic-user-info">
-                <span class="cd-dynamic-title">{{item.u_name}}<i v-if="item.isTop">置顶</i></span>
-                <i class="istop" v-if="!item.isTop&&userInfo.uid==detailInfo.ownerID"
-                   @click.stop="isTop(1,item.id)">置顶</i>
-                <i class="istop" v-if="item.isTop&&userInfo.uid==detailInfo.ownerID"
-                   @click.stop="isTop(0,item.id)">取消置顶</i>
-                <span class="cd-dynamic-time">{{item.createTime|moment('YYYY-MM-DD HH:mm')}}</span>
+    <div class="cd-dynamic " v-if="index!==1">
+      <div class="pullScroll">
+        <div id="scroll">
+          <div>
+            <div class="cd-dynamic-item" v-for="(item,index) in articleList"
+                 @click.stop="$router.push({path:'/articleDetail',query:{item:JSON.stringify(item)}})">
+              <div class="cd-dynamic-user">
+                <img :src="item.u_pic" alt="">
+                <!--i是否置顶-->
+                <div class="cd-dynamic-user-info">
+                  <span class="cd-dynamic-title">{{item.u_name}}<i v-if="item.isTop">置顶</i></span>
+                  <i class="istop" v-if="!item.isTop&&userInfo.uid==detailInfo.ownerID"
+                     @click.stop="isTop(1,item.id)">置顶</i>
+                  <i class="istop" v-if="item.isTop&&userInfo.uid==detailInfo.ownerID"
+                     @click.stop="isTop(0,item.id)">取消置顶</i>
+                  <span class="cd-dynamic-time">{{item.createTime|moment('YYYY-MM-DD HH:mm')}}</span>
+                </div>
               </div>
-            </div>
 
-            <div class="cd-dynamic-content">
-              <span class="cd-dynamic-text">{{item.content}}</span>
-              <img :src="attr" alt="" v-for="attr in item.imgs">
-              <div class="cd-dynamic-icon">
-                <i class="icon iconfont icon-dianzan dianzan " @click.stop="dianzan(item,index)"
-                   :class="{'is-dianzan':item.isLike}"></i>
-                <i class="icon iconfont icon-web-icon- pinglun" @click.stop="comment(item.id)"></i>
+              <div class="cd-dynamic-content">
+                <span class="cd-dynamic-text">{{item.content}}</span>
+                <img :src="attr" alt="" v-for="attr in item.imgs">
+                <div class="cd-dynamic-icon">
+                  <i class="icon iconfont icon-dianzan dianzan " @click.stop="dianzan(item,index)"
+                     :class="{'is-dianzan':item.isLike}"></i>
+                  <i class="icon iconfont icon-web-icon- pinglun" @click.stop="comment(item.id)"></i>
+                </div>
               </div>
+              <div class="cd-dynamic-zan">
+                <i class="icon iconfont icon-dianzan dianzan zan"></i>
+                <span style="padding-left: .1rem;">{{item.likes.items.toString()}} <span v-if="item.likes.num>20">等{{item.likes.num}}人点赞</span></span>
+              </div>
+              <ul class="cd-dynamic-comment">
+                <li v-for="attr in item.comments.items">
+                  <span> <a style="color: #208de3;">{{attr.u_name}}</a>：{{attr.content}}</span>
+                </li>
+              </ul>
             </div>
-            <div class="cd-dynamic-zan">
-              <i class="icon iconfont icon-dianzan dianzan zan"></i>
-              <span style="padding-left: .1rem;">{{item.likes.items.toString()}} <span v-if="item.likes.num>20">等{{item.likes.num}}人点赞</span></span>
-            </div>
-            <ul class="cd-dynamic-comment">
-              <li v-for="attr in item.comments.items">
-                <span> <a style="color: #208de3;">{{attr.u_name}}</a>：{{attr.content}}</span>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
+
 
     </div>
     <div class="cd-add" v-if="!detailInfo.isIn" @click="add">
@@ -115,8 +117,7 @@
     },
     mounted() {
       this.getDetail()
-      // this.getArticleList()
-      let that = this
+      let that =this
       this.scroll = new PullScroll("scroll", {
         refresh: function (pullScroll) {
           that.len = 0
@@ -127,7 +128,8 @@
           that.loadDataList(pullScroll);
         }
       });
-      this.scroll.triggerRefresh();
+      this.scroll.triggerRefresh()
+
     },
     methods: {
       initDataList(pullScroll) {
@@ -167,13 +169,8 @@
         })
       },
       clickItem(key) {
-        console.log(key)
         this.index = key
-        if (key === 1) {
-          console.log(this.scroll)
-          // this.scroll = ''
-          // console.log(this.scroll)
-        }
+        // this.getScroll()
       },
       //文章点赞
       dianzan(item, index) {
@@ -216,6 +213,7 @@
                   }
                 }
               }
+              that.scroll.triggerRefresh()
             } else if (res.code === 401) {
               that.$router.push({path: 'Login'})
             }
@@ -255,6 +253,8 @@
               if (res.code === 401) {
                 that.$router.push({path: 'Login'})
               }
+              // that.scroll.triggerRefresh()
+
               that.getArticleList()
 
             }
@@ -332,4 +332,22 @@
   .is-dianzan {
     color: #208de3;
   }
+
+  .cd-dynamic-comment {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 0 0 .8rem;
+    background: #fff;
+    font-size: .3rem;
+    li {
+      display: flex;
+      width: 100%;
+      padding-bottom: .1rem;
+      overflow: hidden;
+      span {
+        text-align: left;
+      }
+    }
+  }
+
 </style>
