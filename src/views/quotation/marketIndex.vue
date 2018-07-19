@@ -1,10 +1,8 @@
 <template>
   <div>
-      <common-header :currentTab.sync="activeTab" :tabClick="tabIndexChange"></common-header>
-    <keep-alive>    
-      <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :downCb="getData" :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
-      </scroll>
-    </keep-alive>
+    <common-header :currentTab.sync="activeTab" :tabClick="tabIndexChange"></common-header>
+    <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :isChoiceType="isChoice" :downCb="getData" :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
+    </scroll>
   </div>
 </template>
 <script>
@@ -26,16 +24,17 @@
         cid: 1,
         eid: '',
         meInstance: '',
+        isChoice: false,
+        activeIndex:0
       }
     },
-    mounted() {
-    },
+    mounted() {},
     components: {
       scroll,
       commonHeader
     },
     methods: {
-      ...mapActions(['TICKER_LIST', 'PLATFORM_LIST', 'LIST_BY_CID', 'COIN_LIST', 'LIST_BY_PLAT']),
+      ...mapActions(['TICKER_LIST', 'PLATFORM_LIST', 'LIST_BY_CID', 'COIN_LIST', 'LIST_BY_PLAT','CHOICE_LIST']),
       //获取币种
       getCoin() {
         this.COIN_LIST().then(res => {
@@ -56,6 +55,14 @@
           len: this.len
         }
         this.LIST_BY_CID(param).then(res => {
+          this.scrollList = res.data.data
+          this.meInstance.finish(false);
+        })
+      },
+      getUserChoice(){
+        this.CHOICE_LIST({
+          len: this.len
+        }).then(res => {
           this.scrollList = res.data.data
           this.meInstance.finish(false);
         })
@@ -94,7 +101,11 @@
           this.len = len
         }
         if (this.activeTab == 1) {
-          this.getTicker()
+          if (this.isChoice) {
+            this.getUserChoice()
+          } else {
+            this.getTicker()
+          }
         } else if (this.activeTab == 2) {
           this.getListByCID()
         } else if (this.activeTab == 3) {
@@ -105,7 +116,7 @@
       initScroll() {
         this.meInstance.triggerRefresh()
       },
-      tabIndexChange(obj, isTicker = false) {
+      tabIndexChange(obj, isChoice = false, isTicker = false) {
         if (!isTicker) {
           if (obj.cid) {
             this.cid = obj.cid
@@ -113,10 +124,13 @@
             this.eid = obj.eid
           }
         }
+        if (isChoice) {
+          console.log(1111111111)
+        }
+        this.isChoice = isChoice
         setTimeout(() => {
           this.initScroll()
         }, 10)
-        // this.$refs.scroller.goTop()
       }
     }
   }

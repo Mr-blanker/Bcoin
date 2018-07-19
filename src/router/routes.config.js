@@ -21,6 +21,9 @@ import trend from '@/views/quotation/trend'
 import tagManange from '@/views/quotation/tagManange'
 //标签添加
 import addTag from '@/views/quotation/addTag'
+//用户自选
+import manageUserChoice from '@/views/quotation/manageUserChoice'
+import addChoice from '@/views/quotation/addChoice'
 
 //搜索
 import search from '@/views/search'
@@ -64,7 +67,20 @@ export default [
     name: 'marketIndex',
     path: '/marketIndex',
     component: marketIndex,
+    meta:{
+      keepalive:true
+    }
   },
+  {
+   name:'manageUserChoice',
+   path:'/manageUserChoice',
+   component:manageUserChoice 
+  },
+  {
+    name:'addChoice',
+    path:'/addChoice',
+    component:addChoice 
+   },
   {
     name: 'person',
     path: '/person',

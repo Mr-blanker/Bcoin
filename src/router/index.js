@@ -8,22 +8,17 @@ Vue.use(Router)
 
 const router = new Router({
   routes,
-  // scrollBehavior(to, from, savedPosition) {
-  //     console.log('savedPosition=>')
-  //     console.dir(savedPosition)
-  //   if (savedPosition) {
-  //     document.body.scrollTop = savedPosition.y
-  //     console.log('document.body.scrollTop')
-  //     console.log(savedPosition.y)
-  //     console.log(document.body.scrollTop)
-  //     return savedPosition
-  //   } else {
-  //     return {x: 0, y: 0}
-  //   }
-  // }
 })
 
 router.beforeEach((to, from, next) => {
-  next()
+  let informationId = window.sessionStorage.getItem('informationActive')
+  let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+  if (from.name == 'Information') {
+    window.sessionStorage.setItem('scrollTop_' + from.name + '_' + informationId, scrollTop);
+    next();
+  }else{
+    window.sessionStorage.setItem('scrollTop_' + from.name, scrollTop);
+    next();
+  }
 })
 export default router

@@ -12,7 +12,7 @@
         <div>
             <div class="shop-box">
                 <div class="shop-img">
-                    <img src="../../assets/Penguins.jpg" alt="">
+                    <img :src="detailData.img" alt="">
                 </div>
                 <div class="shop-base" v-if="type==1">
                     <div class="info-base">

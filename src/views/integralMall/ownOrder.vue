@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="pullScroll" :style="{'padding-top':activeTab==1?'75px':'47px','padding-bottom':'50px'}">
-      <div id="scroll">
+      <div id="orderScroll">
         <div>
           <div class="commodity-item" v-for="(item,index) in prdList" :key="index"
                @click="$router.push(`/orderDetail?order=${JSON.stringify(item)}`)">
@@ -79,7 +79,7 @@
     },
     mounted() {
       let that = this;
-      this.scroll = new PullScroll("scroll", {
+      this.scroll = new PullScroll("orderScroll", {
         refresh: function (pullScroll) {
           that.getData(pullScroll)
         },

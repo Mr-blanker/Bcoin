@@ -30,7 +30,22 @@ const actions = {
   [types.TREND]({},params){
     return http.get('/api/coin.trend',{params})
   },
-
+  //获取用户自选列表
+  [types.CHOICE_LIST]({}){
+    return http.get('/api/user/choice.lists')
+  },
+  //删除用户自选
+  [types.DEL_CHOICE]({},params){
+    return http.post('/api/user/choice.del',params)
+  },
+  //新增用户自选
+  [types.ADD_CHOICE]({},params){
+    return http.post('/api/user/choice.add',params)
+  },
+  //搜索指定关键字对应的币种
+  [types.SEARCH_CHOICE]({},params){
+    return http.get('/api/coin.search',{params})
+  }
 }
 
 const mutations = {}

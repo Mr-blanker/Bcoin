@@ -130,5 +130,14 @@
 </script>
 
 <style scoped>
-
+  #form1 {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    opacity: 0;
+  input {
+    height: 100%;
+    width: 100%;
+  }
+  }
 </style>

@@ -203,4 +203,29 @@
       padding-left: 10px;
     }
   }
+  .ad-dynamic-comment {
+    padding: 10px;
+    margin-top: 10px;
+    .ad-comment-title {
+      display: flex;
+      align-items: center;
+      height: 40px;
+      width: 100%;
+      border-bottom: 1px solid #dadada;
+    }
+  }
+  .ad-comment-item {
+    min-height: 1rem;
+    padding: .3rem 0 !important;
+    border-bottom: 1px solid #dadada;
+    flex-wrap: wrap;
+    &:last-child {
+      border: 0;
+    }
+    img {
+      height: .8rem;
+      width: .8rem;
+      border-radius: 100%;
+    }
+  }
 </style>

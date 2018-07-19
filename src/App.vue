@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    <keep-alive include="Information">
+    <keep-alive :include="includeComponents">
       <router-view></router-view>
     </keep-alive>
     <Footer></Footer>
@@ -16,27 +16,31 @@
     name: 'App',
     data() {
       return {
-        isShowFooterNav: true
+        isShowFooterNav: true,
+        includeComponents:['Information','marketIndex']
       }
     },
     components: {
       Footer
     },
     watch: {
-      // $route(to) {
-      //   console.log(to)
-      //   if (to.name == 'Information') {
-      //     this.isShowFooterNav = true
-      //   } else {
-      //     this.isShowFooterNav = false
-      //   }
-      // }
     },
     mounted() {
       // console.log(window.localStorage.userInfo)
       // this.$store.dispatch(types.USER_USERINFO)
 
-    }
+    },
+    updated() {
+      let informationId = window.sessionStorage.getItem('informationActive')
+      let scrollTop
+      if (this.$route.name == 'Information') {
+        scrollTop = window.sessionStorage.getItem('scrollTop_' + this.$route.name + '_' + informationId)
+      } else {
+        scrollTop = window.sessionStorage.getItem('scrollTop_' + this.$route.name);
+      }
+      document.body.scrollTop = scrollTop;
+      document.documentElement.scrollTop = scrollTop;
+    },
   }
 </script>
 

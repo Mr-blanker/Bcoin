@@ -123,7 +123,6 @@
         this.shopScroll.triggerRefresh()
       },
       vantTabClick(index) {
-        console.log(12345678)
         if (index == 0) {
           delete this.reqParam.status
         }

@@ -114,7 +114,9 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  @import "../../assets/css/public";
+
   .build-community {
     background: rgb(245, 245, 245);
     border-top: 1px solid rgb(244, 244, 244);
@@ -122,5 +124,89 @@
     left: 0;
     right: 0;
     bottom: 0;
+  }
+
+  .re-box {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .re-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 44px;
+    border-bottom: 1px solid $fbb;
+    background: #fff;
+    padding: 0 .2rem;
+    font-size: .3rem;
+    &-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      p {
+        color: #999;
+        font-size: .28rem;
+      }
+    }
+  }
+
+  .re-text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-bottom: 55px;
+    textarea {
+      width: 100%;
+      border: 0;
+      font-size: .32rem;
+      padding: 0 .2rem;
+      flex: 1;
+    }
+    .img-list {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 .2rem;
+      background: #fff;
+      li {
+        position: relative;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: .1rem;
+        margin-bottom: .15rem;
+        img {
+          height: 100%;
+          width: 100%;
+        }
+        i {
+          position: absolute;
+          top: -.1rem;
+          right: -.1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: .3rem;
+          height: .3rem;
+          border-radius: .2rem;
+          background: #b9b7b7;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .comment-box {
+    width: 100%;
+  }
+  #form1 {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    opacity: 0;
+    input {
+      height: 100%;
+      width: 100%;
+    }
   }
 </style>
