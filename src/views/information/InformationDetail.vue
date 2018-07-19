@@ -28,7 +28,7 @@
     </div>
     <div class="cd-dynamic-comment ad-dynamic-comment pullScroll" v-if="aid">
       <span class="ad-comment-title">评论</span>
-      <div id="scroll" style="width: 100%;">
+      <div id="informationDetailScroll" style="width: 100%;">
         <ul>
           <li v-for="attr in commentList" class="ad-comment-item">
             <img src="../../assets/default_avatar_male.jpg" alt="" v-if="!attr.pic">
@@ -64,7 +64,8 @@
         aid: '',
         id: '',
         a: '',
-        commentList: []
+        commentList: [],
+        commentTotal:''
       }
     },
     components: {
@@ -79,16 +80,14 @@
       this.wid = this.$route.query.wid
       let that = this
       this.$nextTick(()=>{
-        this.scroll = new PullScroll("scroll", {
-          refresh: function (pullScroll) {
-            that.loadDataList(pullScroll)
-          },
-          loading: function (pullScroll) {
-            that.loadDataList(pullScroll);
-          }
-        });
+        this.scroll = new MeScroll("informationDetailScroll", {
+        down: {
+          callback: that.loadDataList,
+        }
+      });
+        
         if(this.aid){
-          this.scroll.triggerRefresh();
+          this.scroll.triggerDownScroll();
         }
       },200)
 
@@ -129,12 +128,13 @@
     },
     methods: {
       //新闻评论列表
-      loadDataList(pullScroll) {
+      loadDataList(page,mescroll) {
         this.$store.dispatch(types.NEWS_LIST, {newID: this.aid}).then(res => {
           console.log(res)
           if (res.code !== 0) return
           this.commentList = res.data
-          pullScroll.finish(true);
+          this.scroll.endSuccess();
+          this.scroll.endUpScroll(true)
         })
       },
       //新闻评论
@@ -163,7 +163,7 @@
               if (res.code === 401) {
                 that.$router.push({path: 'Login'})
               }
-              that.scroll.triggerRefresh();
+              that.scroll.triggerDownScroll();
             }
           })
         });
