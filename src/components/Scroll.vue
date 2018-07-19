@@ -1,7 +1,7 @@
 <template>
   <div class="pullScroll" ref="scrollObj" style="padding-top:104px;padding-bottom:50px;">
     <div id="scroll">
-      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="$router.push(`/trend?coin=${JSON.stringify(item)}`)">
+      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="$router.push(`/trend?coin=${JSON.stringify(item)}&active=1`)">
         <div class="box-left">
           <div>
             <span class="coin-symbol">{{item.symbol}}</span>
@@ -22,7 +22,7 @@
           </div>
         </div>
       </div>
-      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==2" @click="$router.push(`/trend?coin=${JSON.stringify(item)}`)">
+      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==2" @click="$router.push(`/trend?coin=${JSON.stringify(item)}&active=2`)">
         <div class="box-left">
           <div>
             <span class="coin-symbol">{{item.name}}</span>
@@ -43,7 +43,7 @@
           </div>
         </div>
       </div>
-      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==3" @click="$router.push(`/trend?coin=${JSON.stringify(item)}`)">
+      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==3" @click="$router.push(`/trend?coin=${JSON.stringify(item)}&active=3`)">
         <div class="box-left">
           <div>
             <span class="coin-symbol">{{item.name}}</span>
