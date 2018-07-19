@@ -1,28 +1,35 @@
 <template>
   <div class="pullScroll" ref="scrollObj" style="padding-top:104px;padding-bottom:50px;">
-    <div id="scroll">
-      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="$router.push(`/trend?coin=${JSON.stringify(item)}`)">
+    <div id="quotationScroll">
+      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="$router.push(`/trend?coin=${JSON.stringify(item)}&active=1`)">
         <div class="box-left">
           <div>
             <span class="coin-symbol">{{item.symbol}}</span>
             <span class="coin-name">{{item.name}}</span>
+            <span class="coin-name" v-if="item.coin_name">{{item.coin_name}}</span>
           </div>
-          <div class="coin-issue">
+          <div class="coin-issue" v-if="item.name">
             <span>量/值:</span>
             <span>{{item['24h_volume_cny']|formatMoney}}/{{item.market_cap_cny|formatMoney}}</span>
+          </div>
+          <div class="coin-issue" v-if="item.cheng">
+            <span>成交量:</span>
+            <span>{{item.cheng|formatMoney}}</span>
           </div>
         </div>
         <div class="box-right flex flex-between">
           <div class="tr mark-box">
-            <div class="mark-sum ">{{item.price_cny?item.price_cny.toPrecision(7):'-'}}</div>
+            <div class="mark-sum " v-if="item.price_cny">{{item.price_cny?item.price_cny.toPrecision(7):'-'}}</div>
+            <div class="mark-sum " v-if="item.price">{{item.price?item.price.toPrecision(7):'-'}}</div>
             <div class="mark-percent">${{item.price_usd}}</div>
           </div>
           <div class="tr circulation-box">
-            <div :class="{'percent-box':true,'percentrise-color':item.percent_change_24h>0,'percentfall-color':item.percent_change_24h<0}">{{item.percent_change_24h}}%</div>
+            <div :class="{'percent-box':true,'percentrise-color':item.percent_change_24h>0,'percentfall-color':item.percent_change_24h<0}"  v-if="item.percent_change_24h">{{item.percent_change_24h}}%</div>
+            <div :class="{'percent-box':true,'percentrise-color':item.zhan>0,'percentfall-color':item.zhan<0}" v-if="item.zhan">{{item.zhan}}%</div>
           </div>
         </div>
       </div>
-      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==2" @click="$router.push(`/trend?coin=${JSON.stringify(item)}`)">
+      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==2" @click="$router.push(`/trend?coin=${JSON.stringify(item)}&active=2`)">
         <div class="box-left">
           <div>
             <span class="coin-symbol">{{item.name}}</span>
@@ -43,7 +50,7 @@
           </div>
         </div>
       </div>
-      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==3" @click="$router.push(`/trend?coin=${JSON.stringify(item)}`)">
+      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==3" @click="$router.push(`/trend?coin=${JSON.stringify(item)}&active=3`)">
         <div class="box-left">
           <div>
             <span class="coin-symbol">{{item.name}}</span>
@@ -64,10 +71,18 @@
           </div>
         </div>
       </div>
+      <div v-show="scrollData.length==0&&scrollBoxShow==1" class="add-choice"  @click="userInfo.name? $router.push({path:'manageUserChoice'}): $router.push({path:'login'})">
+        <span> <i class="icon iconfont icon-tianjia"></i></span>
+        <div>点击添加自选</div>
+      </div>
+       <span class="add-box" @click="$router.push('manageUserChoice')"  v-show="isChoiceType&&scrollBoxShow==1">
+        <i class="icon iconfont icon-tianjia"></i>
+      </span>
     </div>
   </div>
 </template>
 <script>
+import {mapGetters} from "vuex"
   export default {
     name: 'Scroll',
     data() {
@@ -81,9 +96,12 @@
         this.$emit('update:mescroll', val)
       }
     },
+    computed:{
+      ...mapGetters(['userInfo'])
+    },
     mounted() {
       let that = this;
-      this.mescroll = new PullScroll("scroll", {
+      this.mescroll = new PullScroll("quotationScroll", {
         refresh: function(pullScroll) {
           that.downCallback(pullScroll)
         },
@@ -110,7 +128,11 @@
     props: {
       scrollData: {
         type: Array,
-        default:()=>[]
+        default: () => []
+      },
+      isChoiceType: {
+        type: Boolean,
+        default: false
       },
       downCb: {
         type: Function
@@ -247,5 +269,33 @@
   }
   #scroll::-webkit-scrollbar {
     display: none;
+  }
+  .add-choice {
+    text-align: center;
+    span {
+      display: inline-block;
+      margin: 100px 0 10px 0;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      border: 1px solid #b0d2ec;
+      i {
+        color:#208de3;
+        font-size: 45px;
+      }
+    }
+  }
+  .add-box {
+    width: 45px;
+    height: 45px;
+    background: #208de3;
+    position: fixed;
+    bottom: 2rem;
+    right: .5rem;
+    border: 0;
+    border-radius: 40px;
+    i {
+      color: #fff;
+    }
   }
 </style>

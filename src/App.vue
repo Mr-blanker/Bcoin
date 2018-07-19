@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    <keep-alive include="Information">
+    <keep-alive :include="includeComponents">
       <router-view></router-view>
     </keep-alive>
     <Footer></Footer>
@@ -16,7 +16,8 @@
     name: 'App',
     data() {
       return {
-        isShowFooterNav: true
+        isShowFooterNav: true,
+        includeComponents:['Information','marketIndex']
       }
     },
     components: {
