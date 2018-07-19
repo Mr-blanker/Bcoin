@@ -2,9 +2,9 @@
   <div style="display: flex;flex-direction: column;height: 100%;">
     <Header v-bind="{left:1,right:1,center:3,list:titleList,liKey:index}" @clickItem="clickItem"></Header>
     <!--介绍-->
-    <div class="cd-box pt" v-if="index===1">
+    <div class="cd-box pt" v-show="index===1">
       <div class="pullScroll">
-        <div id="scroll">
+        <div>
           <div>
             <div class="cd-header">
               <div class="cd-header-top"></div>
@@ -43,9 +43,9 @@
       </div>
     </div>
     <!--动态-->
-    <div class="cd-dynamic " v-if="index!==1">
+    <div class="cd-dynamic " v-show="index!==1">
       <div class="pullScroll">
-        <div id="scroll">
+        <div id="dynamicScroll">
           <div>
             <div class="cd-dynamic-item" v-for="(item,index) in articleList" @click.stop="$router.push({path:'/articleDetail',query:{item:JSON.stringify(item)}})">
               <div class="cd-dynamic-user">
@@ -85,8 +85,8 @@
       <span v-else>免费加入本群</span>
     </div>
     <span class="add-box" @click="$router.push({path:'Release',query:{gid:id,name:detailInfo.name}})">
-        <i class="icon iconfont icon-tianjia"></i>
-      </span>
+              <i class="icon iconfont icon-tianjia"></i>
+            </span>
   </div>
 </template>
 
@@ -116,26 +116,34 @@
     mounted() {
       this.getDetail()
       let that = this
-      this.scroll = new PullScroll("scroll", {
-        refresh: function(pullScroll) {
-          that.len = 0
-          that.articleList = []
-          that.initDataList(pullScroll)
+      this.scroll = new MeScroll("dynamicScroll", {
+        down: {
+          callback: that.refresh,
         },
-        loading: function(pullScroll) {
-          that.loadDataList(pullScroll);
+        up: {
+          callback: that.loadDataList,
+          page: {
+            num: 0,
+            size: 10,
+            time: null
+          }
         }
       });
-      this.scroll.triggerRefresh()
+      this.scroll.triggerDownScroll()
     },
     methods: {
-      initDataList(pullScroll) {
-        this.loadDataList(pullScroll);
+      initDataList(page, meScroll) {
+        this.loadDataList(page, meScroll);
       },
-      loadDataList(pullScroll) {
-        if (this.len !== 0) {
-          pullScroll.finish(this.listCount < this.len);
-        }
+      refresh(page, meScroll) {
+        this.len = 0
+        this.articleList = []
+        this.initDataList(page, meScroll)
+      },
+      loadDataList(page, meScroll) {
+        // if (this.len !== 0) {
+        //   pullScroll.finish(this.listCount < this.len);
+        // }
         this.len += 20
         this.$store.dispatch(types.COMMUNITY_ARTICLE_LIST, {
           gid: this.id,
@@ -145,7 +153,9 @@
           if (res.code !== 0) return
           this.articleList = res.data
           this.listCount = res.data.length
-          pullScroll.finish(this.listCount < this.len);
+          this.scroll.endSuccess(res.data.length, this.listCount >= this.len);
+          if (this.listCount < this.len)
+            this.scroll.endUpScroll(true)
         })
       },
       getDetail() {
@@ -169,6 +179,8 @@
       },
       clickItem(key) {
         this.index = key
+        console.log('index')
+        console.log(key)
         // this.getScroll()
       },
       //文章点赞

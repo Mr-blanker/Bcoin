@@ -4,8 +4,7 @@
       <div class="market-tab ">
         <i class="icon iconfont icon-fanhui" @click="$router.go(-1)"></i>
         <div class="tab-contianer">
-          <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index"
-                @click="tabChange(index+1)">{{item}}</span>
+          <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index" @click="tabChange(index+1)">{{item}}</span>
         </div>
         <yd-icon name="" size="20px" color="#fff" style="visibility:hidden;"></yd-icon>
       </div>
@@ -19,8 +18,7 @@
     <div class="pullScroll" :style="{'padding-top':activeTab==1?'75px':'47px','padding-bottom':'50px'}">
       <div id="scrollBox">
         <div>
-          <div class="commodity-item" v-for="(item,index) in prdList" :key="index"
-               @click="$router.push(`/shopDetail?id=${item.id}&type=1`)" v-if="activeTab==1">
+          <div class="commodity-item" v-for="(item,index) in prdList" :key="index" @click="$router.push(`/shopDetail?id=${item.id}&type=1`)" v-if="activeTab==1">
             <div class="commodity-img">
               <img src="../../assets/logo.png" alt="">
             </div>
@@ -30,8 +28,7 @@
               <div>{{item.cur_point}}</div>
             </div>
           </div>
-          <div class="commodity-item" v-for="(item,index) in prdList" :key="index"
-               @click="$router.push(`/shopDetail?id=${item.id}&type=2`)" v-if="activeTab==2">
+          <div class="commodity-item" v-for="(item,index) in prdList" :key="index" @click="$router.push(`/shopDetail?id=${item.id}&type=2`)" v-if="activeTab==2">
             <div class="commodity-img">
               <img src="../../assets/logo.png" alt="">
             </div>
@@ -46,7 +43,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -61,7 +57,6 @@
     mapMutations,
     mapActions
   } from 'vuex'
-
   export default {
     name: 'index',
     data() {
@@ -92,20 +87,24 @@
     },
     mounted() {
       let that = this;
-      this.shopScroll = new PullScroll("scrollBox", {
-        refresh: function (pullScroll) {
-          that.getData(pullScroll)
+      this.shopScroll = new MeScroll("scrollBox", {
+        down: {
+          callback: that.getData
         },
-        loading: function (pullScroll) {
-          console.log('我被触发了')
-          that.loadMore(pullScroll);
+        up: {
+          callback: that.loadMore,
+          page: {
+            num: 0,
+            size: 10,
+            time: null
+          }
         }
       });
       this.vantTabClick(0)
     },
     methods: {
       ...mapActions(['PRD_LIST']),
-      getData(pullScroll) {
+      getData(page, mescroll) {
         if (this.activeTab == 1) {
           this.param = this.reqParam
         } else if (this.activeTab == 2) {
@@ -114,26 +113,28 @@
         this.PRD_LIST(this.param).then(res => {
           this.prdList = res.data.data
           this.totalCount = res.data.data.length
-          pullScroll.finish(this.totalCount < this.param.len);
-
+          this.shopScroll.endSuccess(res.data.data.length, this.totalCount >= this.param.len);
+          if (this.totalCount < this.param.len)
+            this.shopScroll.endUpScroll(true)
         })
       },
       tabChange(index) {
         this.activeTab = index
-        this.shopScroll.triggerRefresh()
+        this.shopScroll.setPageNum(1);
+        this.shopScroll.triggerDownScroll()
       },
       vantTabClick(index) {
         if (index == 0) {
           delete this.reqParam.status
         }
         this.reqParam.status = index - 1
-        this.shopScroll.triggerRefresh()
+        this.shopScroll.triggerDownScroll()
       },
-      loadMore() {
+      loadMore(page, mescroll) {
         if (this.activeTab == 1) {
-          this.reqParam.len += 20
+          this.reqParam.len = page.num*20
         } else if (this.activeTab == 2) {
-          this.hgParam.len += 20
+          this.hgParam.len = page.num*20
         }
         this.getData()
       }
@@ -178,7 +179,6 @@
       font-size: 16px;
     }
   }
-
   .commodity-item {
     display: flex;
     background-color: #fff;
@@ -207,23 +207,20 @@
     .commodity-inter {
       width: 30%;
       font-size: 16px;
-      & > div:last-child {
+      &>div:last-child {
         margin: 10px 0 0 0;
       }
     }
   }
-
   .mall-header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
   }
-
   .prd-box {
     padding: 75px 0 0 0;
   }
-
   .tab-active {
     background-color: #1464cc;
   }

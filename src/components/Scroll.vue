@@ -1,6 +1,6 @@
 <template>
-  <div class="pullScroll" ref="scrollObj" style="padding-top:104px;padding-bottom:50px;">
-    <div id="quotationScroll">
+  <div ref="scrollObj" style="padding-top:104px;padding-bottom:50px;">
+    <div id="quotationScroll" class="mescroll">
       <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="$router.push(`/trend?coin=${JSON.stringify(item)}&active=1`)">
         <div class="box-left">
           <div>
@@ -24,7 +24,7 @@
             <div class="mark-percent">${{item.price_usd}}</div>
           </div>
           <div class="tr circulation-box">
-            <div :class="{'percent-box':true,'percentrise-color':item.percent_change_24h>0,'percentfall-color':item.percent_change_24h<0}"  v-if="item.percent_change_24h">{{item.percent_change_24h}}%</div>
+            <div :class="{'percent-box':true,'percentrise-color':item.percent_change_24h>0,'percentfall-color':item.percent_change_24h<0}" v-if="item.percent_change_24h">{{item.percent_change_24h}}%</div>
             <div :class="{'percent-box':true,'percentrise-color':item.zhan>0,'percentfall-color':item.zhan<0}" v-if="item.zhan">{{item.zhan}}%</div>
           </div>
         </div>
@@ -71,18 +71,20 @@
           </div>
         </div>
       </div>
-      <div v-show="scrollData.length==0&&scrollBoxShow==1" class="add-choice"  @click="userInfo.name? $router.push({path:'manageUserChoice'}): $router.push({path:'login'})">
+      <div v-show="scrollData.length==0&&scrollBoxShow==1" class="add-choice" @click="userInfo.name? $router.push({path:'manageUserChoice'}): $router.push({path:'login'})">
         <span> <i class="icon iconfont icon-tianjia"></i></span>
         <div>点击添加自选</div>
       </div>
-       <span class="add-box" @click="$router.push('manageUserChoice')"  v-show="isChoiceType&&scrollBoxShow==1">
-        <i class="icon iconfont icon-tianjia"></i>
-      </span>
     </div>
+    <span class="add-box" @click="$router.push('manageUserChoice')" v-show="isChoiceType&&scrollBoxShow==1">
+        <i class="icon iconfont icon-tianjia"></i>
+    </span>
   </div>
 </template>
 <script>
-import {mapGetters} from "vuex"
+  import {
+    mapGetters
+  } from "vuex"
   export default {
     name: 'Scroll',
     data() {
@@ -96,26 +98,35 @@ import {mapGetters} from "vuex"
         this.$emit('update:mescroll', val)
       }
     },
-    computed:{
+    computed: {
       ...mapGetters(['userInfo'])
     },
     mounted() {
       let that = this;
-      this.mescroll = new PullScroll("quotationScroll", {
-        refresh: function(pullScroll) {
-          that.downCallback(pullScroll)
+      this.mescroll = new MeScroll("quotationScroll", {
+        down: {
+          callback: that.downCallback,
+          page: {
+            num: 0,
+            size: 10,
+            time: null
+          }
         },
-        loading: function(pullScroll) {
-          that.upCallback(pullScroll);
+        up: {
+          callback: that.upCallback
         }
       });
     },
     methods: {
-      upCallback(pullScroll) {
-        this.len += 20
+      upCallback(page, mescroll) {
+        console.log('page')
+        console.log(page)
+        console.log('mescroll')
+        console.log(mescroll)
+        this.len = 20 * page.num
         this.upCb(true, this.len)
       },
-      downCallback(pullScroll) {
+      downCallback(page, mescroll) {
         this.len = 20
         this.upCb(true, this.len)
       },
@@ -280,7 +291,7 @@ import {mapGetters} from "vuex"
       line-height: 100px;
       border: 1px solid #b0d2ec;
       i {
-        color:#208de3;
+        color: #208de3;
         font-size: 45px;
       }
     }

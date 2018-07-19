@@ -98,8 +98,6 @@
         mounted() {
             this.tabChange(1)
             let that = this
-            this.CHOICE_LIST().then(res => {
-            })
         },
         methods: {
             ...mapActions(['PLATFORM_LIST', 'COIN_LIST', 'CHOICE_LIST']),
@@ -112,6 +110,7 @@
                 })
             },
             vantTabClick(index) {
+                this.active = index
                 if ((index == 0 || index == 1) && this.activeTab != 3) {
                     this.activeTab = 1
                     this.$emit('update:currentTab', 1)
@@ -120,9 +119,9 @@
                     this.$emit('update:currentTab', 2)
                 }
                 if (this.activeTab == 1 && this.active == 0) {
-                    this.tabClick(this.tabList[index] ,false, true)
+                    this.tabClick(this.tabList[index] ,true, false)
                 } else if (this.activeTab == 1 && this.active == 1) {
-                    this.tabClick(this.tabList[index],true)
+                    this.tabClick(this.tabList[index],false,true)
                 } else {
                     this.tabClick(this.tabList[index])
                 }

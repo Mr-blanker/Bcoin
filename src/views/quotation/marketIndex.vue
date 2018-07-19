@@ -25,7 +25,8 @@
         eid: '',
         meInstance: '',
         isChoice: false,
-        activeIndex:0
+        activeIndex: 0,
+        totalCount: ''
       }
     },
     mounted() {},
@@ -34,7 +35,7 @@
       commonHeader
     },
     methods: {
-      ...mapActions(['TICKER_LIST', 'PLATFORM_LIST', 'LIST_BY_CID', 'COIN_LIST', 'LIST_BY_PLAT','CHOICE_LIST']),
+      ...mapActions(['TICKER_LIST', 'PLATFORM_LIST', 'LIST_BY_CID', 'COIN_LIST', 'LIST_BY_PLAT', 'CHOICE_LIST']),
       //获取币种
       getCoin() {
         this.COIN_LIST().then(res => {
@@ -56,15 +57,21 @@
         }
         this.LIST_BY_CID(param).then(res => {
           this.scrollList = res.data.data
-          this.meInstance.finish(false);
+          this.totalCount = res.data.data.length
+          this.meInstance.endSuccess(res.data.data.length, this.totalCount >= this.len);
+          if (this.totalCount < this.len)
+            this.meInstance.endUpScroll(true)
         })
       },
-      getUserChoice(){
+      getUserChoice() {
         this.CHOICE_LIST({
           len: this.len
         }).then(res => {
           this.scrollList = res.data.data
-          this.meInstance.finish(false);
+          this.totalCount = res.data.data.length
+          this.meInstance.endSuccess(res.data.data.length, this.totalCount >= this.len);
+          if (this.totalCount < this.len)
+            this.meInstance.endUpScroll(true)
         })
       },
       //获取所有货币的综合行情
@@ -73,7 +80,10 @@
           len: this.len
         }).then(res => {
           this.scrollList = res.data.data
-          this.meInstance.finish(false);
+          this.totalCount = res.data.data.length
+          this.meInstance.endSuccess(res.data.data.length, this.totalCount >= this.len);
+          if (this.totalCount < this.len)
+            this.meInstance.endUpScroll(true)
         })
       },
       //获取所有交易平台
@@ -92,7 +102,10 @@
           eid: this.eid
         }).then(res => {
           this.scrollList = res.data.data
-          this.meInstance.finish(false);
+          this.totalCount = res.data.data.length
+          this.meInstance.endSuccess(res.data.data.length, this.totalCount >= this.len);
+          if (this.totalCount < this.len)
+            this.meInstance.endUpScroll(true)
         })
       },
       //滚动容器获取数据方法
@@ -114,7 +127,9 @@
       },
       //初始化滚动条
       initScroll() {
-        this.meInstance.triggerRefresh()
+        // this.meInstance.resetUpScroll()
+        this.meInstance.setPageNum(1);
+        this.meInstance.triggerDownScroll()
       },
       tabIndexChange(obj, isChoice = false, isTicker = false) {
         if (!isTicker) {
@@ -124,9 +139,8 @@
             this.eid = obj.eid
           }
         }
-        if (isChoice) {
-          console.log(1111111111)
-        }
+        console.log('isChoice')
+        console.log(isChoice)
         this.isChoice = isChoice
         setTimeout(() => {
           this.initScroll()

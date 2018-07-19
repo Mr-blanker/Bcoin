@@ -29,7 +29,7 @@
         <div class="date-check">
             <div class="start-time">
                 <span>范围:</span>
-                <yd-datetime type="datetime" v-model="beginTime"></yd-datetime>
+                <yd-datetime type="datetime" v-model="beginTime" :callback="startCB"></yd-datetime>
             </div>
             <div>
                 <span>至:</span>
@@ -128,9 +128,19 @@
             },
             startCB() {
                 console.log('start')
+                if(this.beginTime>this.endTime){
+                    let temp = this.beginTime
+                    this.beginTime = this.endTime
+                    this.endTime = temp
+                }
             },
             endCB() {
                 console.log('end')
+                if(this.beginTime>this.endTime){
+                    let temp = this.beginTime
+                    this.beginTime = this.endTime
+                    this.endTime = temp
+                }
                 this.getTrends()
             },
             stampToDate(stamp) {
