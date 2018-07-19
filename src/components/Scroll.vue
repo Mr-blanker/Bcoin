@@ -35,7 +35,7 @@
             <span class="coin-symbol">{{item.name}}</span>
             <span class="coin-name">{{item.dui}}</span>
           </div>
-          <div class="coin-issue">
+          <div class="coin-issue" style="font-size: .26rem">
             <span>成交量:</span>
             <span>{{item.cheng|formatMoney}}</span>
           </div>
@@ -46,7 +46,7 @@
             <div class="mark-percent">${{item.price_usd}}</div>
           </div>
           <div class="tr circulation-box">
-            <div :class="{'percent-box':true,'percentrise-color':item.zhan>0,'percentfall-color':item.zhan<0}">{{item.zhan?item.zhan:'-'}}%</div>
+            <div :class="{'percent-box':true,'percentrise-color':item.zhan>0,'percentfall-color':item.zhan<0}" style="font-size: .28rem !important;">{{item.zhan?item.zhan:'-'}}%</div>
           </div>
         </div>
       </div>
@@ -198,13 +198,14 @@
         font-weight: 700;
       }
       .coin-name {
-        font-size: .24rem;
+        font-size: .26rem;
         color: $fcolor;
-        @include small-font;
+        //@include small-font;
       }
       .coin-issue {
         color: $fcolor;
-        @include small-font;
+        //@include small-font;
+        font-size: .24rem;
       }
     }
     .box-right {
@@ -274,6 +275,7 @@
   }
   .percentrise-color {
     background-color: #eb4236 !important;
+    font-size: .28rem !important;
   }
   .percentfall-color {
     background-color: #32a853 !important;
