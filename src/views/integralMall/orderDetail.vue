@@ -79,77 +79,77 @@
     $bg: #208de3; //header   背景颜色   主色调
     .market-tab {
         width: 100%;
-        height: 45px;
-        padding: 0 10px;
+        height: .9rem;
+        padding: 0 .2rem;
         background-color: $bg;
         display: flex;
         align-items: center;
         justify-content: space-between;
         color: #fff;
         .tab-contianer {
-            height: 45px;
+            height: .9rem;
             display: flex;
             align-items: center;
             flex-direction: column;
             justify-content: center;
             color: #fff;
-            font-size: 16px;
+            font-size: .32rem;
         }
         .save-text {
             color: #fff;
-            font-size: 16px;
+            font-size: .32rem;
         }
     }
     .address-info {
         background-color: #fff;
-        padding: 5px;
-        font-size: 15px;
+        padding: .1rem;
+        font-size: .3rem;
         .user-base {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 30px;
+            height: .6rem;
         }
         .user-address {
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            height: 30px;
+            height: .6rem;
         }
     }
     .commodity-item {
         background-color: #fff;
-        min-height: 80px;
-        margin: 5px 2px;
-        border-radius: 2px;
-        padding: 5px;
+        min-height: 1.6rem;
+        margin: .1rem .04rem;
+        border-radius: .04rem;
+        padding: .1rem;
         .order-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2px 0;
+            padding: .04rem 0;
             border-bottom: 1px solid #f3f3f3;
         }
         .order-main {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 5px 0;
+            padding: .1rem 0;
             img {
                 display: inline-block;
-                width: 70px;
-                height: 70px;
+                width: 1.4rem;
+                height: 1.4rem;
             }
         }
         .order-footer {
             border-top: 1px solid #f3f3f3;
-            height: 30px;
+            height: .6rem;
             display: flex;
             justify-content: flex-end;
             align-items: center;
             .cancle-btn {
                 border: 1px solid #eaeaea;
-                padding: 2px 4px;
+                padding: .04rem .08rem;
                 border-radius: 3px;
             }
         }
@@ -159,7 +159,7 @@
         &>div {
             display: flex;
             justify-content: space-between;
-            height: 25px;
+            height: .5rem;
             align-items: center;
         }
     }

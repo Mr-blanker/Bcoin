@@ -154,26 +154,26 @@
   $bg: #208de3; //header   背景颜色   主色
   .market-tab {
     width: 100%;
-    height: 45px;
-    padding: 0 10px;
+    height: .9rem;
+    padding: 0 .2rem;
     background-color: $bg;
     display: flex;
     align-items: center;
     justify-content: space-between;
     .tab-contianer {
-      height: 25px;
+      height: .5rem;
       display: flex;
       align-items: center;
       border: 1px solid #1464cc;
       color: #fff;
-      border-radius: 5px;
+      border-radius: .1rem;
       span {
         display: inline-block;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 50px;
-        height: 23px;
+        width: 1rem;
+        height: .46rem;
         cursor: pointer;
       }
       span:nth-child(2n) {
@@ -189,7 +189,7 @@
     justify-content: space-between;
   }
   .market-container {
-    height: calc(100vh - 45px - 28px - 75px);
+    height: calc(100vh - .9rem - .56rem - 1.5rem);
     overflow: auto;
   }
   .market-container::-webkit-scrollbar {

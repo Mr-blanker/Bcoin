@@ -13,7 +13,7 @@
         <i class="icon iconfont icon-gengduo"></i>
       </li>
     </ul>
-    <div class="community-box  pullScroll" id="communityScroll"  style="padding-bottom:50px;">
+    <div class="community-box  pullScroll" id="communityScroll"  style="padding-bottom:1rem;">
       <div>
         <div class="recommend-box">
           <span class="recommend-text">推荐</span>

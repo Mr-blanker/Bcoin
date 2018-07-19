@@ -36,7 +36,7 @@
                 <yd-datetime type="datetime" v-model="endTime" :callback="endCB"></yd-datetime>
             </div>
         </div>
-        <div id="myChart" :style="{width: '100%', height: '600px'}"></div>
+        <div id="myChart" :style="{width: '100%', height: '12rem'}"></div>
     </div>
 </template>
 <script>
@@ -378,7 +378,7 @@
         margin: 1px 0 0 0;
     }
     @mixin small-font {
-        font-size: 12px;
+        font-size: .24rem;
         transform: scale(0.90);
         transform-origin: 0 0;
         -ms-transform: scale(0.90);
@@ -405,15 +405,15 @@
     }
     .market-tab {
         width: 100%;
-        height: 45px;
-        padding: 0 10px;
+        height: .9rem;
+        padding: 0 .2rem;
         background-color: $bg;
         display: flex;
         align-items: center;
         justify-content: space-between;
         color: #fff;
         .tab-contianer {
-            height: 45px;
+            height: .9rem;
             display: flex;
             align-items: center;
             flex-direction: column;
@@ -427,19 +427,19 @@
     }
     .coin-info {
         width: 100%;
-        height: 60px;
+        height: 1.2rem;
         background-color: rgb(18, 123, 206);
         @include flex-center;
         color: #fff;
-        font-size: 13px;
+        font-size: .26rem;
         &>div {
             width: 50%;
-            height: 40px;
+            height: .8rem;
             display: flex;
             justify-content: space-around;
             align-items: flex-start;
             flex-direction: column;
-            padding: 0 0 0 10px;
+            padding: 0 0 0 .2rem;
             .left-coin {
                 display: flex;
                 justify-content: flex-start;
@@ -450,7 +450,7 @@
                     align-items: flex-start;
                     flex-direction: column;
                     &>div:first-child {
-                        margin: 0 10px 0 0;
+                        margin: 0 .2rem 0 0;
                     }
                 }
             }
@@ -465,11 +465,11 @@
         align-items: center;
         &>div {
             background-color: #fff;
-            height: 30px;
+            height: .6rem;
             width: 50%;
             @include flex-center;
             span {
-                width: 50px;
+                width: 1rem;
             }
         }
     }
