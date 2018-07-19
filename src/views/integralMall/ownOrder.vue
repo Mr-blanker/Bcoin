@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="pullScroll" :style="{'padding-top':activeTab==1?'75px':'47px','padding-bottom':'50px'}">
-      <div id="scroll">
+      <div id="orderScroll">
         <div>
           <div class="commodity-item" v-for="(item,index) in prdList" :key="index"
                @click="$router.push(`/orderDetail?order=${JSON.stringify(item)}`)">
@@ -79,12 +79,18 @@
     },
     mounted() {
       let that = this;
-      this.scroll = new PullScroll("scroll", {
-        refresh: function (pullScroll) {
-          that.getData(pullScroll)
+      this.scroll = new MeScroll("orderScroll", {
+        down: {
+          callback: that.getData,
+          
         },
-        loading: function (pullScroll) {
-          that.loadList(pullScroll);
+        up: {
+          callback: that.loadList,
+          page: {
+            num: 0,
+            size: 10,
+            time: null
+          }
         }
       });
       this.vantTabClick(0)
@@ -99,19 +105,22 @@
         this.USER_ORDER_LIST(this.param).then(res => {
           this.prdList = res.data.data
           this.totalCount = res.data.data.length
-          this.scroll.finish(this.totalCount < this.param.len);
-
+           this.scroll.endSuccess(res.data.data.length, this.totalCount >= this.param.len);
+          if (this.totalCount < this.param.len)
+            this.scroll.endUpScroll(true)
         })
+
       },
       vantTabClick(index) {
         this.reqParam.status = index - 1
         if (index == 0) {
           delete this.reqParam.status
         }
-        this.scroll.triggerRefresh()
+        this.scroll.setPageNum(1);
+        this.scroll.triggerDownScroll()
       },
-      loadList() {
-        this.reqParam.len += 20
+      loadList(page, mescroll) {
+        this.reqParam.len = 20*page.num
         this.getData()
       },
       cancleOrder(id) {

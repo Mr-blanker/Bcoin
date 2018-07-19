@@ -51,11 +51,17 @@
                 tabList: '',
                 tabKey: '',
                 mult: [{
-                    "cid": -2,
-                    "id": "all",
-                    "name": "全部",
-                    "symbol": "全部"
-                }],
+                        "cid": -1,
+                        "id": "choice",
+                        "name": "自选",
+                        "symbol": "自选"
+                    },{
+                        "cid": -2,
+                        "id": "all",
+                        "name": "全部",
+                        "symbol": "全部"
+                    }                
+                ],
                 plus: ''
             }
         },
@@ -94,7 +100,7 @@
             let that = this
         },
         methods: {
-            ...mapActions(['PLATFORM_LIST', 'COIN_LIST']),
+            ...mapActions(['PLATFORM_LIST', 'COIN_LIST', 'CHOICE_LIST']),
             goTagManange() {
                 this.$router.push({
                     path: '/tagManange',
@@ -104,19 +110,23 @@
                 })
             },
             vantTabClick(index) {
-                if (index == 0 && this.activeTab != 3) {
+                this.active = index
+                if ((index == 0 || index == 1) && this.activeTab != 3) {
                     this.activeTab = 1
                     this.$emit('update:currentTab', 1)
-                } else if (index >= 1 && this.activeTab != 3) {
+                } else if (index >= 2 && this.activeTab != 3) {
                     this.activeTab = 2
                     this.$emit('update:currentTab', 2)
                 }
-                console.log('vantTabClick=>comeHome')
-                if (this.activeTab == 1) {
-                    this.tabClick(this.tabList[index], true)
+                if (this.activeTab == 1 && this.active == 0) {
+                    this.tabClick(this.tabList[index] ,true, false)
+                } else if (this.activeTab == 1 && this.active == 1) {
+                    this.tabClick(this.tabList[index],false,true)
                 } else {
                     this.tabClick(this.tabList[index])
                 }
+                console.log(' asdadadclick')
+                console.log( this.active)
             },
             tabChange(index) {
                 this.activeTab = index
@@ -138,8 +148,8 @@
                     tempArr.push(...coin)
                     this.tabList = tempArr
                     if (this.activeTab == 2) {
-                        this.active = 1
-                        this.vantTabClick(1)
+                        this.active = 2
+                        this.vantTabClick(2)
                     } else {
                         this.active = 0
                         this.vantTabClick(0)
@@ -153,8 +163,8 @@
                         tempArr.unshift(...this.mult)
                         this.tabList = tempArr
                         if (this.activeTab == 2) {
-                            this.active = 1
-                            this.vantTabClick(1)
+                            this.active = 2
+                            this.vantTabClick(2)
                         } else {
                             this.active = 0
                             this.vantTabClick(0)
@@ -171,8 +181,8 @@
                     tempArr.unshift(...this.mult)
                     this.tabList = tempArr
                     if (this.activeTab == 2) {
-                        this.active = 1
-                        this.vantTabClick(1)
+                        this.active = 2
+                        this.vantTabClick(2)
                     } else {
                         this.active = 0
                         this.vantTabClick(0)
@@ -186,8 +196,8 @@
                         tempArr.unshift(...this.mult)
                         this.tabList = tempArr
                         if (this.activeTab == 2) {
-                            this.active = 1
-                            this.vantTabClick(1)
+                            this.active = 2
+                            this.vantTabClick(2)
                         } else {
                             this.active = 0
                             this.vantTabClick(0)

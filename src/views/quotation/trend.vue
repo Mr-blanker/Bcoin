@@ -29,7 +29,7 @@
         <div class="date-check">
             <div class="start-time">
                 <span>范围:</span>
-                <yd-datetime type="datetime" v-model="beginTime"></yd-datetime>
+                <yd-datetime type="datetime" v-model="beginTime" :callback="startCB"></yd-datetime>
             </div>
             <div>
                 <span>至:</span>
@@ -60,12 +60,12 @@
                 volume: [],
                 price: [],
                 coin: '',
-                trendArr: ''
+                trendArr: '',
+                active: ''
             }
         },
         mounted() {
-            this.coin = JSON.parse(this.$route.query.coin)
-            this.trendParam.coin = this.coin.name
+            this.init()
             this.initDateTime()
             this.getTrends()
             console.log(utils.timestamp())
@@ -80,12 +80,21 @@
         },
         methods: {
             ...mapActions(['TREND']),
+            init() {
+                this.active = this.$route.query.active
+                this.coin = JSON.parse(this.$route.query.coin)
+                if (this.active == 1) {
+                    this.trendParam.coin = this.coin.id
+                } else {
+                    this.trendParam.coin = this.coin.name
+                }
+            },
             initDateTime() {
                 let start = this.getTimeStamp(10)
                 let end = this.getTimeStamp()
                 this.beginTime = this.stampToDate(start),
-                this.endTime = this.stampToDate(end),
-                this.trendParam.start = start
+                    this.endTime = this.stampToDate(end),
+                    this.trendParam.start = start
                 this.trendParam.end = end
             },
             getTrends() {
@@ -119,9 +128,19 @@
             },
             startCB() {
                 console.log('start')
+                if(this.beginTime>this.endTime){
+                    let temp = this.beginTime
+                    this.beginTime = this.endTime
+                    this.endTime = temp
+                }
             },
             endCB() {
                 console.log('end')
+                if(this.beginTime>this.endTime){
+                    let temp = this.beginTime
+                    this.beginTime = this.endTime
+                    this.endTime = temp
+                }
                 this.getTrends()
             },
             stampToDate(stamp) {

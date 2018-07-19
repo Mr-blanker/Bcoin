@@ -27,6 +27,15 @@ export const LIST_BY_PLAT = 'LIST_BY_PLAT'
 export const TREND = 'TREND'
 //指定货币的各平台行情
 export const LIST_BY_CID = 'LIST_BY_CID'
+//用户自选列表
+export const CHOICE_LIST = 'CHOICE_LIST'
+//用户自选列表
+export const DEL_CHOICE = 'DEL_CHOICE'
+//用户自选列表
+export const ADD_CHOICE = 'ADD_CHOICE'
+//搜索
+export const SEARCH_CHOICE = 'SEARCH_CHOICE'
+
 //名人库
 //列表
 export const PERSON_LIST = 'PERSON_LIST'

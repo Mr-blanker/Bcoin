@@ -1,12 +1,11 @@
 <template>
   <div>
     <Header v-bind="{left:1,right:1,center:3,list:titleList,liKey:index}" @clickItem="clickItem"></Header>
-    <div style="padding-top: 45px;padding-bottom:50px" class="pullScroll">
+    <div style="padding-top: 45px;padding-bottom:50px">
       <div class="new-box" v-if="index===0">
         <ul class="new-bar">
           <li class="new-bar-item " :class="{'new-bar-item-active':newCateId===0}" @click="chooseNewCate(0)">全部</li>
-          <li class="new-bar-item" v-for="item in newCateList" :class="{'new-bar-item-active':newCateId===item.id}"
-              @click="chooseNewCate(item.id)">
+          <li class="new-bar-item" v-for="item in newCateList" :class="{'new-bar-item-active':newCateId===item.id}" @click="chooseNewCate(item.id)">
             <span class="new-bar-item-content">{{item.name}}</span>
           </li>
         </ul>
@@ -19,7 +18,7 @@
           </div>
         </yd-slider-item>
       </yd-slider>
-      <div id="scroll">
+      <div id="newsScroll">
         <!--新闻资讯-->
         <div v-if="index===0">
           <ul class="information-list">
@@ -45,11 +44,9 @@
             </div>
           </div>
         </div>
-
         <!--名人库-->
         <div class="person-list" v-if="index===3">
-          <div class="person-item" v-for="item in personList"
-               @click="$router.push({path:'InformationDetail',query:{id: item.aid}})">
+          <div class="person-item" v-for="item in personList" @click="$router.push({path:'InformationDetail',query:{id: item.aid}})">
             <div class="person-item-box">
               <div class="person-img"><img :src="item.thumbnail" alt=""></div>
               <span class="person-title">{{item.title}}</span>
@@ -63,8 +60,7 @@
             <div class="c-list">
               <ul class="c-list-box" style="width: 100%;">
                 <yd-grids-group :rows="3" item-height="2.2rem">
-                  <yd-grids-item v-for="(n,key) in item.items" :key="key" class="ccc"
-                                 @click.native="$router.push({path:'acView',query:{val:JSON.stringify(n)}})">
+                  <yd-grids-item v-for="(n,key) in item.items" :key="key" class="ccc" @click.native="$router.push({path:'acView',query:{val:JSON.stringify(n)}})">
                     <span slot="text">{{n.title}}</span>
                     <img slot="icon" :src="n.thumbnail" alt="">
                   </yd-grids-item>
@@ -84,7 +80,6 @@
   import {
     mapGetters
   } from "vuex"
-
   export default {
     name: "Information",
     data() {
@@ -98,7 +93,6 @@
         index: 0,
         broadcastAdList: [],
         len: 1,
-
         flash: {
           flashLen: 0,
           flashCount: -1,
@@ -121,28 +115,33 @@
     },
     mounted() {
       let that = this;
-      document.addEventListener('plusready', function () {
+      document.addEventListener('plusready', function() {
         that.plus = plus
       })
       this.getNewCate()
       if (this.informationActive) {
         this.index = parseInt(this.informationActive)
       }
-      this.scroll = new PullScroll("scroll", {
-        refresh: function (pullScroll) {
-          that.initDataList(pullScroll)
+      this.scroll = new MeScroll("newsScroll", {
+        down: {
+          callback: that.initDataList,
         },
-        loading: function (pullScroll) {
-          that.loadDataList(pullScroll);
+        up: {
+          callback: that.loadDataList,
+          page: {
+            num: 0,
+            size: 10,
+            time: null
+          }
         }
       });
-      // this.scroll.triggerRefresh();
+      // this.scroll.triggerDownScroll();
       this.clickItem(this.index)
     },
     methods: {
       sliderRouter(url) {
         console.log(url)
-        this.plus.runtime.openURL(url, function (err) {
+        this.plus.runtime.openURL(url, function(err) {
           console.log(err)
         })
       },
@@ -158,9 +157,9 @@
       chooseNewCate(id) {
         console.log(id)
         this.newCateId = id
-        this.scroll.triggerRefresh();
+        this.scroll.triggerDownScroll();
       },
-      initDataList(pullScroll) {
+      initDataList(page, mescroll) {
         console.log(this.index)
         // // 重复请求处理
         // if (this.index === 1) {
@@ -173,9 +172,9 @@
         if (this.index === 0) {
           this.new.newLen = 0
         }
-        this.loadDataList(pullScroll);
+        this.loadDataList(page, mescroll);
       },
-      loadDataList(pullScroll) {
+      loadDataList(page, mescroll) {
         //快讯列表
         if (this.index === 1) {
           this.flash.flashLen += 20
@@ -184,8 +183,10 @@
           }).then(res => {
             this.flashList = res
             this.flash.flashCount = res.length
-            pullScroll.finish(this.flash.flashCount < this.flash.flashLen);
             console.log(this.flashLen, '快讯')
+            this.scroll.endSuccess(res.length, this.flash.flashCount >= this.flash.flashLen);
+            if (this.flash.flashCount < this.flash.flashLen)
+              this.scroll.endUpScroll(true)
           })
         } else if (this.index === 0) {
           //获取新闻资讯列表
@@ -201,8 +202,9 @@
             console.log(this.new.newCount, 'count')
             console.log(this.new.newLen, 'len')
             console.log(this.new.newLen, '新闻')
-
-            pullScroll.finish(this.new.newCount < this.new.newLen);
+            this.scroll.endSuccess(res.data.length, this.new.newCount >= this.new.newLen);
+            if (this.new.newCount < this.new.newLen)
+              this.scroll.endUpScroll(true)
           })
         } else if (this.index === 3) {
           //名人库列表
@@ -213,15 +215,19 @@
             if (res.code !== 0) return
             this.personList = res.data
             this.person.personCount = res.data.length
-            pullScroll.finish(this.person.personCount < this.person.personLen);
             console.log(this.personLen, '名人')
-
+            this.scroll.endSuccess(res.data.length, this.person.personCount >= this.person.personLen);
+            if (this.person.personCount < this.person.personLen)
+              this.scroll.endUpScroll(true)
           })
         } else if (this.index === 2) {
           this.$store.dispatch(types.COLUMN_CATE).then(res => {
             if (res.code !== 0) return
             this.columnList = res.data
-            pullScroll.finish(true);
+            console.log('res')
+            console.log(res)
+            this.scroll.endSuccess()
+            this.scroll.endUpScroll(true)
           })
         }
       },
@@ -240,7 +246,7 @@
           this.getBroadcastAd()
         }
         console.log(1)
-        this.scroll.triggerRefresh();
+        this.scroll.triggerDownScroll();
       },
       //轮播图
       getBroadcastAd() {
@@ -282,7 +288,6 @@
           this.$refs.artContent[key].style.display = 'flex'
         } else {
           this.$refs.artContent[key].style.display = '-webkit-box'
-
         }
       }
     }
@@ -290,28 +295,24 @@
 </script>
 
 <style scoped lang="scss">
-  ::-webkit-scrollbar {
+   ::-webkit-scrollbar {
     display: none
   }
-
   .ccc {
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-
     span {
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 1;
       overflow: hidden;
     }
-
     img {
       height: 1rem;
       width: 1rem;
       border-radius: 1rem;
     }
-
   }
 </style>

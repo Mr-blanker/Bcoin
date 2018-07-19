@@ -1,10 +1,8 @@
 <template>
   <div>
-      <common-header :currentTab.sync="activeTab" :tabClick="tabIndexChange"></common-header>
-    <keep-alive>    
-      <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :downCb="getData" :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
-      </scroll>
-    </keep-alive>
+    <common-header :currentTab.sync="activeTab" :tabClick="tabIndexChange"></common-header>
+    <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :isChoiceType="isChoice" :downCb="getData" :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
+    </scroll>
   </div>
 </template>
 <script>
@@ -26,16 +24,18 @@
         cid: 1,
         eid: '',
         meInstance: '',
+        isChoice: false,
+        activeIndex: 0,
+        totalCount: ''
       }
     },
-    mounted() {
-    },
+    mounted() {},
     components: {
       scroll,
       commonHeader
     },
     methods: {
-      ...mapActions(['TICKER_LIST', 'PLATFORM_LIST', 'LIST_BY_CID', 'COIN_LIST', 'LIST_BY_PLAT']),
+      ...mapActions(['TICKER_LIST', 'PLATFORM_LIST', 'LIST_BY_CID', 'COIN_LIST', 'LIST_BY_PLAT', 'CHOICE_LIST']),
       //获取币种
       getCoin() {
         this.COIN_LIST().then(res => {
@@ -57,7 +57,21 @@
         }
         this.LIST_BY_CID(param).then(res => {
           this.scrollList = res.data.data
-          this.meInstance.finish(false);
+          this.totalCount = res.data.data.length
+          this.meInstance.endSuccess(res.data.data.length, this.totalCount >= this.len);
+          if (this.totalCount < this.len)
+            this.meInstance.endUpScroll(true)
+        })
+      },
+      getUserChoice() {
+        this.CHOICE_LIST({
+          len: this.len
+        }).then(res => {
+          this.scrollList = res.data.data
+          this.totalCount = res.data.data.length
+          this.meInstance.endSuccess(res.data.data.length, this.totalCount >= this.len);
+          if (this.totalCount < this.len)
+            this.meInstance.endUpScroll(true)
         })
       },
       //获取所有货币的综合行情
@@ -66,7 +80,10 @@
           len: this.len
         }).then(res => {
           this.scrollList = res.data.data
-          this.meInstance.finish(false);
+          this.totalCount = res.data.data.length
+          this.meInstance.endSuccess(res.data.data.length, this.totalCount >= this.len);
+          if (this.totalCount < this.len)
+            this.meInstance.endUpScroll(true)
         })
       },
       //获取所有交易平台
@@ -85,7 +102,10 @@
           eid: this.eid
         }).then(res => {
           this.scrollList = res.data.data
-          this.meInstance.finish(false);
+          this.totalCount = res.data.data.length
+          this.meInstance.endSuccess(res.data.data.length, this.totalCount >= this.len);
+          if (this.totalCount < this.len)
+            this.meInstance.endUpScroll(true)
         })
       },
       //滚动容器获取数据方法
@@ -94,7 +114,11 @@
           this.len = len
         }
         if (this.activeTab == 1) {
-          this.getTicker()
+          if (this.isChoice) {
+            this.getUserChoice()
+          } else {
+            this.getTicker()
+          }
         } else if (this.activeTab == 2) {
           this.getListByCID()
         } else if (this.activeTab == 3) {
@@ -103,9 +127,11 @@
       },
       //初始化滚动条
       initScroll() {
-        this.meInstance.triggerRefresh()
+        // this.meInstance.resetUpScroll()
+        this.meInstance.setPageNum(1);
+        this.meInstance.triggerDownScroll()
       },
-      tabIndexChange(obj, isTicker = false) {
+      tabIndexChange(obj, isChoice = false, isTicker = false) {
         if (!isTicker) {
           if (obj.cid) {
             this.cid = obj.cid
@@ -113,10 +139,12 @@
             this.eid = obj.eid
           }
         }
+        console.log('isChoice')
+        console.log(isChoice)
+        this.isChoice = isChoice
         setTimeout(() => {
           this.initScroll()
         }, 10)
-        // this.$refs.scroller.goTop()
       }
     }
   }
