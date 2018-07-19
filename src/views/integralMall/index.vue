@@ -20,7 +20,7 @@
         <div>
           <div class="commodity-item" v-for="(item,index) in prdList" :key="index" @click="$router.push(`/shopDetail?id=${item.id}&type=1`)" v-if="activeTab==1">
             <div class="commodity-img">
-              <img src="../../assets/logo.png" alt="">
+              <img :src="item.img" alt="">
             </div>
             <div class="commodity-name">{{item.name}}</div>
             <div class="commodity-inter">
@@ -30,7 +30,7 @@
           </div>
           <div class="commodity-item" v-for="(item,index) in prdList" :key="index" @click="$router.push(`/shopDetail?id=${item.id}&type=2`)" v-if="activeTab==2">
             <div class="commodity-img">
-              <img src="../../assets/logo.png" alt="">
+              <img :src="item.img" alt="">
             </div>
             <div class="commodity-name">{{item.name}}</div>
             <div class="commodity-inter">
