@@ -1,20 +1,25 @@
 $bg: #208de3; //header   背景颜色   主色调
 $hc: #fff; //header里面的颜色
-$hf: .4rem; //header字体大小
+$hf: .35rem; //header字体大小
 $fbg: #f7f7f7; //footer 背景颜色
 $ftb: #efefef; //footer 上边框颜色
 $fws: .3rem; //footer 字体大小
 $wfs: .32rem; //字体大小  全局
 $fbb: #e2dede; //下边框颜色
-$smallws:.25rem;//字体  小
-$wdc:#909090; //字体颜色
-.pt{
-  padding-top:.9rem;
+$smallws: .25rem; //字体  小
+$wdc: #909090; //字体颜色
+.pt {
+  padding-top: .9rem;
 }
-.padlr02{
+
+.padlr02 {
   padding-left: .2rem;
   padding-right: .2rem;
 }
+.icon-fanhui{
+  font-size: .4rem !important;
+}
+
 //header
 .header {
   position: fixed;
@@ -25,7 +30,7 @@ $wdc:#909090; //字体颜色
   justify-content: space-between;
   align-items: center;
   height: .9rem;
-  padding: 0 10px;
+  padding: 0 .2rem;
   background: $bg;
   z-index: 9999;
   .header-left,
@@ -107,7 +112,7 @@ $wdc:#909090; //字体颜色
       font-size: .45rem;
     }
   }
-  .footer-active{
+  .footer-active {
     color: $bg;
   }
 }
@@ -124,35 +129,42 @@ $wdc:#909090; //字体颜色
 .cancel-text {
   color: $hc !important;
 }
-.yd-cell:after{
+
+.yd-cell:after {
   border-bottom: 0 !important;
 }
 
 .yd-slider-pagination-item-active {
   background: $bg !important;
 }
-.yd-confirm-ft>a.primary{
+
+.yd-confirm-ft > a.primary {
   color: $bg;
 }
-.yd-cell-right{
+
+.yd-cell-right {
   min-height: 100% !important;
 }
-.yd-btn-block{
+
+.yd-btn-block {
   height: .9rem !important;
 }
-.yd-cell-right{
+
+.yd-cell-right {
   font-size: .3rem !important;
 }
-.yd-textarea textarea{
+
+.yd-textarea textarea {
   text-align: right;
   height: 100%;
 }
-.yd-switch{
+
+.yd-switch {
   color: $bg !important;
 }
 
-.van-tabs__line{
-  background-color:$bg !important;
+.van-tabs__line {
+  background-color: $bg !important;
   display: none;
 }
 
@@ -166,38 +178,41 @@ $wdc:#909090; //字体颜色
 
 .van-tab {
   line-height: .56rem !important;
-  color:#8a8d99 !important;
+  color: #8a8d99 !important;
   padding: 0 !important;
 }
 
 .van-tab--active {
-  color:$bg !important;
+  color: $bg !important;
 }
 
 .van-tabs__wrap--scrollable .van-tab {
-  flex:0 0 19% !important;
+  flex: 0 0 19% !important;
 }
 
-.yd-datetime-head>a:last-child {
-  color:#208de3 !important;
+.yd-datetime-head > a:last-child {
+  color: #208de3 !important;
 }
-.yd-grids-txt{
+
+.yd-grids-txt {
   margin-top: .3rem !important;
 }
+
 .yd-grids-txt {
   width: 100%;
 }
-.yd-popup{
+
+.yd-popup {
   z-index: 9999;
   width: 100% !important;
 }
 
 .cd-dynamic {
-  padding: 55px 10px 44px;
+  padding: 1.1rem .2rem .88rem;
   background: #fff;
   flex: 1;
   .cd-dynamic-item {
-    padding: 10px 0;
+    padding: .2rem 0;
     border-bottom: 1px solid $fbb;
     &:last-child {
       border-bottom: 0;
@@ -215,7 +230,7 @@ $wdc:#909090; //字体颜色
         display: flex;
         flex-direction: column;
         align-items: self-start;
-        padding-left: 5px;
+        padding-left: .1rem;
         .cd-dynamic-title {
           font-size: .32rem;
           color: $bg;
@@ -242,7 +257,7 @@ $wdc:#909090; //字体颜色
       }
     }
     .cd-dynamic-content {
-      padding: 10px 0 0 .8rem;
+      padding: .2rem 0 0 .8rem;
       .cd-dynamic-text {
         display: flex;
         text-align: left;
@@ -257,12 +272,12 @@ $wdc:#909090; //字体颜色
         align-items: center;
         i {
           font-size: .5rem;
-          margin-right: 20px;
+          margin-right: .4rem;
         }
       }
     }
     .cd-dynamic-zan {
-      padding: 10px 0 0 .8rem;
+      padding: .2rem 0 0 .8rem;
       font-size: .3rem;
       display: flex;
       align-items: center;
@@ -274,9 +289,8 @@ $wdc:#909090; //字体颜色
     }
   }
 
-
-
 }
+
 .cd-add {
   position: fixed;
   left: 0;
@@ -286,15 +300,16 @@ $wdc:#909090; //字体颜色
   align-items: center;
   justify-content: center;
   font-size: $wfs;
-  height: 44px;
+  height: .88rem;
   color: $bg;
   background: #fff;
   border-top: 1px solid $fbb;
 }
+
 .cd-dynamic-comment {
   display: flex;
   flex-wrap: wrap;
-  padding: 10px 0 0 .8rem;
+  padding: .2rem 0 0 .8rem;
   background: #fff;
   font-size: .3rem;
   li {
@@ -307,8 +322,9 @@ $wdc:#909090; //字体颜色
     }
   }
 }
+
 .cd-box {
-  padding-bottom: 45px;
+  padding-bottom: .9rem;
   .cd-header {
     position: relative;
     display: flex;
@@ -385,7 +401,7 @@ $wdc:#909090; //字体颜色
   }
   .cd-ind {
     padding: 0 .2rem;
-    margin-top: 10px;
+    margin-top: .2rem;
     background: #fff;
     h3 {
       display: flex;
@@ -434,8 +450,8 @@ $wdc:#909090; //字体颜色
 
 //login
 .login-box {
-  padding-top: 45px;
-  //padding-bottom: 50px;
+  padding-top: .9rem;
+  //padding-bottom: 1rem;
 }
 
 .btn-submit {
@@ -447,12 +463,12 @@ $wdc:#909090; //字体颜色
 }
 
 .register-forget {
-  margin-right: 10px;
-  margin-bottom: 20px;
+  margin-right: .2rem;
+  margin-bottom: .4rem;
   text-align: right;
   span {
     font-size: $wfs;
-    margin: 0 5px;
+    margin: 0 .1rem;
   }
 }
 
@@ -465,7 +481,7 @@ $wdc:#909090; //字体颜色
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100px;
+  height: 2rem;
   background: $bg;
   font-size: $wfs;
   padding: 0 .2rem;
@@ -474,12 +490,12 @@ $wdc:#909090; //字体颜色
     display: flex;
     align-items: center;
     img {
-      height: 50px;
-      width: 50px;
+      height: 1rem;
+      width: 1rem;
       border-radius: 1rem;
     }
     span {
-      margin-left: 10px;
+      margin-left: .2rem;
     }
   }
 
@@ -490,8 +506,8 @@ $wdc:#909090; //字体颜色
   display: flex;
   &-return {
     color: $hc;
-    width: 35px;
-    line-height: 50px;
+    width: .7rem;
+    line-height: 1rem;
     background: $bg;
   }
   &-text {
@@ -505,7 +521,7 @@ $wdc:#909090; //字体颜色
 .new-box {
   position: fixed;
   z-index: 999;
-  top: 44px;
+  top: .88rem;
   width: 100%;
   background: #fff;
   border-bottom: 1px solid $fbb;
@@ -531,11 +547,11 @@ $wdc:#909090; //字体颜色
 }
 
 .information-list {
-  //padding-bottom: 50px;
+  //padding-bottom: 1rem;
   .information-item {
     display: flex;
     align-items: center;
-    height: 80px;
+    height: 1.6rem;
     background: $hc;
     font-size: $fws;
     padding: 0 .2rem;
@@ -564,14 +580,14 @@ $wdc:#909090; //字体颜色
   .information-item img {
     height: 1.3rem;
     width: 2rem;
-    margin-right: 10px;
+    margin-right: .2rem;
   }
 
 }
 
 .flash-list {
   text-align: left;
-  //padding: 50px;
+  //padding: 1rem;
 
   .flash-item {
     padding: .1rem .2rem .2rem;
@@ -607,7 +623,7 @@ $wdc:#909090; //字体颜色
   display: flex;
   height: 4.2rem;
   background: #fff;
-  padding: 0 10px;
+  padding: 0 .2rem;
   text-align: left;
   font-size: .3rem;
   border-bottom: 1px solid $fbb;
@@ -615,8 +631,8 @@ $wdc:#909090; //字体颜色
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: .1rem;
+    padding-bottom: .1rem;
   }
   &:last-child {
     border: 0;
@@ -649,11 +665,11 @@ $wdc:#909090; //字体颜色
   }
 }
 
-@media screen and (max-width: 350px) {
-  .person-item {
-    height: 4.4rem !important;
-  }
-}
+//@media screen and (max-width: 350px) {
+//  .person-item {
+//    height: 4.4rem !important;
+//  }
+//}
 
 .column-bar {
   display: flex;
@@ -668,7 +684,7 @@ $wdc:#909090; //字体颜色
     align-items: center;
     font-size: .6rem;
     position: absolute;
-    height: 200px;
+    height: 4rem;
     left: 0;
     width: 100%;
     img {
@@ -703,13 +719,13 @@ $wdc:#909090; //字体颜色
         height: 2.5rem;
         background: #fff;
         width: 2rem;
-        border-radius: 3px;
+        border-radius: .06rem;
         padding: 0 .2rem;
         img {
           width: 1.3rem;
           border-radius: 1rem;
           height: 1.3rem;
-          margin-bottom: 10px;
+          margin-bottom: .2rem;
         }
         span {
           display: -webkit-box;
@@ -730,14 +746,14 @@ $wdc:#909090; //字体颜色
         display: inline-flex;
         padding: .1rem .4rem;
         margin-top: .3rem;
-        border-radius: 3px;
+        border-radius: .06rem;
       }
       .content-bottom {
         display: inline-flex;
         padding: .1rem .4rem;
         background: #fff;
         margin-top: .3rem;
-        border-radius: 3px;
+        border-radius: .06rem;
       }
 
     }
@@ -752,7 +768,7 @@ $wdc:#909090; //字体颜色
   flex-wrap: wrap;
   padding: 0 .2rem;
   background: $hc;
-  padding-top: 45px;
+  padding-top: .9rem;
 
   .content-item {
     font-size: .28rem;
@@ -781,9 +797,9 @@ $wdc:#909090; //字体颜色
     }
     .item-text {
       display: inline-flex;
-      padding: 3px 15px;
+      padding: .06rem .3rem;
       margin-top: .2rem;
-      border-radius: 3px;
+      border-radius: .06rem;
       border: 1px solid #505050;
 
     }
@@ -795,18 +811,18 @@ $wdc:#909090; //字体颜色
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding-top: 45px;
+  padding-top: .9rem;
 
 }
 
 .informationDetail-list {
   //flex: 1;
-  padding: 0 10px;
+  padding: 0 .2rem;
   background: $hc;
 }
 
 .informationDetail-title {
-  padding-top: 10px;
+  padding-top: .2rem;
   font-size: .38rem;
   font-weight: bold;
   text-align: left;
@@ -838,10 +854,10 @@ $wdc:#909090; //字体颜色
   margin: .2rem 0;
   li {
     display: inline-flex;
-    padding: 5px;
+    padding: .1rem;
     background: #dcdcdc;
-    border-radius: 3px;
-    margin-right: 5px;
+    border-radius: .06rem;
+    margin-right: .1rem;
     color: $wdc;
   }
 }
@@ -874,7 +890,7 @@ $wdc:#909090; //字体颜色
 .acView-box {
   display: flex;
   flex-direction: column;
-  padding-top: 45px;
+  padding-top: .9rem;
 
   //height: 100%;
   .acView-list-box {
@@ -980,18 +996,18 @@ $wdc:#909090; //字体颜色
     .address-item {
       display: flex;
       flex-direction: column;
-      height: 120px;
-      padding: 0 10px;
+      height: 2.4rem;
+      padding: 0 .2rem;
       background: $hc;
-      margin-bottom: 5px;
+      margin-bottom: .1rem;
       .address-main {
-        height: 80px;
-        padding: 5px 0;
+        height: 1.6rem;
+        padding: .1rem 0;
         border-bottom: 1px solid $fbb;
         .main-top {
           display: flex;
           justify-content: space-between;
-          margin-bottom: 5px;
+          margin-bottom: .1rem;
           color: #000;
         }
         .main-text {
@@ -1013,9 +1029,9 @@ $wdc:#909090; //字体颜色
         .operate-box {
           color: $wdc;
           span {
-            padding: 0 5px;
+            padding: 0 .1rem;
             i {
-              padding-right: 3px;
+              padding-right: .06rem;
             }
           }
         }
@@ -1026,7 +1042,7 @@ $wdc:#909090; //字体颜色
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 20px;
+    bottom: .4rem;
   }
 }
 
@@ -1042,11 +1058,11 @@ $wdc:#909090; //字体颜色
     margin-bottom: .8rem;
   }
   .address-box ul li {
-    margin-left: 12px;
+    margin-left: .24rem;
     position: relative;
     font-size: $wfs;
     background-color: #fff;
-    padding: 12px 0;
+    padding: .24rem 0;
     font-family: "微软雅黑";
     border-bottom: 1px solid #e4e4e4;
     display: flex;
@@ -1061,7 +1077,7 @@ $wdc:#909090; //字体颜色
     visibility: hidden;
   }
   .address-box ul li span.mr {
-    margin-right: 10px;
+    margin-right: .2rem;
     color: #999;
     font-size: $wfs;
   }
@@ -1084,11 +1100,11 @@ $wdc:#909090; //字体颜色
     visibility: hidden;
   }
   .address-box ul li.radio_box .fr {
-    margin-right: 12px;
+    margin-right: .24rem;
   }
   .address-box ul li.radio_box .fr .u-rb {
     float: left;
-    margin-right: 10px;
+    margin-right: .2rem;
     margin-left: 3rem;
   }
   .address-box ul li.radio_box .fr .u-rb label {
@@ -1096,18 +1112,18 @@ $wdc:#909090; //字体颜色
     color: #cc292e;
     top: .1rem;
     left: 0;
-    width: 18px;
-    height: 18px;
+    width: .36rem;
+    height: .36rem;
   }
   .address-box ul li.radio_box .fr .u-rb label:before {
-    left: 6px;
+    left: 1.2rem;
   }
   .address-box ul li.radio_box .fr > label {
     float: left;
     font-size: $wfs;
-    height: 18px;
-    line-height: 18px;
-    margin-top: 3px;
+    height: .36rem;
+    line-height: .36rem;
+    margin-top: .06rem;
   }
   .address-box ul li input {
     float: right;
@@ -1115,7 +1131,7 @@ $wdc:#909090; //字体颜色
     //width: 70%;
     border: none;
     text-align: right;
-    margin-right: 12px;
+    margin-right: .24rem;
     color: #333;
     font-size: $wfs;
   }
@@ -1139,7 +1155,7 @@ $wdc:#909090; //字体颜色
 }
 
 .btn_box {
-  padding: 12px;
+  padding: .24rem;
 }
 
 .btn_box a {
@@ -1149,9 +1165,9 @@ $wdc:#909090; //字体颜色
   color: #fff;
   text-align: center;
   font-size: $wfs;
-  border-radius: 3px;
-  height: 40px;
-  line-height: 40px;
+  border-radius: .06rem;
+  height: .8rem;
+  line-height: .8rem;
 }
 
 .btn_box a.no-link {
@@ -1160,7 +1176,7 @@ $wdc:#909090; //字体颜色
 
 .address-gengduo {
   position: absolute;
-  right: 12px;
+  right: .24rem;
   top: 50%;
   transform: translate(0, -50%);
 
@@ -1169,7 +1185,7 @@ $wdc:#909090; //字体颜色
 .detali-address {
   flex: 1;
   text-align: right;
-  margin-right: 25px !important;
+  margin-right: .5rem !important;
   color: #333 !important;
 }
 
@@ -1197,7 +1213,7 @@ $wdc:#909090; //字体颜色
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 55px;
+  height: 1.1rem;
   background: #fff;
   font-size: $wfs;
   & i {
@@ -1209,10 +1225,10 @@ $wdc:#909090; //字体颜色
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
-  width: 40px;
+  height: .8rem;
+  width: .8rem;
   background: #f3f3f3;
-  border-radius: 2px;
+  border-radius: .04rem;
   margin-right: .1rem;
   border: 1px solid #dad3d3;
 }
@@ -1226,9 +1242,9 @@ $wdc:#909090; //字体颜色
 .recommend-text {
   display: flex;
   align-items: center;
-  height: 44px;
+  height: .88rem;
   background: #fff;
-  padding: 0 10px;
+  padding: 0 .2rem;
 
 }
 
@@ -1236,8 +1252,8 @@ $wdc:#909090; //字体颜色
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 60px;
-  padding: 10px;
+  height: 1.2rem;
+  padding: .2rem;
   background: #fff;
 
 }
@@ -1260,9 +1276,9 @@ $wdc:#909090; //字体颜色
 }
 
 .recommend-item img {
-  height: 40px;
-  width: 40px;
-  margin-right: 5px;
+  height: .8rem;
+  width: .8rem;
+  margin-right: .1rem;
   border-radius: 100%;
 }
 
@@ -1276,8 +1292,8 @@ $wdc:#909090; //字体颜色
 
 .community-logo-box {
   display: flex;
-  height: 50px;
-  padding-left: 12px;
+  height: 1rem;
+  padding-left: .24rem;
   font-size: .3rem;
   .community-logo-main {
     flex: 1;
@@ -1286,15 +1302,15 @@ $wdc:#909090; //字体颜色
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #eae9e9;
-    padding-right: 12px;
+    padding-right: .24rem;
     img {
-      height: 40px;
-      width: 40px;
+      height: .8rem;
+      width: .8rem;
     }
     .add-icon {
       position: relative;
-      width: 40px;
-      height: 40px;
+      width: .8rem;
+      height: .8rem;
       background: #f3f3f3;
       display: flex;
       align-items: center;
@@ -1309,15 +1325,15 @@ $wdc:#909090; //字体颜色
 }
 
 .van-tabs--line {
-  padding-top: 28px !important;
+  padding-top: .56rem !important;
 }
 
 .van-tabs--line .van-tabs__wrap {
-  height: 28px !important;
+  height: .56rem !important;
 }
 
 .van-tab {
-  line-height: 28px !important;
+  line-height: .56rem !important;
   color: #8a8d99 !important;
   padding: 0 !important;
 }
@@ -1362,7 +1378,7 @@ $wdc:#909090; //字体颜色
         align-items: center;
         justify-content: space-around;
         width: 32%;
-        height: 100px;
+        height: 2rem;
         img {
           height: 60%;
           width: 60%;
@@ -1381,16 +1397,14 @@ $wdc:#909090; //字体颜色
 
   //communityDynamic
 
-
-
   //articleDetail
   .ad-dynamic-comment {
-    padding: 10px;
-    margin-top: 10px;
+    padding: .2rem;
+    margin-top: .2rem;
     .ad-comment-title {
       display: flex;
       align-items: center;
-      height: 40px;
+      height: .8rem;
       width: 100%;
       border-bottom: 1px solid #dadada;
     }
@@ -1412,8 +1426,8 @@ $wdc:#909090; //字体颜色
   }
 
   #form1 {
-    width: 40px;
-    height: 40px;
+    width: .8rem;
+    height: .8rem;
     position: absolute;
     opacity: 0;
     input {
@@ -1433,7 +1447,7 @@ $wdc:#909090; //字体颜色
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 44px;
+    height: .88rem;
     border-bottom: 1px solid $fbb;
     background: #fff;
     padding: 0 .2rem;
@@ -1453,7 +1467,7 @@ $wdc:#909090; //字体颜色
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding-bottom: 55px;
+    padding-bottom: 1.1rem;
     textarea {
       width: 100%;
       border: 0;
@@ -1496,7 +1510,5 @@ $wdc:#909090; //字体颜色
   .comment-box {
     width: 100%;
   }
-
-
 
 }

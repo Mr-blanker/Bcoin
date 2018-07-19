@@ -90,25 +90,25 @@
     $bg: #208de3; //header   背景颜色   主色调
     .market-tab {
         width: 100%;
-        height: 45px;
-        padding: 0 10px;
+        height: .9rem;
+        padding: 0 .2rem;
         background-color: $bg;
         display: flex;
         align-items: center;
         justify-content: space-between;
         color: #fff;
         .tab-contianer {
-            height: 45px;
+            height: .9rem;
             display: flex;
             align-items: center;
             flex-direction: column;
             justify-content: center;
             color: #fff;
-            font-size: 16px;
+            font-size: .32rem;
         }
         .save-text {
             color: #fff;
-            font-size: 16px;
+            font-size: .32rem;
         }
     }
     .hg-footer {
@@ -118,18 +118,18 @@
         right: 0;
         z-index: 9999;
         display: flex;
-        height: 50px;
+        height: 1rem;
         background-color: #fff;
         justify-content: flex-end;
         align-items: center;
         border-top: 1px solid #eae8e8;
         &>div:first-child {
-            width: 110px;
+            width: 1.1rem;
             height: 100%;
             text-align: center;
-            line-height: 50px;
+            line-height: 1rem;
             border-radius: 0;
-            font-size: 16px;
+            font-size: .32rem;
             color: #fff;
             background-color: #f44;
         }

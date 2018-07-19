@@ -136,7 +136,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 44px;
+    height: .88rem;
     border-bottom: 1px solid $fbb;
     background: #fff;
     padding: 0 .2rem;
@@ -156,7 +156,7 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding-bottom: 55px;
+    padding-bottom: 1.1rem;
     textarea {
       width: 100%;
       border: 0;
@@ -200,8 +200,8 @@
     width: 100%;
   }
   #form1 {
-    width: 40px;
-    height: 40px;
+    width: .8rem;
+    height: .8rem;
     position: absolute;
     opacity: 0;
     input {

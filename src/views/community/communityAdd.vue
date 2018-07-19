@@ -63,7 +63,7 @@
     components: {
       Upload
     },
-    computed:{
+    computed: {
       ...mapGetters(['userSid'])
     },
     methods: {
@@ -129,15 +129,15 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   #form1 {
-    width: 40px;
-    height: 40px;
+    width: .8rem;
+    height: .8rem;
     position: absolute;
     opacity: 0;
-  input {
-    height: 100%;
-    width: 100%;
-  }
+    input {
+      height: 100%;
+      width: 100%;
+    }
   }
 </style>

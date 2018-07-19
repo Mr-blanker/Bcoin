@@ -1,10 +1,11 @@
 <template>
   <div>
     <div class="mall-header">
-      <div class="market-tab ">
+      <div class="market-tab " style="position:relative;">
         <i class="icon iconfont icon-fanhui" @click="$router.go(-1)"></i>
-        <div class="tab-contianer">
-          <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index" @click="tabChange(index+1)">{{item}}</span>
+        <div class="tab-contianer" style="position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%)">
+          <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index"
+                @click="tabChange(index+1)">{{item}}</span>
         </div>
         <yd-icon name="" size="20px" color="#fff" style="visibility:hidden;"></yd-icon>
       </div>
@@ -15,10 +16,11 @@
         </van-tabs>
       </div>
     </div>
-    <div class="pullScroll" :style="{'padding-top':activeTab==1?'75px':'47px','padding-bottom':'50px'}">
+    <div class="pullScroll" :style="{'padding-top':activeTab==1?'1.5rem':'.94rem','padding-bottom':'1rem'}">
       <div id="scrollBox">
         <div>
-          <div class="commodity-item" v-for="(item,index) in prdList" :key="index" @click="$router.push(`/shopDetail?id=${item.id}&type=1`)" v-if="activeTab==1">
+          <div class="commodity-item" v-for="(item,index) in prdList" :key="index"
+               @click="$router.push(`/shopDetail?id=${item.id}&type=1`)" v-if="activeTab==1">
             <div class="commodity-img">
               <img src="../../assets/logo.png" alt="">
             </div>
@@ -28,7 +30,8 @@
               <div>{{item.cur_point}}</div>
             </div>
           </div>
-          <div class="commodity-item" v-for="(item,index) in prdList" :key="index" @click="$router.push(`/shopDetail?id=${item.id}&type=2`)" v-if="activeTab==2">
+          <div class="commodity-item" v-for="(item,index) in prdList" :key="index"
+               @click="$router.push(`/shopDetail?id=${item.id}&type=2`)" v-if="activeTab==2">
             <div class="commodity-img">
               <img src="../../assets/logo.png" alt="">
             </div>
@@ -57,6 +60,7 @@
     mapMutations,
     mapActions
   } from 'vuex'
+
   export default {
     name: 'index',
     data() {
@@ -132,9 +136,9 @@
       },
       loadMore(page, mescroll) {
         if (this.activeTab == 1) {
-          this.reqParam.len = page.num*20
+          this.reqParam.len = page.num * 20
         } else if (this.activeTab == 2) {
-          this.hgParam.len = page.num*20
+          this.hgParam.len = page.num * 20
         }
         this.getData()
       }
@@ -146,28 +150,29 @@
   $bg: #208de3; //header   背景颜色   主色调
   .market-tab {
     width: 100%;
-    height: 45px;
-    padding: 0 10px;
+    height: .9rem;
+    padding: 0 .2rem;
     background-color: $bg;
     display: flex;
     align-items: center;
     justify-content: space-between;
     color: #fff;
     .tab-contianer {
-      height: 25px;
+      height: .6rem;
       display: flex;
       align-items: center;
       border: 1px solid #1464cc;
       color: #fff;
-      border-radius: 5px;
+      border-radius: .1rem;
       span {
         display: inline-block;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 50px;
-        height: 23px;
+        width: 1.2rem;
+        height: .56rem;
         cursor: pointer;
+        font-size: .28rem;
       }
       span:nth-child(2n) {
         border-left: 1px solid #1464cc;
@@ -176,28 +181,29 @@
     }
     .save-text {
       color: #fff;
-      font-size: 16px;
+      font-size: .32rem;
     }
   }
+
   .commodity-item {
     display: flex;
     background-color: #fff;
     justify-content: space-between;
-    margin: 5px 0;
-    height: 60px;
-    padding: 5px; // align-items: center;
+    margin: .1rem 0;
+    height: 1.2rem;
+    padding: .1rem; // align-items: center;
     .commodity-img {
       img {
         display: block;
-        width: 50px;
-        height: 50px;
+        width: 1rem;
+        height: 1rem;
       }
     }
     .commodity-name {
       color: #333;
       width: 50%;
-      font-size: 16px;
-      max-height: 40px;
+      font-size: .32rem;
+      max-height: .8rem;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
@@ -206,21 +212,24 @@
     }
     .commodity-inter {
       width: 30%;
-      font-size: 16px;
-      &>div:last-child {
-        margin: 10px 0 0 0;
+      font-size: .32rem;
+      & > div:last-child {
+        margin: .2rem 0 0 0;
       }
     }
   }
+
   .mall-header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
   }
+
   .prd-box {
-    padding: 75px 0 0 0;
+    padding: 1.5rem 0 0 0;
   }
+
   .tab-active {
     background-color: #1464cc;
   }

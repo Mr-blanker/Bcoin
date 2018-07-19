@@ -15,7 +15,7 @@
         </van-tabs>
       </div>
     </div>
-    <div class="pullScroll" :style="{'padding-top':activeTab==1?'75px':'47px','padding-bottom':'50px'}">
+    <div class="pullScroll" :style="{'padding-top':activeTab==1?'1.5rem':'.94rem','padding-bottom':'1rem'}">
       <div id="auctionScroll">
         <div>
           <div class="commodity-item" v-for="(item,index) in prdList" :key="index">
@@ -136,8 +136,8 @@
   $bg: #208de3; //header   背景颜色   主色调
   .market-tab {
     width: 100%;
-    height: 45px;
-    padding: 0 10px;
+    height: .9rem;
+    padding: 0 .2rem;
     background-color: $bg;
     display: flex;
     align-items: center;
@@ -145,7 +145,7 @@
     color: #fff;
     .save-text {
       color: #fff;
-      font-size: 16px;
+      font-size: .32rem;
     }
   }
 
@@ -153,20 +153,20 @@
     display: flex;
     background-color: #fff;
     justify-content: space-between;
-    margin: 5px 0;
-    padding: 5px; // align-items: center;
+    margin: .1rem 0;
+    padding: .1rem; // align-items: center;
     .commodity-img {
       img {
         display: block;
-        width: 50px;
-        height: 50px;
+        width: 1rem;
+        height: 1rem;
       }
     }
     .commodity-name {
       color: #333;
       width: 50%;
-      font-size: 16px;
-      max-height: 40px;
+      font-size: .32rem;
+      max-height: .8rem;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
@@ -175,9 +175,9 @@
     }
     .commodity-inter {
       width: 30%;
-      font-size: 16px;
+      font-size: .32rem;
       & > div:last-child {
-        margin: 10px 0 0 0;
+        margin: .2rem 0 0 0;
       }
     }
   }
@@ -187,11 +187,11 @@
     top: 0;
     left: 0;
     right: 0;
-    font-size: 16px;
+    font-size: .32rem;
   }
 
   .prd-box {
-    padding: 75px 0 0 0;
+    padding: 1.5rem 0 0 0;
   }
 
   .tab-active {

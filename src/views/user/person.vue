@@ -10,7 +10,7 @@
         </div>
         <i class="icon iconfont icon-gengduo"></i>
       </div>
-      <yd-cell-group style="margin-top:10px;border: 0;">
+      <yd-cell-group style="margin-top:.2rem;border: 0;">
         <yd-cell-item arrow type="a" @click.native="userInfo.name?$router.push({path:'addressList'}):$router.push({path:'login'})">
           <span slot="left">地址</span>
           <span slot="right"></span>

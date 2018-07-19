@@ -150,6 +150,6 @@
 
 <style scoped>
   .yd-cell {
-    padding: 0 10px !important;
+    padding: 0 .2rem !important;
   }
 </style>

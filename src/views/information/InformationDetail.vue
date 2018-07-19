@@ -187,7 +187,7 @@
     align-items: center;
     text-align: left;
     padding: 0 .2rem;
-    height: 35px;
+    height: .7rem;
     background: #fff;
     border-top: 1px solid #efefef;
     input {
@@ -195,21 +195,21 @@
       height: 90%;
       border: 0;
       background: #f3f3f3;
-      border-radius: 15px;
-      padding-left: 20px;
+      border-radius: .3rem;
+      padding-left: .4rem;
       font-size: .3rem;
     }
     i {
-      padding-left: 10px;
+      padding-left: .2rem;
     }
   }
   .ad-dynamic-comment {
-    padding: 10px;
-    margin-top: 10px;
+    padding: .2rem;
+    margin-top: .2rem;
     .ad-comment-title {
       display: flex;
       align-items: center;
-      height: 40px;
+      height: .8rem;
       width: 100%;
       border-bottom: 1px solid #dadada;
     }

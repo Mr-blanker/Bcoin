@@ -1,5 +1,5 @@
 <template>
-  <div ref="scrollObj" style="padding-top:104px;padding-bottom:50px;">
+  <div ref="scrollObj" style="padding-top:2.08rem;padding-bottom:1rem">
     <div id="quotationScroll" class="mescroll">
       <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="$router.push(`/trend?coin=${JSON.stringify(item)}&active=1`)">
         <div class="box-left">
@@ -161,7 +161,7 @@
 <style lang="scss" scoped>
   $fcolor:#8a8d99;
   @mixin small-font {
-    font-size: 12px;
+    font-size: .24rem;
     transform: scale(0.90);
     transform-origin: 0 0;
     -ms-transform: scale(0.90);
@@ -182,10 +182,10 @@
     /* Opera */
   }
   .scroll-item {
-    height: 55px;
+    height: 1.1rem;
     background-color: #fff;
     margin: 1px 0;
-    padding: 0 10px;
+    padding: 0 .2rem;
     align-items: center;
     .box-left {
       width: 49%;
@@ -193,12 +193,12 @@
       margin: 0 1% 0 0;
       text-align: left;
       .coin-symbol {
-        font-size: 16px;
+        font-size: .32rem;
         color: #323232;
         font-weight: 700;
       }
       .coin-name {
-        font-size: 12px;
+        font-size: .24rem;
         color: $fcolor;
         @include small-font;
       }
@@ -220,7 +220,7 @@
       }
       .circulation-sum,
       .mark-sum {
-        font-size: 16px;
+        font-size: .32rem;
         font-weight: bolder;
         color: #4a4a4a;
       }
@@ -232,12 +232,12 @@
   }
   .platform-icon {
     display: inline-block;
-    width: 32px;
+    width: .64rem;
     vertical-align: middle;
   }
   .percent-box {
-    width: 65px;
-    height: 25px;
+    width: 1.3rem;
+    height: .5rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -285,26 +285,26 @@
     text-align: center;
     span {
       display: inline-block;
-      margin: 100px 0 10px 0;
-      width: 100px;
-      height: 100px;
-      line-height: 100px;
+      margin: 2rem 0 .2rem 0;
+      width: 2rem;
+      height: 2rem;
+      line-height: 2rem;
       border: 1px solid #b0d2ec;
       i {
         color: #208de3;
-        font-size: 45px;
+        font-size: .9rem;
       }
     }
   }
   .add-box {
-    width: 45px;
-    height: 45px;
+    width: .9rem;
+    height: .9rem;
     background: #208de3;
     position: fixed;
     bottom: 2rem;
     right: .5rem;
     border: 0;
-    border-radius: 40px;
+    border-radius: .8rem;
     i {
       color: #fff;
     }

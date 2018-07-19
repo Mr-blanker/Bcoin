@@ -46,7 +46,7 @@
 
         </li>
       </ul>
-      <div class="cd-dynamic-comment ad-dynamic-comment pullScroll" style="padding-bottom:30px">
+      <div class="cd-dynamic-comment ad-dynamic-comment pullScroll" style="padding-bottom:.6rem">
         <span class="ad-comment-title">评论</span>
         <div id="scroll1" style="width: 100%;">
           <ul>
@@ -312,7 +312,7 @@
   .cd-dynamic-comment {
     display: flex;
     flex-wrap: wrap;
-    padding: 10px 0 0 .8rem;
+    padding: .2rem 0 0 .8rem;
     background: #fff;
     font-size: .3rem;
     li {
@@ -327,19 +327,19 @@
   }
 
   .ad-dynamic-comment {
-    padding: 10px;
-    margin-top: 10px;
+    padding: .2rem;
+    margin-top: .2rem;
     .ad-comment-title {
       display: flex;
       align-items: center;
-      height: 40px;
+      height: .8rem;
       width: 100%;
       border-bottom: 1px solid #dadada;
     }
   }
 
   .cd-dynamic-item {
-    padding: 10px 0;
+    padding: .2rem 0;
     border-bottom: 1px solid $fbb;
     &:last-child {
       border-bottom: 0;
@@ -361,7 +361,7 @@
     display: flex;
     flex-direction: column;
     align-items: self-start;
-    padding-left: 5px;
+    padding-left: .1rem;
   }
 
   .cd-dynamic-title {
@@ -391,7 +391,7 @@
   }
 
   .cd-dynamic-content {
-    padding: 10px 0 0 .8rem;
+    padding: .2rem 0 0 .8rem;
     .cd-dynamic-text {
       display: flex;
       text-align: left;
@@ -408,12 +408,12 @@
     align-items: center;
     i {
       font-size: .5rem;
-      margin-right: 20px;
+      margin-right: .4rem;
     }
   }
 
   .cd-dynamic-zan {
-    padding: 10px 0 0 .8rem;
+    padding: .2rem 0 0 .8rem;
     font-size: .3rem;
     display: flex;
     align-items: center;
@@ -486,7 +486,7 @@
     align-items: center;
     text-align: left;
     padding: 0 .2rem;
-    height: 35px;
+    height: .7rem;
     background: #fff;
     border-top: 1px solid #efefef;
     input {
@@ -494,8 +494,8 @@
       height: 90%;
       border: 0;
       background: #f3f3f3;
-      border-radius: 15px;
-      padding-left: 20px;
+      border-radius: .3rem;
+      padding-left: .4rem;
       font-size: .3rem;
     }
     i {

@@ -145,69 +145,69 @@
     $bg: #208de3; //header   背景颜色   主色调
     .market-tab {
         width: 100%;
-        height: 45px;
-        padding: 0 10px;
+        height: .9rem;
+        padding: 0 .2rem;
         background-color: $bg;
         display: flex;
         align-items: center;
         justify-content: space-between;
         color: #fff;
         .tab-contianer {
-            height: 45px;
+            height: .9rem;
             display: flex;
             align-items: center;
             flex-direction: column;
             justify-content: center;
             color: #fff;
-            font-size: 16px;
+            font-size: .32rem;
         }
         .save-text {
             color: #fff;
-            font-size: 16px;
+            font-size: .32rem;
         }
     }
     .tag-list {
-        padding: 0 0 30px 0;
+        padding: 0 0 .6rem 0;
         &>div {
-            padding: 10px;
+            padding: .2rem;
             display: flex;
             flex-wrap: wrap;
         }
     }
     .tag-container {
-        height: calc(100vh - 45px);
+        height: calc(100vh - .9rem);
         background-color: #fff;
         overflow: auto;
         .tag-title {
             width: 100%;
             text-align: left;
-            line-height: 35px;
-            font-size: 14px;
-            padding: 0 10px;
+            line-height: .7rem;
+            font-size: .28rem;
+            padding: 0 .2rem;
             border-bottom: 1px solid #e5e5e5;
         }
         .tag-item {
-            width: 85px;
-            height: 35px;
+            width: 1.7rem;
+            height: .7rem;
             background-color: #f7f7f7;
             border: 1px solid #d5d5d5;
             position: relative;
-            margin: 7px;
+            margin: .14rem;
             .add-tag {
-                width: 85px;
-                height: 35px;
+                width: 1.7rem;
+                height: .7rem;
                 text-align: center;
-                line-height: 35px;
+                line-height: .7rem;
                 color: #dfdfdf;
-                font-size: 45px;
+                font-size: .9rem;
             }
             .tag-content {
-                width: 85px;
-                height: 35px;
+                width: 1.7rem;
+                height: .7rem;
                 text-align: center;
-                line-height: 35px;
+                line-height: .7rem;
                 color: #000;
-                font-size: 16px;
+                font-size: .32rem;
             }
         }
     }

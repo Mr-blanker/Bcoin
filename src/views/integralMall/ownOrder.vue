@@ -15,7 +15,7 @@
         </van-tabs>
       </div>
     </div>
-    <div class="pullScroll" :style="{'padding-top':activeTab==1?'75px':'47px','padding-bottom':'50px'}">
+    <div class="pullScroll" :style="{'padding-top':activeTab==1?'1.5rem':'.94rem','padding-bottom':'1rem'}">
       <div id="orderScroll">
         <div>
           <div class="commodity-item" v-for="(item,index) in prdList" :key="index"
@@ -147,8 +147,8 @@
   $bg: #208de3; //header   背景颜色   主色调
   .market-tab {
     width: 100%;
-    height: 45px;
-    padding: 0 10px;
+    height: .9rem;
+    padding: 0 .2rem;
     background-color: $bg;
     display: flex;
     align-items: center;
@@ -156,43 +156,43 @@
     color: #fff;
     .save-text {
       color: #fff;
-      font-size: 16px;
+      font-size: .32rem;
     }
   }
 
   .commodity-item {
     background-color: #fff;
-    min-height: 80px;
-    margin: 5px 2px;
+    min-height: 1.6rem;
+    margin: .1rem .04rem;
     border-radius: 2px;
-    padding: 5px;
+    padding:.1rem;
     .order-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 2px 0;
+      padding: .04rem 0;
       border-bottom: 1px solid #f3f3f3;
     }
     .order-main {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 5px 0;
+      padding: .1rem 0;
       img {
         display: inline-block;
-        width: 70px;
-        height: 70px;
+        width: 1.4rem;
+        height: 1.4rem;
       }
     }
     .order-footer {
       border-top: 1px solid #f3f3f3;
-      height: 30px;
+      height: .6rem;
       display: flex;
       justify-content: flex-end;
       align-items: center;
       .cancle-btn {
         border: 1px solid #eaeaea;
-        padding: 2px 4px;
+        padding: .04rem .08rem;
         border-radius: 3px;
       }
     }
@@ -204,7 +204,7 @@
     left: 0;
     right: 0;
     z-index: 999;
-    font-size: 16px;
+    font-size: .32rem;
   }
 
   .clear-fixed:before, .clear-fixed:after {
@@ -214,7 +214,7 @@
   }
 
   .prd-box {
-    padding: 75px 0 0 0;
+    padding: 1.5rem 0 0 0;
   }
 
   .tab-active {

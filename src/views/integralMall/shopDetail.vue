@@ -30,7 +30,7 @@
                         <div v-html="detailData.descs" class="shop-desc"></div>
                     </div>
                 </div>
-                <div class="shop-detail" style="margin:5px 0 0 0;" v-if="type==1">
+                <div class="shop-detail" style="margin:.1rem 0 0 0;" v-if="type==1">
                     <yd-cell-group>
                         <yd-cell-item arrow>
                             <span slot="left">拍卖开始时间</span>
@@ -123,25 +123,25 @@
     $bg: #208de3; //header   背景颜色   主色调
     .market-tab {
         width: 100%;
-        height: 45px;
-        padding: 0 10px;
+        height: .9rem;
+        padding: 0 .2rem;
         background-color: $bg;
         display: flex;
         align-items: center;
         justify-content: space-between;
         color: #fff;
         .tab-contianer {
-            height: 45px;
+            height: .9rem;
             display: flex;
             align-items: center;
             flex-direction: column;
             justify-content: center;
             color: #fff;
-            font-size: 16px;
+            font-size: .32rem;
         }
         .save-text {
             color: #fff;
-            font-size: 16px;
+            font-size: .32rem;
         }
     }
     .shop-header {
@@ -151,25 +151,25 @@
         right: 0;
     }
     .shop-box {
-        margin: 45px 0 0 0;
-        padding: 0 0 55px 0;
+        margin: .9rem 0 0 0;
+        padding: 0 0 1.1rem 0;
         overflow: auto;
         .shop-img {
             background-color: #fff;
             img {
                 display: inline-block;
                 width: 100%;
-                height: 200px;
+                height: 4rem;
             }
         }
         .shop-base {
             background-color: #fff;
-            padding: 5px 13px;
+            padding: .1rem .26rem;
             text-align: left;
             .info-base {
                 display: flex;
                 justify-content: space-between;
-                font-size: 15px;
+                font-size: .3rem;
                 .shop-prices,
                 .shop-state {
                     &>span {
@@ -183,8 +183,8 @@
         display: flex;
         flex-direction: column;
         background-color: #fff;
-        margin: 5px 0 0 0;
-        padding: 5px 13px;
+        margin: .1rem 0 0 0;
+        padding: .1rem .26rem;
         align-items: flex-start;
         &>div {
             display: flex;
@@ -197,18 +197,18 @@
         right: 0;
         z-index: 9999;
         display: flex;
-        height: 50px;
+        height: 1rem;
         background-color: #fff;
         justify-content: flex-end;
         align-items: center;
         border-top: 1px solid #eae8e8;
         &>div:first-child {
-            width: 110px;
+            width: 1.2rem;
             height: 100%;
             text-align: center;
-            line-height: 50px;
+            line-height: 1rem;
             border-radius: 0;
-            font-size: 16px;
+            font-size: .32rem;
             color: #fff;
             background-color: #f44;
         }
@@ -220,10 +220,10 @@
         right: 0;
         z-index: 9999;
         display: flex;
-        height: 50px;
+        height: 1rem;
         background-color: #fff;
         justify-content: space-between;
-        padding: 0 0 0 20px;
+        padding: 0 0 0 .4rem;
         align-items: center;
         border-top: 1px solid #eae8e8;
         &>div:first-child {
@@ -231,16 +231,16 @@
             justify-content: space-between;
             align-items: center;
             &>span {
-                margin: 0 10px 0 0;
+                margin: 0 .2rem 0 0;
             }
         }
         &>div:last-child {
-            width: 110px;
+            width: 2.2rem;
             height: 100%;
             text-align: center;
-            line-height: 50px;
+            line-height: 1rem;
             border-radius: 0;
-            font-size: 16px;
+            font-size: .32rem;
             color: #fff;
             background-color: #f44;
         }

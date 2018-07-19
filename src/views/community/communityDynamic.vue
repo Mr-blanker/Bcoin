@@ -47,7 +47,8 @@
       <div class="pullScroll">
         <div id="dynamicScroll">
           <div>
-            <div class="cd-dynamic-item" v-for="(item,index) in articleList" @click.stop="$router.push({path:'/articleDetail',query:{item:JSON.stringify(item)}})">
+            <div class="cd-dynamic-item" v-for="(item,index) in articleList"
+                 @click.stop="$router.push({path:'/articleDetail',query:{item:JSON.stringify(item)}})">
               <div class="cd-dynamic-user">
                 <img :src="item.u_pic" alt="">
                 <!--i是否置顶-->
@@ -62,7 +63,8 @@
                 <span class="cd-dynamic-text">{{item.content}}</span>
                 <img :src="attr" alt="" v-for="attr in item.imgs">
                 <div class="cd-dynamic-icon">
-                  <i class="icon iconfont icon-dianzan dianzan " @click.stop="dianzan(item,index)" :class="{'is-dianzan':item.isLike}"></i>
+                  <i class="icon iconfont icon-dianzan dianzan " @click.stop="dianzan(item,index)"
+                     :class="{'is-dianzan':item.isLike}"></i>
                   <i class="icon iconfont icon-web-icon- pinglun" @click.stop="comment(item.id)"></i>
                 </div>
               </div>
@@ -95,6 +97,7 @@
   import {
     mapGetters
   } from "vuex"
+
   export default {
     name: "communityDynamic",
     data() {
@@ -333,25 +336,27 @@
 
 <style scoped lang="scss">
   .add-box {
-    width: 45px;
-    height: 45px;
+    width: .9rem;
+    height: .9rem;
     background: #208de3;
     position: fixed;
     bottom: 2rem;
     right: .5rem;
     border: 0;
-    border-radius: 40px;
+    border-radius: .8rem;
     i {
       color: #fff;
     }
   }
+
   .is-dianzan {
     color: #208de3;
   }
+
   .cd-dynamic-comment {
     display: flex;
     flex-wrap: wrap;
-    padding: 10px 0 0 .8rem;
+    padding: .2rem 0 0 .8rem;
     background: #fff;
     font-size: .3rem;
     li {
