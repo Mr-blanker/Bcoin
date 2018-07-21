@@ -59,6 +59,7 @@
         height: 1rem;
         padding: 0 .2rem;
         background-color: $bg;
+        overflow:hidden;
         display: flex;
         align-items: center;
         justify-content: space-between;

@@ -46,7 +46,7 @@ import orderDetail from '@/views/integralMall/orderDetail'
 export default [
   {
     path: '/',
-    redirect: '/marketIndex',
+    redirect: '/Information',
   },
   {
     name: 'HelloWorld',

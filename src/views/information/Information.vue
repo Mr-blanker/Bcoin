@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header v-bind="{right:1,center:3,list:titleList,liKey:index}" @clickItem="clickItem"></Header>
-    <div style="padding-top: 45px;padding-bottom:50px">
+    <div style="padding-top: 32px;padding-bottom:50px">
       <div class="new-box" v-if="index===0">
         <ul class="new-bar">
           <li class="new-bar-item " :class="{'new-bar-item-active':newCateId===0}" @click="chooseNewCate(0)">全部</li>
@@ -10,65 +10,73 @@
           </li>
         </ul>
       </div>
-      <yd-slider autoplay="3000" v-if="index==0" style="padding-top: 36px;">
-        <yd-slider-item v-for="(item,index) in broadcastAdList" :key="index" @click.native="goBrower(item)">
-          <!--<a :href="item.url" class="slider-img">-->
-          <div style="height: 3.5rem;" @click="sliderRouter(item.url)">
-            <img :src="item.pic" style="height: 100%;">
-          </div>
-        </yd-slider-item>
-      </yd-slider>
-      <div id="newsScroll">
-        <!--新闻资讯-->
-        <div v-if="index===0">
-          <ul class="information-list">
-            <li class="information-item" v-for="(item,key) in list" @click="informationDetail(item.aid)">
-              <img :src="item.thumbnail" alt="">
-              <div class="information-text">
-                <span>{{item.title}}</span>
-                <p>{{mo(item.t*1000)}}</p>
+      <div id="newsScroll" class="mescroll">
+        <div>
+          <yd-slider autoplay="3000" v-if="index==0" style="padding-top: 36px;">
+            <yd-slider-item v-for="(item,index) in broadcastAdList" :key="index">
+              <!--<a :href="item.url" class="slider-img">-->
+              <div style="height: 3.5rem;">
+                <img :src="item.pic" style="height: 100%;" @click="sliderRouter(item.url)">
               </div>
-            </li>
-          </ul>
-        </div>
-        <!--快讯-->
-        <div class=" flash-list" v-if="index===1">
-          <div>
-            <div class="flash-item" v-for="(item,key) in flashList">
-              <p class="flash-time">{{item.k_time*1000|moment('MM-DD HH:mm')}}</p>
-              <p class="flash-content" v-html="item.k_content" @click="lookAllArt(key)" ref="artContent"></p>
-              <div class="flash-comment">
-                <span class="flash-duo" @click="comment(item,'duo',key)">看多（{{item.duo}}）</span>
-                <span class="flash-kong" @click="comment(item,'kong',key)">看空（{{item.kong}}）</span>
+            </yd-slider-item>
+          </yd-slider>
+          <!--新闻资讯-->
+          <div v-if="index===0">
+            <ul class="information-list">
+              <li class="information-item" v-for="(item,key) in list" @click="informationDetail(item.aid)">
+                <img :src="item.thumbnail" alt="">
+                <div class="information-text">
+                  <span>{{item.title}}</span>
+                  <p>{{mo(item.t*1000)}}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <!--快讯-->
+          <div class=" flash-list" v-if="index===1">
+            <div>
+              <div class="flash-item" v-for="(item,key) in flashList">
+                <p class="flash-time">{{item.k_time*1000|moment('MM-DD HH:mm')}}</p>
+                <p class="flash-content" v-html="item.k_content" @click="lookAllArt(key)" ref="artContent"></p>
+                <div class="flash-comment">
+                  <span class="flash-duo" @click="comment(item,'duo',key)">看多（{{item.duo}}）</span>
+                  <span class="flash-kong" @click="comment(item,'kong',key)">看空（{{item.kong}}）</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <!--名人库-->
-        <div class="person-list" v-if="index===3">
-          <div class="person-item" v-for="item in personList" @click="$router.push({path:'InformationDetail',query:{id: item.aid}})">
-            <div class="person-item-box">
-              <div class="person-img"><img :src="item.thumbnail" alt=""></div>
-              <span class="person-title">{{item.title}}</span>
-              <span class="person-content">{{item.description}}</span>
+          <!--名人库-->
+          <div class="person-list" v-if="index===3">
+            <div class="person-item" v-for="item in personList" @click="$router.push({path:'InformationDetail',query:{id: item.aid}})">
+              <div class="person-item-box">
+                <div class="person-img"><img :src="item.thumbnail" alt=""></div>
+                <span class="person-title">{{item.title}}</span>
+                <span class="person-content">{{item.description}}</span>
+              </div>
             </div>
           </div>
+          <!--专栏-->
+          <yd-accordion v-if="index===2">
+            <yd-accordion-item :title="item.name" v-for="(item,index) in columnList" :key="index">
+              <div class="c-list">
+                <!-- <ul class="c-list-box" style="width: 100%;">
+                        <yd-grids-group :rows="3" item-height="2.2rem">
+                          <yd-grids-item v-for="(n,key) in item.items" :key="key" class="ccc" @click.native="$router.push({path:'acView',query:{val:JSON.stringify(n)}})">
+                            <span slot="text">{{n.title}}</span>
+                            <img slot="icon" :src="n.thumbnail" alt="">
+                          </yd-grids-item>
+                        </yd-grids-group>
+                      </ul>-->
+                <div class="special-item">
+                  <div v-for="(n,key) in item.items" :key="key"  @click="$router.push({path:'acView',query:{val:JSON.stringify(n)}})">
+                    <img :src="n.thumbnail" alt="">
+                    <span>{{n.title}}</span>
+                  </div>
+                </div>
+              </div>
+            </yd-accordion-item>
+          </yd-accordion>
         </div>
-        <!--专栏-->
-        <yd-accordion v-if="index===2">
-          <yd-accordion-item :title="item.name" v-for="(item,index) in columnList" :key="index">
-            <div class="c-list">
-              <ul class="c-list-box" style="width: 100%;">
-                <yd-grids-group :rows="3" item-height="2.2rem">
-                  <yd-grids-item v-for="(n,key) in item.items" :key="key" class="ccc" @click.native="$router.push({path:'acView',query:{val:JSON.stringify(n)}})">
-                    <span slot="text">{{n.title}}</span>
-                    <img slot="icon" :src="n.thumbnail" alt="">
-                  </yd-grids-item>
-                </yd-grids-group>
-              </ul>
-            </div>
-          </yd-accordion-item>
-        </yd-accordion>
       </div>
     </div>
   </div>
@@ -122,21 +130,26 @@
       if (this.informationActive) {
         this.index = parseInt(this.informationActive)
       }
+      if (this.index == 0 && !this.broadcastAdList.length) {
+        this.getBroadcastAd()
+      }
       this.scroll = new MeScroll("newsScroll", {
         down: {
           callback: that.initDataList,
         },
         up: {
           callback: that.loadDataList,
+          auto: false,
           page: {
             num: 0,
             size: 10,
             time: null
-          }
+          },
+          htmlNodata: '<p class="upwarp-nodata">-- 没有更多数据了 --</p>'
         }
       });
       // this.scroll.triggerDownScroll();
-      this.clickItem(this.index)
+      // this.clickItem(this.index)
     },
     methods: {
       sliderRouter(url) {
@@ -156,6 +169,7 @@
       //选择新闻分类
       chooseNewCate(id) {
         console.log(id)
+        this.scroll.scrollTo(0);
         this.newCateId = id
         this.scroll.triggerDownScroll();
       },
@@ -246,6 +260,7 @@
           this.getBroadcastAd()
         }
         console.log(1)
+        this.scroll.scrollTo(0);
         this.scroll.triggerDownScroll();
       },
       //轮播图
@@ -314,5 +329,31 @@
       width: 1rem;
       border-radius: 1rem;
     }
+  }
+  .mescroll {
+    position: fixed;
+    top: .9rem;
+    bottom: 1rem;
+    height: auto;
+  }
+  .special-item {
+    display: flex;
+    flex-wrap: wrap;
+    border-left: 1px solid #d9d9d9;
+    &>div {
+      display: flex;
+      width: 33.3333%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid #d9d9d9;
+      border-right: 1px solid #d9d9d9;
+      height: 2.2rem;
+      img {
+        width: 1rem;
+        margin:0 0 .3rem 0;
+      }
+    }
+ 
   }
 </style>

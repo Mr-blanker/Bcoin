@@ -1,34 +1,6 @@
 <template>
-  <div ref="scrollObj" style="padding-top:2.08rem;padding-bottom:1rem">
+  <div ref="scrollObj">
     <div id="quotationScroll" class="mescroll">
-      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="$router.push(`/trend?coin=${JSON.stringify(item)}&active=1`)">
-        <div class="box-left">
-          <div>
-            <span class="coin-symbol">{{item.symbol}}</span>
-            <span class="coin-name">{{item.name}}</span>
-            <span class="coin-name" v-if="item.coin_name">{{item.coin_name}}</span>
-          </div>
-          <div class="coin-issue" v-if="item.name">
-            <span>量/值:</span>
-            <span>{{item['24h_volume_cny']|formatMoney}}/{{item.market_cap_cny|formatMoney}}</span>
-          </div>
-          <div class="coin-issue" v-if="item.cheng">
-            <span>成交量:</span>
-            <span>{{item.cheng|formatMoney}}</span>
-          </div>
-        </div>
-        <div class="box-right flex flex-between">
-          <div class="tr mark-box">
-            <div class="mark-sum " v-if="item.price_cny">{{item.price_cny?item.price_cny.toPrecision(7):'-'}}</div>
-            <div class="mark-sum " v-if="item.price">{{item.price?item.price.toPrecision(7):'-'}}</div>
-            <div class="mark-percent">${{item.price_usd}}</div>
-          </div>
-          <div class="tr circulation-box">
-            <div :class="{'percent-box':true,'percentrise-color':item.percent_change_24h>0,'percentfall-color':item.percent_change_24h<0}" v-if="item.percent_change_24h">{{item.percent_change_24h}}%</div>
-            <div :class="{'percent-box':true,'percentrise-color':item.zhan>0,'percentfall-color':item.zhan<0}" v-if="item.zhan">{{item.zhan}}%</div>
-          </div>
-        </div>
-      </div>
       <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==2" @click="$router.push(`/trend?coin=${JSON.stringify(item)}&active=2`)">
         <div class="box-left">
           <div>
@@ -71,14 +43,42 @@
           </div>
         </div>
       </div>
-      <div v-show="scrollData.length==0&&scrollBoxShow==1" class="add-choice" @click="userInfo.name? $router.push({path:'manageUserChoice'}): $router.push({path:'login'})">
-        <span> <i class="icon iconfont icon-tianjia"></i></span>
-        <div>点击添加自选</div>
+      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="$router.push(`/trend?coin=${JSON.stringify(item)}&active=1`)">
+        <div class="box-left">
+          <div>
+            <span class="coin-symbol">{{item.symbol}}</span>
+            <span class="coin-name">{{item.name}}</span>
+            <span class="coin-name" v-if="item.coin_name">{{item.coin_name}}</span>
+          </div>
+          <div class="coin-issue" v-if="item.name">
+            <span>量/值:</span>
+            <span>{{item['24h_volume_cny']|formatMoney}}/{{item.market_cap_cny|formatMoney}}</span>
+          </div>
+          <div class="coin-issue" v-if="item.cheng">
+            <span>成交量:</span>
+            <span>{{item.cheng|formatMoney}}</span>
+          </div>
+        </div>
+        <div class="box-right flex flex-between">
+          <div class="tr mark-box">
+            <div class="mark-sum " v-if="item.price_cny">{{item.price_cny?item.price_cny.toPrecision(7):'-'}}</div>
+            <div class="mark-sum " v-if="item.price">{{item.price?item.price.toPrecision(7):'-'}}</div>
+            <div class="mark-percent">${{item.price_usd}}</div>
+          </div>
+          <div class="tr circulation-box">
+            <div :class="{'percent-box':true,'percentrise-color':item.percent_change_24h>0,'percentfall-color':item.percent_change_24h<0}" v-if="item.percent_change_24h">{{item.percent_change_24h}}%</div>
+            <div :class="{'percent-box':true,'percentrise-color':item.zhan>0,'percentfall-color':item.zhan<0}" v-if="item.zhan">{{item.zhan}}%</div>
+          </div>
+        </div>
       </div>
+      <!--  <div v-show="scrollData.length==0&&scrollBoxShow==1" class="add-choice" @click="userInfo.name? $router.push({path:'manageUserChoice'}): $router.push({path:'login'})">
+          <span> <i class="icon iconfont icon-tianjia"></i></span>
+          <div>点击添加自选</div>
+        </div>-->
     </div>
     <span class="add-box" @click="$router.push('manageUserChoice')" v-show="isChoiceType&&scrollBoxShow==1">
-        <i class="icon iconfont icon-tianjia"></i>
-    </span>
+          <i class="icon iconfont icon-tianjia"></i>
+      </span>
   </div>
 </template>
 <script>
@@ -106,14 +106,12 @@
       this.mescroll = new MeScroll("quotationScroll", {
         down: {
           callback: that.downCallback,
-          page: {
-            num: 0,
-            size: 10,
-            time: null
-          }
+          auto: false
         },
         up: {
-          callback: that.upCallback
+          callback: that.upCallback,
+          auto: false,
+          htmlNodata: '<p class="upwarp-nodata">-- 没有更多数据了 --</p>'
         }
       });
     },
@@ -199,12 +197,10 @@
       }
       .coin-name {
         font-size: .26rem;
-        color: $fcolor;
-        //@include small-font;
+        color: $fcolor; //@include small-font;
       }
       .coin-issue {
-        color: $fcolor;
-        //@include small-font;
+        color: $fcolor; //@include small-font;
         font-size: .24rem;
       }
     }
@@ -310,5 +306,11 @@
     i {
       color: #fff;
     }
+  }
+  .mescroll {
+    position: fixed;
+    top: 2.1rem;
+    bottom: 1rem;
+    height: auto;
   }
 </style>

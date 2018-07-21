@@ -44,8 +44,8 @@
     </div>
     <!--动态-->
     <div class="cd-dynamic " v-show="index!==1">
-      <div class="pullScroll">
-        <div id="dynamicScroll">
+      <div class="mescroll">
+        <div id="dynamicScroll" >
           <div>
             <div class="cd-dynamic-item" v-for="(item,index) in articleList"
                  @click.stop="$router.push({path:'/articleDetail',query:{item:JSON.stringify(item)}})">
@@ -132,7 +132,7 @@
           }
         }
       });
-      this.scroll.triggerDownScroll()
+      // this.scroll.triggerDownScroll()
     },
     methods: {
       initDataList(page, meScroll) {
@@ -368,5 +368,12 @@
         text-align: left;
       }
     }
+  }
+  .mescroll {
+    position: fixed;
+    top: 2.65rem;
+    bottom: 1rem;
+    height: auto;
+    width:94%;
   }
 </style>

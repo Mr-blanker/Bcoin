@@ -1,6 +1,6 @@
 <template>
   <div>
-    <common-header :currentTab.sync="activeTab" :tabClick="tabIndexChange"></common-header>
+    <common-header :currentTab.sync="activeTab" :tabClick="tabIndexChange" ref="commonHeader"></common-header>
     <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :isChoiceType="isChoice" :downCb="getData" :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
     </scroll>
   </div>
@@ -34,6 +34,9 @@
       scroll,
       commonHeader
     },
+    computed: {
+      ...mapGetters(['userInfo'])
+    },
     methods: {
       ...mapActions(['TICKER_LIST', 'PLATFORM_LIST', 'LIST_BY_CID', 'COIN_LIST', 'LIST_BY_PLAT', 'CHOICE_LIST']),
       //获取币种
@@ -56,32 +59,41 @@
           len: this.len
         }
         this.LIST_BY_CID(param).then(res => {
+          this.scrollList = []
           this.scrollList = res.data.data
           this.totalCount = res.data.data.length
-          this.meInstance.endSuccess(res.data.data.length, this.totalCount >= this.len);
+          this.meInstance.endSuccess(res.data.data.length, this.totalCount >= this.len, 1000);
           if (this.totalCount < this.len)
             this.meInstance.endUpScroll(true)
         })
       },
       getUserChoice() {
-        this.CHOICE_LIST({
-          len: this.len
-        }).then(res => {
-          this.scrollList = res.data.data
-          this.totalCount = res.data.data.length
-          this.meInstance.endSuccess(res.data.data.length, this.totalCount >= this.len);
-          if (this.totalCount < this.len)
-            this.meInstance.endUpScroll(true)
-        })
+        if (this.userInfo.name) {
+          this.CHOICE_LIST({
+            len: this.len
+          }).then(res => {
+            this.scrollList = []
+            this.scrollList = res.data.data
+            this.totalCount = res.data.data.length
+            this.meInstance.endSuccess(res.data.data.length, this.totalCount >= this.len, 1000);
+            if (this.totalCount < this.len)
+              this.meInstance.endUpScroll(true)
+          })
+        } else {
+          this.scrollList = []
+          this.meInstance.endSuccess(0, true)
+          this.meInstance.endUpScroll(true)
+        }
       },
       //获取所有货币的综合行情
       getTicker() {
         this.TICKER_LIST({
           len: this.len
         }).then(res => {
+          this.scrollList = []
           this.scrollList = res.data.data
           this.totalCount = res.data.data.length
-          this.meInstance.endSuccess(res.data.data.length, this.totalCount >= this.len);
+          this.meInstance.endSuccess(res.data.data.length, this.totalCount >= this.len, 1000);
           if (this.totalCount < this.len)
             this.meInstance.endUpScroll(true)
         })
@@ -101,6 +113,7 @@
           len: this.len,
           eid: this.eid
         }).then(res => {
+          this.scrollList = []
           this.scrollList = res.data.data
           this.totalCount = res.data.data.length
           this.meInstance.endSuccess(res.data.data.length, this.totalCount >= this.len);
@@ -142,9 +155,11 @@
         console.log('isChoice')
         console.log(isChoice)
         this.isChoice = isChoice
-        setTimeout(() => {
-          this.initScroll()
-        }, 10)
+        // document.documentElement.scrollTop = window.pageYOffset = document.body.scrollTop = 0
+        this.meInstance.scrollTo(0);
+        // setTimeout(() => {
+        this.initScroll()
+        // }, 1000)
       }
     }
   }

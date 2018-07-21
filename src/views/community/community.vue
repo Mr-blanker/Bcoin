@@ -13,7 +13,7 @@
         <i class="icon iconfont icon-gengduo"></i>
       </li>
     </ul>
-    <div class="community-box  pullScroll" id="communityScroll"  style="padding-bottom:1rem;">
+    <div class="community-box mescroll" id="communityScroll"   style="padding-bottom:1rem;">
       <div>
         <div class="recommend-box">
           <span class="recommend-text">推荐</span>
@@ -59,10 +59,11 @@
             num: 0,
             size: 10,
             time: null
-          }
+          },
+           htmlNodata:'<p class="upwarp-nodata">-- 没有更多推荐了 --</p>'
         }
       });
-      this.scroll.triggerDownScroll();
+      // this.scroll.triggerDownScroll();
     },
     methods: {
       initDataList(page,mescroll) {
@@ -92,5 +93,10 @@
 </script>
 
 <style scoped>
-
+ .mescroll {
+    position: fixed;
+    top: 2.65rem;
+    bottom: 1rem;
+    height: auto;
+  }
 </style>

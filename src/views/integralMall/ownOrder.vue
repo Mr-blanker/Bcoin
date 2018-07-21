@@ -15,8 +15,8 @@
         </van-tabs>
       </div>
     </div>
-    <div class="pullScroll" :style="{'padding-top':activeTab==1?'1.5rem':'.94rem','padding-bottom':'1rem'}">
-      <div id="orderScroll">
+    <div class="pullScroll" >
+      <div id="orderScroll" class="mescroll">
         <div>
           <div class="commodity-item" v-for="(item,index) in prdList" :key="index"
                @click="$router.push(`/orderDetail?order=${JSON.stringify(item)}`)">
@@ -93,7 +93,7 @@
           }
         }
       });
-      this.vantTabClick(0)
+      // this.vantTabClick(0)
     },
     methods: {
       ...mapActions(['USER_ORDER_LIST', 'CANCLE_ORDER']),
@@ -219,5 +219,11 @@
 
   .tab-active {
     background-color: #1464cc;
+  }
+  .mescroll {
+    position: fixed;
+    top: 1.45rem;
+    bottom: 1rem;
+    height: auto;
   }
 </style>

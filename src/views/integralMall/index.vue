@@ -4,8 +4,7 @@
       <div class="market-tab " style="position:relative;">
         <i class="icon iconfont icon-fanhui" @click="$router.go(-1)"></i>
         <div class="tab-contianer" style="position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%)">
-          <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index"
-                @click="tabChange(index+1)">{{item}}</span>
+          <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index" @click="tabChange(index+1)">{{item}}</span>
         </div>
         <yd-icon name="" size="20px" color="#fff" style="visibility:hidden;"></yd-icon>
       </div>
@@ -16,11 +15,10 @@
         </van-tabs>
       </div>
     </div>
-    <div class="pullScroll" :style="{'padding-top':activeTab==1?'1.5rem':'.94rem','padding-bottom':'1rem'}">
-      <div id="scrollBox">
+    <div class="pullScroll">
+      <div id="scrollBox" class="mescroll" :style="{'top':activeTab==1?'1.45rem':'.94rem'}">
         <div>
-          <div class="commodity-item" v-for="(item,index) in prdList" :key="index"
-               @click="$router.push(`/shopDetail?id=${item.id}&type=1`)" v-if="activeTab==1">
+          <div class="commodity-item" v-for="(item,index) in prdList" :key="index" @click="$router.push(`/shopDetail?id=${item.id}&type=1`)" v-if="activeTab==1">
             <div class="commodity-img">
               <img :src="item.img" alt="">
             </div>
@@ -30,8 +28,7 @@
               <div>{{item.cur_point}}</div>
             </div>
           </div>
-          <div class="commodity-item" v-for="(item,index) in prdList" :key="index"
-               @click="$router.push(`/shopDetail?id=${item.id}&type=2`)" v-if="activeTab==2">
+          <div class="commodity-item" v-for="(item,index) in prdList" :key="index" @click="$router.push(`/shopDetail?id=${item.id}&type=2`)" v-if="activeTab==2">
             <div class="commodity-img">
               <img :src="item.img" alt="">
             </div>
@@ -60,7 +57,6 @@
     mapMutations,
     mapActions
   } from 'vuex'
-
   export default {
     name: 'index',
     data() {
@@ -104,7 +100,7 @@
           }
         }
       });
-      this.vantTabClick(0)
+      // this.vantTabClick(0)
     },
     methods: {
       ...mapActions(['PRD_LIST']),
@@ -184,7 +180,6 @@
       font-size: .32rem;
     }
   }
-
   .commodity-item {
     display: flex;
     background-color: #fff;
@@ -213,24 +208,27 @@
     .commodity-inter {
       width: 30%;
       font-size: .32rem;
-      & > div:last-child {
+      &>div:last-child {
         margin: .2rem 0 0 0;
       }
     }
   }
-
   .mall-header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
   }
-
   .prd-box {
     padding: 1.5rem 0 0 0;
   }
-
   .tab-active {
     background-color: #1464cc;
+  }
+  .mescroll {
+    position: fixed;
+    top: 1.45rem;
+    bottom: 1rem;
+    height: auto;
   }
 </style>

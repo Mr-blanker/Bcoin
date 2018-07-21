@@ -16,7 +16,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 let notLoading = ['/api/news.lists', '/api/flash.lists', '/api/news.flash',
   '/api/column.cate', '/api/person.lists', '/api/coin.lists',
   '/api/coin.ticker', 'api/platform.lists', '/api/platform.ticker',
-  '/api/coin.plat', '/api/group.lists', '/api/group.info', '/api/group.article',
+  '/api/coin.plat', '/api/group.lists', '/api/group.info', '/api/group.article','/api/user/choice.lists',
   '/api/group.comments']
 axios.interceptors.request.use(
   config => {

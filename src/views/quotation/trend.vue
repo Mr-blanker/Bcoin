@@ -6,7 +6,7 @@
                 <div>{{coin.name}}</div>
                 <div>{{coin.dui}}</div>
             </div>
-            <yd-icon name="refresh" size="20px" color="#fff" @click.native="getTrends"></yd-icon>
+            <span @click="getTrends">刷新</span>
         </div>
         <div class="coin-info">
             <div>
@@ -55,6 +55,7 @@
                     start: '',
                     end: ''
                 },
+                myChart: '',
                 dates: [],
                 market_cap: [],
                 volume: [],
@@ -100,9 +101,18 @@
             getTrends() {
                 this.TREND(this.trendParam).then(res => {
                     this.trendArr = res.data
-                    if (res.data.price.length == 0 && res.data.market_cap.length == 0 && res.data.volume.length == 0)
+                    if (res.data.code !== 0) {
+                        this.$dialog.toast({
+                            mes: res.data.msg,
+                            timeout: 1500
+                        });
                         return
-                    this.formatterRes(res.data)
+                    }
+                    if (res.data.price.length == 0 && res.data.market_cap.length == 0 && res.data.volume.length == 0) {
+                        this.myChart.clear()
+                    } else {
+                        this.formatterRes(res.data)
+                    }
                     this.initCharts()
                 })
             },
@@ -121,6 +131,7 @@
                 for (let item of data.volume) {
                     this.volume.push(item[1])
                 }
+                console.log(this.dates)
             },
             getTimeStamp(day = 0) {
                 let timeStamp = new Date().valueOf()
@@ -128,15 +139,16 @@
             },
             startCB() {
                 console.log('start')
-                if(this.beginTime>this.endTime){
+                if (this.beginTime > this.endTime) {
                     let temp = this.beginTime
                     this.beginTime = this.endTime
                     this.endTime = temp
                 }
+                this.getTrends()
             },
             endCB() {
                 console.log('end')
-                if(this.beginTime>this.endTime){
+                if (this.beginTime > this.endTime) {
                     let temp = this.beginTime
                     this.beginTime = this.endTime
                     this.endTime = temp
@@ -156,6 +168,7 @@
             initCharts() {
                 let colorList = ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'];
                 let labelFont = 'bold 12px Sans-serif';
+                let that = this
                 let option = {
                     animation: false,
                     color: colorList,
@@ -208,7 +221,7 @@
                     }],
                     xAxis: [{
                         type: 'category',
-                        data: this.dates,
+                        data: that.dates,
                         boundaryGap: false,
                         axisLine: {
                             lineStyle: {
@@ -223,7 +236,7 @@
                     }, {
                         type: 'category',
                         gridIndex: 1,
-                        data: this.dates,
+                        data: that.dates,
                         scale: true,
                         boundaryGap: false,
                         splitLine: {
@@ -339,11 +352,11 @@
                                 color: '#140'
                             }
                         },
-                        data: this.volume
+                        data: that.volume
                     }, {
                         name: '市值',
                         type: 'line',
-                        data: this.market_cap,
+                        data: that.market_cap,
                         smooth: true,
                         showSymbol: false,
                         lineStyle: {
@@ -354,7 +367,7 @@
                     }, {
                         name: '价格',
                         type: 'line',
-                        data: this.price,
+                        data: that.price,
                         smooth: true,
                         showSymbol: false,
                         lineStyle: {
@@ -364,8 +377,8 @@
                         }
                     }]
                 }
-                let myChart = this.$echarts.init(document.getElementById('myChart'))
-                myChart.setOption(option)
+                this.myChart = this.$echarts.init(document.getElementById('myChart'))
+                this.myChart.setOption(option, true)
             }
         }
     }

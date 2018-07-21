@@ -13,7 +13,7 @@
                     <span @click="delTag(item)">X</span>
                     <div class="tag-content">{{item.coin_name}}</div>
                 </div>
-                <div class="tag-item" @click="$router.push('/addChoice')">
+                <div class="tag-item" @click="userInfo.name?$router.push('/addChoice'):$router.push('/login')">
                     <div class="add-tag">+</div>
                 </div>
             </div>
@@ -37,14 +37,17 @@
         computed: {
             choiceList() {
                 return this.userChoice
-            }
+            },
+            ...mapGetters(['userInfo'])
         },
         methods: {
             ...mapActions(['CHOICE_LIST', 'DEL_CHOICE']),
             init() {
-                this.CHOICE_LIST().then(res => {
-                    this.userChoice = res.data.data
-                })
+                if (this.userInfo.name) {
+                    this.CHOICE_LIST().then(res => {
+                        this.userChoice = res.data.data
+                    })
+                }
             },
             delTag(item) {
                 this.DEL_CHOICE({

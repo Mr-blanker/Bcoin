@@ -48,7 +48,7 @@
       return {
         activeTab: 1,
         show: false,
-        active: 0,
+        active: 5,
         tabList: '',
         tabKey: '',
         mult: [{
