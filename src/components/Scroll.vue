@@ -1,7 +1,7 @@
 <template>
   <div ref="scrollObj">
     <div id="quotationScroll" class="mescroll">
-    <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="$router.push(`/trend?coin=${JSON.stringify(item)}&active=1`)">
+      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="$router.push(`/trend?coin=${JSON.stringify(item)}&active=1`)">
         <div class="box-left">
           <div>
             <span class="coin-symbol">{{item.symbol}}</span>
@@ -71,15 +71,13 @@
           </div>
         </div>
       </div>
-      
+       
       <!--  <div v-show="scrollData.length==0&&scrollBoxShow==1" class="add-choice" @click="userInfo.name? $router.push({path:'manageUserChoice'}): $router.push({path:'login'})">
-          <span> <i class="icon iconfont icon-tianjia"></i></span>
-          <div>点击添加自选</div>
-        </div>-->
+            <span> <i class="icon iconfont icon-tianjia"></i></span>
+            <div>点击添加自选</div>
+          </div>-->
     </div>
-    <span class="add-box" @click="$router.push('manageUserChoice')" v-show="isChoiceType&&scrollBoxShow==1">
-          <i class="icon iconfont icon-tianjia"></i>
-      </span>
+  
   </div>
 </template>
 <script>
@@ -313,5 +311,6 @@
     top: 2.1rem;
     bottom: 1rem;
     height: auto;
+    -webkit-box-sizing: border-box; box-sizing: border-box;
   }
 </style>

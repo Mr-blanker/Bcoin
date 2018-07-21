@@ -3,6 +3,9 @@
     <common-header :currentTab.sync="activeTab" :tabClick="tabIndexChange" ref="commonHeader"></common-header>
     <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :isChoiceType="isChoice" :downCb="getData" :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
     </scroll>
+     <span class="add-box" @click="$router.push('manageUserChoice')" v-show="isChoice&&activeTab==1">
+            <i class="icon iconfont icon-tianjia"></i>
+        </span>
   </div>
 </template>
 <script>
@@ -209,5 +212,18 @@
   }
   .market-container::-webkit-scrollbar {
     display: none;
+  }
+   .add-box {
+    width: .9rem;
+    height: .9rem;
+    background: #208de3;
+    position: fixed;
+    bottom: 2rem;
+    right: .5rem;
+    border: 0;
+    border-radius: .8rem;
+    i {
+      color: #fff;
+    }
   }
 </style>
