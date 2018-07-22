@@ -37,8 +37,8 @@
             </div>
         </div>
         <div v-show="market_cap.length==0&&volume.length==0&&price.length==0" class="none-tip">暂无走势数据</div>
-        <div id="myChart" :style="{width: '100%', height: '12rem'}"></div>
-        <!--<div id="myChartPie" :style="{width: '100%', height: '12rem'}"></div>-->
+        <div id="myChartPie" :style="{width: '100%', height: '3rem',background:'#fff'}"></div>
+        <div id="myChart" :style="{width: '100%', height: '8rem'}"></div>
     </div>
 </template>
 <script>
@@ -65,7 +65,9 @@
                 coin: '',
                 trendArr: '',
                 active: '',
-                myChartPie: ''
+                myChartPie: '',
+                pieData: [],
+                pieLegend: []
             }
         },
         mounted() {
@@ -118,6 +120,15 @@
                         this.myChart.clear()
                     } else {
                         this.formatterRes(res.data)
+                    }
+                    this.pieLegend.length = 0
+                    this.pieData.length = 0
+                    for (let item of res.data.per) {
+                        this.pieLegend.push(item.name)
+                        this.pieData.push({
+                            name: item.name,
+                            value: item.y
+                        })
                     }
                     this.initCharts()
                 })
@@ -179,7 +190,7 @@
                     animation: false,
                     color: colorList,
                     legend: {
-                        top: 30,
+                        top: 0,
                         data: ['市值', '价格']
                     },
                     tooltip: {
@@ -213,7 +224,7 @@
                         realtime: false,
                         start: 20,
                         end: 70,
-                        top: 65,
+                        top: 30,
                         height: 20,
                         handleIcon: 'M10.7,11.9H9.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4h1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
                         handleSize: '120%'
@@ -271,7 +282,7 @@
                             handle: {
                                 show: true,
                                 margin: 30,
-                                color: '#B80C00'
+                                color: '#208de3'
                             }
                         }
                     }],
@@ -313,18 +324,18 @@
                     grid: [{
                         left: 20,
                         right: 20,
-                        top: 110,
+                        top: 80,
                         height: 120
                     }, {
                         left: 20,
                         right: 20,
                         height: 40,
-                        top: 260
+                        top: 230
                     }],
                     graphic: [{
                         type: 'group',
                         left: 'center',
-                        top: 70,
+                        top: 30,
                         width: 300,
                         bounding: 'raw',
                         children: [{
@@ -383,75 +394,45 @@
                         }
                     }]
                 }
-                // var data = genData(80);
-                // let pieOption = {
-                //     title: {
-                //         x: 'center'
-                //     },
-                //     tooltip: {
-                //         trigger: 'item',
-                //         formatter: "{a} <br/>{b} : {c} ({d}%)"
-                //     },
-                //     legend: {
-                //         type: 'scroll',
-                //         orient: 'vertical',
-                //         right: 10,
-                //         top: 0,
-                //         bottom: 5,
-                //         data: data.legendData,
-                //         selected: data.selected
-                //     },
-                //     series: [{
-                //         name: '姓名',
-                //         type: 'pie',
-                //         radius: '20%',
-                //         center: ['30%', '10%'],
-                //         data: data.seriesData,
-                //         itemStyle: {
-                //             emphasis: {
-                //                 shadowBlur: 10,
-                //                 shadowOffsetX: 0,
-                //                 shadowColor: 'rgba(0, 0, 0, 0.5)'
-                //             }
-                //         }
-                //     }]
-                // };
+                let pieOption = {
+                    title: {
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        type: 'scroll',
+                        orient: 'vertical',
+                        right: 10,
+                        top: 0,
+                        bottom: 5,
+                        data: that.pieLegend
+                    },
+                    series: [{
+                        name: '姓名',
+                        type: 'pie',
+                        radius: '80%',
+                        center: ['30%', '50%'],
+                        data: that.pieData,
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: false
+                                },
+                                labelLine: {
+                                    show: false
+                                }
+                            },
+                        },
+                    }]
+                };
+                console.log(pieOption)
                 this.myChart = this.$echarts.init(document.getElementById('myChart'))
-                // this.myChartPie = this.$echarts.init(document.getElementById('myChartPie'))
+                this.myChartPie = this.$echarts.init(document.getElementById('myChartPie'))
                 this.myChart.setOption(option, true)
-                // this.myChartPie.setOption(pieOption, true)
-                // function genData(count) {
-                //     var nameList = [
-                //         '赵', '钱', '孙', '李', '周', '吴', '郑', '王', '冯', '陈', '褚', '卫', '蒋', '沈', '韩', '杨', '朱', '秦', '尤', '许', '何', '吕', '施', '张', '孔', '曹', '严', '华', '金', '魏', '陶', '姜', '戚', '谢', '邹', '喻', '柏', '水', '窦', '章', '云', '苏', '潘', '葛', '奚', '范', '彭', '郎', '鲁', '韦', '昌', '马', '苗', '凤', '花', '方', '俞', '任', '袁', '柳', '酆', '鲍', '史', '唐', '费', '廉', '岑', '薛', '雷', '贺', '倪', '汤', '滕', '殷', '罗', '毕', '郝', '邬', '安', '常', '乐', '于', '时', '傅', '皮', '卞', '齐', '康', '伍', '余', '元', '卜', '顾', '孟', '平', '黄', '和', '穆', '萧', '尹', '姚', '邵', '湛', '汪', '祁', '毛', '禹', '狄', '米', '贝', '明', '臧', '计', '伏', '成', '戴', '谈', '宋', '茅', '庞', '熊', '纪', '舒', '屈', '项', '祝', '董', '梁', '杜', '阮', '蓝', '闵', '席', '季', '麻', '强', '贾', '路', '娄', '危'
-                //     ];
-                //     var legendData = [];
-                //     var seriesData = [];
-                //     var selected = {};
-                //     for (var i = 0; i < 7; i++) {
-                //         name = Math.random() > 0.65 ?
-                //             makeWord(4, 1) + '·' + makeWord(3, 0) :
-                //             makeWord(2, 1);
-                //         legendData.push(name);
-                //         seriesData.push({
-                //             name: name,
-                //             value: Math.round(Math.random() * 100000)
-                //         });
-                //         selected[name] = i < 6;
-                //     }
-                //     return {
-                //         legendData: legendData,
-                //         seriesData: seriesData,
-                //         selected: selected
-                //     };
-                //     function makeWord(max, min) {
-                //         var nameLen = Math.ceil(Math.random() * max + min);
-                //         var name = [];
-                //         for (var i = 0; i < nameLen; i++) {
-                //             name.push(nameList[Math.round(Math.random() * nameList.length - 1)]);
-                //         }
-                //         return name.join('');
-                //     }
-                // }
+                this.myChartPie.setOption(pieOption, true)
             }
         }
     }
@@ -571,5 +552,4 @@
         height: 20rem;
         padding: 2.5rem 0;
     }
-   
 </style>
