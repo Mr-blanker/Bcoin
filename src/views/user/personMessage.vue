@@ -55,5 +55,7 @@
 </script>
 
 <style scoped>
-
+  .yd-cell-item{
+    height: .9rem !important;
+  }
 </style>

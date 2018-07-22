@@ -316,4 +316,10 @@
     right: 0;
     z-index: 9999;
   }
+  .van-tab {
+    line-height: .72rem !important;
+  }
+  .van-tabs--line .van-tabs__wrap {
+    height: .72rem !important;
+  }
 </style>

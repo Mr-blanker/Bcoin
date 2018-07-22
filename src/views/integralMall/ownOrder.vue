@@ -9,13 +9,14 @@
         <yd-icon name="" size="20px" color="#fff" style="visibility:hidden;"></yd-icon>
       </div>
       <div>
-        <van-tabs v-model="active" @click="vantTabClick" v-show="activeTab==1">
-          <van-tab v-for="(item,index) in status" :title="item" :key="index">
-          </van-tab>
-        </van-tabs>
+        <ul class="own-bar" v-if="activeTab==1">
+          <li class="own-bar-item" :class="{'own-bar-item-active':index===selectId}"
+              v-for="(item,index) in status" :key="index" @click="vantTabClick(index)">{{item}}
+          </li>
+        </ul>
       </div>
     </div>
-    <div class="pullScroll" >
+    <div class="pullScroll">
       <div id="orderScroll" class="mescroll">
         <div>
           <div class="commodity-item" v-for="(item,index) in prdList" :key="index"
@@ -25,10 +26,12 @@
               <div>{{item.status_name}}</div>
             </div>
             <div class="order-main" v-for="(item,index) in item.items" :key="index">
-              <div><img src="../../assets/Penguins.jpg" alt=""></div>
-              <div>{{item.prd_name}}</div>
-              <div>x{{item.num}}</div>
-              <div>{{item.prd_point}}</div>
+              <div style="height: 100%;"><img style="height: 100%;" src="../../assets/Penguins.jpg" alt=""></div>
+              <div class="order-item-right">
+                <div>{{item.prd_name}}</div>
+                <div>x{{item.num}}</div>
+                <div>{{item.prd_point}}</div>
+              </div>
             </div>
             <div class="order-footer" v-show="item.status==0">
               <div class="cancle-btn" @click="cancleOrder(item.id)">取消订单</div>
@@ -68,6 +71,7 @@
         active: '',
         activeTab: 1,
         totalCount: -1,
+        selectId: 0,
         param: {
           len: 0
         }
@@ -82,7 +86,7 @@
       this.scroll = new MeScroll("orderScroll", {
         down: {
           callback: that.getData,
-          
+
         },
         up: {
           callback: that.loadList,
@@ -105,13 +109,15 @@
         this.USER_ORDER_LIST(this.param).then(res => {
           this.prdList = res.data.data
           this.totalCount = res.data.data.length
-           this.scroll.endSuccess(res.data.data.length, this.totalCount >= this.param.len);
+          this.scroll.endSuccess(res.data.data.length, this.totalCount >= this.param.len);
           if (this.totalCount < this.param.len)
             this.scroll.endUpScroll(true)
         })
 
       },
       vantTabClick(index) {
+        console.log(index)
+        this.selectId = index
         this.reqParam.status = index - 1
         if (index == 0) {
           delete this.reqParam.status
@@ -120,7 +126,7 @@
         this.scroll.triggerDownScroll()
       },
       loadList(page, mescroll) {
-        this.reqParam.len = 20*page.num
+        this.reqParam.len = 20 * page.num
         this.getData()
       },
       cancleOrder(id) {
@@ -165,19 +171,20 @@
     min-height: 1.6rem;
     margin: .1rem .04rem;
     border-radius: 2px;
-    padding:.1rem;
+    padding: 0 .2rem;
     .order-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: .04rem 0;
+      padding: .15rem 0;
       border-bottom: 1px solid #f3f3f3;
+      font-size: .28rem;
     }
     .order-main {
       display: flex;
-      justify-content: space-between;
       align-items: center;
       padding: .1rem 0;
+      height: 1.68rem;
       img {
         display: inline-block;
         width: 1.4rem;
@@ -186,13 +193,14 @@
     }
     .order-footer {
       border-top: 1px solid #f3f3f3;
-      height: .6rem;
+      height: .7rem;
       display: flex;
       justify-content: flex-end;
       align-items: center;
+      font-size: .28rem;
       .cancle-btn {
         border: 1px solid #eaeaea;
-        padding: .04rem .08rem;
+        padding: .05rem .1rem;
         border-radius: 3px;
       }
     }
@@ -220,10 +228,21 @@
   .tab-active {
     background-color: #1464cc;
   }
+
   .mescroll {
     position: fixed;
     top: 1.45rem;
     bottom: 1rem;
     height: auto;
+  }
+
+  .order-item-right {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-left: .2rem;
   }
 </style>

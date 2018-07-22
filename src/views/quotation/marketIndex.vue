@@ -1,9 +1,10 @@
 <template>
   <div>
     <common-header :currentTab.sync="activeTab" :tabClick="tabIndexChange" ref="commonHeader"></common-header>
-    <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :isChoiceType="isChoice" :downCb="getData" :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
+    <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :isChoiceType="isChoice" :downCb="getData"
+            :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
     </scroll>
-     <span class="add-box" @click="$router.push('manageUserChoice')" v-show="isChoice&&activeTab==1">
+    <span class="add-box" @click="$router.push('manageUserChoice')" v-show="isChoice&&activeTab==1">
             <i class="icon iconfont icon-tianjia"></i>
         </span>
   </div>
@@ -17,6 +18,7 @@
   import scroll from '@/components/Scroll'
   import commonHeader from '@/components/CommonHeader'
   import * as types from "../../store/mutations-type"
+
   export default {
     name: 'marketIndex',
     data() {
@@ -32,7 +34,8 @@
         totalCount: ''
       }
     },
-    mounted() {},
+    mounted() {
+    },
     components: {
       scroll,
       commonHeader
@@ -168,7 +171,7 @@
   }
 </script>
 <style lang="scss" scoped>
-  $fcolor:#8a8d99;
+  $fcolor: #8a8d99;
   $bg: #208de3; //header   背景颜色   主色
   .market-tab {
     width: 100%;
@@ -200,20 +203,25 @@
       }
     }
   }
+
   .flex {
     display: flex;
   }
+
   .flex-between {
     justify-content: space-between;
   }
+
   .market-container {
     height: calc(100vh - .9rem - .56rem - 1.5rem);
     overflow: auto;
   }
+
   .market-container::-webkit-scrollbar {
     display: none;
   }
-   .add-box {
+
+  .add-box {
     width: .9rem;
     height: .9rem;
     background: #208de3;
@@ -224,6 +232,12 @@
     border-radius: .8rem;
     i {
       color: #fff;
+    }
+    .van-tab {
+      line-height: .72rem !important;
+    }
+    .van-tabs--line .van-tabs__wrap {
+      height: .72rem !important;
     }
   }
 </style>

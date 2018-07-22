@@ -154,7 +154,7 @@
     background-color: #fff;
     justify-content: space-between;
     margin: .1rem 0;
-    padding: .1rem; // align-items: center;
+    padding: 0 .2rem; // align-items: center;
     .commodity-img {
       img {
         display: block;
@@ -163,10 +163,10 @@
       }
     }
     .commodity-name {
+      text-align: left;
       color: #333;
       width: 50%;
       font-size: .32rem;
-      max-height: .8rem;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;

@@ -479,7 +479,7 @@ $wdc: #909090; //字体颜色
 
 //mine
 .mine {
-  padding-top: .8rem;
+  padding-top: .9rem;
 }
 
 .head {
@@ -655,10 +655,12 @@ $wdc: #909090; //字体颜色
     font-weight: bold;
     font-size: .32rem;
     display: -webkit-box;
+    display:-moz-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
     overflow: hidden;
     height: .5rem;
+    line-height: .5rem;
   }
   .person-content {
     font-size: .25rem;
@@ -666,7 +668,8 @@ $wdc: #909090; //字体颜色
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
-    height: .8rem;
+    height: .7rem;
+    line-height: .35rem;
   }
 }
 
@@ -1516,4 +1519,27 @@ $wdc: #909090; //字体颜色
     width: 100%;
   }
 
+}
+
+.van-tab {
+  line-height: .72rem !important;
+}
+.van-tabs--line .van-tabs__wrap {
+  height: .72rem !important;
+}
+.own-bar{
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 .2rem;
+  height: .72rem;
+  border-bottom: 1px solid #f4f4f4;
+  align-items: center;
+}
+.own-bar-item{
+  color: #8a8d99 !important;
+  font-size: .28rem;
+}
+.own-bar-item-active{
+  color: $bg !important;
 }
