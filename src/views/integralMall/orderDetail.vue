@@ -1,166 +1,183 @@
 <template>
-    <div>
-        <div class="market-tab ">
-            <i class="icon iconfont icon-fanhui" @click="$router.go(-1)"></i>
-            <div class="tab-contianer">
-                <div>订单详情</div>
-            </div>
-            <yd-icon name="" size="20px" color="#fff" style="visibility:hidden;"></yd-icon>
-        </div>
-        <div>
-            <div class="address-info">
-                <div class="user-base">
-                    <div>
-                        <span>收货人:</span>
-                        <span>{{order.user_name}}</span>
-                    </div>
-                    <div>{{order.user_phone}}</div>
-                </div>
-                <div class="user-address">
-                    <span>收货地址:</span>
-                    <span>{{order.user_addr}}</span>
-                </div>
-            </div>
-            <div class="commodity-item">
-                <div class="order-header">
-                    <div>{{formatTime(order.createTime)}}</div>
-                    <div>{{order.status_name}}</div>
-                </div>
-                <div class="order-main" v-for="(item,index) in order.items" :key="index">
-                    <div><img :src="item.prd_img" alt=""></div>
-                    <div>{{item.prd_name}}</div>
-                    <div>x{{item.num}}</div>
-                    <div>{{item.prd_point}}</div>
-                </div>
-                <div class="order-price">
-                    <div>
-                        <span>快递公司</span>
-                        <span>{{order.express_name}}</span>
-                    </div>
-                    <div>
-                        <span>快递单号</span>
-                        <span>{{order.express_num}}</span>
-                    </div>
-                    <div>
-                        <span>订单总积分</span>
-                        <span>{{order.point}}</span>
-                    </div>
-                </div>
-                <div class="order-footer" v-show="order.status==0">
-                    <div class="cancle-btn" @click="cancleOrder(item.id)">取消订单</div>
-                </div>
-            </div>
-        </div>
+  <div>
+    <div class="market-tab ">
+      <i class="icon iconfont icon-fanhui" @click="$router.go(-1)"></i>
+      <div class="tab-contianer">
+        <div>订单详情</div>
+      </div>
+      <yd-icon name="" size="20px" color="#fff" style="visibility:hidden;"></yd-icon>
     </div>
+    <div>
+      <div class="address-info">
+        <div class="user-base">
+          <div>
+            <span>收货人:</span>
+            <span>{{order.user_name}}</span>
+          </div>
+          <div>{{order.user_phone}}</div>
+        </div>
+        <div class="user-address">
+          <span>收货地址:</span>
+          <span>{{order.user_addr}}</span>
+        </div>
+      </div>
+      <div class="commodity-item">
+        <div class="order-header">
+          <div>{{formatTime(order.createTime)}}</div>
+          <div>{{order.status_name}}</div>
+        </div>
+        <div class="order-main" v-for="(item,index) in order.items" :key="index">
+          <div style="height: 100%;"><img  style="height: 100%;" :src="item.prd_img" alt=""></div>
+          <div class="order-item-right">
+            <div>{{item.prd_name}}</div>
+            <div>x{{item.num}}</div>
+            <div>{{item.prd_point}}</div>
+          </div>
+
+        </div>
+        <div class="order-price">
+          <div>
+            <span>快递公司</span>
+            <span>{{order.express_name}}</span>
+          </div>
+          <div>
+            <span>快递单号</span>
+            <span>{{order.express_num}}</span>
+          </div>
+          <div>
+            <span>订单总积分</span>
+            <span>{{order.point}}</span>
+          </div>
+        </div>
+        <div class="order-footer" v-show="order.status==0">
+          <div class="cancle-btn" @click="cancleOrder(item.id)">取消订单</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
-    import utils from 'utility'
-    export default {
-        name: 'orderDetail',
-        data() {
-            return {
-                order: ''
-            }
-        },
-        mounted() {
-            this.order = JSON.parse(this.$route.query.order)
-            console.log('order=>')
-            console.dir(this.order)
-        },
-        methods: {
-            formatTime(time) {
-                return utils.YYYYMMDDHHmmss(time)
-            }
-        }
+  import utils from 'utility'
+
+  export default {
+    name: 'orderDetail',
+    data() {
+      return {
+        order: ''
+      }
+    },
+    mounted() {
+      this.order = JSON.parse(this.$route.query.order)
+      console.log('order=>')
+      console.dir(this.order)
+    },
+    methods: {
+      formatTime(time) {
+        return utils.YYYYMMDDHHmmss(time)
+      }
     }
+  }
 </script>
 <style lang="scss" scoped>
-    $fcolor:#8a8d99;
-    $bg: #208de3; //header   背景颜色   主色调
-    .market-tab {
-        width: 100%;
-        height: .9rem;
-        padding: 0 .2rem;
-        background-color: $bg;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        color: #fff;
-        .tab-contianer {
-            height: .9rem;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: center;
-            color: #fff;
-            font-size: .32rem;
-        }
-        .save-text {
-            color: #fff;
-            font-size: .32rem;
-        }
+  $fcolor: #8a8d99;
+  $bg: #208de3; //header   背景颜色   主色调
+  .market-tab {
+    width: 100%;
+    height: .9rem;
+    padding: 0 .2rem;
+    background-color: $bg;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    .tab-contianer {
+      height: .9rem;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      color: #fff;
+      font-size: .32rem;
     }
-    .address-info {
-        background-color: #fff;
-        padding: .1rem;
-        font-size: .3rem;
-        .user-base {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: .6rem;
-        }
-        .user-address {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            height: .6rem;
-        }
+    .save-text {
+      color: #fff;
+      font-size: .32rem;
     }
-    .commodity-item {
-        background-color: #fff;
-        min-height: 1.6rem;
-        margin: .1rem .04rem;
-        border-radius: .04rem;
-        padding: .1rem;
-        .order-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: .04rem 0;
-            border-bottom: 1px solid #f3f3f3;
-        }
-        .order-main {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: .1rem 0;
-            img {
-                display: inline-block;
-                width: 1.4rem;
-                height: 1.4rem;
-            }
-        }
-        .order-footer {
-            border-top: 1px solid #f3f3f3;
-            height: .6rem;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            .cancle-btn {
-                border: 1px solid #eaeaea;
-                padding: .04rem .08rem;
-                border-radius: 3px;
-            }
-        }
+  }
+
+  .address-info {
+    background-color: #fff;
+    padding: .1rem;
+    font-size: .3rem;
+    .user-base {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: .6rem;
     }
-    .order-price {
-        border-top: 1px solid #f3f3f3;
-        &>div {
-            display: flex;
-            justify-content: space-between;
-            height: .5rem;
-            align-items: center;
-        }
+    .user-address {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      height: .6rem;
     }
+  }
+
+  .commodity-item {
+    background-color: #fff;
+    min-height: 1.6rem;
+    margin: .1rem .04rem;
+    border-radius: .04rem;
+    padding: 0 .2rem;
+    font-size: .28rem;
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: .15rem 0;
+      border-bottom: 1px solid #f3f3f3;
+    }
+    .order-main {
+      display: flex;
+      align-items: center;
+      padding: .1rem 0;
+      height: 1.68rem;
+      img {
+        display: inline-block;
+        width: 1.4rem;
+        height: 1.4rem;
+      }
+    }
+    .order-footer {
+      border-top: 1px solid #f3f3f3;
+      height: .7rem;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      .cancle-btn {
+        border: 1px solid #eaeaea;
+        padding: .05rem .1rem;
+        border-radius: 3px;
+      }
+    }
+  }
+
+  .order-price {
+    border-top: 1px solid #f3f3f3;
+    & > div {
+      display: flex;
+      justify-content: space-between;
+      height: .5rem;
+      align-items: center;
+    }
+  }
+  .order-item-right {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-left: .2rem;
+  }
 </style>

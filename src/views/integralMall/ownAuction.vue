@@ -154,7 +154,7 @@
     background-color: #fff;
     justify-content: space-between;
     margin: .1rem 0;
-    padding: 0 .2rem; // align-items: center;
+    padding: 0 .2rem;
     .commodity-img {
       img {
         display: block;
