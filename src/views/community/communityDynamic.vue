@@ -43,9 +43,9 @@
       </div>
     </div>
     <!--动态-->
-    <div class="cd-dynamic " v-show="index!==1">
-      <div class="mescroll">
-        <div id="dynamicScroll" >
+    <div class="cd-dynamic mescroll" v-show="index!==1">
+      <div class="">
+        <div id="dynamicScroll">
           <div>
             <div class="cd-dynamic-item" v-for="(item,index) in articleList"
                  @click.stop="$router.push({path:'/articleDetail',query:{item:JSON.stringify(item)}})">
@@ -144,9 +144,6 @@
         this.initDataList(page, meScroll)
       },
       loadDataList(page, meScroll) {
-        // if (this.len !== 0) {
-        //   pullScroll.finish(this.listCount < this.len);
-        // }
         this.len += 20
         this.$store.dispatch(types.COMMUNITY_ARTICLE_LIST, {
           gid: this.id,
@@ -157,8 +154,7 @@
           this.articleList = res.data
           this.listCount = res.data.length
           this.scroll.endSuccess(res.data.length, this.listCount >= this.len);
-          if (this.listCount < this.len)
-            this.scroll.endUpScroll(true)
+          if (this.listCount < this.len) this.scroll.endUpScroll(true)
         })
       },
       getDetail() {
@@ -220,6 +216,8 @@
               if (like) {
                 console.log(item.u_name)
                 that.articleList[index].likes.items.push(that.userInfo.name)
+                that.articleList[index].likes.num++
+
               } else {
                 let str
                 str = that.articleList[index].likes.items.toString().replace(that.userInfo.name, '')
@@ -229,8 +227,10 @@
                     that.articleList[index].likes.items.splice(i, 1)
                   }
                 }
+                that.articleList[index].likes.num--
+
               }
-              that.scroll.triggerRefresh()
+              // that.scroll.triggerDownScroll()
             } else if (res.code === 401) {
               that.$router.push({
                 path: 'Login'
@@ -368,12 +368,5 @@
         text-align: left;
       }
     }
-  }
-  .mescroll {
-    position: fixed;
-    top: 2.65rem;
-    bottom: 1rem;
-    height: auto;
-    width:94%;
   }
 </style>

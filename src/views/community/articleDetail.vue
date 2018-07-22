@@ -7,7 +7,7 @@
         <i class="icon iconfont icon-fanhui" @click="show4=false"></i>
         <span>{{list.likes.num}}人赞过</span>
       </div>
-      <div class="zl-list pullScroll">
+      <div class="zl-list mescroll">
         <div id="scroll">
           <div>
             <div v-for="item in dianzanList" class="zl-item" @click.stop="forbid">
@@ -46,7 +46,7 @@
 
         </li>
       </ul>
-      <div class="cd-dynamic-comment ad-dynamic-comment pullScroll" style="padding-bottom:.6rem">
+      <div class="cd-dynamic-comment ad-dynamic-comment mescroll" style="padding-bottom:.6rem">
         <span class="ad-comment-title">评论</span>
         <div id="scroll1" style="width: 100%;">
           <ul>
@@ -96,36 +96,57 @@
     mounted() {
       console.log(this.list)
       let that = this
-      this.scroll = new PullScroll("scroll", {
-        refresh: function (pullScroll) {
-          that.zanLen = 0
-          that.dianzanList = []
-          that.initDataList(pullScroll)
+      // this.scroll = new PullScroll("", {
+      //   refresh: function (pullScroll) {
+      //     that.zanLen = 0
+      //     that.dianzanList = []
+      //     that.initDataList(pullScroll)
+      //   },
+      //   loading: function (pullScroll) {
+      //     that.loadDataList(pullScroll);
+      //   }
+      // });
+      this.scroll = new MeScroll("scroll", {
+        down: {
+          callback: that.refresh,
         },
-        loading: function (pullScroll) {
-          that.loadDataList(pullScroll);
+        up: {
+          callback: that.loadDataList,
+          page: {
+            num: 0,
+            size: 10,
+            time: null
+          }
         }
       });
-      this.scroll1 = new PullScroll("scroll1", {
-        refresh: function (pullScroll) {
-          that.commentLen = 0
-          that.commentList = []
-          that.initDataList1(pullScroll)
+      this.scroll1 = new MeScroll("scroll1", {
+        down: {
+          callback: that.refresh1,
         },
-        loading: function (pullScroll) {
-          that.loadDataList1(pullScroll);
+        up: {
+          callback: that.loadDataList1,
+          page: {
+            num: 0,
+            size: 10,
+            time: null
+          }
         }
       });
-      this.scroll1.triggerRefresh();
     },
     methods: {
-      //获取文章评论列表
-      initDataList1(pullScroll) {
-        this.loadDataList1(pullScroll);
+      refresh(page, meScroll) {
+        this.zanLen = 0
+        this.dianzanList = []
+        this.initDataList(page, meScroll)
       },
+      refresh1(page, meScroll) {
+        this.commentLen = 0
+        this.commentList = []
+        this.loadDataList1(page, meScroll)
+      },
+      //获取文章评论列表
       loadDataList1(pullScroll) {
-
-        this.commentLen += 20
+        this.commentLen += 2
         this.$store.dispatch(types.COMMUNITY_PINGLUN_LIST, {
           aid: this.list.id,
           len: this.commentLen
@@ -134,7 +155,8 @@
           if (res.code !== 0) return
           this.commentList = res.data
           this.commentCount = res.data.length
-          pullScroll.finish(this.commentCount < this.commentLen);
+          this.scroll.endSuccess(res.data.length, this.commentCount >= this.commentLen);
+          if (this.commentCount < this.commentLen) this.scroll.endUpScroll(true)
         })
       },
 
@@ -150,27 +172,23 @@
       },
 
       //点赞列表
-      initDataList(pullScroll) {
-        console.log(this.index)
-        this.loadDataList(pullScroll);
+      initDataList() {
+        this.loadDataList();
       },
-      loadDataList(pullScroll) {
-
+      loadDataList() {
         this.zanLen += 20
         this.$store.dispatch(types.COMMUNITY_DIANZAN_LIST, {aid: this.list.id, len: this.zanLen}).then(res => {
           console.log(res)
           if (res.code !== 0) return
           this.dianzanList = res.data
           this.zanCount = res.data.length
-          pullScroll.finish(this.zanCount < this.zanLen);
-
+          this.scroll.endSuccess(res.data.length, this.zanCount >= this.zanLen);
+          if (this.zanCount < this.zanLen) this.scroll.endUpScroll(true)
         })
       },
       //获取文章点赞列表
       getDianzanList() {
         this.show4 = true
-        this.scroll.triggerRefresh();
-
       },
       //禁言
       forbid(id) {
@@ -233,8 +251,7 @@
               if (res.code === 401) {
                 that.$router.push({path: 'Login'})
               }
-              // that.scroll1.triggerRefresh();
-              that.getCommentList()
+              that.scroll.triggerDownScroll();
 
             }
           })
@@ -278,7 +295,7 @@
                 that.list.likes.num--
 
               }
-              that.scroll.triggerRefresh()
+              that.scroll.triggerDownScroll()
             } else if (res.code === 401) {
               that.$router.push({path: 'Login'})
             }

@@ -19,8 +19,7 @@
       <div class="informationDetail-images" v-if="dataList.thumbnail">
         <img :src="dataList.thumbnail" alt="">
       </div>
-      <p class="informationDetail-content" v-if="dataList.description">
-        {{dataList.description}}
+      <p class="informationDetail-content v-html" v-html="dataList.description">
       </p>
       <!--<p  v-html="dataList.content" v-if="id"></p>-->
       <div v-html="dataList.content" style="width: 100%;" class="v-html"></div>
@@ -206,6 +205,8 @@
   .ad-dynamic-comment {
     padding: .2rem;
     margin-top: .2rem;
+    padding-bottom: 1.1rem;
+
     .ad-comment-title {
       display: flex;
       align-items: center;

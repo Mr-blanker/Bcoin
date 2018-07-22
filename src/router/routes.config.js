@@ -116,14 +116,6 @@ export default [
     name: 'createOrder',
     path: '/createOrder',
     component: createOrder
-  },
-  { name: 'Information',
-    name: 'Information',
-    path: '/Information',
-    component: Information,
-    meta: {
-      // keepalive: true
-    }
   }, {
     name: 'InformationDetail',
     path: '/InformationDetail',
@@ -175,6 +167,9 @@ export default [
     name: 'community',
     path: '/community',
     component: community,
+    meta:{
+      keepalive:true
+    }
   },{
     name: 'communityAdd',
     path: '/communityAdd',
