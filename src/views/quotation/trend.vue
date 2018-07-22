@@ -90,7 +90,11 @@
                 this.active = this.$route.query.active
                 this.coin = JSON.parse(this.$route.query.coin)
                 if (this.active == 1) {
-                    this.trendParam.coin = this.coin.id
+                    if (this.coin.coin_id) {
+                        this.trendParam.coin = this.coin.coin_id
+                    } else {
+                        this.trendParam.coin = this.coin.id
+                    }
                 } else if (this.active == 2) {
                     let currencyItem = JSON.parse(this.$route.query.currencyItem)
                     this.trendParam.coin = currencyItem.id
