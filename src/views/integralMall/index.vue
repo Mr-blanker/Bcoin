@@ -240,7 +240,7 @@
   .mescroll {
     position: fixed;
     top: 1.45rem;
-    bottom: 1rem;
+    bottom: .9rem;
     height: auto;
   }
 </style>

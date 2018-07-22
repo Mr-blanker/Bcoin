@@ -96,7 +96,7 @@
  .mescroll {
     position: fixed;
     top: 2.65rem;
-    bottom: 1rem;
+    bottom: .9rem;
     height: auto;
   }
 </style>

@@ -205,7 +205,7 @@
   .ad-dynamic-comment {
     padding: .2rem;
     margin-top: .2rem;
-    padding-bottom: 1.1rem;
+    padding-bottom: 2.1rem;
 
     .ad-comment-title {
       display: flex;
