@@ -36,8 +36,8 @@
                 <yd-datetime type="datetime" v-model="endTime" :callback="endCB"></yd-datetime>
             </div>
         </div>
-        <div id="myChart" :style="{width: '100%', height: '12rem'}"></div>
-
+        <div v-show="market_cap.length==0&&volume.length==0&&price.length==0" class="none-tip">暂无走势数据</div>        
+        <div id="myChart" :style="{width: '100%', height: '12rem'}" ></div>
     </div>
 </template>
 <script>
@@ -470,7 +470,7 @@
             }
         }
         &>div:first-child {
-            border-right: 1px solid rgb(30, 28, 206);
+            border-right: 1px solid #d0d0fa;
         }
     }
     .date-check {
@@ -492,5 +492,11 @@
         top: 0;
         left: 0;
         right: 0;
+    }
+    .none-tip {
+        background-color:#fff;
+        font-size:.44rem;
+        height:20rem;
+        padding:2.5rem 0;
     }
 </style>
