@@ -1,86 +1,103 @@
 <template>
   <div id="quotationScroll" class="mescroll">
-    <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="goTrend(item,1)">
-      <div class="box-left">
-        <div>
-          <span class="coin-symbol">{{item.symbol}}</span>
-          <span class="coin-name">{{item.name}}</span>
-          <span class="coin-name" v-if="item.coin_name">{{item.coin_name}}</span>
+    <div>
+      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1"
+           @click="goTrend(item,1)">
+        <div class="box-left">
+          <div>
+            <span class="coin-symbol">{{item.symbol}}</span>
+            <span class="coin-name">{{item.name}}</span>
+            <span class="coin-name" v-if="item.coin_name">{{item.coin_name}}</span>
+          </div>
+          <div class="coin-issue" v-if="item.name">
+            <span>量/值:</span>
+            <span>{{item['24h_volume_cny']|formatMoney}}/{{item.market_cap_cny|formatMoney}}</span>
+          </div>
+          <div class="coin-issue" v-if="item.cheng">
+            <span>成交量:</span>
+            <span>{{item.cheng|formatMoney}}</span>
+          </div>
         </div>
-        <div class="coin-issue" v-if="item.name">
-          <span>量/值:</span>
-          <span>{{item['24h_volume_cny']|formatMoney}}/{{item.market_cap_cny|formatMoney}}</span>
-        </div>
-        <div class="coin-issue" v-if="item.cheng">
-          <span>成交量:</span>
-          <span>{{item.cheng|formatMoney}}</span>
+        <div class="box-right flex flex-between">
+          <div class="tr mark-box">
+            <div class="mark-sum " v-if="item.price_cny">{{item.price_cny?item.price_cny.toPrecision(7):'-'}}</div>
+            <div class="mark-sum " v-if="item.price">{{item.price?item.price.toPrecision(7):'-'}}</div>
+            <div class="mark-percent">${{item.price_usd}}</div>
+          </div>
+          <div class="tr circulation-box">
+            <div
+              :class="{'percent-box':true,'percentrise-color':item.percent_change_24h>0,'percentfall-color':item.percent_change_24h<0}"
+              v-if="item.percent_change_24h">{{item.percent_change_24h}}%
+            </div>
+            <div :class="{'percent-box':true,'percentrise-color':item.zhan>0,'percentfall-color':item.zhan<0}"
+                 v-if="item.zhan">{{item.zhan}}%
+            </div>
+          </div>
         </div>
       </div>
-      <div class="box-right flex flex-between">
-        <div class="tr mark-box">
-          <div class="mark-sum " v-if="item.price_cny">{{item.price_cny?item.price_cny.toPrecision(7):'-'}}</div>
-          <div class="mark-sum " v-if="item.price">{{item.price?item.price.toPrecision(7):'-'}}</div>
-          <div class="mark-percent">${{item.price_usd}}</div>
+
+      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==2"
+           @click="goTrend(item,2)">
+        <div class="box-left">
+          <div>
+            <span class="coin-symbol">{{item.name}}</span>
+            <span class="coin-name">{{item.dui}}</span>
+          </div>
+          <div class="coin-issue" style="font-size: .26rem">
+            <span>成交量:</span>
+            <span>{{item.cheng|formatMoney}}</span>
+          </div>
         </div>
-        <div class="tr circulation-box">
-          <div :class="{'percent-box':true,'percentrise-color':item.percent_change_24h>0,'percentfall-color':item.percent_change_24h<0}" v-if="item.percent_change_24h">{{item.percent_change_24h}}%</div>
-          <div :class="{'percent-box':true,'percentrise-color':item.zhan>0,'percentfall-color':item.zhan<0}" v-if="item.zhan">{{item.zhan}}%</div>
+        <div class="box-right flex flex-between">
+          <div class="tr mark-box">
+            <div class="mark-sum ">{{item.price?item.price.toPrecision(7):'-'}}</div>
+            <div class="mark-percent">${{item.price_usd}}</div>
+          </div>
+          <div class="tr circulation-box">
+            <div :class="{'percent-box':true,'percentrise-color':item.zhan>0,'percentfall-color':item.zhan<0}"
+                 style="font-size: .28rem !important;">{{item.zhan?item.zhan:'-'}}%
+            </div>
+          </div>
         </div>
       </div>
+      <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==3"
+           @click="goTrend(item,3)">
+        <div class="box-left">
+          <div>
+            <span class="coin-symbol">{{item.name}}</span>
+            <span class="coin-name">{{item.dui}}</span>
+          </div>
+          <div class="coin-issue">
+            <span>成交量:</span>
+            <span>{{item.cheng|formatMoney}}</span>
+          </div>
+        </div>
+        <div class="box-right flex flex-between">
+          <div class="tr mark-box">
+            <div class="mark-sum ">{{item.price?item.price.toPrecision(7):'-'}}</div>
+            <div class="mark-percent">${{item.price_usd}}</div>
+          </div>
+          <div class="tr circulation-box">
+            <div :class="{'percent-box':true,'percentrise-color':item.zhang>0,'percentfall-color':item.zhang<0}">
+              {{item.zhang?item.zhang:'-'}}%
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--  <div v-show="scrollData.length==0&&scrollBoxShow==1" class="add-choice" @click="userInfo.name? $router.push({path:'manageUserChoice'}): $router.push({path:'login'})">
+                <span> <i class="icon iconfont icon-tianjia"></i></span>
+                <div>点击添加自选</div>
+              </div>-->
     </div>
-    <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==2" @click="goTrend(item,2)">
-      <div class="box-left">
-        <div>
-          <span class="coin-symbol">{{item.name}}</span>
-          <span class="coin-name">{{item.dui}}</span>
-        </div>
-        <div class="coin-issue" style="font-size: .26rem">
-          <span>成交量:</span>
-          <span>{{item.cheng|formatMoney}}</span>
-        </div>
-      </div>
-      <div class="box-right flex flex-between">
-        <div class="tr mark-box">
-          <div class="mark-sum ">{{item.price?item.price.toPrecision(7):'-'}}</div>
-          <div class="mark-percent">${{item.price_usd}}</div>
-        </div>
-        <div class="tr circulation-box">
-          <div :class="{'percent-box':true,'percentrise-color':item.zhan>0,'percentfall-color':item.zhan<0}" style="font-size: .28rem !important;">{{item.zhan?item.zhan:'-'}}%</div>
-        </div>
-      </div>
-    </div>
-    <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==3" @click="goTrend(item,3)">
-      <div class="box-left">
-        <div>
-          <span class="coin-symbol">{{item.name}}</span>
-          <span class="coin-name">{{item.dui}}</span>
-        </div>
-        <div class="coin-issue">
-          <span>成交量:</span>
-          <span>{{item.cheng|formatMoney}}</span>
-        </div>
-      </div>
-      <div class="box-right flex flex-between">
-        <div class="tr mark-box">
-          <div class="mark-sum ">{{item.price?item.price.toPrecision(7):'-'}}</div>
-          <div class="mark-percent">${{item.price_usd}}</div>
-        </div>
-        <div class="tr circulation-box">
-          <div :class="{'percent-box':true,'percentrise-color':item.zhang>0,'percentfall-color':item.zhang<0}">{{item.zhang?item.zhang:'-'}}%</div>
-        </div>
-      </div>
-    </div>
-    <!--  <div v-show="scrollData.length==0&&scrollBoxShow==1" class="add-choice" @click="userInfo.name? $router.push({path:'manageUserChoice'}): $router.push({path:'login'})">
-              <span> <i class="icon iconfont icon-tianjia"></i></span>
-              <div>点击添加自选</div>
-            </div>-->
   </div>
+
 </template>
 <script>
   import {
     mapGetters,
     mapMutations
   } from "vuex"
+
   export default {
     name: 'Scroll',
     data() {
@@ -95,7 +112,7 @@
       }
     },
     computed: {
-      ...mapGetters(['userInfo','scrollTop'])
+      ...mapGetters(['userInfo', 'scrollTop'])
     },
     mounted() {
       this.SET_SCROLL_BOX('quotationScroll')
@@ -111,12 +128,12 @@
           htmlNodata: '<p class="upwarp-nodata">-- 没有更多数据了 --</p>'
         }
       });
-       console.log(`this.scrollTop`)
+      console.log(`this.scrollTop`)
       console.log(this.scrollTop)
       this.mescroll.scrollTo(this.scrollTop)
     },
     methods: {
-      ...mapMutations(['SET_SCROLL_TOP','SET_SCROLL_BOX']),
+      ...mapMutations(['SET_SCROLL_TOP', 'SET_SCROLL_BOX']),
       upCallback(page, mescroll) {
         this.len = 20 * page.num
         this.upCb(true, this.len)
@@ -125,7 +142,7 @@
         this.len = 20
         this.upCb(true, this.len)
       },
-      goTrend(item,index){
+      goTrend(item, index) {
         this.$router.push(`/trend?coin=${JSON.stringify(item)}&active=${index}`)
         let top = this.mescroll.getScrollTop()
         this.SET_SCROLL_TOP(top)
@@ -155,7 +172,7 @@
   }
 </script>
 <style lang="scss" scoped>
-  $fcolor:#8a8d99;
+  $fcolor: #8a8d99;
   @mixin small-font {
     font-size: .24rem;
     transform: scale(0.90);
@@ -177,6 +194,7 @@
     -o-transform-origin: 0 0;
     /* Opera */
   }
+
   .scroll-item {
     height: 1.1rem;
     background-color: #fff;
@@ -225,11 +243,13 @@
       }
     }
   }
+
   .platform-icon {
     display: inline-block;
     width: .64rem;
     vertical-align: middle;
   }
+
   .percent-box {
     width: 1.3rem;
     height: .5rem;
@@ -240,43 +260,56 @@
     color: #fff;
     background-color: $fcolor;
   }
+
   .flex {
     display: flex;
   }
+
   .flex-between {
     justify-content: space-between;
   }
+
   .flex-c {
     justify-content: center;
   }
+
   .flex-col {
     flex-direction: column;
   }
+
   .flex-m {
     align-items: center;
   }
+
   .tr {
     text-align: right;
   }
+
   .mescroll::-webkit-scrollbar {
     display: none;
   }
+
   .rise-color {
     color: #eb4236 !important;
   }
+
   .fall-color {
     color: #32a853 !important;
   }
+
   .percentrise-color {
     background-color: #eb4236 !important;
     font-size: .28rem !important;
   }
+
   .percentfall-color {
     background-color: #32a853 !important;
   }
+
   #scroll::-webkit-scrollbar {
     display: none;
   }
+
   .add-choice {
     text-align: center;
     span {
@@ -292,6 +325,7 @@
       }
     }
   }
+
   .add-box {
     width: .9rem;
     height: .9rem;
@@ -305,6 +339,7 @@
       color: #fff;
     }
   }
+
   .mescroll {
     position: fixed;
     top: 2.1rem;
