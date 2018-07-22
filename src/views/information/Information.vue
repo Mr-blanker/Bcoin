@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header v-bind="{right:1,center:3,list:titleList,liKey:index}" @clickItem="clickItem"></Header>
+    <Header v-bind="{center:3,list:titleList,liKey:index}" @clickItem="clickItem"></Header>
     <div style="padding-top: 32px;padding-bottom:50px">
       <div class="new-box" v-if="index===0">
         <ul class="new-bar">

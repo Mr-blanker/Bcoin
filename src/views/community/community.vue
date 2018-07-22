@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header v-bind="{right:1,center:2,centerValue:'社群'}"></Header>
+    <Header v-bind="{center:2,centerValue:'社群'}"></Header>
     <ul class="community-list pt">
       <!--<li class="community-item" v-for="item in 5">{{item}}</li>-->
       <li class="build-community padlr02" @click="$router.push({path:'/communityAdd'})">
