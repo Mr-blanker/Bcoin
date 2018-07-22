@@ -1,12 +1,11 @@
 <template>
   <div>
-    <common-header :currentTab.sync="activeTab" :tabClick="tabIndexChange" ref="commonHeader"></common-header>
-    <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :isChoiceType="isChoice" :downCb="getData"
-            :upCb="getData" :scrollBoxShow="activeTab" ref="scroller">
+    <common-header :currentTab.sync="activeTab" :tabClick="tabIndexChange" :currency="setCurrencyId" ref="commonHeader"></common-header>
+    <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :isChoiceType="isChoice" :downCb="getData" :upCb="getData" :currItem="currentItem" :scrollBoxShow="activeTab" ref="scroller">
     </scroll>
     <span class="add-box" @click="$router.push('manageUserChoice')" v-show="isChoice&&activeTab==1">
-            <i class="icon iconfont icon-tianjia"></i>
-        </span>
+              <i class="icon iconfont icon-tianjia"></i>
+          </span>
   </div>
 </template>
 <script>
@@ -18,7 +17,6 @@
   import scroll from '@/components/Scroll'
   import commonHeader from '@/components/CommonHeader'
   import * as types from "../../store/mutations-type"
-
   export default {
     name: 'marketIndex',
     data() {
@@ -31,7 +29,8 @@
         meInstance: '',
         isChoice: false,
         activeIndex: 0,
-        totalCount: ''
+        totalCount: '',
+        currentItem: []
       }
     },
     mounted() {
@@ -150,6 +149,12 @@
         this.meInstance.setPageNum(1);
         this.meInstance.triggerDownScroll()
       },
+      setCurrencyId(item) {
+        console.log('this.currencyItem=>4444')
+        console.log(item)
+        console.log('this.currencyItem=>4444')
+        this.currentItem = item
+      },
       tabIndexChange(obj, isChoice = false, isTicker = false) {
         if (!isTicker) {
           if (obj.cid) {
@@ -203,24 +208,19 @@
       }
     }
   }
-
   .flex {
     display: flex;
   }
-
   .flex-between {
     justify-content: space-between;
   }
-
   .market-container {
     height: calc(100vh - .9rem - .56rem - 1.5rem);
     overflow: auto;
   }
-
   .market-container::-webkit-scrollbar {
     display: none;
   }
-
   .add-box {
     width: .9rem;
     height: .9rem;

@@ -891,6 +891,15 @@ $wdc: #909090; //字体颜色
   }
   p {
     text-align: left !important;
+    overflow: hidden;
+  }
+  table{
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+  }
+  iframe{
+    width: 100%;
   }
 }
 
@@ -1520,13 +1529,13 @@ $wdc: #909090; //字体颜色
   }
 
 }
-
-.van-tab {
-  line-height: .72rem !important;
-}
-.van-tabs--line .van-tabs__wrap {
-  height: .72rem !important;
-}
+//
+//.van-tab {
+//  line-height: .72rem !important;
+//}
+//.van-tabs--line .van-tabs__wrap {
+//  height: .72rem !important;
+//}
 .own-bar{
   background: #fff;
   display: flex;
