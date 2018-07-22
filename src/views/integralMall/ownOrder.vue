@@ -231,8 +231,7 @@
 
   .mescroll {
     position: fixed;
-    top: 1.45rem;
-    bottom: 1rem;
+    top: 1.6rem;
     height: auto;
   }
 
