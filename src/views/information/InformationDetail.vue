@@ -232,4 +232,7 @@
   .cd-dynamic-comment {
     display: block !important;
   }
+  .informationDetail-content p{
+    width: 100%;
+  }
 </style>
