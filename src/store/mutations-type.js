@@ -1,3 +1,6 @@
+//scrollTopValue
+export const SET_SCROLL_TOP = 'SET_SCROLL_TOP'
+export const SET_SCROLL_BOX = 'SET_SCROLL_BOX'
 /*资讯*/
 //新闻资讯
 //列表

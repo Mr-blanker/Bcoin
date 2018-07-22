@@ -1,7 +1,10 @@
 import * as types from '../mutations-type'
 import http from '../../plugins/http'
 
-const state = {}
+const state = {
+  scrollTop:0,
+  scrollBox:''
+}
 
 
 const actions = {
@@ -48,11 +51,35 @@ const actions = {
   }
 }
 
-const mutations = {}
-
+const mutations = {
+  [types.SET_SCROLL_TOP](state, top) {
+    console.log(top)
+    window.localStorage.setItem('scrollTop', top)
+    state.scrollTop = top
+  },
+  [types.SET_SCROLL_BOX](state, Id) {
+    console.log(Id)
+    window.localStorage.setItem('scrollBox', Id)
+    state.scrollBox = Id
+  }
+}
+const getters = {
+  scrollTop(state) {
+    if (!state.scrollTop && window.localStorage.scrollTop) {
+      state.scrollTop = window.localStorage.getItem('scrollTop')
+    }
+    return state.scrollTop ? state.scrollTop : 0
+  },
+  scrollBox(state) {
+    if (!state.scrollBox && window.localStorage.scrollBox) {
+      state.scrollBox = window.localStorage.getItem('scrollBox')
+    }
+    return state.scrollBox ? state.scrollBox : ''
+  }
+}
 export default {
   state,
   actions,
   mutations,
-  getters: {}
+  getters
 }

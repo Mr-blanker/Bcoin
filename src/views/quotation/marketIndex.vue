@@ -35,6 +35,7 @@
       }
     },
     mounted() {
+     
     },
     components: {
       scroll,

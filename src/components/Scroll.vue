@@ -1,6 +1,6 @@
 <template>
   <div id="quotationScroll" class="mescroll">
-    <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="$router.push(`/trend?coin=${JSON.stringify(item)}&active=1`)">
+    <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="goTrend(item,1)">
       <div class="box-left">
         <div>
           <span class="coin-symbol">{{item.symbol}}</span>
@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==2" @click="$router.push(`/trend?coin=${JSON.stringify(item)}&active=2`)">
+    <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==2" @click="goTrend(item,2)">
       <div class="box-left">
         <div>
           <span class="coin-symbol">{{item.name}}</span>
@@ -49,7 +49,7 @@
         </div>
       </div>
     </div>
-    <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==3" @click="$router.push(`/trend?coin=${JSON.stringify(item)}&active=3`)">
+    <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==3" @click="goTrend(item,3)">
       <div class="box-left">
         <div>
           <span class="coin-symbol">{{item.name}}</span>
@@ -78,7 +78,8 @@
 </template>
 <script>
   import {
-    mapGetters
+    mapGetters,
+    mapMutations
   } from "vuex"
   export default {
     name: 'Scroll',
@@ -94,9 +95,10 @@
       }
     },
     computed: {
-      ...mapGetters(['userInfo'])
+      ...mapGetters(['userInfo','scrollTop'])
     },
     mounted() {
+      this.SET_SCROLL_BOX('quotationScroll')
       let that = this;
       this.mescroll = new MeScroll("quotationScroll", {
         down: {
@@ -109,13 +111,13 @@
           htmlNodata: '<p class="upwarp-nodata">-- 没有更多数据了 --</p>'
         }
       });
+       console.log(`this.scrollTop`)
+      console.log(this.scrollTop)
+      this.mescroll.scrollTo(this.scrollTop)
     },
     methods: {
+      ...mapMutations(['SET_SCROLL_TOP','SET_SCROLL_BOX']),
       upCallback(page, mescroll) {
-        console.log('page')
-        console.log(page)
-        console.log('mescroll')
-        console.log(mescroll)
         this.len = 20 * page.num
         this.upCb(true, this.len)
       },
@@ -123,10 +125,11 @@
         this.len = 20
         this.upCb(true, this.len)
       },
-      goTop(top = 0) {
-        console.log(this.$refs.scrollObj.scrollTop)
-        this.$refs.scrollObj.scrollTop = top
-        console.log(this.$refs.scrollObj.scrollTop)
+      goTrend(item,index){
+        this.$router.push(`/trend?coin=${JSON.stringify(item)}&active=${index}`)
+        let top = this.mescroll.getScrollTop()
+        this.SET_SCROLL_TOP(top)
+        this.SET_SCROLL_BOX('quotationScroll')
       }
     },
     props: {

@@ -1,3 +1,4 @@
+import store from '../store'
 //路由
 
 //user
@@ -69,6 +70,18 @@ export default [
     component: marketIndex,
     meta:{
       keepalive:true
+    },
+    beforeEnter: (to, from, next) => {
+      let scrollMain = store.getters.scrollBox
+      let topVal = store.getters.scrollTop
+      if(scrollMain&&topVal!=0){
+        setTimeout(()=>{
+          document.getElementById(scrollMain).scrollTop = topVal
+          store.commit('SET_SCROLL_TOP',0)
+          store.commit('SET_SCROLL_BOX','')
+        },1)
+      }
+      next()
     }
   },
   {
@@ -142,6 +155,18 @@ export default [
     component: Information,
     meta:{
       keepalive:true
+    },
+    beforeEnter: (to, from, next) => {
+      let scrollMain = store.getters.scrollBox
+      let topVal = store.getters.scrollTop
+      if(scrollMain&&topVal!=0){
+        setTimeout(()=>{
+          document.getElementById(scrollMain).scrollTop = topVal
+          store.commit('SET_SCROLL_TOP',0)
+          store.commit('SET_SCROLL_BOX','')
+        },1)
+      }
+      next()
     }
   },
   {

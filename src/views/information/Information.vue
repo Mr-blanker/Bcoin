@@ -49,7 +49,7 @@
           <!--名人库-->
           <div class="person-list" v-if="index===3">
             <div class="person-item" v-for="item in personList"
-                 @click="$router.push({path:'InformationDetail',query:{id: item.aid}})">
+                 @click="goPersonDetail(item)">
               <div class="person-item-box">
                 <div class="person-img"><img :src="item.thumbnail" alt=""></div>
                 <span class="person-title">{{item.title}}</span>
@@ -89,7 +89,8 @@
   import * as types from "../../store/mutations-type"
   import moment from 'moment'
   import {
-    mapGetters
+    mapGetters,
+    mapMutations
   } from "vuex"
 
   export default {
@@ -126,6 +127,7 @@
       ...mapGetters(['informationActive'])
     },
     mounted() {
+      this.SET_SCROLL_BOX('newsScroll')
       let that = this;
       document.addEventListener('plusready', function () {
         that.plus = plus
@@ -156,6 +158,13 @@
       // this.clickItem(this.index)
     },
     methods: {
+      ...mapMutations(['SET_SCROLL_TOP','SET_SCROLL_BOX']),
+      goPersonDetail(item){
+        this.$router.push({path:'InformationDetail',query:{id: item.aid}})
+        let top = this.scroll.getScrollTop()
+        this.SET_SCROLL_TOP(top)
+        this.SET_SCROLL_BOX('newsScroll')
+      },
       sliderRouter(url) {
         console.log(url)
         this.plus.runtime.openURL(url, function (err) {
@@ -282,6 +291,9 @@
             aid: aid
           }
         })
+        let top = this.scroll.getScrollTop()
+        this.SET_SCROLL_TOP(top)
+        this.SET_SCROLL_BOX('newsScroll')
       },
       //快讯点评
       comment(item, val, key) {

@@ -37,6 +37,7 @@
             </div>
         </div>
         <div id="myChart" :style="{width: '100%', height: '12rem'}"></div>
+
     </div>
 </template>
 <script>
