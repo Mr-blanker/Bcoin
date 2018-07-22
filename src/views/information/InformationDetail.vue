@@ -179,7 +179,7 @@
 
   .id-comment {
     position: fixed;
-    bottom: 0;
+    bottom: -2px;
     left: 0;
     right: 0;
     display: flex;
