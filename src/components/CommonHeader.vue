@@ -2,8 +2,7 @@
   <div class="header-box">
     <div class="market-tab " style="position:relative;">
       <div class="tab-contianer" style="position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%)">
-        <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index"
-              @click="tabChange(index+1)">{{item}}</span>
+        <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index" @click="tabChange(index+1)">{{item}}</span>
       </div>
       <yd-icon :name="rightIcon" size="20px" color="#fff" style="visibility:hidden;"></yd-icon>
     </div>
@@ -41,7 +40,6 @@
     mapActions
   } from 'vuex'
   import * as storage from '@/utils/storage'
-
   export default {
     name: 'CommonHeader',
     data() {
@@ -61,8 +59,7 @@
           "id": "all",
           "name": "全部",
           "symbol": "全部"
-        }
-        ],
+        }],
         plus: ''
       }
     },
@@ -87,6 +84,12 @@
         type: Function,
         default: (index) => {
           console.log(index + '被点击了！')
+        }
+      },
+      currency: {
+        type: Function,
+        default: (id) => {
+          console.log(id + 'id')
         }
       },
       scrollTabClick: {
@@ -125,6 +128,9 @@
           this.tabClick(this.tabList[index], false, true)
         } else {
           this.tabClick(this.tabList[index])
+        }
+        if (this.activeTab == 2) {
+          this.currency(this.tabList[index])
         }
         console.log(' asdadadclick')
         console.log(this.active)
@@ -262,11 +268,9 @@
       }
     }
   }
-
   .tab-active {
     background-color: #1464cc;
   }
-
   .coin-header {
     width: 100%;
     height: .56rem;
@@ -286,29 +290,23 @@
       }
     }
   }
-
   .flex {
     display: flex;
   }
-
   .flex-between {
     justify-content: space-between;
   }
-
   .flex-m {
     align-items: center;
   }
-
   .tab-box {
     background-color: #fff;
     padding: 0 .1rem;
     border-bottom: 1px solid #e5e5e5;
   }
-
   .add-tab {
     line-height: .56rem;
   }
-
   .header-box {
     position: fixed;
     left: 0;
