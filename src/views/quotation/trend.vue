@@ -411,6 +411,7 @@
                         data: that.pieLegend
                     },
                     series: [{
+                        name: '成交占比',
                         type: 'pie',
                         radius: '80%',
                         center: ['30%', '50%'],
