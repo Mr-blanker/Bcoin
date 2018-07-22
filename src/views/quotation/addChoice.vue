@@ -9,8 +9,7 @@
                 <!-- <div class="tag-item" v-for="(item,index) in searchData" :key="index" @click="addChoice(item)">
                             <div>平台:{{item.plt_name}}</div>
                             <div>币名:{{item.coin_name}}</div>
-                        </div>-->
-                        </div>-->
+                    </div>-->
                 <div class="scroll-item flex flex-between" v-for="(item,index) in searchData" :key="index" @click="addChoice(item)">
                     <div class="box-left">
                         <div>

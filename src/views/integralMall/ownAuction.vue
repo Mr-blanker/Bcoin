@@ -20,7 +20,7 @@
         <div>
           <div class="commodity-item" v-for="(item,index) in prdList" :key="index">
             <div class="commodity-img">
-              <img src="../../assets/logo.png" alt="">
+              <img :src="item.img" alt="">
             </div>
             <div class="commodity-name">{{item.name}}</div>
             <div class="commodity-inter">
