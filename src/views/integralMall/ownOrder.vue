@@ -26,7 +26,7 @@
               <div>{{item.status_name}}</div>
             </div>
             <div class="order-main" v-for="(item,index) in item.items" :key="index">
-              <div style="height: 100%;"><img style="height: 100%;" src="../../assets/Penguins.jpg" alt=""></div>
+              <div style="height: 100%;"><img style="height: 100%;" :src="item.prd_img" alt=""></div>
               <div class="order-item-right">
                 <div>{{item.prd_name}}</div>
                 <div>x{{item.num}}</div>
