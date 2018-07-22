@@ -240,4 +240,10 @@
       height: .72rem !important;
     }
   }
+  .mescroll{
+    position: fixed;
+    top: 2.1rem;
+    bottom: .9rem !important;
+    height: auto;
+  }
 </style>
