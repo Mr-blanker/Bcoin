@@ -893,7 +893,11 @@ $wdc: #909090; //字体颜色
     text-align: left !important;
     overflow: hidden;
   }
-
+  table{
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+  }
 }
 
 //acView
