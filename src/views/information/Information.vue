@@ -13,7 +13,7 @@
       </div>
       <div id="newsScroll" class="mescroll">
         <div>
-          <yd-slider autoplay="3000" v-if="index==0" style="padding-top: 36px;">
+          <yd-slider autoplay="3000" v-if="index==0" style="padding-top: .72rem;">
             <yd-slider-item v-for="(item,index) in broadcastAdList" :key="index">
               <!--<a :href="item.url" class="slider-img">-->
               <div style="height: 3.5rem;">
