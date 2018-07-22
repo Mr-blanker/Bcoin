@@ -411,7 +411,6 @@
                         data: that.pieLegend
                     },
                     series: [{
-                        name: '姓名',
                         type: 'pie',
                         radius: '80%',
                         center: ['30%', '50%'],
