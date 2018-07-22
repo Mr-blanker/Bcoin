@@ -229,4 +229,7 @@
       border-radius: 100%;
     }
   }
+  .cd-dynamic-comment {
+    display: block !important;
+  }
 </style>

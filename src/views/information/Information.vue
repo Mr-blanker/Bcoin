@@ -5,7 +5,8 @@
       <div class="new-box" v-if="index===0">
         <ul class="new-bar">
           <li class="new-bar-item " :class="{'new-bar-item-active':newCateId===0}" @click="chooseNewCate(0)">全部</li>
-          <li class="new-bar-item" v-for="item in newCateList" :class="{'new-bar-item-active':newCateId===item.id}" @click="chooseNewCate(item.id)">
+          <li class="new-bar-item" v-for="item in newCateList" :class="{'new-bar-item-active':newCateId===item.id}"
+              @click="chooseNewCate(item.id)">
             <span class="new-bar-item-content">{{item.name}}</span>
           </li>
         </ul>
@@ -47,7 +48,8 @@
           </div>
           <!--名人库-->
           <div class="person-list" v-if="index===3">
-            <div class="person-item" v-for="item in personList" @click="$router.push({path:'InformationDetail',query:{id: item.aid}})">
+            <div class="person-item" v-for="item in personList"
+                 @click="$router.push({path:'InformationDetail',query:{id: item.aid}})">
               <div class="person-item-box">
                 <div class="person-img"><img :src="item.thumbnail" alt=""></div>
                 <span class="person-title">{{item.title}}</span>
@@ -68,7 +70,8 @@
                         </yd-grids-group>
                       </ul>-->
                 <div class="special-item">
-                  <div v-for="(n,key) in item.items" :key="key"  @click="$router.push({path:'acView',query:{val:JSON.stringify(n)}})">
+                  <div v-for="(n,key) in item.items" :key="key"
+                       @click="$router.push({path:'acView',query:{val:JSON.stringify(n)}})">
                     <img :src="n.thumbnail" alt="">
                     <span>{{n.title}}</span>
                   </div>
@@ -88,6 +91,7 @@
   import {
     mapGetters
   } from "vuex"
+
   export default {
     name: "Information",
     data() {
@@ -123,7 +127,7 @@
     },
     mounted() {
       let that = this;
-      document.addEventListener('plusready', function() {
+      document.addEventListener('plusready', function () {
         that.plus = plus
       })
       this.getNewCate()
@@ -154,7 +158,7 @@
     methods: {
       sliderRouter(url) {
         console.log(url)
-        this.plus.runtime.openURL(url, function(err) {
+        this.plus.runtime.openURL(url, function (err) {
           console.log(err)
         })
       },
@@ -310,9 +314,10 @@
 </script>
 
 <style scoped lang="scss">
-   ::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     display: none
   }
+
   .ccc {
     display: flex;
     justify-content: center;
@@ -330,17 +335,19 @@
       border-radius: 1rem;
     }
   }
+
   .mescroll {
     position: fixed;
     top: .9rem;
     bottom: 1rem;
     height: auto;
   }
+
   .special-item {
     display: flex;
     flex-wrap: wrap;
     border-left: 1px solid #d9d9d9;
-    &>div {
+    & > div {
       display: flex;
       width: 33.3333%;
       flex-direction: column;
@@ -351,9 +358,11 @@
       height: 2.2rem;
       img {
         width: 1rem;
-        margin:0 0 .3rem 0;
+        margin: 0 0 .3rem 0;
       }
     }
- 
+
   }
+
+
 </style>
