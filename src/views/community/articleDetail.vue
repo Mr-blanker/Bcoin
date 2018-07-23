@@ -2,7 +2,6 @@
   <div>
     <Header v-bind="{left:1,center:2,centerValue:'详情'}"></Header>
     <yd-popup v-model="show4" position="right">
-
       <div class="zl-header">
         <i class="icon iconfont icon-fanhui" @click="show4=false"></i>
         <span>{{list.likes.num}}人赞过</span>
@@ -14,11 +13,9 @@
               <img src='../../assets/default_avatar_male.jpg' alt="" v-if="!item.pic">
               <img :src='item.pic' alt="" v-if="item.pic">
               <span>{{item.name}}</span>
-
             </div>
           </div>
         </div>
-
       </div>
     </yd-popup>
     <div>
@@ -39,11 +36,10 @@
           <div class="cd-dynamic-zan" style="padding-left: 0;">
             <i class="icon iconfont icon-dianzan dianzan zan"></i>
             <span style="padding-left: .1rem;">{{list.likes.items.slice(0,2).toString()}} <span @click="getDianzanList"
-                                                                                                style="color:#000;font-size: .25rem">{{list.likes.num}}人赞过<i
-              class="icon iconfont icon-gengduo" style="font-size: .2rem"></i>
- </span></span>
+                                                                                                  style="color:#000;font-size: .25rem">{{list.likes.num}}人赞过<i
+                class="icon iconfont icon-gengduo" style="font-size: .2rem"></i>
+   </span></span>
           </div>
-
         </li>
       </ul>
       <div class="cd-dynamic-comment ad-dynamic-comment mescroll" style="padding-bottom:.6rem">
@@ -64,18 +60,17 @@
       </div>
       <div class="id-comment" @click.stop="newComment">
         <input type="text" placeholder="写评论..." disabled="disabled">
-        <i class="icon iconfont icon-dianzan" style="font-size: .5rem;" :class="{'is-dianzan':list.isLike}"
-           @click.stop="dianzan()"></i>
+        <i class="icon iconfont icon-dianzan" style="font-size: .5rem;" :class="{'is-dianzan':list.isLike}" @click.stop="dianzan()"></i>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
   import * as types from "../../store/mutations-type"
-  import {mapGetters} from 'vuex'
-
+  import {
+    mapGetters
+  } from 'vuex'
   export default {
     name: "articleDetail",
     data() {
@@ -155,11 +150,10 @@
           if (res.code !== 0) return
           this.commentList = res.data
           this.commentCount = res.data.length
-          this.scroll.endSuccess(res.data.length, this.commentCount >= this.commentLen);
-          if (this.commentCount < this.commentLen) this.scroll.endUpScroll(true)
+          this.scroll1.endSuccess(res.data.length, this.commentCount >= this.commentLen);
+          if (this.commentCount < this.commentLen) this.scroll1.endUpScroll(true)
         })
       },
-
       //评论列表（评论加载）
       getCommentList() {
         this.$store.dispatch(types.COMMUNITY_PINGLUN_LIST, {
@@ -170,14 +164,16 @@
           this.commentList = res.data
         })
       },
-
       //点赞列表
       initDataList() {
         this.loadDataList();
       },
       loadDataList() {
         this.zanLen += 20
-        this.$store.dispatch(types.COMMUNITY_DIANZAN_LIST, {aid: this.list.id, len: this.zanLen}).then(res => {
+        this.$store.dispatch(types.COMMUNITY_DIANZAN_LIST, {
+          aid: this.list.id,
+          len: this.zanLen
+        }).then(res => {
           console.log(res)
           if (res.code !== 0) return
           this.dianzanList = res.data
@@ -198,7 +194,6 @@
           gid: this.list.id,
           isForbid: true,
           duration: 0
-
         }
         utils.dialog.prompt('禁言时长（h）', (value) => {
           if (value !== '') info.duration = Number(value)
@@ -216,10 +211,11 @@
             success: (res) => {
               console.log(res)
               if (res.code === 401) {
-                that.$router.push({path: 'Login'})
+                that.$router.push({
+                  path: 'Login'
+                })
               }
               that.scroll1.triggerRefresh();
-
             }
           })
         })
@@ -249,10 +245,11 @@
             success: (res) => {
               console.log(res)
               if (res.code === 401) {
-                that.$router.push({path: 'Login'})
+                that.$router.push({
+                  path: 'Login'
+                })
               }
               that.scroll.triggerDownScroll();
-
             }
           })
         });
@@ -264,7 +261,10 @@
           like = false
         }
         let that = this
-        let info = {aid: that.list.id, like: like}
+        let info = {
+          aid: that.list.id,
+          like: like
+        }
         $.ajax({
           contentType: 'application/json',
           url: "http://ssl.pandawork.vip/api/user/group.like",
@@ -293,16 +293,16 @@
                   }
                 }
                 that.list.likes.num--
-
               }
               that.scroll.triggerDownScroll()
             } else if (res.code === 401) {
-              that.$router.push({path: 'Login'})
+              that.$router.push({
+                path: 'Login'
+              })
             }
           }
         })
         return false;
-
       },
     }
   }
@@ -310,7 +310,6 @@
 
 <style scoped lang="scss">
   @import "../../assets/css/public";
-
   .ad-comment-item {
     min-height: 1rem;
     padding: .3rem 0 !important;
@@ -325,7 +324,6 @@
       border-radius: 100%;
     }
   }
-
   .cd-dynamic-comment {
     display: flex;
     flex-wrap: wrap;
@@ -342,7 +340,6 @@
       }
     }
   }
-
   .ad-dynamic-comment {
     padding: .2rem;
     margin-top: .2rem;
@@ -354,7 +351,6 @@
       border-bottom: 1px solid #dadada;
     }
   }
-
   .cd-dynamic-item {
     padding: .2rem 0;
     border-bottom: 1px solid $fbb;
@@ -362,7 +358,6 @@
       border-bottom: 0;
     }
   }
-
   .cd-dynamic-user {
     position: relative;
     display: flex;
@@ -373,14 +368,12 @@
       width: .8rem;
     }
   }
-
   .cd-dynamic-user-info {
     display: flex;
     flex-direction: column;
     align-items: self-start;
     padding-left: .1rem;
   }
-
   .cd-dynamic-title {
     font-size: .32rem;
     color: $bg;
@@ -394,19 +387,16 @@
       color: $bg;
     }
   }
-
   .cd-dynamic-time {
     font-size: .25rem;
     color: #666;
   }
-
   .istop {
     position: absolute;
     right: 0;
     top: 0;
     color: $bg;
   }
-
   .cd-dynamic-content {
     padding: .2rem 0 0 .8rem;
     .cd-dynamic-text {
@@ -419,7 +409,6 @@
       width: 32%;
     }
   }
-
   .cd-dynamic-icon {
     display: flex;
     align-items: center;
@@ -428,7 +417,6 @@
       margin-right: .4rem;
     }
   }
-
   .cd-dynamic-zan {
     padding: .2rem 0 0 .8rem;
     font-size: .3rem;
@@ -437,10 +425,8 @@
     color: $bg;
     i {
       font-size: .35rem;
-
     }
   }
-
   .zl-header {
     position: relative;
     height: .9rem;
@@ -454,7 +440,6 @@
       left: .2rem;
       transform: translate(0, -50%);
       font-size: .4rem;
-
     }
     span {
       position: absolute;
@@ -463,7 +448,6 @@
       transform: translate(-50%, -50%);
     }
   }
-
   .zl-item {
     display: flex;
     align-items: center;
@@ -493,7 +477,6 @@
       }
     }
   }
-
   .id-comment {
     position: fixed;
     bottom: 0;
@@ -519,7 +502,6 @@
       padding-left: .3rem;
     }
   }
-
   .is-dianzan {
     color: #208de3;
   }
