@@ -29,6 +29,8 @@
                 <div class="information-text">
                   <span>{{item.title}}</span>
                   <p>{{mo(item.t*1000)}}</p>
+                  <span>{{item.befrom}}</span>
+                  <span>{{item.n}}</span>
                 </div>
               </li>
             </ul>
@@ -73,7 +75,7 @@
                   <div v-for="(n,key) in item.items" :key="key"
                        @click="$router.push({path:'acView',query:{val:JSON.stringify(n)}})">
                     <img :src="n.thumbnail" alt="">
-                    <span>{{n.title}}</span>
+                    <span style="font-size: .25rem;height:.28rem;line-height: .3rem;overflow: hidden;">{{n.title}}</span>
                   </div>
                 </div>
               </div>
@@ -370,6 +372,8 @@
       height: 2.2rem;
       img {
         width: 1rem;
+        height:1rem;
+        border-radius: 100%;
         margin: 0 0 .3rem 0;
       }
     }
