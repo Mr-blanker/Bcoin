@@ -24,13 +24,14 @@
 
 <script>
     import * as types from "../../store/mutations-type"
+
     export default {
         name: "userAddressList",
         data() {
             return {
                 addressList: [],
                 lastAddr: '',
-                orderId:''
+                orderId: ''
             }
         },
         mounted() {
@@ -39,7 +40,7 @@
             this.orderId = this.$route.query.orderId
         },
         methods: {
-            checkAddress(item){
+            checkAddress(item) {
                 this.$router.push(`/createOrder?address=${JSON.stringify(item)}&id=${this.orderId}`)
             },
             //最近使用地址
