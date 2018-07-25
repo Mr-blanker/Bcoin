@@ -2,7 +2,7 @@
   <div>
     <Header v-bind="{centerValue:'快讯',center:2}"></Header>
     <div>
-      <div class="flash-list mescroll" id="newsScroll" style="padding-top: .9rem;padding-bottom: .9rem;">
+      <div class="flash-list mescroll" id="newsScroll" >
         <div>
           <div class="flash-item" v-for="(item,key) in flashList">
             <p class="flash-time">{{item.k_time*1000|moment('MM-DD HH:mm')}}</p>
@@ -70,5 +70,10 @@
 </script>
 
 <style scoped>
-
+.mescroll {
+    position: fixed;
+    top: .9rem;
+    bottom: .9rem;
+    height: auto;
+  }
 </style>
