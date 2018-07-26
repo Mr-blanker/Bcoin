@@ -10,7 +10,7 @@
                             <span class="tel">{{item.phone}}</span>
                         </div>
                         <p class="main-text">
-                            地址：{{item.detail}}</p>
+                            地址:{{item.detail}}</p>
                     </div>
                     <div class="address-operate">
                         <div class="recent" v-if="item.id===lastAddr">最近使用</div>

@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="market-tab ">
+        <div class="market-tab " style="position: relative;">
             <i class="icon iconfont icon-fanhui" @click="$router.go(-1)"></i>
-            <div class="tab-contianer">
-                <div>订单详情</div>
+            <div class="tab-contianer" style="position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%)">
+                <div style="font-size: .35rem">订单详情</div>
             </div>
             <yd-icon name="" size="20px" color="#fff" style="visibility:hidden;"></yd-icon>
         </div>
@@ -17,7 +17,7 @@
                     <div>{{order.user_phone}}</div>
                 </div>
                 <div class="user-address">
-                    <span>收货地址:</span>
+                    <span>收货地址：</span>
                     <span>{{order.user_addr}}</span>
                 </div>
             </div>
@@ -107,7 +107,7 @@
 
     .address-info {
         background-color: #fff;
-        padding: .1rem;
+        padding: .2rem;
         font-size: .3rem;
         .user-base {
             display: flex;
@@ -126,7 +126,7 @@
     .commodity-item {
         background-color: #fff;
         min-height: 1.6rem;
-        margin: .1rem .04rem;
+        margin: .2rem 0;
         border-radius: .04rem;
         padding: 0 .2rem;
         font-size: .28rem;
@@ -134,7 +134,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: .15rem 0;
+            padding: .2rem 0;
             border-bottom: 1px solid #f3f3f3;
         }
         .order-main {
@@ -149,8 +149,7 @@
             }
         }
         .order-footer {
-            border-top: 1px solid #f3f3f3;
-            height: .7rem;
+            height: .8rem;
             display: flex;
             justify-content: flex-end;
             align-items: center;
@@ -164,11 +163,16 @@
 
     .order-price {
         border-top: 1px solid #f3f3f3;
+        margin-top: .2rem;
         & > div {
             display: flex;
             justify-content: space-between;
-            height: .5rem;
+            height: .8rem;
             align-items: center;
+            border-bottom: 1px solid #e4e4e4;
+            &:last-child {
+                /*border-bottom: 0;*/
+            }
         }
     }
 

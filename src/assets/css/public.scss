@@ -1556,9 +1556,15 @@ $wdc: #909090; //字体颜色
 .tab-box > .van-tabs--line > div {
     height: .72rem;
 }
-.tab-box > .van-tabs--line{
-    padding-top:.72rem !important
+
+.tab-box > .van-tabs--line > .van-tabs__wrap {
+    //padding-top: .72rem !important
 }
+
+.tab-box > .van-tabs--line {
+    padding-top: .72rem !important
+}
+
 .tab-box > .van-tabs--line > .van-tabs__wrap {
     border-bottom: 1px solid #e4e4e4;
     .van-tabs__nav--line {

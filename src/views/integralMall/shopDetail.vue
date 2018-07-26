@@ -145,7 +145,7 @@
             flex-direction: column;
             justify-content: center;
             color: #fff;
-            font-size: .32rem;
+            font-size: .35rem;
         }
         .save-text {
             color: #fff;
@@ -182,7 +182,7 @@
                 .shop-prices,
                 .shop-state {
                     & > span {
-                        color:#a09f9f;
+                        color: #a09f9f;
                     }
                 }
             }
@@ -199,6 +199,13 @@
         align-items: flex-start;
         & > div {
             display: flex;
+            height: .8rem;
+            width: 100%;
+            border-bottom: 1px solid #e4e4e4;
+            align-items: center;
+            &:last-child {
+                border-bottom: 0;
+            }
         }
     }
 
@@ -209,13 +216,13 @@
         right: 0;
         z-index: 9999;
         display: flex;
-        height: 1rem;
+        height: .9rem;
         background-color: #fff;
         justify-content: flex-end;
         align-items: center;
         border-top: 1px solid #eae8e8;
         & > div:first-child {
-            width: 1.2rem;
+            width: 2.2rem;
             height: 100%;
             text-align: center;
             line-height: 1rem;

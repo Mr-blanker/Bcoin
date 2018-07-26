@@ -45,7 +45,7 @@
                                 <div>换购积分：{{item.points}}</div>
                             </div>
                             <div class="commodity-inter">
-                                <div>库存： {{item.stock}}</div>
+                                <div>库存：{{item.stock}}</div>
                             </div>
                         </div>
 

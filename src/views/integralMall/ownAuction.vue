@@ -17,16 +17,20 @@
         </div>
         <div class="pullScroll">
             <div id="auctionScroll" class="mescroll">
-                <div>
+                <div style="margin-top: .02rem;">
                     <div class="commodity-item" v-for="(item,index) in prdList" :key="index">
                         <div class="commodity-img">
                             <img :src="item.img" alt="">
                         </div>
-                        <div class="commodity-name">{{item.name}}</div>
-                        <div class="commodity-inter">
-                            <div>当前积分</div>
-                            <div>{{item.cur_point}}</div>
+                        <div class="commodity-name">
+                            <p style="padding-right: 1rem;">{{item.name}}</p>
+                            <div class="commodity-inter">
+                                <div>当前积分：{{item.cur_point}}</div>
+                            </div>
                         </div>
+                        <i class="status" :class="{'status-ing':item.status===2}">{{item.status===1?'拍卖中':'已结束'}}</i>
+
+
                     </div>
                 </div>
             </div>
@@ -150,10 +154,10 @@
     }
 
     .commodity-item {
+        position: relative;
         display: flex;
         background-color: #fff;
         justify-content: space-between;
-        margin: .1rem 0;
         padding: 0 .2rem;
         .commodity-img {
             img {
@@ -221,5 +225,55 @@
         height: .72rem;
     }
 
+    .commodity-item {
+        position: relative;
+        display: flex;
+        background-color: #fff;
+        justify-content: space-between;
+        height: 1.8rem;
+        padding: .2rem; // align-items: center;
+        align-items: center;
+        flex: 1;
+        .commodity-img {
+            img {
+                width: 1.4rem;
+                height: 1.4rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+        .commodity-name {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            flex: 1;
+            padding-left: .2rem;
+            color: #333;
+            font-size: .32rem;
+            overflow: hidden;
+            height: 1.4rem;
+            justify-content: space-between;
+            p {
+                line-height: 0.4rem;
+                overflow: hidden;
+                height: .35rem;
+            }
+        }
+        .commodity-inter {
+            font-size: .25rem;
+            & > div:last-child {
+                /*margin: .2rem 0 0 0;*/
+            }
+        }
+    }
+
+    .status {
+        position: absolute;
+        top: .2rem;
+        right: .2rem;
+        font-size: .28rem;
+        color: #a09f9f;
+    }
 
 </style>

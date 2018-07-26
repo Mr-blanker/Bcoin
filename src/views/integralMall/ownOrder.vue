@@ -1,9 +1,10 @@
 <template>
     <div>
         <div class="mall-header clear-fixed">
-            <div class="market-tab ">
+            <div class="market-tab " style="position: relative">
                 <i class="icon iconfont icon-fanhui" @click="$router.go(-1)"></i>
-                <div class="tab-contianer">
+                <div class="tab-contianer"
+                     style="position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);font-size: .35rem">
                     <div>我的订单</div>
                 </div>
                 <yd-icon name="" size="20px" color="#fff" style="visibility:hidden;"></yd-icon>
@@ -244,5 +245,9 @@
         justify-content: space-between;
         align-items: flex-start;
         padding-left: .2rem;
+    }
+
+    .order-item-right {
+        font-size: .28rem;
     }
 </style>
