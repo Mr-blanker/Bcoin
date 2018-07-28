@@ -288,20 +288,7 @@
                 this.SET_SCROLL_TOP(top)
                 this.SET_SCROLL_BOX('newsScroll')
             },
-            //快讯点评
-            comment(item, val, key) {
-                this.$store.dispatch(types.FLASH_COMMENT, {
-                    k_id: item.k_id,
-                    view: val
-                }).then(res => {
-                    if (res.code !== 0) return
-                    if (val == 'duo') {
-                        this.flashList[key].duo = res.num
-                    } else {
-                        this.flashList[key].kong = res.num
-                    }
-                })
-            },
+
             //时间转换
             mo(val) {
                 return moment(moment(val).format('YYYYMMDDHHmmss'), "YYYYMMDD-HH:mm:ss").fromNow()

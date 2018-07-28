@@ -1,21 +1,21 @@
 <template>
-  <div>
-    <Header v-bind="{centerValue:'快讯',center:2}"></Header>
     <div>
-      <div class="flash-list mescroll" id="newsScroll" >
+        <Header v-bind="{centerValue:'快讯',center:2}"></Header>
         <div>
-          <div class="flash-item" v-for="(item,key) in flashList">
-            <p class="flash-time">{{item.k_time*1000|moment('MM-DD HH:mm')}}</p>
-            <p class="flash-content" v-html="item.k_content" ></p>
-            <div class="flash-comment">
-              <span class="flash-duo" @click="comment(item,'duo',key)">看多（{{item.duo}}）</span>
-              <span class="flash-kong" @click="comment(item,'kong',key)">看空（{{item.kong}}）</span>
+            <div class="flash-list mescroll" id="newsScroll">
+                <div>
+                    <div class="flash-item" v-for="(item,key) in flashList">
+                        <p class="flash-time">{{item.k_time*1000|moment('MM-DD HH:mm')}}</p>
+                        <p class="flash-content" v-html="item.k_content"></p>
+                        <div class="flash-comment">
+                            <span class="flash-duo" @click="comment(item,'duo',key)">看多（{{item.duo}}）</span>
+                            <span class="flash-kong" @click="comment(item,'kong',key)">看空（{{item.kong}}）</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -65,7 +65,6 @@
                         this.scroll.endUpScroll(true)
                 })
             },
-
             //快讯点评
             comment(item, val, key) {
                 this.$store.dispatch(types.FLASH_COMMENT, {
@@ -85,10 +84,10 @@
 </script>
 
 <style scoped>
-.mescroll {
-    position: fixed;
-    top: .9rem;
-    bottom: .9rem;
-    height: auto;
-  }
+    .mescroll {
+        position: fixed;
+        top: .9rem;
+        bottom: .9rem;
+        height: auto;
+    }
 </style>
