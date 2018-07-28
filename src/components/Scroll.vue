@@ -79,7 +79,7 @@
       <!--  <div v-show="scrollData.length==0&&scrollBoxShow==1" class="add-choice" @click="userInfo.name? $router.push({path:'manageUserChoice'}): $router.push({path:'login'})">
                     <span> <i class="icon iconfont icon-tianjia"></i></span>
                     <div>点击添加自选</div>
-                  </div>-->
+            </div>-->
     </div>
   </div>
 </template>

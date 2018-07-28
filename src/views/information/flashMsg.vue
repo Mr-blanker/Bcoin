@@ -64,7 +64,22 @@
                     if (this.flash.flashCount < this.flash.flashLen)
                         this.scroll.endUpScroll(true)
                 })
-            }
+            },
+
+            //快讯点评
+            comment(item, val, key) {
+                this.$store.dispatch(types.FLASH_COMMENT, {
+                    k_id: item.k_id,
+                    view: val
+                }).then(res => {
+                    if (res.code !== 0) return
+                    if (val == 'duo') {
+                        this.flashList[key].duo = res.num
+                    } else {
+                        this.flashList[key].kong = res.num
+                    }
+                })
+            },
         }
     }
 </script>

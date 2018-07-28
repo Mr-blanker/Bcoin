@@ -5,7 +5,7 @@
     </scroll>
     <span class="add-box" @click="$router.push('manageUserChoice')" v-show="isChoice&&activeTab==1">
               <i class="icon iconfont icon-tianjia"></i>
-          </span>
+    </span>
   </div>
 </template>
 <script>
