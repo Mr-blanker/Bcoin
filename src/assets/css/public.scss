@@ -608,10 +608,11 @@ $wdc: #909090; //字体颜色
         }
         .flash-content {
             font-size: $wfs;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 5;
-            overflow: hidden;
+            //display: -webkit-box;
+            //display: -webkit-inline-box;
+            //-webkit-box-orient: vertical;
+            //-webkit-line-clamp: 5;
+            //overflow: hidden;
         }
         .flash-comment {
             padding-top: .1rem;

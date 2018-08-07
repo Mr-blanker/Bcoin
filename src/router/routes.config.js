@@ -9,6 +9,7 @@ import person from '@/views/user/person'
 import personMessage from '@/views/user/personMessage'
 import addressList from '@/views/user/addressList'
 import addressDetail from '@/views/user/addressDetail'
+import updateUserInfo from '@/views/user/updateUserInfo'
 import Information from '@/views/information/Information'
 import InformationDetail from '@/views/information/InformationDetail'
 import contentList from '@/views/information/contentList'
@@ -246,6 +247,10 @@ export default [
         name: 'flashMsg',
         path: '/flashMsg',
         component: flashMsg,
+    }, {
+        name: 'updateUserInfo',
+        path: '/updateUserInfo',
+        component: updateUserInfo,
     }
 
 ]

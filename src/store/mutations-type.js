@@ -81,6 +81,10 @@ export const USER_EDITRESSLIST = 'USER_EDITRESSLIST'
 export const USER_DELRESSLIST = 'USER_DELRESSLIST'
 //最近使用的地址
 export const USER_GETLASTADDR= 'USER_GETLASTADDR'
+//更新性别
+export const UPDATE_SEX= 'UPDATE_SEX'
+//更新手机
+export const UPDATE_PHONE= 'UPDATE_PHONE'
 
 //公共
 //图片上传

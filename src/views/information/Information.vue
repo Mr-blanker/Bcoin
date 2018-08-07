@@ -1,93 +1,106 @@
 <template>
-  <div>
-    <Header v-bind="{center:3,list:titleList,liKey:index}" @clickItem="clickItem"></Header>
-    <div style="padding-top: 32px;padding-bottom:50px">
-      <div class="new-box" v-if="index===0">
-        <ul class="new-bar">
-          <li class="new-bar-item " :class="{'new-bar-item-active':newCateId===0}" @click="chooseNewCate(0)">全部</li>
-          <li class="new-bar-item" v-for="item in newCateList" :class="{'new-bar-item-active':newCateId===item.id}"
-              @click="chooseNewCate(item.id)">
-            <span class="new-bar-item-content">{{item.name}}</span>
-          </li>
-        </ul>
-      </div>
-      <div id="newsScroll" class="mescroll">
-        <div>
-          <yd-slider autoplay="3000" v-if="index==0" style="padding-top: .72rem;">
-            <yd-slider-item v-for="(item,index) in broadcastAdList" :key="index">
-              <!--<a :href="item.url" class="slider-img">-->
-              <div style="height: 3.5rem;">
-                <img :src="item.pic" style="height: 100%;" @click="sliderRouter(item.url)">
-              </div>
-            </yd-slider-item>
-          </yd-slider>
-          <!--新闻资讯-->
-          <div v-if="index===0">
-            <ul class="information-list">
-              <li class="information-item" v-for="(item,key) in list" @click="informationDetail(item.aid)">
-                <img :src="item.thumbnail" alt="">
-                <div class="information-text">
-                  <span>{{item.title}}</span>
-                  <div class="bbb">
-                    <p>{{mo(item.t*1000)}}</p>
-                    <p style="padding-left: .1rem;">{{item.befrom}}</p>
-                    <p class="amount">{{item.n}}次浏览</p>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <!--快讯-->
-          <div class=" flash-list" v-if="index===1">
-            <!--<div>-->
-            <!--<div class="flash-item" v-for="(item,key) in flashList">-->
-            <!--<p class="flash-time">{{item.k_time*1000|moment('MM-DD HH:mm')}}</p>-->
-            <!--<p class="flash-content" v-html="item.k_content" @click="lookAllArt(key)" ref="artContent"></p>-->
-            <!--<div class="flash-comment">-->
-            <!--<span class="flash-duo" @click="comment(item,'duo',key)">看多（{{item.duo}}）</span>-->
-            <!--<span class="flash-kong" @click="comment(item,'kong',key)">看空（{{item.kong}}）</span>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-          </div>
-          <!--名人库-->
-          <div class="person-list" v-if="index===2">
-            <div class="person-item" v-for="item in personList"
-                 @click="goPersonDetail(item)">
-              <div class="person-item-box">
-                <div class="person-img"><img :src="item.thumbnail" alt=""></div>
-                <span class="person-title">{{item.title}}</span>
-                <span class="person-content">{{item.description}}</span>
-              </div>
+    <div>
+        <Header v-bind="{center:3,list:titleList,liKey:index}" @clickItem="clickItem"></Header>
+        <div style="padding-top: 32px;padding-bottom:50px">
+            <div class="new-box" v-if="index===0">
+                <ul class="new-bar">
+                    <li class="new-bar-item " :class="{'new-bar-item-active':newCateId===0}" @click="chooseNewCate(0)">
+                        全部
+                    </li>
+                    <li class="new-bar-item" v-for="item in newCateList"
+                        :class="{'new-bar-item-active':newCateId===item.id}"
+                        @click="chooseNewCate(item.id)">
+                        <span class="new-bar-item-content">{{item.name}}</span>
+                    </li>
+                </ul>
             </div>
-          </div>
-          <!--专栏-->
-          <yd-accordion v-if="index===1">
-            <yd-accordion-item :title="item.name" v-for="(item,index) in columnList" :key="index">
-              <div class="c-list">
-                <!-- <ul class="c-list-box" style="width: 100%;">
-                        <yd-grids-group :rows="3" item-height="2.2rem">
-                          <yd-grids-item v-for="(n,key) in item.items" :key="key" class="ccc" @click.native="$router.push({path:'acView',query:{val:JSON.stringify(n)}})">
-                            <span slot="text">{{n.title}}</span>
-                            <img slot="icon" :src="n.thumbnail" alt="">
-                          </yd-grids-item>
-                        </yd-grids-group>
-                      </ul>-->
-                <div class="special-item">
-                  <div v-for="(n,key) in item.items" :key="key"
-                       @click="$router.push({path:'acView',query:{val:JSON.stringify(n)}})">
-                    <img :src="n.thumbnail" alt="">
-                    <span
-                      style="font-size: .25rem;height:.28rem;line-height: .3rem;overflow: hidden;">{{n.title}}</span>
-                  </div>
+
+
+            <div id="newsScroll" class="mescroll">
+                <div>
+                    <yd-slider autoplay="3000" v-if="index==0" style="padding-top: .72rem;">
+                        <yd-slider-item v-for="(item,index) in broadcastAdList" :key="index">
+                            <!--<a :href="item.url" class="slider-img">-->
+                            <div style="height: 3.5rem;">
+                                <img :src="item.pic" style="height: 100%;" @click="sliderRouter(item.url)">
+                            </div>
+                        </yd-slider-item>
+                    </yd-slider>
+                    <div v-if="index===0&&newCateId===0">
+                        <ul class="all-list-box">
+                            <li @click="chooseNewCate(0)">全部</li>
+                            <li @click="clickItem(1)">专栏文章</li>
+                            <li @click="$router.push({path:'marketIndex'})">行情分析</li>
+                        </ul>
+                    </div>
+                    <!--新闻资讯-->
+                    <div v-if="index===0">
+                        <ul class="information-list">
+                            <li class="information-item" v-for="(item,key) in list"
+                                @click="informationDetail(item.aid)">
+                                <img :src="item.thumbnail" alt="">
+                                <div class="information-text">
+                                    <span>{{item.title}}</span>
+                                    <div class="bbb">
+                                        <p>{{mo(item.t*1000)}}</p>
+                                        <p style="padding-left: .1rem;">{{item.befrom}}</p>
+                                        <p class="amount">{{item.n}}次浏览</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--快讯-->
+                    <div class=" flash-list" v-if="index===1">
+                        <!--<div>-->
+                        <!--<div class="flash-item" v-for="(item,key) in flashList">-->
+                        <!--<p class="flash-time">{{item.k_time*1000|moment('MM-DD HH:mm')}}</p>-->
+                        <!--<p class="flash-content" v-html="item.k_content" @click="lookAllArt(key)" ref="artContent"></p>-->
+                        <!--<div class="flash-comment">-->
+                        <!--<span class="flash-duo" @click="comment(item,'duo',key)">看多（{{item.duo}}）</span>-->
+                        <!--<span class="flash-kong" @click="comment(item,'kong',key)">看空（{{item.kong}}）</span>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                    <!--名人库-->
+                    <div class="person-list" v-if="index===2">
+                        <div class="person-item" v-for="item in personList"
+                             @click="goPersonDetail(item)">
+                            <div class="person-item-box">
+                                <div class="person-img"><img :src="item.thumbnail" alt=""></div>
+                                <span class="person-title">{{item.title}}</span>
+                                <span class="person-content">{{item.description}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--专栏-->
+                    <yd-accordion v-if="index===1">
+                        <yd-accordion-item :title="item.name" v-for="(item,index) in columnList" :key="index">
+                            <div class="c-list">
+                                <!-- <ul class="c-list-box" style="width: 100%;">
+                                        <yd-grids-group :rows="3" item-height="2.2rem">
+                                          <yd-grids-item v-for="(n,key) in item.items" :key="key" class="ccc" @click.native="$router.push({path:'acView',query:{val:JSON.stringify(n)}})">
+                                            <span slot="text">{{n.title}}</span>
+                                            <img slot="icon" :src="n.thumbnail" alt="">
+                                          </yd-grids-item>
+                                        </yd-grids-group>
+                                      </ul>-->
+                                <div class="special-item">
+                                    <div v-for="(n,key) in item.items" :key="key"
+                                         @click="$router.push({path:'acView',query:{val:JSON.stringify(n)}})">
+                                        <img :src="n.thumbnail" alt="">
+                                        <span
+                                            style="font-size: .25rem;height:.28rem;line-height: .3rem;overflow: hidden;">{{n.title}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </yd-accordion-item>
+                    </yd-accordion>
                 </div>
-              </div>
-            </yd-accordion-item>
-          </yd-accordion>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -253,6 +266,7 @@
             },
             //选择bar
             clickItem(key) {
+                console.log(key)
                 this.$store.commit('SET_INFORMATION_ACTIVE', key)
                 this.index = key
                 // if (this.index === 2) {
@@ -306,68 +320,94 @@
 </script>
 
 <style scoped lang="scss">
-  ::-webkit-scrollbar {
-    display: none
-  }
-
-  .ccc {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    span {
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 1;
-      overflow: hidden;
-    }
-    img {
-      height: 1rem;
-      width: 1rem;
-      border-radius: 1rem;
-    }
-  }
-
-  .mescroll {
-    position: fixed;
-    top: .9rem;
-    bottom: .9rem;
-    height: auto;
-  }
-
-  .special-item {
-    display: flex;
-    flex-wrap: wrap;
-    border-left: 1px solid #d9d9d9;
-    & > div {
-      display: flex;
-      width: 33.3333%;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      border-bottom: 1px solid #d9d9d9;
-      border-right: 1px solid #d9d9d9;
-      height: 2.2rem;
-      img {
-        width: 1rem;
-        height: 1rem;
-        border-radius: 100%;
-        margin: 0 0 .3rem 0;
-      }
+    ::-webkit-scrollbar {
+        display: none
     }
 
-  }
+    .ccc {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        span {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+        }
+        img {
+            height: 1rem;
+            width: 1rem;
+            border-radius: 1rem;
+        }
+    }
 
-  .amount {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-  }
+    .mescroll {
+        position: fixed;
+        top: .9rem;
+        bottom: .9rem;
+        height: auto;
+    }
 
-  .bbb {
-    color: #a2a2a2;
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: start !important;
-  }
+    .special-item {
+        display: flex;
+        flex-wrap: wrap;
+        border-left: 1px solid #d9d9d9;
+        & > div {
+            display: flex;
+            width: 33.3333%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid #d9d9d9;
+            border-right: 1px solid #d9d9d9;
+            height: 2.2rem;
+            img {
+                width: 1rem;
+                height: 1rem;
+                border-radius: 100%;
+                margin: 0 0 .3rem 0;
+            }
+        }
+
+    }
+
+    .amount {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .bbb {
+        color: #a2a2a2;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: start !important;
+        align-items: flex-end;
+    }
+
+    .all-list-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: .8rem;
+        font-size: .28rem;
+        background: #fff;
+        color: #333;
+        margin-bottom: .2rem;
+        li {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            border-right: 1px solid #ddd;
+            &:last-child {
+                border-right: 0;
+            }
+        }
+        li:first-child{
+            color: #208de3;
+        }
+    }
 </style>
