@@ -20,6 +20,12 @@
                         <div class="shop-state">当前状态:<span>{{detailData.status|formatStatus}}</span></div>
                     </div>
                 </div>
+                <div class="shop-base" v-if="type==2">
+                    <div class="info-base">
+                        <div class="shop-prices">所需积分:<span>{{detailData.points}}</span></div>
+                        <div class="shop-state">库存:<span>{{detailData.stk}}</span></div>
+                    </div>
+                </div>
                 <div class="spec-info">
                     <div>
                         <span>规格:</span>
@@ -53,8 +59,7 @@
                 <div class="footer" v-if="type==1 &&detailId!=3">
                     <div style="font-size: .28rem">
                         <span>加价幅度:</span>
-                        <yd-spinner :min="detailData.point_step" :unit="detailData.point_step"
-                                    v-model="point"></yd-spinner>
+                        <yd-spinner :min="detailData.point_step" :unit="detailData.point_step" v-model="point"></yd-spinner>
                     </div>
                     <div @click="auction">竞拍</div>
                 </div>
@@ -72,7 +77,6 @@
         mapActions
     } from 'vuex'
     import utils from 'utility'
-
     export default {
         name: 'shopDetail',
         data() {
@@ -96,7 +100,7 @@
             this.init()
         },
         methods: {
-            ...mapActions(['PRD_DETAIL', 'PRD_AUCTION',]),
+            ...mapActions(['PRD_DETAIL', 'PRD_AUCTION', ]),
             init() {
                 this.PRD_DETAIL({
                     id: this.id
@@ -152,22 +156,20 @@
             font-size: .32rem;
         }
     }
-
     .shop-header {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
     }
-
     .shop-box {
         padding: .9rem 0 1.1rem 0;
         overflow: auto;
         .shop-img {
             background-color: #fff;
+            width: 100%;
             img {
                 display: inline-block;
-                width: 100%;
                 height: 4rem;
             }
         }
@@ -181,14 +183,13 @@
                 font-size: .3rem;
                 .shop-prices,
                 .shop-state {
-                    & > span {
+                    &>span {
                         color: #a09f9f;
                     }
                 }
             }
         }
     }
-
     .spec-info {
         font-size: .28rem;
         display: flex;
@@ -197,7 +198,7 @@
         margin: .1rem 0 0 0;
         padding: .1rem .26rem;
         align-items: flex-start;
-        & > div {
+        &>div:first-child {
             display: flex;
             height: .8rem;
             width: 100%;
@@ -207,8 +208,22 @@
                 border-bottom: 0;
             }
         }
+        &>div:last-child {
+            display: flex;
+            flex-direction:column;
+            align-items:flex-start;
+            justify-content:flex-start;
+            min-height: .8rem;
+            width: 100%;
+            border-bottom: 1px solid #e4e4e4;
+            &>div {
+                margin:.1rem 0 0 0;
+            }
+            &:last-child {
+                border-bottom: 0;
+            }
+        }
     }
-
     .hg-footer {
         position: fixed;
         bottom: 0;
@@ -221,8 +236,8 @@
         justify-content: flex-end;
         align-items: center;
         border-top: 1px solid #eae8e8;
-        & > div:first-child {
-            width: 2.2rem;
+        &>div:first-child {
+            width: 100%;
             height: 100%;
             text-align: center;
             line-height: 1rem;
@@ -232,7 +247,6 @@
             background-color: #f44;
         }
     }
-
     .footer {
         position: fixed;
         bottom: 0;
@@ -246,15 +260,15 @@
         padding: 0 0 0 .4rem;
         align-items: center;
         border-top: 1px solid #eae8e8;
-        & > div:first-child {
+        &>div:first-child {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            & > span {
+            &>span {
                 margin: 0 .2rem 0 0;
             }
         }
-        & > div:last-child {
+        &>div:last-child {
             width: 2.2rem;
             height: 100%;
             text-align: center;
