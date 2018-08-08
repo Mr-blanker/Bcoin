@@ -49,7 +49,8 @@
             submit() {
                 this.$store.dispatch(types.USER_LOGOUT).then(res => {
                     if (res.code === 0) {
-                        this.success('登出成功', '/person')
+                        this.success('登出成功')
+                        this.$router.go(-1)
                     }
                 })
             }
