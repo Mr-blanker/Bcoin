@@ -3,16 +3,14 @@
         <div class="mall-header clear-fixed">
             <div class="market-tab " style="position: relative">
                 <i class="icon iconfont icon-fanhui" @click="$router.go(-1)"></i>
-                <div class="tab-contianer"
-                     style="position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);font-size: .35rem">
+                <div class="tab-contianer" style="position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);font-size: .35rem">
                     <div>我的订单</div>
                 </div>
                 <yd-icon name="" size="20px" color="#fff" style="visibility:hidden;"></yd-icon>
             </div>
             <div>
                 <ul class="own-bar" v-if="activeTab==1">
-                    <li class="own-bar-item" :class="{'own-bar-item-active':index===selectId}"
-                        v-for="(item,index) in status" :key="index" @click="vantTabClick(index)">{{item}}
+                    <li class="own-bar-item" :class="{'own-bar-item-active':index===selectId}" v-for="(item,index) in status" :key="index" @click="vantTabClick(index)">{{item}}
                     </li>
                 </ul>
             </div>
@@ -20,26 +18,26 @@
         <div class="pullScroll">
             <div id="orderScroll" class="mescroll">
                 <div>
-                    <div class="commodity-item" v-for="(item,index) in prdList" :key="index"
-                         @click="$router.push(`/orderDetail?order=${JSON.stringify(item)}`)">
-                        <div class="order-header">
-                            <div>{{formatTime(item.createTime)}}</div>
-                            <div>{{item.status_name}}</div>
-                        </div>
-                        <div class="order-main" v-for="(item,index) in item.items" :key="index">
-                            <div style="height: 100%;"><img style="height: 100%;" :src="item.prd_img" alt=""></div>
-                            <div class="order-item-right">
-                                <div>{{item.prd_name}}</div>
-                                <div>x{{item.num}}</div>
-                                <div>{{item.prd_point}}</div>
+                    <div class="commodity-item" v-for="(item,index) in prdList" :key="index">
+                        <div @click="$router.push(`/orderDetail?order=${JSON.stringify(item)}`)">
+                            <div class="order-header">
+                                <div>{{formatTime(item.createTime)}}</div>
+                                <div>{{item.status_name}}</div>
+                            </div>
+                            <div class="order-main" v-for="(item,index) in item.items" :key="index">
+                                <div style="height: 100%;"><img style="height: 100%;" :src="item.prd_img" alt=""></div>
+                                <div class="order-item-right">
+                                    <div>{{item.prd_name}}</div>
+                                    <div>x{{item.num}}</div>
+                                    <div>{{item.prd_point}}</div>
+                                </div>
                             </div>
                         </div>
-                        <div class="order-footer" v-show="item.status==0">
+                        <div class="order-footer" v-show="item.status==0&&item.types==0">
                             <div class="cancle-btn" @click="cancleOrder(item.id)">取消订单</div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -55,7 +53,6 @@
         mapActions
     } from 'vuex'
     import utils from 'utility'
-
     export default {
         name: 'component_name',
         data() {
@@ -64,7 +61,7 @@
                 tabName: ['竞拍', '换购'],
                 status: ['全部', '等待发货', '已完成', '用户取消', '管理员取消'],
                 reqParam: {
-                    status: '',
+                    status: -1,
                     len: 20
                 },
                 prdList: [],
@@ -87,7 +84,6 @@
             this.scroll = new MeScroll("orderScroll", {
                 down: {
                     callback: that.getData,
-
                 },
                 up: {
                     callback: that.loadList,
@@ -114,7 +110,6 @@
                     if (this.totalCount < this.param.len)
                         this.scroll.endUpScroll(true)
                 })
-
             },
             vantTabClick(index) {
                 console.log(index)
@@ -136,7 +131,7 @@
                 }).then(res => {
                     if (res.data.code == 0) {
                         this.$dialog.toast({
-                            mes: '换购成功！',
+                            mes: '取消成功！',
                             timeout: 1500,
                             icon: 'success',
                             callback: () => {
@@ -166,7 +161,6 @@
             font-size: .32rem;
         }
     }
-
     .commodity-item {
         background-color: #fff;
         min-height: 1.6rem;
@@ -206,7 +200,6 @@
             }
         }
     }
-
     .mall-header {
         position: fixed;
         top: 0;
@@ -215,28 +208,24 @@
         z-index: 999;
         font-size: .32rem;
     }
-
-    .clear-fixed:before, .clear-fixed:after {
+    .clear-fixed:before,
+    .clear-fixed:after {
         content: "";
         display: block;
         clear: both;
     }
-
     .prd-box {
         padding: 1.5rem 0 0 0;
     }
-
     .tab-active {
         background-color: #1464cc;
     }
-
     .mescroll {
         position: fixed;
         top: 1.6rem;
         bottom: 0rem;
         height: auto;
     }
-
     .order-item-right {
         height: 100%;
         flex: 1;
@@ -246,7 +235,6 @@
         align-items: flex-start;
         padding-left: .2rem;
     }
-
     .order-item-right {
         font-size: .28rem;
     }

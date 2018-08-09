@@ -49,8 +49,8 @@
                         <span>{{order.point}}</span>
                     </div>
                 </div>
-                <div class="order-footer" v-show="order.status==0">
-                    <div class="cancle-btn" @click="cancleOrder(item.id)">取消订单</div>
+                <div class="order-footer" v-show="order.status==0&&order.types==0">
+                    <div class="cancle-btn" @click="cancleOrder(order.id)">取消订单</div>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
 </template>
 <script>
     import utils from 'utility'
-
+    import  {mapActions} from 'vuex'
     export default {
         name: 'orderDetail',
         data() {
@@ -72,8 +72,25 @@
             console.dir(this.order)
         },
         methods: {
+            ...mapActions([ 'CANCLE_ORDER']),
             formatTime(time) {
                 return utils.YYYYMMDDHHmmss(time)
+            },
+            cancleOrder(id) {
+                this.CANCLE_ORDER({
+                    id
+                }).then(res => {
+                    if (res.data.code == 0) {
+                        this.$dialog.toast({
+                            mes: '取消成功！',
+                            timeout: 1500,
+                            icon: 'success',
+                            callback: () => {
+                                this.order.status = 2
+                            }
+                        });
+                    }
+                })
             }
         }
     }

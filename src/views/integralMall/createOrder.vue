@@ -76,7 +76,7 @@
                             timeout: 1500,
                             icon: 'success',
                             callback: () => {
-                                this.$router.push('/mallIndex')
+                                this.$router.replace('/mallIndex')
                             }
                         });
                     }
@@ -124,7 +124,7 @@
         align-items: center;
         border-top: 1px solid #eae8e8;
         &>div:first-child {
-            width: 1.1rem;
+            width: 100%;
             height: 100%;
             text-align: center;
             line-height: 1rem;

@@ -5,6 +5,7 @@
         <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index" @click="tabChange(index+1)">{{item}}</span>
       </div>
       <yd-icon :name="rightIcon" size="20px" color="#fff" style="visibility:hidden;"></yd-icon>
+      <i class="icon iconfont icon-search" style="color:#fff"></i>
     </div>
     <div class="flex flex-m tab-box">
       <div style="width:92%">
@@ -20,9 +21,27 @@
     <div class="coin-header flex flex-between">
       <div class="header-left">名称</div>
       <div class="header-right flex flex-between">
-        <div>最新价(￥)</div>
-        <div v-show="activeTab==1">24H涨幅</div>
-        <div v-show="activeTab==2||activeTab==3">占比</div>
+        <div class="new-price">
+          <div class="price-tip">最新价(￥)</div>
+          <div class="orderby-icon">
+            <i class="icon iconfont icon-jiantou_up"></i>
+            <i class="icon iconfont icon-jiantou_down"></i>
+          </div>
+        </div>
+        <div v-show="activeTab==1" class="zhan-box">
+          <div class="zhan-tip">24h涨幅</div>
+          <div class="zhanorder-icon">
+            <i class="icon iconfont icon-jiantou_up"></i>
+            <i class="icon iconfont icon-jiantou_down"></i>
+          </div>
+        </div>
+        <div v-show="activeTab==2||activeTab==3" class="zhanbi-box">
+          <div class="zhanbi-tip">占比</div>
+          <div class="zhanobiorder-icon">
+            <i class="icon iconfont icon-jiantou_up"></i>
+            <i class="icon iconfont icon-jiantou_down"></i>
+          </div>
+        </div>
       </div>
     </div>
     <div class="coin-header flex flex-between" v-show="false">
@@ -285,7 +304,7 @@
     .header-right {
       width: 50%;
       text-align: right;
-      div {
+      &>div {
         width: 50%;
       }
     }
@@ -319,5 +338,50 @@
   }
   .van-tabs--line .van-tabs__wrap {
     height: .72rem !important;
+  }
+  .new-price {
+    display: flex;
+    height: .56rem;
+    align-items: center;
+    div[class="price-tip"] {
+      width: 80%
+    }
+    .orderby-icon {
+      width: 20%;
+      &>i {
+        display: block;
+        line-height: .25rem;
+      }
+    }
+  }
+  .zhan-box {
+    display: flex;
+    height: .56rem;
+    align-items: center;
+    div[class="zhan-tip"] {
+      width: 80%
+    }
+    .zhanorder-icon {
+      width: 20%;
+      &>i {
+        display: block;
+        line-height: .25rem;
+      }
+    }
+  }
+  .zhanbi-box {
+    display: flex;
+    height: .56rem;
+    align-items: center;
+    div[class="zhanbi-tip"] {
+      width: 80%
+    }
+    .zhanobiorder-icon {
+      width: 20%;
+      &>i {
+        display: block;
+        line-height: .25rem;
+      }
+    }
   }
 </style>
