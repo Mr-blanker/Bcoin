@@ -6,10 +6,14 @@
                 <div>
                     <div class="flash-item" v-for="(item,key) in flashList">
                         <p class="flash-time">{{item.k_time*1000|moment('MM-DD HH:mm')}}</p>
-                        <p class="flash-content" v-html="item.k_content"></p>
+                        <span style="font-size: .32rem">【{{item.k_title}}】</span>
+                        <span class="flash-content" v-html="item.k_content"></span>
                         <div class="flash-comment">
-                            <span class="flash-duo" @click="comment(item,'duo',key)">看多（{{item.duo}}）</span>
-                            <span class="flash-kong" @click="comment(item,'kong',key)">看空（{{item.kong}}）</span>
+                            <div>
+                                <span class="flash-duo" @click="comment(item,'duo',key)">看多（{{item.duo}}）</span>
+                                <span class="flash-kong" @click="comment(item,'kong',key)">看空（{{item.kong}}）</span>
+                            </div>
+                            <span style='color: #208de3'>分享</span>
                         </div>
                     </div>
                 </div>
@@ -51,15 +55,18 @@
             });
         },
         methods: {
-
+            initDataList() {
+                this.flash.flashLen = 0
+                this.loadDataList()
+            },
             loadDataList() {
                 this.flash.flashLen += 20
                 this.$store.dispatch(types.FLASH_LIST, {
                     len: this.flash.flashLen
                 }).then(res => {
+                    console.log(res)
                     this.flashList = res
                     this.flash.flashCount = res.length
-                    console.log(this.flashLen, '快讯')
                     this.scroll.endSuccess(res.length, this.flash.flashCount >= this.flash.flashLen);
                     if (this.flash.flashCount < this.flash.flashLen)
                         this.scroll.endUpScroll(true)
@@ -89,5 +96,10 @@
         top: .9rem;
         bottom: .9rem;
         height: auto;
+    }
+
+    .flash-comment {
+        display: flex;
+        justify-content: space-between;
     }
 </style>
