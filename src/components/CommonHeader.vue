@@ -24,26 +24,26 @@
         <div class="new-price">
           <div class="price-tip">最新价(￥)</div>
           <div class="orderby-icon" v-if="activeTab==1" @click="sortByPrice('price')">
-            <i class="icon iconfont icon-jiantou_up" ></i>
-            <i class="icon iconfont icon-jiantou_down"></i>
+            <i class="icon iconfont icon-jiantou_up" :class="{'active-color':!priceSortFlag&&priceSortActive}"></i>
+            <i class="icon iconfont icon-jiantou_down" :class="{'active-color':priceSortFlag&&priceSortActive}"></i>
           </div>
           <div class="orderby-icon" v-if="activeTab==2" @click="sortByPlat('price')">
-            <i class="icon iconfont icon-jiantou_up"></i>
-            <i class="icon iconfont icon-jiantou_down"></i>
+            <i class="icon iconfont icon-jiantou_up" :class="{'active-color':!platSortFlag&&platSortActive}"></i>
+            <i class="icon iconfont icon-jiantou_down" :class="{'active-color':platSortFlag&&platSortActive}"></i>
           </div>
         </div>
         <div v-show="activeTab==1" class="zhan-box">
           <div class="zhan-tip">24h涨幅</div>
           <div class="zhanorder-icon" @click="sortByPrice('market')">
-            <i class="icon iconfont icon-jiantou_up" @click="priceSort('market',false,true)"></i>
-            <i class="icon iconfont icon-jiantou_down" @click="priceSort('market',true,true)"></i>
+            <i class="icon iconfont icon-jiantou_up" :class="{'active-color':!priceSortFlag&&priceSortActiveMarket}"></i>
+            <i class="icon iconfont icon-jiantou_down" :class="{'active-color':priceSortFlag&&priceSortActiveMarket}"></i>
           </div>
         </div>
         <div v-show="activeTab==2||activeTab==3" class="zhanbi-box">
           <div class="zhanbi-tip">占比</div>
           <div class="zhanobiorder-icon"  v-if="activeTab!==3" @click="sortByPlat('zhan')">
-            <i class="icon iconfont icon-jiantou_up" ></i>
-            <i class="icon iconfont icon-jiantou_down" ></i>
+            <i class="icon iconfont icon-jiantou_up" :class="{'active-color':!platSortFlag&&platSortActiveZhan}"></i>
+            <i class="icon iconfont icon-jiantou_down" :class="{'active-color':platSortFlag&&platSortActiveZhan}"></i>
           </div>
         </div>
       </div>
@@ -74,6 +74,10 @@
         tabKey: '',
         priceSortFlag:false,
         platSortFlag:false,
+        priceSortActive:false,
+        platSortActive:false,
+        priceSortActiveMarket:false,
+        platSortActiveZhan:false,
         mult: [{
           "cid": -1,
           "id": "choice",
@@ -101,6 +105,7 @@
         type: String,
         default: 'icon iconfont icon-fanhui'
       },
+
       rightIcon: {
         type: String,
         default: 'search'
@@ -142,12 +147,12 @@
     },
     methods: {
       ...mapActions(['PLATFORM_LIST', 'COIN_LIST', 'CHOICE_LIST']),
-      sortByPlat(){
-        this.sortPlatForm('price',this.platSortFlag,true)
+      sortByPlat(type){
+        this.sortPlatForm(type,this.platSortFlag,true)
         this.platSortFlag = !this.platSortFlag
       },
-      sortByPrice(){
-        this.priceSort('market',this.priceSortFlag,true)
+      sortByPrice(type){
+        this.priceSort(type,this.priceSortFlag,true)
         this.priceSortFlag = !this.priceSortFlag        
       },
       goTagManange() {
@@ -409,5 +414,8 @@
         line-height: .25rem;
       }
     }
+  }
+  .active-color {
+    color:#000
   }
 </style>

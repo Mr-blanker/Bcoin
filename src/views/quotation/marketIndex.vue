@@ -4,8 +4,8 @@
     <scroll :mescroll.sync="meInstance" :scrollData="scrollList" :isChoiceType="isChoice" :downCb="getData" :upCb="getData" :currItem="currentItem" :scrollBoxShow="activeTab" ref="scroller">
     </scroll>
     <span class="add-box" @click="$router.push('manageUserChoice')" v-show="isChoice&&activeTab==1">
-                    <i class="icon iconfont icon-tianjia"></i>
-          </span>
+                          <i class="icon iconfont icon-tianjia"></i>
+                </span>
   </div>
 </template>
 <script>
@@ -33,6 +33,7 @@
         currentItem: [],
         asc: false,
         orderBy: '',
+        isSortFlag: false,
         isTickerSort: false
       }
     },
@@ -45,58 +46,72 @@
       ...mapGetters(['userInfo'])
     },
     methods: {
-      ...mapActions(['TICKER_LIST', 'PLATFORM_LIST', 'LIST_BY_CID', 'COIN_LIST', 'LIST_BY_PLAT', 'CHOICE_LIST', 'SORT_TICKER','SORT_PLAT']),
+      ...mapActions(['TICKER_LIST', 'PLATFORM_LIST', 'LIST_BY_CID', 'COIN_LIST', 'LIST_BY_PLAT', 'CHOICE_LIST', 'SORT_TICKER', 'SORT_PLAT']),
       //综合排名排序
-      sortTicker(orderBy='id', asc=true,isFromClick=false) {
+      sortTicker(orderBy = 'id', asc = true, isFromClick = false) {
         if (!this.isChoice) {
-          if(isFromClick){
-              this.len = 20
-              this.$refs.scroller.len = 20
-              this.meInstance.scrollTo(0);
+          if (isFromClick) {
+            if (orderBy == 'market') {
+              this.$refs.commonHeader.priceSortActiveMarket = true
+              this.$refs.commonHeader.priceSortActive = false
+            } else {
+              this.$refs.commonHeader.priceSortActive = true
+              this.$refs.commonHeader.priceSortActiveMarket = false
+            }
+            this.len = 20
+            this.$refs.scroller.len = 20
+            this.meInstance.scrollTo(0);
           }
-        this.SORT_TICKER({
-          len: (this.len / 20)-1,
-          asc,
-          orderBy
-        }).then(res => {
-          if (this.len == 20) {
-            this.scrollList = []
-            this.scrollList = res.data.data
-          } else {
-            this.scrollList.push(...res.data.data)
-          }
-          this.totalCount = res.data.data.length
-          this.meInstance.endSuccess(res.data.data.length, this.totalCount >= 20);
-          if (this.totalCount < 20)
-            this.meInstance.endUpScroll(true)
-        })
+          this.SORT_TICKER({
+            len: (this.len / 20) - 1,
+            asc,
+            orderBy
+          }).then(res => {
+            if (this.len == 20) {
+              this.scrollList = []
+              this.scrollList = res.data.data
+            } else {
+              this.scrollList.push(...res.data.data)
+            }
+            this.totalCount = res.data.data.length
+            this.meInstance.endSuccess(res.data.data.length, this.totalCount >= 20);
+            if (this.totalCount < 20)
+              this.meInstance.endUpScroll(true)
+          })
         }
       },
       //综合排名排序
-      sortPlat(orderBy='id', asc=true,isFromClick=false) {
+      sortPlat(orderBy = 'id', asc = true, isFromClick = false) {
         if (!this.isChoice) {
-          if(isFromClick){
-              this.len = 20
-              this.$refs.scroller.len = 20
-              this.meInstance.scrollTo(0);
+          if (isFromClick) {
+            this.len = 20
+            if (orderBy == 'zhan') {
+              this.$refs.commonHeader.platSortActiveZhan = true
+              this.$refs.commonHeader.platSortActive = false
+            } else {
+              this.$refs.commonHeader.platSortActiveZhan = false
+              this.$refs.commonHeader.platSortActive = true
+            }
+            this.$refs.scroller.len = 20
+            this.meInstance.scrollTo(0);
           }
-        this.SORT_PLAT({
-          len: (this.len / 20)-1,
-          cid: this.cid,
-          asc,
-          orderBy
-        }).then(res => {
-          if (this.len == 20) {
-            this.scrollList = []
-            this.scrollList = res.data.data
-          } else {
-            this.scrollList.push(...res.data.data)
-          }
-          this.totalCount = res.data.data.length
-          this.meInstance.endSuccess(res.data.data.length, this.totalCount >= 20);
-          if (this.totalCount < 20)
-            this.meInstance.endUpScroll(true)
-        })
+          this.SORT_PLAT({
+            len: (this.len / 20) - 1,
+            cid: this.cid,
+            asc,
+            orderBy
+          }).then(res => {
+            if (this.len == 20) {
+              this.scrollList = []
+              this.scrollList = res.data.data
+            } else {
+              this.scrollList.push(...res.data.data)
+            }
+            this.totalCount = res.data.data.length
+            this.meInstance.endSuccess(res.data.data.length, this.totalCount >= 20);
+            if (this.totalCount < 20)
+              this.meInstance.endUpScroll(true)
+          })
         }
       },
       //获取币种
@@ -182,14 +197,20 @@
         })
       },
       //滚动容器获取数据方法
-      getData(increase = false, len) {
+      getData(increase = false, len, isdown = false) {
         if (increase) {
           this.len = len
+        }
+        if (isdown) {
+          this.$refs.commonHeader.priceSortActive = false
+          this.$refs.commonHeader.priceSortActiveMarket = false
+          this.$refs.commonHeader.platSortActive = false
+          this.$refs.commonHeader.platSortActiveZhan = false
         }
         if (this.activeTab == 1) {
           if (this.isChoice) {
             this.getUserChoice()
-          } else{
+          } else {
             this.sortTicker()
           }
         } else if (this.activeTab == 2) {

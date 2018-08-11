@@ -133,7 +133,7 @@
       },
       downCallback(page, mescroll) {
         this.len = 20
-        this.upCb(true, this.len)
+        this.upCb(true, this.len,true)
       },
       goTrend(item, index) {
         if (this.scrollBoxShow == 2) {
