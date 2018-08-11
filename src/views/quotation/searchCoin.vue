@@ -4,13 +4,13 @@
             <i class="icon iconfont icon-fanhui" @click="$router.go(-1)"></i>
             <yd-search class="search-text" v-model="searchValue" :on-submit="submitHandler" cancel-text="搜索" :on-cancel="submitHandler"> </yd-search>
         </div>
-        <div class="tag-container">
-            <div class="tag-list">
+        <div class="tag-container" id="searchScroll">
+            <div class="tag-list" >
                 <!-- <div class="tag-item" v-for="(item,index) in searchData" :key="index" @click="addChoice(item)">
                             <div>平台:{{item.plt_name}}</div>
                             <div>币名:{{item.coin_name}}</div>
                     </div>-->
-                <div class="scroll-item flex flex-between" v-for="(item,index) in searchData" :key="index" @click="$router.push(`/trend?coin=${JSON.stringify(item)}&from=200`)">
+                <div class="scroll-item flex flex-between"  v-for="(item,index) in searchData" :key="index" @click="goTrend(item)">
                     <div class="box-left">
                         <div>
                             <span class="coin-symbol">{{item.coin_name}}</span>
@@ -37,7 +37,8 @@
 </template>
 <script>
     import {
-        mapActions
+        mapActions,
+        mapMutations
     } from 'vuex'
     import {
         Search
@@ -51,18 +52,28 @@
                 searchData: []
             }
         },
-        mounted() {},
+        mounted() {
+            this.SET_SCROLL_BOX('searchScroll')
+
+        },
         components: {
             'vanSearch': Search
         },
         methods: {
             ...mapActions(['SEARCH_CHOICE', 'ADD_CHOICE']),
+            ...mapMutations(['SET_SCROLL_TOP', 'SET_SCROLL_BOX']),
             submitHandler() {
                 this.SEARCH_CHOICE({
                     key: this.searchValue
                 }).then(res => {
                     this.searchData = res.data.data
                 })
+            },
+            goTrend(item){
+                this.SET_SCROLL_BOX('searchScroll')                
+                let top =  document.getElementById('searchScroll').scrollTop
+                this.SET_SCROLL_TOP(top)
+                this.$router.push(`/trend?coin=${JSON.stringify(item)}&from=200`)
             }
         }
     }

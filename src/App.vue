@@ -17,7 +17,7 @@
     data() {
       return {
         isShowFooterNav: true,
-        includeComponents:['Information','marketIndex','community']
+        includeComponents:['Information','marketIndex','community','searchCoin']
       }
     },
     components: {
