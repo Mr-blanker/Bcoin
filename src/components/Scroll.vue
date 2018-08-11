@@ -24,9 +24,9 @@
             <div class="mark-percent">${{item.price_usd}}</div>
           </div>
           <div class="tr circulation-box">
-            <div :class="{'percent-box':true,'percentrise-color':item.percent_change_24h>0,'percentfall-color':item.percent_change_24h<0}" v-if="item.percent_change_24h">{{item.percent_change_24h}}%
+            <div :class="{'percent-box':true,'percentrise-color':item.percent_change_24h>0,'percentfall-color':item.percent_change_24h<0}" v-if="item.percent_change_24h||item.percent_change_24h==0">{{item.percent_change_24h}}%
             </div>
-            <div :class="{'percent-box':true,'percentrise-color':item.zhan>0,'percentfall-color':item.zhan<0}" v-if="item.zhan">{{item.zhan}}%
+            <div :class="{'percent-box':true,'percentrise-color':item.zhan>0,'percentfall-color':item.zhan<0}" v-if="item.zhan||item.zhan==0">{{item.zhan}}%
             </div>
           </div>
         </div>
@@ -126,7 +126,9 @@
     methods: {
       ...mapMutations(['SET_SCROLL_TOP', 'SET_SCROLL_BOX']),
       upCallback(page, mescroll) {
-        this.len = 20 * page.num
+        console.log('page')
+        console.log(page)
+        this.len += 20
         this.upCb(true, this.len)
       },
       downCallback(page, mescroll) {

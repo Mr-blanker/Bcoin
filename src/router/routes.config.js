@@ -27,6 +27,7 @@ import addTag from '@/views/quotation/addTag'
 //用户自选
 import manageUserChoice from '@/views/quotation/manageUserChoice'
 import addChoice from '@/views/quotation/addChoice'
+import searchCoin from '@/views/quotation/searchCoin'
 
 //搜索
 import search from '@/views/search'
@@ -147,7 +148,12 @@ export default [
         name: 'addressList',
         path: '/addressList',
         component: addressList,
-    }, {
+    }, 
+    {   name:'searchCoin',
+        path:'/searchCoin',
+        component:searchCoin
+    },
+    {
         name: 'addressDetail',
         path: '/addressDetail',
         component: addressDetail

@@ -48,7 +48,16 @@ const actions = {
   //搜索指定关键字对应的币种
   [types.SEARCH_CHOICE]({},params){
     return http.get('/api/coin.search',{params})
-  }
+  },
+  //综合行情排序
+  [types.SORT_TICKER]({},params){
+    return http.get('/api/coin.ticker2',{params})
+  },
+  //指定货币的各平台行情排序
+  [types.SORT_PLAT]({},params){
+    return http.get('/api/coin.plat2',{params})
+  },
+  
 }
 
 const mutations = {

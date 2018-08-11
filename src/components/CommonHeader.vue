@@ -5,7 +5,7 @@
         <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index" @click="tabChange(index+1)">{{item}}</span>
       </div>
       <yd-icon :name="rightIcon" size="20px" color="#fff" style="visibility:hidden;"></yd-icon>
-      <i class="icon iconfont icon-search" style="color:#fff"></i>
+      <i class="icon iconfont icon-search" style="color:#fff" @click="$router.push('/searchCoin')"></i>
     </div>
     <div class="flex flex-m tab-box">
       <div style="width:92%">
@@ -23,23 +23,27 @@
       <div class="header-right flex flex-between">
         <div class="new-price">
           <div class="price-tip">最新价(￥)</div>
-          <div class="orderby-icon">
-            <i class="icon iconfont icon-jiantou_up"></i>
-            <i class="icon iconfont icon-jiantou_down"></i>
+          <div class="orderby-icon" v-if="activeTab==1">
+            <i class="icon iconfont icon-jiantou_up" @click="priceSort('price',false,true)"></i>
+            <i class="icon iconfont icon-jiantou_down" @click="priceSort('price',true,true)"></i>
+          </div>
+          <div class="orderby-icon" v-if="activeTab==2">
+            <i class="icon iconfont icon-jiantou_up" @click="sortPlatForm('price',false,true)"></i>
+            <i class="icon iconfont icon-jiantou_down" @click="sortPlatForm('price',true,true)"></i>
           </div>
         </div>
         <div v-show="activeTab==1" class="zhan-box">
           <div class="zhan-tip">24h涨幅</div>
           <div class="zhanorder-icon">
-            <i class="icon iconfont icon-jiantou_up"></i>
-            <i class="icon iconfont icon-jiantou_down"></i>
+            <i class="icon iconfont icon-jiantou_up" @click="priceSort('market',false,true)"></i>
+            <i class="icon iconfont icon-jiantou_down" @click="priceSort('market',true,true)"></i>
           </div>
         </div>
         <div v-show="activeTab==2||activeTab==3" class="zhanbi-box">
           <div class="zhanbi-tip">占比</div>
-          <div class="zhanobiorder-icon">
-            <i class="icon iconfont icon-jiantou_up"></i>
-            <i class="icon iconfont icon-jiantou_down"></i>
+          <div class="zhanobiorder-icon"  v-if="activeTab!==3">
+            <i class="icon iconfont icon-jiantou_up" @click="sortPlatForm('zhan',false,true)"></i>
+            <i class="icon iconfont icon-jiantou_down" @click="sortPlatForm('zhan',true,true)"></i>
           </div>
         </div>
       </div>
@@ -115,6 +119,18 @@
         type: Function,
         default: (index) => {
           console.log(index + '被点击了！')
+        }
+      },
+      priceSort:{
+        type:Function,
+        default:(type,isAsc,isfromClick)=>{
+          console.log(type,isAsc,isfromClick)
+        }
+      },
+      sortPlatForm:{
+        type:Function,
+        default:(type,isAsc,isfromClick)=>{
+          console.log(type,isAsc,isfromClick)
         }
       }
     },

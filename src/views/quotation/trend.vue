@@ -88,6 +88,7 @@
             ...mapActions(['TREND']),
             init() {
                 this.active = this.$route.query.active
+                let fromSearch = this.$route.query.from
                 this.coin = JSON.parse(this.$route.query.coin)
                 if (this.active == 1) {
                     if (this.coin.coin_id) {
@@ -98,7 +99,9 @@
                 } else if (this.active == 2) {
                     let currencyItem = JSON.parse(this.$route.query.currencyItem)
                     this.trendParam.coin = currencyItem.id
-                } else {
+                } else if(fromSearch==200){
+                    this.trendParam.coin = this.coin.id
+                }else{
                     this.trendParam.coin = this.coin.name
                 }
             },

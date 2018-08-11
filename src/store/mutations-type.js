@@ -38,6 +38,8 @@ export const DEL_CHOICE = 'DEL_CHOICE'
 export const ADD_CHOICE = 'ADD_CHOICE'
 //搜索
 export const SEARCH_CHOICE = 'SEARCH_CHOICE'
+export const SORT_TICKER = 'SORT_TICKER'
+export const SORT_PLAT = 'SORT_PLAT'
 
 //名人库
 //列表
