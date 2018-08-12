@@ -2,14 +2,15 @@
     <div>
         <Header v-bind="{center:3,list:titleList,liKey:index}" @clickItem="clickItem"></Header>
         <div style="padding-top: 32px;padding-bottom:50px">
-            <div class="new-box" v-if="index===0">
+            <div class="new-box" v-if="index===0&&sIndex===0">
                 <ul class="new-bar">
-                    <li class="new-bar-item " :class="{'new-bar-item-active':newCateId===0}" @click="chooseNewCate(0)">
+                    <li class="new-bar-item " :class="{'new-bar-item-active':newCateId===0}"
+                        @click="sIndex=0,chooseNewCate(0)">
                         全部
                     </li>
                     <li class="new-bar-item" v-for="item in newCateList"
                         :class="{'new-bar-item-active':newCateId===item.id}"
-                        @click="chooseNewCate(item.id)">
+                        @click="sIndex=0,chooseNewCate(item.id)">
                         <span class="new-bar-item-content">{{item.name}}</span>
                     </li>
                 </ul>
@@ -18,7 +19,7 @@
 
             <div id="newsScroll" class="mescroll">
                 <div>
-                    <yd-slider autoplay="3000" v-if="index==0" style="padding-top: .72rem;">
+                    <yd-slider autoplay="3000" v-if="index==0" :class="{ipt:sIndex===0}">
                         <yd-slider-item v-for="(item,index) in broadcastAdList" :key="index">
                             <!--<a :href="item.url" class="slider-img">-->
                             <div style="height: 3.5rem;">
@@ -28,9 +29,9 @@
                     </yd-slider>
                     <div v-if="index===0&&newCateId===0">
                         <ul class="all-list-box">
-                            <li @click="chooseNewCate(0)">全部</li>
-                            <li @click="clickItem(1)">专栏文章</li>
-                            <li @click="$router.push({path:'marketIndex'})">行情分析</li>
+                            <li @click="sIndex=0,chooseNewCate(0)" :class="{'all-list-box-active':sIndex===0}">全部</li>
+                            <li @click="sIndex=1,chooseNewCate(0)" :class="{'all-list-box-active':sIndex===1}">专栏文章</li>
+                            <li @click="sIndex=2,chooseNewCate(0)" :class="{'all-list-box-active':sIndex===2}">行情分析</li>
                         </ul>
                     </div>
                     <!--新闻资讯-->
@@ -41,10 +42,14 @@
                                 <img :src="item.thumbnail" alt="">
                                 <div class="information-text">
                                     <span>{{item.title}}</span>
-                                    <div class="bbb">
+                                    <div class="bbb" v-if="sIndex===0">
                                         <p>{{mo(item.t*1000)}}</p>
                                         <p style="padding-left: .1rem;">{{item.befrom}}</p>
                                         <p class="amount">{{item.n}}次浏览</p>
+                                    </div>
+                                    <div class="bbb" v-if="sIndex===1">
+                                        <p class="amount">{{item.t*1000|moment('YYYY-MM-DD')}}</p>
+
                                     </div>
                                 </div>
                             </li>
@@ -138,11 +143,15 @@
                 },
                 newCateList: [],
                 newCateId: 0,
-                plus: ''
+                plus: '',
+                sIndex: 0
             }
         },
         computed: {
             ...mapGetters(['informationActive'])
+        },
+        updated() {
+            console.log(this.sIndex)
         },
         mounted() {
             this.SET_SCROLL_BOX('newsScroll')
@@ -172,8 +181,6 @@
                     htmlNodata: '<p class="upwarp-nodata">-- 没有更多数据了 --</p>'
                 }
             });
-            // this.scroll.triggerDownScroll();
-            // this.clickItem(this.index)
         },
         methods: {
             ...mapMutations(['SET_SCROLL_TOP', 'SET_SCROLL_BOX']),
@@ -199,7 +206,6 @@
             },
             //选择新闻分类
             chooseNewCate(id) {
-                console.log(id)
                 this.scroll.scrollTo(0);
                 this.newCateId = id
                 this.scroll.triggerDownScroll();
@@ -221,24 +227,50 @@
             },
             loadDataList(page, mescroll) {
                 //快讯列表
+
                 if (this.index === 0) {
-                    //获取新闻资讯列表
                     this.new.newLen += 20
-                    this.$store.dispatch(types.INFORMATION_LIST, {
-                        len: this.new.newLen,
-                        cateID: this.newCateId
-                    }).then(res => {
-                        console.log(res)
-                        if (res.code !== 0) return
-                        this.list = res.data
-                        this.new.newCount = res.data.length
-                        console.log(this.new.newCount, 'count')
-                        console.log(this.new.newLen, 'len')
-                        console.log(this.new.newLen, '新闻')
-                        this.scroll.endSuccess(res.data.length, this.new.newCount >= this.new.newLen);
-                        if (this.new.newCount < this.new.newLen)
-                            this.scroll.endUpScroll(true)
-                    })
+
+                    if (this.sIndex == 0) {
+                        //获取新闻资讯列表
+                        this.$store.dispatch(types.INFORMATION_LIST, {
+                            len: this.new.newLen,
+                            cateID: this.newCateId
+                        }).then(res => {
+                            console.log(res)
+                            if (res.code !== 0) return
+                            this.list = res.data
+                            this.new.newCount = res.data.length
+                            this.scroll.endSuccess(res.data.length, this.new.newCount >= this.new.newLen);
+                            if (this.new.newCount < this.new.newLen)
+                                this.scroll.endUpScroll(true)
+                        })
+                    } else if (this.sIndex == 1) {
+                        //专栏文章
+                        this.$store.dispatch(types.COLUMN_LIST, {len: this.new.newLen}).then(res => {
+                            console.log(res)
+                            if (res.code !== 0) return
+                            this.list = res.data
+                            this.new.newCount = res.data.length
+                            this.scroll.endSuccess(res.data.length, this.new.newCount >= this.new.newLen);
+                            if (this.new.newCount < this.new.newLen)
+                                this.scroll.endUpScroll(true)
+                        })
+                    } else {
+                        //行情分析
+                        this.$store.dispatch(types.COLUMN_MARKET, {
+                            len: this.new.newLen
+                        }).then(res => {
+                            console.log(res)
+                            if (res.code !== 0) return
+                            this.list = res.data
+                            this.new.newCount = res.data.length
+                            this.scroll.endSuccess(res.data.length, this.new.newCount >= this.new.newLen);
+                            if (this.new.newCount < this.new.newLen)
+                                this.scroll.endUpScroll(true)
+                        })
+                    }
+
                 } else if (this.index === 2) {
                     //名人库列表
                     this.person.personLen += 20
@@ -269,13 +301,6 @@
                 console.log(key)
                 this.$store.commit('SET_INFORMATION_ACTIVE', key)
                 this.index = key
-                // if (this.index === 2) {
-                //   this.$store.dispatch(types.COLUMN_CATE).then(res => {
-                //     if (res.code !== 0) return
-                //     this.columnList = res.data
-                //     return
-                //   })
-                // }
                 if (key == 0 && !this.broadcastAdList.length) {
                     this.getBroadcastAd()
                 }
@@ -292,12 +317,29 @@
             //新闻详情
             informationDetail(aid) {
                 console.log(aid)
-                this.$router.push({
-                    path: 'InformationDetail',
-                    query: {
-                        aid: aid
-                    }
-                })
+                if (this.sIndex === 0) {
+                    this.$router.push({
+                        path: 'InformationDetail',
+                        query: {
+                            aid: aid
+                        }
+                    })
+                } else if (this.sIndex === 1) {
+                    this.$router.push({
+                        path: 'InformationDetail',
+                        query: {
+                            wid: aid
+                        }
+                    })
+                } else {
+                    this.$router.push({
+                        path: 'InformationDetail',
+                        query: {
+                            wid: aid
+                        }
+                    })
+                }
+
                 let top = this.scroll.getScrollTop()
                 this.SET_SCROLL_TOP(top)
                 this.SET_SCROLL_BOX('newsScroll')
@@ -406,8 +448,14 @@
                 border-right: 0;
             }
         }
-        li:first-child{
-            color: #208de3;
-        }
+    }
+
+    .all-list-box-active {
+        color: #208de3;
+
+    }
+
+    .ipt {
+        padding-top: .72rem;
     }
 </style>

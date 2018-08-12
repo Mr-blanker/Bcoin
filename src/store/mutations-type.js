@@ -56,6 +56,9 @@ export const COLUMN_CATESECOND = 'COLUMN_CATESECOND'
 export const COLUMN_LIST = 'COLUMN_LIST'
 //专栏文章
 export const COLUMN_CONTENT = 'COLUMN_CONTENT'
+//行情分析
+export const COLUMN_MARKET = 'COLUMN_MARKET'
+
 export const SET_INFORMATION_ACTIVE = 'SET_INFORMATION_ACTIVE'
 
 //轮播
