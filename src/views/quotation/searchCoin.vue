@@ -2,7 +2,7 @@
     <div>
         <div class="market-tab ">
             <i class="icon iconfont icon-fanhui" @click="$router.go(-1)"></i>
-            <yd-search class="search-text" v-model="searchValue" :on-submit="submitHandler" cancel-text="搜索" :on-cancel="submitHandler"> </yd-search>
+            <yd-search class="search-text" v-model="searchValue" @input="submitHandler" :on-submit="submitHandler" cancel-text="搜索" :on-cancel="submitHandler"> </yd-search>
         </div>
         <div class="tag-container" id="searchScroll">
             <div class="tag-list" >

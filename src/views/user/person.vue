@@ -31,6 +31,10 @@
           <span slot="left">我的订单</span>
           <span slot="right"></span>
         </yd-cell-item>
+        <yd-cell-item arrow type="a" @click.native="userInfo.name? $router.push({path:'myCoin'}): $router.push({path:'login'})">
+          <span slot="left">我的资产</span>
+          <span slot="right"></span>
+        </yd-cell-item>
 
       </yd-cell-group>
     </div>

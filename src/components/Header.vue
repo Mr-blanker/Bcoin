@@ -5,13 +5,12 @@
             <i class="icon iconfont icon-gengduo-" @click="leftClick" v-if="left===2" style="font-size:.55rem"></i>
         </div>
         <div class="header-main">
-      <span class="center-input" v-if="center===1">
-        <i class="icon iconfont icon-search" style="font-size: 0.3rem;margin-right: -5px;"></i>{{centerValue}}</span>
+            <span class="center-input" v-if="center===1">
+            <i class="icon iconfont icon-search" style="font-size: 0.3rem;margin-right: -5px;"></i>{{centerValue}}</span>
             <span class="center-title" v-if="center===2">{{centerValue}}</span>
             <ul class="center-ul" v-if="center===3">
                 <li v-for="(item,key) in list" @click="clickItem(key)" :class="{active:liKey ===key}">{{item}}</li>
             </ul>
-
         </div>
         <div class="header-right">
             <i class="icon iconfont icon-search" @click="rightClick" style="font-size: 0.4rem;" v-if="right===1"></i>
@@ -40,8 +39,7 @@
             leftClick() {
                 // console.log('left')
                 this.$router.go(-1)
-                if(this.$route.name=='personMessage'){
-
+                if (this.$route.name == 'personMessage') {
                 }
             },
             rightClick() {
@@ -50,7 +48,6 @@
             clickItem(key) {
                 this.$emit('clickItem', key)
             }
-
         }
     }
 </script>

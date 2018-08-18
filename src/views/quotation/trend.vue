@@ -22,8 +22,13 @@
                 </div>
             </div>
             <div>
-                <div>￥{{coin.price||coin.price_cny}}</div>
-                <div>￥{{coin.cheng||coin['24h_volume_cny']}}</div>
+                <div>
+                    <div>￥{{coin.price||coin.price_cny}}</div>
+                    <div>￥{{coin.cheng||coin['24h_volume_cny']}}</div>
+                </div>
+                <div class="sale-operation">
+                    <div @click="goBuyCoin">购买</div>
+                </div>
             </div>
         </div>
         <div class="date-check">
@@ -86,6 +91,16 @@
         },
         methods: {
             ...mapActions(['TREND']),
+            goBuyCoin(){
+                this.$router.push({
+                    path:'/buyCoin',
+                    query:{
+                        cid:this.trendArr.cid,
+                        coin_price:this.trendArr.coin_price,
+                        coin_name:this.coin.name
+                    }
+                })
+            },
             init() {
                 this.active = this.$route.query.active
                 let fromSearch = this.$route.query.from
@@ -108,10 +123,10 @@
             initDateTime() {
                 let start = this.getTimeStamp(10)
                 let end = this.getTimeStamp()
-                this.beginTime = this.stampToDate(start),
+                    this.beginTime = this.stampToDate(start),
                     this.endTime = this.stampToDate(end),
                     this.trendParam.start = start
-                this.trendParam.end = end
+                    this.trendParam.end = end
             },
             getTrends() {
                 this.TREND(this.trendParam).then(res => {
@@ -145,17 +160,17 @@
                 this.price.length = 0
                 this.market_cap.length = 0
                 this.volume.length = 0
-                for (let item of data.price) {
-                    this.dates.push(this.stampToDate(item[0]))
-                    this.price.push(item[1])
-                }
+                // for (let item of data.price) {
+                //     this.dates.push(this.stampToDate(item[0]))
+                //     this.price.push(item[1])
+                // }
                 for (let item of data.market_cap) {
                     this.market_cap.push(item[1])
                 }
                 for (let item of data.volume) {
                     this.volume.push(item[1])
                 }
-                console.log(this.dates)
+                console.log(this.market_cap)
             },
             getTimeStamp(day = 0) {
                 let timeStamp = new Date().valueOf()
@@ -532,6 +547,15 @@
         &>div:first-child {
             border-right: 1px solid #d0d0fa;
         }
+        &>div:last-child {
+            flex-direction:row ;
+            &>div:first-child {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items:flex-start;
+            }
+        }
     }
     .date-check {
         display: flex;
@@ -558,5 +582,16 @@
         font-size: .44rem;
         height: 20rem;
         padding: 2.5rem 0;
+    }
+    .sale-operation {
+        display:flex;
+        align-items:center;
+        height:100%;
+        justify-content:center;
+        &>div {
+            width:1rem;
+            height:.4rem;
+
+        }
     }
 </style>

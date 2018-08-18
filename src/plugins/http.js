@@ -14,7 +14,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 // axios.defaults.headers.post['Content-Type'] = 'application/json; charset=UTF-8';
 // http request 拦截器
 let notLoading = ['/api/news.lists', '/api/flash.lists', '/api/news.flash',
-  '/api/column.cate', '/api/person.lists', '/api/coin.lists',
+  '/api/column.cate', '/api/person.lists', '/api/coin.lists','/api/coin.search',
   '/api/coin.ticker','/api/coin.ticker2', 'api/platform.lists', '/api/platform.ticker','/api/coin.plat2',
   '/api/coin.plat', '/api/group.lists', '/api/group.info', '/api/group.article','/api/user/choice.lists',
   '/api/group.comments']
