@@ -15,8 +15,10 @@ import "./assets/css/public.scss"
 // import "./assets/css/style.scss"
 import Header from "./components/Header"
 import moment from 'moment'
+import 'moment/locale/zh-cn'
 import filters from './filters/index'
-Vue.prototype.$echarts = echarts 
+
+Vue.prototype.$echarts = echarts
 Vue.mixin(mixins)
 Vue.use(YDUI)
 Vue.component('Header', Header)
@@ -24,8 +26,8 @@ Vue.config.productionTip = false
 Vue.component(Slider.name, Slider);
 Vue.component(SliderItem.name, SliderItem);
 
-for(let key in filters[0]){
-    Vue.filter(key,filters[0][key])
+for (let key in filters[0]) {
+  Vue.filter(key, filters[0][key])
 }
 
 Vue.filter('moment', function (value, formatString) {
