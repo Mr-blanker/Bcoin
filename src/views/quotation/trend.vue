@@ -91,13 +91,13 @@
         },
         methods: {
             ...mapActions(['TREND']),
-            goBuyCoin(){
+            goBuyCoin() {
                 this.$router.push({
-                    path:'/buyCoin',
-                    query:{
-                        cid:this.trendArr.cid,
-                        coin_price:this.trendArr.coin_price,
-                        coin_name:this.coin.name
+                    path: '/buyCoin',
+                    query: {
+                        cid: this.trendArr.cid,
+                        coin_price: this.trendArr.coin_price,
+                        coin_name: this.coin.name
                     }
                 })
             },
@@ -114,19 +114,19 @@
                 } else if (this.active == 2) {
                     let currencyItem = JSON.parse(this.$route.query.currencyItem)
                     this.trendParam.coin = currencyItem.id
-                } else if(fromSearch==200){
+                } else if (fromSearch == 200) {
                     this.trendParam.coin = this.coin.id
-                }else{
+                } else {
                     this.trendParam.coin = this.coin.name
                 }
             },
             initDateTime() {
                 let start = this.getTimeStamp(10)
                 let end = this.getTimeStamp()
-                    this.beginTime = this.stampToDate(start),
+                this.beginTime = this.stampToDate(start),
                     this.endTime = this.stampToDate(end),
                     this.trendParam.start = start
-                    this.trendParam.end = end
+                this.trendParam.end = end
             },
             getTrends() {
                 this.TREND(this.trendParam).then(res => {
@@ -160,10 +160,10 @@
                 this.price.length = 0
                 this.market_cap.length = 0
                 this.volume.length = 0
-                // for (let item of data.price) {
-                //     this.dates.push(this.stampToDate(item[0]))
-                //     this.price.push(item[1])
-                // }
+                for (let item of data.price) {
+                    this.dates.push(this.stampToDate(item[0]))
+                    this.price.push(item[1])
+                }
                 for (let item of data.market_cap) {
                     this.market_cap.push(item[1])
                 }
@@ -236,9 +236,11 @@
                         }
                     },
                     axisPointer: {
+                        type: 'shadow',
                         link: [{
                             xAxisIndex: [0, 1]
-                        }]
+                        }],
+                        snap: true
                     },
                     dataZoom: [{
                         type: 'slider',
@@ -271,6 +273,10 @@
                         max: 'dataMax',
                         axisPointer: {
                             show: true
+                        },
+                        axisTick: {
+                            inside: true,
+                            alignWithLabel: true,
                         }
                     }, {
                         type: 'category',
@@ -548,12 +554,12 @@
             border-right: 1px solid #d0d0fa;
         }
         &>div:last-child {
-            flex-direction:row ;
+            flex-direction: row;
             &>div:first-child {
                 display: flex;
                 flex-direction: column;
                 justify-content: flex-start;
-                align-items:flex-start;
+                align-items: flex-start;
             }
         }
     }
@@ -584,14 +590,13 @@
         padding: 2.5rem 0;
     }
     .sale-operation {
-        display:flex;
-        align-items:center;
-        height:100%;
-        justify-content:center;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        justify-content: center;
         &>div {
-            width:1rem;
-            height:.4rem;
-
+            width: 1rem;
+            height: .4rem;
         }
     }
 </style>
