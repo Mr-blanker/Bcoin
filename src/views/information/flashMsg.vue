@@ -6,8 +6,8 @@
                 <div>
                     <div class="flash-item" v-for="(item,key) in flashList">
                         <p class="flash-time">{{item.k_time*1000|moment('MM-DD HH:mm')}}</p>
-                        <span style="font-size: .32rem;font-weight: bold;">【{{item.k_title}}】</span>
-                        <span class="flash-content" v-html="item.k_content"></span>
+                        <span style="font-size: .35rem;font-weight: bold;display: block;">{{item.k_title}}</span>
+                        <span class="flash-content" v-html="item.k_content" style="font-size:.3rem"></span>
                         <div class="flash-comment">
                             <div>
                                 <span class="flash-duo" @click="comment(item,'duo',key)">看多（{{item.duo}}）</span>
