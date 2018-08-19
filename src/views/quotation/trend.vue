@@ -12,23 +12,14 @@
             <div>
                 <div class="left-coin">
                     <div>
-                        <div>市场价:</div>
-                        <div>成交量:</div>
-                    </div>
-                    <div>
-                        <div><span>$</span>{{coin.price_usd}}</div>
-                        <div><span>$</span>{{coin.cheng_usd||coin['24h_volume_usd']}}</div>
+                        <div>市场价:<span style="margin:0 0 0 .1rem">$</span>{{coin.price_usd}}</div>
+                        <div>成交量:<span style="margin:0 0 0 .1rem">$</span>{{coin.cheng_usd||coin['24h_volume_usd']}}</div>
                     </div>
                 </div>
             </div>
             <div>
-                <div>
-                    <div>￥{{coin.price||coin.price_cny}}</div>
-                    <div>￥{{coin.cheng||coin['24h_volume_cny']}}</div>
-                </div>
-                <div class="sale-operation">
-                    <div @click="goBuyCoin">购买</div>
-                </div>
+                <div>￥{{coin.price||coin.price_cny}}</div>
+                <div>￥{{coin.cheng||coin['24h_volume_cny']}}</div>
             </div>
         </div>
         <div class="date-check">
@@ -42,8 +33,12 @@
             </div>
         </div>
         <div v-show="market_cap.length==0&&volume.length==0&&price.length==0" class="none-tip">暂无走势数据</div>
-        <div id="myChartPie" :style="{width: '100%', height: '3rem',background:'#fff'}"></div>
+        <div id="myChartPie" :style="{width: '100%', height: '2.5rem',background:'#fff'}"></div>
         <div id="myChart" :style="{width: '100%', height: '8rem'}"></div>
+        <div class="user-operation">
+            <div @click="goBuyCoin">购买</div>
+            <div @click="goSaleCoin">出售</div>
+        </div>
     </div>
 </template>
 <script>
@@ -98,6 +93,28 @@
                         cid: this.trendArr.cid,
                         coin_price: this.trendArr.coin_price,
                         coin_name: this.coin.name
+                    }
+                })
+            },
+            goSaleCoin() {
+                if (this.trendArr.num == 0) {
+                    this.$dialog.toast({
+                        mes: '没有持有货币！',
+                        timeout: 1500,
+                        icon: 'error'
+                    });
+                    return false;
+                }
+                let coin = {
+                    cid: this.trendArr.cid,
+                    coin_price: this.trendArr.coin_price,
+                    coin_name: this.coin.name,
+                    num: this.trendArr.num
+                }
+                this.$router.push({
+                    path: '/saleCoin',
+                    query: {
+                        coin: JSON.stringify(coin)
                     }
                 })
             },
@@ -216,7 +233,7 @@
                         data: ['市值', '价格']
                     },
                     tooltip: {
-                        triggerOn: 'none',
+                        trigger: 'axis',
                         transitionDuration: 0,
                         confine: true,
                         bordeRadius: 4,
@@ -251,7 +268,7 @@
                         top: 30,
                         height: 20,
                         handleIcon: 'M10.7,11.9H9.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4h1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
-                        handleSize: '120%'
+                        handleSize: '100%'
                     }, {
                         type: 'inside',
                         xAxisIndex: [0, 1],
@@ -522,7 +539,7 @@
     }
     .coin-info {
         width: 100%;
-        height: 1.2rem;
+        height: .9rem;
         background-color: rgb(18, 123, 206);
         @include flex-center;
         color: #fff;
@@ -537,10 +554,12 @@
             padding: 0 0 0 .2rem;
             .left-coin {
                 display: flex;
+                height: .75rem;
                 justify-content: flex-start;
                 align-items: center;
                 &>div {
                     display: flex;
+                    height:100%;
                     justify-content: center;
                     align-items: flex-start;
                     flex-direction: column;
@@ -552,15 +571,6 @@
         }
         &>div:first-child {
             border-right: 1px solid #d0d0fa;
-        }
-        &>div:last-child {
-            flex-direction: row;
-            &>div:first-child {
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: flex-start;
-            }
         }
     }
     .date-check {
@@ -597,6 +607,31 @@
         &>div {
             width: 1rem;
             height: .4rem;
+        }
+    }
+    .user-operation {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: .8rem;
+        display: flex;
+        color: #fff;
+        &>div:first-child {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50%;
+            font-size: .32rem;
+            background-color: #f44;
+        }
+        &>div:last-child {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: .32rem;
+            width: 50%;
+            background-color: #208de3;
         }
     }
 </style>
