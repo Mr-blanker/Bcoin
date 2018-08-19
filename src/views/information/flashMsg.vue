@@ -6,7 +6,7 @@
                 <div>
                     <div class="flash-item" v-for="(item,key) in flashList">
                         <p class="flash-time">{{item.k_time*1000|moment('MM-DD HH:mm')}}</p>
-                        <span style="font-size: .32rem">【{{item.k_title}}】</span>
+                        <span style="font-size: .32rem;font-weight: bold;">【{{item.k_title}}】</span>
                         <span class="flash-content" v-html="item.k_content"></span>
                         <div class="flash-comment">
                             <div>
