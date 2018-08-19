@@ -36,6 +36,12 @@ export const CHOICE_LIST = 'CHOICE_LIST'
 export const DEL_CHOICE = 'DEL_CHOICE'
 //用户自选列表
 export const ADD_CHOICE = 'ADD_CHOICE'
+//购买货币
+export const BUY_COIN = 'BUY_COIN'
+//出售货币
+export const SALE_COIN = 'SALE_COIN'
+//用户购买货币列表
+export const MY_COIN = 'MY_COIN'
 //搜索
 export const SEARCH_CHOICE = 'SEARCH_CHOICE'
 export const SORT_TICKER = 'SORT_TICKER'

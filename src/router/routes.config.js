@@ -20,13 +20,21 @@ import flashMsg from '@/views/information/flashMsg'
 import marketIndex from '@/views/quotation/marketIndex'
 //走势
 import trend from '@/views/quotation/trend'
+//购买货币
+import buyCoin from '@/views/quotation/buyCoin'
+//出售货币
+import saleCoin from '@/views/quotation/saleCoin'
 //标签管理
 import tagManange from '@/views/quotation/tagManange'
 //标签添加
 import addTag from '@/views/quotation/addTag'
 //用户自选
 import manageUserChoice from '@/views/quotation/manageUserChoice'
+//我的资产
+import myCoin from '@/views/quotation/myCoin'
+//添加自选
 import addChoice from '@/views/quotation/addChoice'
+//搜索货币
 import searchCoin from '@/views/quotation/searchCoin'
 
 //搜索
@@ -101,6 +109,21 @@ export default [
         name: 'person',
         path: '/person',
         component: person,
+    },
+    {
+        name:'buyCoin',
+        path:'/buyCoin',
+        component:buyCoin
+    },
+    {
+        name:'saleCoin',
+        path:'/saleCoin',
+        component:saleCoin
+    },
+    {
+        name:'myCoin',
+        path:'/myCoin',
+        component:myCoin
     },
     {
         name: 'personMessage',

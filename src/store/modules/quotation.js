@@ -57,6 +57,18 @@ const actions = {
   [types.SORT_PLAT]({},params){
     return http.get('/api/coin.plat2',{params})
   },
+  //购买货币
+  [types.BUY_COIN]({},params){
+    return http.post('/api/user/coin.buy',params)
+  },
+  //出售货币
+  [types.SALE_COIN]({},params){
+    return http.post('/api/user/coin.sell',params)
+  },
+  //个人购买货币列表
+  [types.MY_COIN]({},params){
+    return http.post('/api/user/coin.myCoins',params)
+  }
   
 }
 
