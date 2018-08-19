@@ -17,7 +17,7 @@
             <div class="recent" v-else></div>
             <div class="operate-box">
               <span class="edit" @click="$router.push({path:'addressDetail',query:{info:JSON.stringify(item)}})"><i
-                    class="icon iconfont icon-edit"></i>编辑</span>
+                class="icon iconfont icon-edit"></i>编辑</span>
               <span class="del" @click="delAddress(item.id)"><i class="icon iconfont icon-delete"></i>删除</span>
             </div>
           </div>
@@ -32,6 +32,7 @@
 
 <script>
   import * as types from "../../store/mutations-type"
+
   export default {
     name: "addressList",
     data() {
