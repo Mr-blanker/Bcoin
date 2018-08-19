@@ -9,11 +9,11 @@
         </div>
         <div class="coin-desc">
             <yd-cell-group>
-                <yd-cell-item>
+                <yd-cell-item v-if="coin.avg">
                     <span slot="left">出售单价</span>
                     <span slot="right">{{coin.avg}}</span>
                 </yd-cell-item>
-                <yd-cell-item>
+                <yd-cell-item v-if="coin.avg">
                     <span slot="left">出售总额</span>
                     <span slot="right">{{coin.avg*buyCount}}</span>
                 </yd-cell-item>
@@ -129,6 +129,7 @@
         color: #fff;
         .tab-contianer {
             height: .9rem;
+            font-size:.35rem;
             display: flex;
             align-items: center;
             flex-direction: column;
