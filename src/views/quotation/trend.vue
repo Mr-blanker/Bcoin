@@ -12,12 +12,8 @@
             <div>
                 <div class="left-coin">
                     <div>
-                        <div>市场价:</div>
-                        <div>成交量:</div>
-                    </div>
-                    <div>
-                        <div><span>$</span>{{coin.price_usd}}</div>
-                        <div><span>$</span>{{coin.cheng_usd||coin['24h_volume_usd']}}</div>
+                        <div>市场价:<span style="margin:0 0 0 .1rem">$</span>{{coin.price_usd}}</div>
+                        <div>成交量:<span style="margin:0 0 0 .1rem">$</span>{{coin.cheng_usd||coin['24h_volume_usd']}}</div>
                     </div>
                 </div>
             </div>
@@ -101,23 +97,25 @@
                 })
             },
             goSaleCoin() {
-                if(this.trendArr.num==0){
+                if (this.trendArr.num == 0) {
                     this.$dialog.toast({
-                            mes: '没有持有货币！',
-                            timeout: 1500,
-                            icon: 'error'
-                        });
+                        mes: '没有持有货币！',
+                        timeout: 1500,
+                        icon: 'error'
+                    });
                     return false;
                 }
                 let coin = {
-                        cid: this.trendArr.cid,
-                        coin_price: this.trendArr.coin_price,
-                        coin_name: this.coin.name,
-                        num:this.trendArr.num
-                    }
+                    cid: this.trendArr.cid,
+                    coin_price: this.trendArr.coin_price,
+                    coin_name: this.coin.name,
+                    num: this.trendArr.num
+                }
                 this.$router.push({
                     path: '/saleCoin',
-                    query: {coin:JSON.stringify(coin)}
+                    query: {
+                        coin: JSON.stringify(coin)
+                    }
                 })
             },
             init() {
@@ -556,10 +554,12 @@
             padding: 0 0 0 .2rem;
             .left-coin {
                 display: flex;
+                height: .75rem;
                 justify-content: flex-start;
                 align-items: center;
                 &>div {
                     display: flex;
+                    height:100%;
                     justify-content: center;
                     align-items: flex-start;
                     flex-direction: column;
@@ -622,12 +622,14 @@
             justify-content: center;
             align-items: center;
             width: 50%;
+            font-size: .32rem;
             background-color: #f44;
         }
         &>div:last-child {
             display: flex;
             justify-content: center;
             align-items: center;
+            font-size: .32rem;
             width: 50%;
             background-color: #208de3;
         }

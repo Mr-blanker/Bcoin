@@ -113,6 +113,7 @@
         .tab-contianer {
             height: .9rem;
             display: flex;
+            font-size:.35rem;
             align-items: center;
             flex-direction: column;
             justify-content: center;
