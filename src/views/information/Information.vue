@@ -456,4 +456,9 @@
   .ipt {
     padding-top: .72rem;
   }
+
+  .information-text span {
+    height: .8rem;
+    line-height: .4rem;
+  }
 </style>
