@@ -82,7 +82,7 @@
           offset: this.page
         }).then(res => {
           console.log(res)
-
+          if (res.data.code !== 0) return
           this.coinList = res.data.data
           this.scroll.endSuccess(res.data.data.length, res.data.data.length >= 20);
           if (res.data.data.length < 20)
@@ -94,7 +94,7 @@
         this.MY_COIN({
           offset: this.page
         }).then(res => {
-          console.log(res)
+          if (res.data.code !== 0) return
           this.coinList = res.data.data
           this.scroll.endSuccess(res.data.data.length, res.data.data.length >= 20);
         })
