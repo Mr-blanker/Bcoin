@@ -1,33 +1,59 @@
 <template>
     <div class="informationDetail-box">
-        <Header v-bind="{left:1,center:2,centerValue:'资讯'}"></Header>
-        <div class="informationDetail-list">
-            <div class="informationDetail-title">
-                {{dataList.title}}
+        <Header v-bind="{left:1,center:2,right:1,centerValue:titleName}"></Header>
+        <main class="container main1">
+            <div class="newsitembox">
+                <section class="newsitem">
+                    <div class="newsitem_head">
+                        <h3 class="title">
+                            {{dataList.title}}
+                        </h3>
+                        <div class="other">
+                            <div class="text">
+                                <div class="releasedate">
+                                    <span class="informationDetail-message-source" v-if="dataList.befrom">文章来源：{{dataList.befrom}}</span>
+                                    <span v-if="a">{{dataList.t*1000|moment('MM-DD:HH:mm')}}</span>
+                                    <!--<span class="iconfont icon-pageviews01">-->
+                                    <!--986-->
+                                    <!--</span>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="newsitem_body">
+                        <p class="informationDetail-content v-html" v-html="dataList.description">
+                        </p>
+                        <!--<p  v-html="dataList.content" v-if="id"></p>-->
+                        <div v-html="dataList.content" style="width: 100%;" class="v-html"></div>
+                    </div>
+                </section>
             </div>
-            <div class="informationDetail-message">
-      <span class="informationDetail-message-source" v-if="dataList.befrom">
-        文章来源：{{dataList.befrom}}
-      </span>
-                <span class="informationDetail-message-time" v-if="a">
-        <i class="icon iconfont icon-clock"></i>{{dataList.t*1000|moment('MM-DD:HH:mm')}}
-      </span>
-            </div>
-            <ul class="informationDetail-keywords">
-                <li v-for="item in keywords">{{item}}</li>
-            </ul>
-            <!--<div class="informationDetail-images" v-if="dataList.thumbnail">-->
-                <!--<img :src="dataList.thumbnail" alt="">-->
-            <!--</div>-->
-            <p class="informationDetail-content v-html" v-html="dataList.description">
-            </p>
-            <!--<p  v-html="dataList.content" v-if="id"></p>-->
-            <div v-html="dataList.content" style="width: 100%;" class="v-html"></div>
+        </main>
+        <!--<div class="informationDetail-list newsitem_head">-->
+        <!--<h3 class="title">-->
+        <!--{{dataList.title}}-->
+        <!--</h3>-->
+        <!--<div class="informationDetail-message">-->
+        <!--<span class="informationDetail-message-source" v-if="dataList.befrom">文章来源：{{dataList.befrom}}</span>-->
+        <!--<span class="informationDetail-message-time" v-if="a">-->
+        <!--<i class="icon iconfont icon-clock"></i>{{dataList.t*1000|moment('MM-DD:HH:mm')}}-->
+        <!--</span>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;<ul class="informationDetail-keywords">&ndash;&gt;-->
+        <!--&lt;!&ndash;<li v-for="item in keywords">{{item}}</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="informationDetail-images" v-if="dataList.thumbnail">&ndash;&gt;-->
+        <!--&lt;!&ndash;<img :src="dataList.thumbnail" alt="">&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--<p class="informationDetail-content v-html" v-html="dataList.description">-->
+        <!--</p>-->
+        <!--&lt;!&ndash;<p  v-html="dataList.content" v-if="id"></p>&ndash;&gt;-->
+        <!--<div v-html="dataList.content" style="width: 100%;" class="v-html"></div>-->
 
-        </div>
+        <!--</div>-->
         <div class="cd-dynamic-comment ad-dynamic-comment pullScroll" v-if="aid">
             <span class="ad-comment-title">评论</span>
-            <div id="informationDetailScroll" style="width: 100%;">
+            <div id="informationDetailScroll" style="width: 100%;" class="">
                 <ul>
                     <li v-for="attr in commentList" class="ad-comment-item">
                         <img src="../../assets/default_avatar_male.jpg" alt="" v-if="!attr.pic">
@@ -64,7 +90,8 @@
                 id: '',
                 a: '',
                 commentList: [],
-                commentTotal: ''
+                commentTotal: '',
+                titleName: '资讯'
             }
         },
         components: {
@@ -77,6 +104,7 @@
             this.aid = this.$route.query.aid
             this.id = this.$route.query.id
             this.wid = this.$route.query.wid
+            this.titleName = this.id ? '名人库' : (this.aid ? '资讯' : '专栏')
             let that = this
             this.$nextTick(() => {
                 this.scroll = new MeScroll("informationDetailScroll", {
@@ -238,5 +266,16 @@
 
     .informationDetail-content p {
         width: 100%;
+    }
+
+    .informationDetail-list {
+        overflow-y: scroll;
+    }
+
+    .newsitem_head {
+        text-align: left;
+    }
+    .container.main1{
+        bottom: 0;
     }
 </style>

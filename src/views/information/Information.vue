@@ -14,23 +14,22 @@
         </header>
         <!--<Header v-bind="{center:3,list:titleList,liKey:index}" @clickItem="clickItem"></Header>-->
         <div class="container main1">
-            <div class="new-box" v-if="index===0&&sIndex===0">
-                <!--<ul class="new-bar">-->
-                <!--<li class="new-bar-item " :class="{'new-bar-item-active':newCateId===0}"-->
-                <!--@click="sIndex=0,chooseNewCate(0)">-->
-                <!--全部-->
-                <!--</li>-->
-                <!--<li class="new-bar-item" v-for="item in newCateList"-->
-                <!--:class="{'new-bar-item-active':newCateId===item.id}"-->
-                <!--@click="sIndex=0,chooseNewCate(item.id)">-->
-                <!--<span class="new-bar-item-content">{{item.name}}</span>-->
-                <!--</li>-->
-                <!--</ul>-->
-            </div>
-
+            <!--<div class="new-box" v-if="index===0&&sIndex===0">-->
+            <!--<ul class="new-bar">-->
+            <!--<li class="new-bar-item " :class="{'new-bar-item-active':newCateId===0}"-->
+            <!--@click="sIndex=0,chooseNewCate(0)">-->
+            <!--全部-->
+            <!--</li>-->
+            <!--<li class="new-bar-item" v-for="item in newCateList"-->
+            <!--:class="{'new-bar-item-active':newCateId===item.id}"-->
+            <!--@click="sIndex=0,chooseNewCate(item.id)">-->
+            <!--<span class="new-bar-item-content">{{item.name}}</span>-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--</div>-->
             <div id="newsScroll" class="mescroll">
                 <div>
-                    <yd-slider autoplay="3000" v-if="index==0">
+                    <yd-slider autoplay="3000" >
                         <yd-slider-item v-for="(item,index) in broadcastAdList" :key="index">
                             <!--<a :href="item.url" class="slider-img">-->
                             <div style="height: 3.5rem;">
@@ -55,13 +54,13 @@
                     <!--</ul>-->
                     <!--</div>-->
                     <div class="news">
-                        <div class="newstitle" v-if="index===0&&newCateId===0">
+                        <div class="newstitle" >
                             <a @click="sIndex=0,chooseNewCate(0)" :class="{'current':sIndex===0}">头条</a>
                             <a @click="sIndex=1,chooseNewCate(0)" :class="{'current':sIndex===1}">推荐</a>
                             <a @click="sIndex=2,chooseNewCate(0)" :class="{'current':sIndex===2}">行情</a>
                         </div>
                         <!--新闻资讯-->
-                        <div v-if="index===0">
+                        <div v-if="index==0">
                             <ul class="newslist">
                                 <li v-for="(item,key) in list" :key="key" @click="informationDetail(item.aid)">
                                     <a class="newsitem">
@@ -71,7 +70,8 @@
                                                 <span class="date">{{mo(item.t*1000)}}</span>
                                                 <span class="point">·</span>
                                                 <span class="author">{{item.befrom}}</span>
-                                                <span class="iconfont icon-pageviews01 pageviews">&nbsp;{{item.n}}</span>
+                                                <span
+                                                    class="iconfont icon-pageviews01 pageviews">&nbsp;{{item.n}}</span>
                                             </div>
                                             <div class="other" v-if="sIndex!==0">
                                                 <p class="iconfont icon-pageviews01 pageviews">&nbsp;{{item.n}}</p>
@@ -142,7 +142,6 @@
 
 <script>
     import * as types from "../../store/mutations-type"
-    import moment from 'moment'
     import {
         mapGetters,
         mapMutations
@@ -152,10 +151,9 @@
         name: "Information",
         data() {
             return {
-                titleList: [{title: '资讯', icon: 'top_newsicon.png'}, {
-                    title: '专栏',
-                    icon: 'top_zlicon.png'
-                }, {title: '名人库', icon: 'top_mrkicon.png'},],
+                titleList: [{title: '资讯', icon: 'top_newsicon.png'},
+                    {title: '专栏', icon: 'top_zlicon.png'},
+                    {title: '名人库', icon: 'top_mrkicon.png'}],
                 list: [],
                 flashList: [],
                 personList: [],
@@ -164,18 +162,9 @@
                 index: 0,
                 broadcastAdList: [],
                 len: 1,
-                flash: {
-                    flashLen: 0,
-                    flashCount: -1,
-                },
-                new: {
-                    newLen: 0,
-                    newCount: -1
-                },
-                person: {
-                    personLen: 0,
-                    personCount: -1
-                },
+                flash: {flashLen: 0, flashCount: -1,},
+                new: {newLen: 0, newCount: -1},
+                person: {personLen: 0, personCount: -1},
                 newCateList: [],
                 newCateId: 0,
                 plus: '',
@@ -185,20 +174,19 @@
         computed: {
             ...mapGetters(['informationActive'])
         },
-        updated() {
-            console.log(this.sIndex)
-        },
         mounted() {
+            console.log(this.index)
             this.SET_SCROLL_BOX('newsScroll')
             let that = this;
             document.addEventListener('plusready', function () {
                 that.plus = plus
             })
             this.getNewCate()
-            if (this.informationActive) {
-                this.index = parseInt(this.informationActive)
-            }
+            // if (this.informationActive) {
+            //     this.index = parseInt(this.informationActive)
+            // }
             if (this.index == 0 && !this.broadcastAdList.length) {
+                console.log(123)
                 this.getBroadcastAd()
             }
             this.scroll = new MeScroll("newsScroll", {
@@ -334,18 +322,25 @@
             //选择bar
             clickItem(key) {
                 console.log(key)
-                this.$store.commit('SET_INFORMATION_ACTIVE', key)
+                if (key == 2) {
+                    this.$router.push({name: 'famousLibrary'})
+                } else if (key === 0) {
+                    this.$router.push({name: 'informationList'})
+                } else {
+                    console.log('专栏')
+                }
+                // this.$store.commit('SET_INFORMATION_ACTIVE', key)
                 this.index = key
                 if (key == 0 && !this.broadcastAdList.length) {
                     this.getBroadcastAd()
                 }
-                console.log(1)
                 this.scroll.scrollTo(0);
                 this.scroll.triggerDownScroll();
             },
             //轮播图
             getBroadcastAd() {
                 this.$store.dispatch(types.BROADCAST_AD).then(res => {
+                    console.log(res)
                     this.broadcastAdList = res
                 })
             },
@@ -380,18 +375,6 @@
                 this.SET_SCROLL_BOX('newsScroll')
             },
 
-            //时间转换
-            mo(val) {
-                return moment(moment(val).format('YYYYMMDDHHmmss'), "YYYYMMDD-HH:mm:ss").fromNow()
-            },
-            //查看全部
-            lookAllArt(key) {
-                if (this.$refs.artContent[key].style.display == '' || this.$refs.artContent[key].style.display == '-webkit-box') {
-                    this.$refs.artContent[key].style.display = 'flex'
-                } else {
-                    this.$refs.artContent[key].style.display = '-webkit-box'
-                }
-            }
         }
     }
 </script>

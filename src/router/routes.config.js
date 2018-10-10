@@ -15,6 +15,8 @@ import InformationDetail from '@/views/information/InformationDetail'
 import contentList from '@/views/information/contentList'
 import acView from '@/views/information/acView'
 import flashMsg from '@/views/information/flashMsg'
+import famousLibrary from '@/views/information/famousLibrary'
+import informationList from '@/views/information/informationList'
 
 //行情
 import marketIndex from '@/views/quotation/marketIndex'
@@ -56,264 +58,280 @@ import userAddressList from '@/views/integralMall/userAddressList'
 import orderDetail from '@/views/integralMall/orderDetail'
 
 export default [
-  {
-    path: '/',
-    redirect: '/Information',
-  },
-  {
-    name: 'HelloWorld',
-    path: '/HelloWorld',
-    component: HelloWorld,
-  },
-  {
-    name: 'login',
-    path: '/login',
-    component: login,
-  },
-  {
-    name: 'register',
-    path: '/register',
-    component: register,
-  },
-  {
-    name: 'marketIndex',
-    path: '/marketIndex',
-    component: marketIndex,
-    meta: {
-      keepalive: true
+    {
+        path: '/',
+        redirect: '/Information',
     },
-    beforeEnter: (to, from, next) => {
-      let scrollMain = store.getters.scrollBox
-      let topVal = store.getters.scrollTop
-      if (scrollMain && topVal != 0) {
-        setTimeout(() => {
-          document.getElementById(scrollMain).scrollTop = topVal
-          store.commit('SET_SCROLL_TOP', 0)
-          store.commit('SET_SCROLL_BOX', '')
-        }, 1)
-      }
-      next()
-    }
-  },
-  {
-    name: 'manageUserChoice',
-    path: '/manageUserChoice',
-    component: manageUserChoice
-  },
-  {
-    name: 'addChoice',
-    path: '/addChoice',
-    component: addChoice
-  },
-  {
-    name: 'person',
-    path: '/person',
-    component: person,
-  },
-  {
-    name: 'buyCoin',
-    path: '/buyCoin',
-    component: buyCoin
-  },
-  {
-    name: 'saleCoin',
-    path: '/saleCoin',
-    component: saleCoin
-  },
-  {
-    name: 'myCoin',
-    path: '/myCoin',
-    component: myCoin,
-    meta: {
-      requireAuth: true
-    }
-  },
-  {
-    name: 'personMessage',
-    path: '/personMessage',
-    component: personMessage,
-    meta: {
-      requireAuth: true
-    }
-  },
-  {
-    name: 'search',
-    path: '/search',
-    component: search,
-  },
-  {
-    name: 'marketIndex',
-    path: '/marketIndex',
-    component: marketIndex,
+    {
+        name: 'HelloWorld',
+        path: '/HelloWorld',
+        component: HelloWorld,
+    },
+    {
+        name: 'login',
+        path: '/login',
+        component: login,
+    },
+    {
+        name: 'register',
+        path: '/register',
+        component: register,
+    },
+    {
+        name: 'marketIndex',
+        path: '/marketIndex',
+        component: marketIndex,
+        meta: {
+            keepalive: true
+        },
+        beforeEnter: (to, from, next) => {
+            let scrollMain = store.getters.scrollBox
+            let topVal = store.getters.scrollTop
+            if (scrollMain && topVal != 0) {
+                setTimeout(() => {
+                    document.getElementById(scrollMain).scrollTop = topVal
+                    store.commit('SET_SCROLL_TOP', 0)
+                    store.commit('SET_SCROLL_BOX', '')
+                }, 1)
+            }
+            next()
+        }
+    },
+    {
+        name: 'manageUserChoice',
+        path: '/manageUserChoice',
+        component: manageUserChoice
+    },
+    {
+        name: 'addChoice',
+        path: '/addChoice',
+        component: addChoice
+    },
+    {
+        name: 'person',
+        path: '/person',
+        component: person,
+    },
+    {
+        name: 'buyCoin',
+        path: '/buyCoin',
+        component: buyCoin
+    },
+    {
+        name: 'saleCoin',
+        path: '/saleCoin',
+        component: saleCoin
+    },
+    {
+        name: 'myCoin',
+        path: '/myCoin',
+        component: myCoin,
+        meta: {
+            requireAuth: true
+        }
+    },
+    {
+        name: 'personMessage',
+        path: '/personMessage',
+        component: personMessage,
+        meta: {
+            requireAuth: true
+        }
+    },
+    {
+        name: 'search',
+        path: '/search',
+        component: search,
+    },
+    {
+        name: 'marketIndex',
+        path: '/marketIndex',
+        component: marketIndex,
 
-  },
-  {
-    name: 'mallIndex',
-    path: '/mallIndex',
-    component: mallIndex,
-    meta: {
-      requireAuth: true
-    }
-  },
-  {
-    name: 'tagManange',
-    path: '/tagManange',
-    component: tagManange
-  },
-  {
-    name: 'createOrder',
-    path: '/createOrder',
-    component: createOrder
-  }, {
-    name: 'InformationDetail',
-    path: '/InformationDetail',
-    component: InformationDetail,
-  }, {
-    name: 'contentList',
-    path: '/contentList',
-    component: contentList,
-  }, {
-    name: 'acView',
-    path: '/acView',
-    component: acView,
-  }, {
-    name: 'addressList',
-    path: '/addressList',
-    component: addressList,
-    meta: {
-      requireAuth: true
-    }
-  },
-  {
-    name: 'searchCoin',
-    path: '/searchCoin',
-    component: searchCoin,
-    meta: {
-      keepalive: true
     },
-    beforeEnter: (to, from, next) => {
-      let scrollMain = store.getters.scrollBox
-      let topVal = store.getters.scrollTop
-      if (scrollMain && topVal != 0) {
-        setTimeout(() => {
-          document.getElementById(scrollMain).scrollTop = topVal
-          store.commit('SET_SCROLL_TOP', 0)
-          store.commit('SET_SCROLL_BOX', '')
-        }, 1)
-      }
-      next()
-    }
-  },
-  {
-    name: 'addressDetail',
-    path: '/addressDetail',
-    component: addressDetail
-  }, {
-    name: 'Information',
-    path: '/Information',
-    component: Information,
-    meta: {
-      keepalive: true
+    {
+        name: 'mallIndex',
+        path: '/mallIndex',
+        component: mallIndex,
+        meta: {
+            requireAuth: true
+        }
     },
-    beforeEnter: (to, from, next) => {
-      let scrollMain = store.getters.scrollBox
-      let topVal = store.getters.scrollTop
-      if (scrollMain && topVal != 0) {
-        setTimeout(() => {
-          document.getElementById(scrollMain).scrollTop = topVal
-          store.commit('SET_SCROLL_TOP', 0)
-          store.commit('SET_SCROLL_BOX', '')
-        }, 1)
-      }
-      next()
+    {
+        name: 'tagManange',
+        path: '/tagManange',
+        component: tagManange
+    },
+    {
+        name: 'createOrder',
+        path: '/createOrder',
+        component: createOrder
+    }, {
+        name: 'InformationDetail',
+        path: '/InformationDetail',
+        component: InformationDetail,
+    }, {
+        name: 'contentList',
+        path: '/contentList',
+        component: contentList,
+    }, {
+        name: 'acView',
+        path: '/acView',
+        component: acView,
+    }, {
+        name: 'addressList',
+        path: '/addressList',
+        component: addressList,
+        meta: {
+            requireAuth: true
+        }
+    },
+    {
+        name: 'searchCoin',
+        path: '/searchCoin',
+        component: searchCoin,
+        meta: {
+            keepalive: true
+        },
+        beforeEnter: (to, from, next) => {
+            let scrollMain = store.getters.scrollBox
+            let topVal = store.getters.scrollTop
+            if (scrollMain && topVal != 0) {
+                setTimeout(() => {
+                    document.getElementById(scrollMain).scrollTop = topVal
+                    store.commit('SET_SCROLL_TOP', 0)
+                    store.commit('SET_SCROLL_BOX', '')
+                }, 1)
+            }
+            next()
+        }
+    },
+    {
+        name: 'addressDetail',
+        path: '/addressDetail',
+        component: addressDetail
+    }, {
+        name: 'Information',
+        path: '/Information',
+        component: Information,
+        meta: {
+            keepalive: true
+        },
+        beforeEnter: (to, from, next) => {
+            let scrollMain = store.getters.scrollBox
+            let topVal = store.getters.scrollTop
+            if (scrollMain && topVal != 0) {
+                setTimeout(() => {
+                    document.getElementById(scrollMain).scrollTop = topVal
+                    store.commit('SET_SCROLL_TOP', 0)
+                    store.commit('SET_SCROLL_BOX', '')
+                }, 1)
+            }
+            next()
+        }
+    },
+    {
+        name: 'InformationDetail',
+        path: '/InformationDetail',
+        component: InformationDetail
+    },
+    {
+        name: 'marketIndex',
+        path: '/marketIndex',
+        component: marketIndex
+    },
+    {
+        name: 'trend',
+        path: '/trend',
+        component: trend,
+    },
+    {
+        name: 'addTag',
+        path: '/addTag',
+        component: addTag,
+    }, {
+        name: 'community',
+        path: '/community',
+        component: community,
+        meta: {
+            keepalive: true
+        }
+    }, {
+        name: 'communityAdd',
+        path: '/communityAdd',
+        component: communityAdd,
+    },
+    {
+        name: 'shopDetail',
+        path: '/shopDetail',
+        component: shopDetail,
+    },
+    {
+        name: 'ownAuction',
+        path: '/ownAuction',
+        component: ownAuction,
+        meta: {
+            requireAuth: true
+        }
+    },
+    {
+        name: 'ownOrder',
+        path: '/ownOrder',
+        component: ownOrder,
+        meta: {
+            requireAuth: true
+        }
+    },
+    {
+        name: 'userAddressList',
+        path: '/userAddressList',
+        component: userAddressList,
+    },
+    {
+        name: 'orderDetail',
+        path: '/orderDetail',
+        component: orderDetail,
+    },
+    , {
+        name: 'upload',
+        path: '/upload',
+        component: () => import('../components/upload/Upload'),
+    }, {
+        name: 'communityDynamic',
+        path: '/communityDynamic',
+        component: communityDynamic,
+    }, {
+        name: 'Release',
+        path: '/Release',
+        component: Release,
+    }, {
+        name: 'articleDetail',
+        path: '/articleDetail',
+        component: articleDetail,
+    }, {
+        name: 'flashMsg',
+        path: '/flashMsg',
+        component: flashMsg,
+    }, {
+        name: 'updateUserInfo',
+        path: '/updateUserInfo',
+        component: updateUserInfo,
+    },
+    {
+        name: 'famousLibrary',
+        path: '/famousLibrary',
+        component: famousLibrary,
+        meta: {
+            keepalive: true
+        }
+    },
+    {
+        name: 'informationList',
+        path: '/informationList',
+        component: informationList,
+        meta: {
+            keepalive: true
+        }
     }
-  },
-  {
-    name: 'InformationDetail',
-    path: '/InformationDetail',
-    component: InformationDetail
-  },
-  {
-    name: 'marketIndex',
-    path: '/marketIndex',
-    component: marketIndex
-  },
-  {
-    name: 'trend',
-    path: '/trend',
-    component: trend,
-  },
-  {
-    name: 'addTag',
-    path: '/addTag',
-    component: addTag,
-  }, {
-    name: 'community',
-    path: '/community',
-    component: community,
-    meta: {
-      keepalive: true
-    }
-  }, {
-    name: 'communityAdd',
-    path: '/communityAdd',
-    component: communityAdd,
-  },
-  {
-    name: 'shopDetail',
-    path: '/shopDetail',
-    component: shopDetail,
-  },
-  {
-    name: 'ownAuction',
-    path: '/ownAuction',
-    component: ownAuction,
-    meta: {
-      requireAuth: true
-    }
-  },
-  {
-    name: 'ownOrder',
-    path: '/ownOrder',
-    component: ownOrder,
-    meta: {
-      requireAuth: true
-    }
-  },
-  {
-    name: 'userAddressList',
-    path: '/userAddressList',
-    component: userAddressList,
-  },
-  {
-    name: 'orderDetail',
-    path: '/orderDetail',
-    component: orderDetail,
-  },
-  , {
-    name: 'upload',
-    path: '/upload',
-    component: () => import('../components/upload/Upload'),
-  }, {
-    name: 'communityDynamic',
-    path: '/communityDynamic',
-    component: communityDynamic,
-  }, {
-    name: 'Release',
-    path: '/Release',
-    component: Release,
-  }, {
-    name: 'articleDetail',
-    path: '/articleDetail',
-    component: articleDetail,
-  }, {
-    name: 'flashMsg',
-    path: '/flashMsg',
-    component: flashMsg,
-  }, {
-    name: 'updateUserInfo',
-    path: '/updateUserInfo',
-    component: updateUserInfo,
-  }
 
 ]
