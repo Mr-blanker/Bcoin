@@ -1,9 +1,9 @@
 <template>
     <div id="app">
-
-        <keep-alive :include="includeComponents">
-            <router-view></router-view>
+        <keep-alive>
+            <router-view v-if="$route.meta.keepalive"></router-view>
         </keep-alive>
+        <router-view v-if="!$route.meta.keepalive"></router-view>
         <Footer></Footer>
     </div>
 </template>
@@ -17,7 +17,7 @@
         data() {
             return {
                 isShowFooterNav: true,
-                includeComponents: ['Information', 'marketIndex', 'community', 'searchCoin', 'famousLibrary']
+                includeComponents: ['Information', 'marketIndex', 'community', 'searchCoin', 'famousLibrary', 'specialColumn']
             }
         },
         components: {

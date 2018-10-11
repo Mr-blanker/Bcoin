@@ -17,6 +17,7 @@ import acView from '@/views/information/acView'
 import flashMsg from '@/views/information/flashMsg'
 import famousLibrary from '@/views/information/famousLibrary'
 import informationList from '@/views/information/informationList'
+import specialColumn from '@/views/information/specialColumn'
 
 //行情
 import marketIndex from '@/views/quotation/marketIndex'
@@ -178,6 +179,9 @@ export default [
         name: 'acView',
         path: '/acView',
         component: acView,
+        meta: {
+            keepalive: true
+        }
     }, {
         name: 'addressList',
         path: '/addressList',
@@ -329,6 +333,14 @@ export default [
         name: 'informationList',
         path: '/informationList',
         component: informationList,
+        meta: {
+            keepalive: true
+        }
+    },
+    {
+        name: 'specialColumn',
+        path: '/specialColumn',
+        component: specialColumn,
         meta: {
             keepalive: true
         }

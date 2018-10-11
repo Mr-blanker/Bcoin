@@ -1,30 +1,33 @@
 <template>
     <div class="acView-box">
-        <Header v-bind="{left:1,right:1,center:2,centerValue:'专栏列表'}"></Header>
-        <div class="acView-list-box">
-            <div class="acView-title">
-                <div class="acView-title-top">
-                    <div class="acView-logo">
-                        <img :src="columnInfo.thumbnail" alt=""></div>
-                    <div class="acView-title-content">
-                        <p>{{columnInfo.title}}</p>
-                        <p>网址：{{columnInfo.link}}</p>
-                        <p>{{columnInfo.contact}}</p>
+        <Header v-bind="{left:1,right:1,center:2,centerValue:'专栏'}"></Header>
+        <section class="container main1 mescroll" id="newsScroll">
+            <div class="zldetails">
+                <div class="zldetails_basic">
+                    <div class="head">
+                        <img :src="columnInfo.thumbnail"/>
+                        <div class="text">
+                            <div class="companyname">{{columnInfo.title}}</div>
+                            <div class="iconfont icon-url01 companyurl">{{columnInfo.link}}</div>
+                            <div class="iconfont icon-qq01 companyqq">{{columnInfo.contact}}</div>
+                        </div>
                     </div>
+                    <div class="body limit">{{columnInfo.description}}</div>
                 </div>
-                <p class="acView-title-bottom">{{columnInfo.description}}</p>
+                <ul class="zldetails_list clearfix">
+                    <li class="item" v-for="item in columnList"
+                        @click="$router.push({path:'InformationDetail',query:{wid:item.aid}})">
+                        <a>
+                            <div class="pic">
+                                <img :src="item.thumbnail"/>
+                            </div>
+                            <div class="name limit">{{item.title}}</div>
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <ul class="acView-list">
-                <li class="acView-item" v-for="item in columnList"
-                    @click="$router.push({path:'InformationDetail',query:{wid:item.aid}})">
-                    <div class="acView-item-img" style="width: 100%;">
-                        <img :src="item.thumbnail" alt="">
-                    </div>
-                    <p class="acView-item-content">{{item.title}}</p>
-                    <span class="acView-item-time">{{item.t*1000|moment('YYYY-MM-DD')}}</span>
-                </li>
-            </ul>
-        </div>
+        </section>
+
     </div>
 </template>
 
@@ -37,32 +40,83 @@
         data() {
             return {
                 columnInfo: '',
-                columnList: []
+                columnList: [],
+                params: {pid: ''},
+                totalCount: -1
             }
         },
-        components: {
-            Header
+
+        created() {
+            console.log(2)
+            this.columnInfo = JSON.parse(this.$route.query.val)
         },
         mounted() {
-            this.getColumnList()
-            this.columnInfo = JSON.parse(this.$route.query.val)
+            let that = this
+            this.scroll = new MeScroll("newsScroll", {
+                down: {
+                    callback: that.initDataList,
+                },
+                up: {
+                    callback: that.loadDataList,
+                    auto: false,
+                    page: {
+                        num: 0,
+                        size: 10,
+                        time: null
+                    },
+                    htmlNodata: '<p class="upwarp-nodata">-- 没有更多数据了 --</p>'
+                }
+            });
             console.log(this.columnInfo)
         },
         methods: {
-            getColumnList() {
-                this.$store.dispatch(types.COLUMN_LIST, this.columnInfo.pid).then(res => {
+            initDataList() {
+                this.params = {
+                    pid: this.columnInfo.id
+                }
+                this.columnList = []
+                this.totalCount = -1
+                this.loadDataList()
+            },
+            loadDataList() {
+                this.$store.dispatch(types.COLUMN_LIST, this.params).then(res => {
                     console.log(res)
                     if (res.code !== 0) return
-                    if (res.data !== null) {
-                        this.columnList = res.data
-                    }
+                    let data = res.data
+                    this.columnList = this.columnList.concat(data)
+                    this.totalCount = data.length
+                    this.scroll.endSuccess(this.totalCount, 20);
+                    // if (this.person.personCount < this.person.personLen)
+                    //     this.scroll.endUpScroll(true)
+                    console.log(data)
+                    this.params.minID = data[this.totalCount - 1].aid
                 })
+            },
 
-            }
         }
     }
 </script>
 
 <style scoped>
+    .container.main1 {
+        bottom: 0;
+    }
+
+    .name {
+        text-align: left;
+    }
+
+    .zldetails_list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .mescroll {
+        position: fixed;
+        top: .9rem;
+        bottom: .9rem;
+        height: auto;
+    }
 
 </style>

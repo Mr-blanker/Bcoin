@@ -94,6 +94,7 @@ const actions = {
     },
     //专栏文章列表
     [types.COLUMN_LIST]({}, info) {
+        console.log(info)
         return new Promise((resolve) => {
             http.get('/api/column.lists', {params: info}).then(res => {
                 return resolve(res.data)

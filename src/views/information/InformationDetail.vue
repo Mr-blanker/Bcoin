@@ -13,9 +13,7 @@
                                 <div class="releasedate">
                                     <span class="informationDetail-message-source" v-if="dataList.befrom">文章来源：{{dataList.befrom}}</span>
                                     <span v-if="a">{{dataList.t*1000|moment('MM-DD:HH:mm')}}</span>
-                                    <!--<span class="iconfont icon-pageviews01">-->
-                                    <!--986-->
-                                    <!--</span>-->
+                                    <span class="iconfont icon-pageviews01" v-if="id">&nbsp;{{dataList.n}}</span>
                                 </div>
                             </div>
                         </div>
@@ -23,55 +21,41 @@
                     <div class="newsitem_body">
                         <p class="informationDetail-content v-html" v-html="dataList.description">
                         </p>
-                        <!--<p  v-html="dataList.content" v-if="id"></p>-->
                         <div v-html="dataList.content" style="width: 100%;" class="v-html"></div>
                     </div>
                 </section>
             </div>
-        </main>
-        <!--<div class="informationDetail-list newsitem_head">-->
-        <!--<h3 class="title">-->
-        <!--{{dataList.title}}-->
-        <!--</h3>-->
-        <!--<div class="informationDetail-message">-->
-        <!--<span class="informationDetail-message-source" v-if="dataList.befrom">文章来源：{{dataList.befrom}}</span>-->
-        <!--<span class="informationDetail-message-time" v-if="a">-->
-        <!--<i class="icon iconfont icon-clock"></i>{{dataList.t*1000|moment('MM-DD:HH:mm')}}-->
-        <!--</span>-->
-        <!--</div>-->
-        <!--&lt;!&ndash;<ul class="informationDetail-keywords">&ndash;&gt;-->
-        <!--&lt;!&ndash;<li v-for="item in keywords">{{item}}</li>&ndash;&gt;-->
-        <!--&lt;!&ndash;</ul>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="informationDetail-images" v-if="dataList.thumbnail">&ndash;&gt;-->
-        <!--&lt;!&ndash;<img :src="dataList.thumbnail" alt="">&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--<p class="informationDetail-content v-html" v-html="dataList.description">-->
-        <!--</p>-->
-        <!--&lt;!&ndash;<p  v-html="dataList.content" v-if="id"></p>&ndash;&gt;-->
-        <!--<div v-html="dataList.content" style="width: 100%;" class="v-html"></div>-->
-
-        <!--</div>-->
-        <div class="cd-dynamic-comment ad-dynamic-comment pullScroll" v-if="aid">
-            <span class="ad-comment-title">评论</span>
-            <div id="informationDetailScroll" style="width: 100%;" class="">
-                <ul>
-                    <li v-for="attr in commentList" class="ad-comment-item">
-                        <img src="../../assets/default_avatar_male.jpg" alt="" v-if="!attr.pic">
-                        <img :src="attr.pic" alt="" v-if="attr.pic">
-                        <div class="ad-comment-content">
-                            <a>{{attr.name}}：</a>
-                            <span> {{attr.content}}</span>
-                            <i>{{attr.createTim|moment('MM-DD HH:mm')}}</i>
+            <section class="comment-wrap " v-if="titleName=='新闻'" >
+                <div class="title">评论专区</div>
+                <div class="mescroll " id="informationDetailScroll">
+                    <div id="list">
+                        <div class="box border1px" v-for="attr in commentList">
+                            <img class="avatar" :src="attr.pic" alt=""/>
+                            <div class="content">
+                                <div class="main">
+                                    <div class="txt">
+                                        <div class="user">{{attr.name}}</div>
+                                        <div class="message">{{attr.content}}</div>
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <span class="time">{{attr.createTim|moment('MM-DD HH:mm')}}</span>
+                                </div>
+                            </div>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer class="commentInput" @click="newComment" v-if="titleName=='新闻'">
+            <div>
+                <form>
+                    <input type="text" name="comment" id="comment" placeholder="说说你的看法" class="editbox"
+                           disabled="disabled">
+                    <button type="button" class="iconfont icon-submit01 subbtns"></button>
+                </form>
             </div>
-
-        </div>
-        <div class="id-comment" @click="newComment" v-if="aid">
-            <input type="text" placeholder="写评论..." disabled="disabled">
-            <i class="icon iconfont icon-skip"></i>
-        </div>
+        </footer>
     </div>
 </template>
 
@@ -91,25 +75,33 @@
                 a: '',
                 commentList: [],
                 commentTotal: '',
-                titleName: '资讯'
+                titleName: '新闻'
             }
         },
         components: {
             Header
         },
+
         computed: {
             ...mapGetters(['userSid'])
+        },
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                if (from.name == 'acView') return vm.titleName = '专栏'
+                if (from.name == 'famousLibrary') return vm.titleName = '名人库'
+            })
         },
         mounted() {
             this.aid = this.$route.query.aid
             this.id = this.$route.query.id
             this.wid = this.$route.query.wid
-            this.titleName = this.id ? '名人库' : (this.aid ? '资讯' : '专栏')
             let that = this
             this.$nextTick(() => {
                 this.scroll = new MeScroll("informationDetailScroll", {
                     down: {
                         callback: that.loadDataList,
+                        htmlNodata: '<p class="upwarp-nodata">-- 没有更多数据了 --</p>'
+
                     }
                 });
 
@@ -156,7 +148,8 @@
         methods: {
             //新闻评论列表
             loadDataList(page, mescroll) {
-                this.$store.dispatch(types.NEWS_LIST, {newID: this.aid}).then(res => {
+                let id = this.aid ? this.aid : this.wid
+                this.$store.dispatch(types.NEWS_LIST, {newID: id}).then(res => {
                     console.log(res)
                     if (res.code !== 0) return
                     this.commentList = res.data
@@ -167,10 +160,12 @@
             //新闻评论
             newComment() {
                 let that = this
+                let id = this.aid ? this.aid : this.wid
+
                 utils.dialog.prompt('写下你的观点', (value) => {
                     if (value == '') return
                     let info = {
-                        newID: that.aid,
+                        newID: id,
                         content: value
                     }
                     console.log(info)
@@ -275,7 +270,17 @@
     .newsitem_head {
         text-align: left;
     }
-    .container.main1{
+
+    .container.main1 {
         bottom: 0;
+    }
+
+    .border1px {
+        text-align: left !important;
+    }
+
+    .comment-wrap {
+        padding-bottom: 1rem;
+        margin-bottom: .88rem;
     }
 </style>

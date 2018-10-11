@@ -12,24 +12,10 @@
                 </div>
             </div>
         </header>
-        <!--<Header v-bind="{center:3,list:titleList,liKey:index}" @clickItem="clickItem"></Header>-->
         <div class="container main1">
-            <!--<div class="new-box" v-if="index===0&&sIndex===0">-->
-            <!--<ul class="new-bar">-->
-            <!--<li class="new-bar-item " :class="{'new-bar-item-active':newCateId===0}"-->
-            <!--@click="sIndex=0,chooseNewCate(0)">-->
-            <!--全部-->
-            <!--</li>-->
-            <!--<li class="new-bar-item" v-for="item in newCateList"-->
-            <!--:class="{'new-bar-item-active':newCateId===item.id}"-->
-            <!--@click="sIndex=0,chooseNewCate(item.id)">-->
-            <!--<span class="new-bar-item-content">{{item.name}}</span>-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--</div>-->
             <div id="newsScroll" class="mescroll">
                 <div>
-                    <yd-slider autoplay="3000" >
+                    <yd-slider autoplay="3000">
                         <yd-slider-item v-for="(item,index) in broadcastAdList" :key="index">
                             <!--<a :href="item.url" class="slider-img">-->
                             <div style="height: 3.5rem;">
@@ -46,15 +32,8 @@
 
                         </div>
                     </nav>
-                    <!--<div v-if="index===0&&newCateId===0">-->
-                    <!--<ul class="all-list-box">-->
-                    <!--<li @click="sIndex=0,chooseNewCate(0)" :class="{'all-list-box-active':sIndex===0}">头条</li>-->
-                    <!--<li @click="sIndex=1,chooseNewCate(0)" :class="{'all-list-box-active':sIndex===1}">推荐</li>-->
-                    <!--<li @click="sIndex=2,chooseNewCate(0)" :class="{'all-list-box-active':sIndex===2}">行情分析</li>-->
-                    <!--</ul>-->
-                    <!--</div>-->
                     <div class="news">
-                        <div class="newstitle" >
+                        <div class="newstitle">
                             <a @click="sIndex=0,chooseNewCate(0)" :class="{'current':sIndex===0}">头条</a>
                             <a @click="sIndex=1,chooseNewCate(0)" :class="{'current':sIndex===1}">推荐</a>
                             <a @click="sIndex=2,chooseNewCate(0)" :class="{'current':sIndex===2}">行情</a>
@@ -85,55 +64,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <!--快讯-->
-                        <div class=" flash-list" v-if="index===1">
-                            <!--<div>-->
-                            <!--<div class="flash-item" v-for="(item,key) in flashList">-->
-                            <!--<p class="flash-time">{{item.k_time*1000|moment('MM-DD HH:mm')}}</p>-->
-                            <!--<p class="flash-content" v-html="item.k_content" @click="lookAllArt(key)" ref="artContent"></p>-->
-                            <!--<div class="flash-comment">-->
-                            <!--<span class="flash-duo" @click="comment(item,'duo',key)">看多（{{item.duo}}）</span>-->
-                            <!--<span class="flash-kong" @click="comment(item,'kong',key)">看空（{{item.kong}}）</span>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                        </div>
-                        <!--名人库-->
-                        <div class="person-list" v-if="index===2">
-                            <div class="person-item" v-for="item in personList"
-                                 @click="goPersonDetail(item)">
-                                <div class="person-item-box">
-                                    <div class="person-img"><img :src="item.thumbnail" alt=""></div>
-                                    <span class="person-title">{{item.title}}</span>
-                                    <span class="person-content">{{item.description}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!--专栏-->
-                        <yd-accordion v-if="index===1">
-                            <yd-accordion-item :title="item.name" v-for="(item,index) in columnList" :key="index">
-                                <div class="c-list">
-                                    <!-- <ul class="c-list-box" style="width: 100%;">
-                                            <yd-grids-group :rows="3" item-height="2.2rem">
-                                              <yd-grids-item v-for="(n,key) in item.items" :key="key" class="ccc" @click.native="$router.push({path:'acView',query:{val:JSON.stringify(n)}})">
-                                                <span slot="text">{{n.title}}</span>
-                                                <img slot="icon" :src="n.thumbnail" alt="">
-                                              </yd-grids-item>
-                                            </yd-grids-group>
-                                          </ul>-->
-                                    <div class="special-item">
-                                        <div v-for="(n,key) in item.items" :key="key"
-                                             @click="$router.push({path:'acView',query:{val:JSON.stringify(n)}})">
-                                            <img :src="n.thumbnail" alt="">
-                                            <span
-                                                style="font-size: .25rem;height:.28rem;line-height: .3rem;overflow: hidden;">{{n.title}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </yd-accordion-item>
-                        </yd-accordion>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -155,16 +86,10 @@
                     {title: '专栏', icon: 'top_zlicon.png'},
                     {title: '名人库', icon: 'top_mrkicon.png'}],
                 list: [],
-                flashList: [],
-                personList: [],
-                columnList: [],
-                columnCateList: [],
                 index: 0,
                 broadcastAdList: [],
                 len: 1,
-                flash: {flashLen: 0, flashCount: -1,},
                 new: {newLen: 0, newCount: -1},
-                person: {personLen: 0, personCount: -1},
                 newCateList: [],
                 newCateId: 0,
                 plus: '',
@@ -235,14 +160,7 @@
             },
             initDataList(page, mescroll) {
                 console.log(this.index)
-                // // 重复请求处理
-                // if (this.index === 1) {
-                //   this.flashLen = 0
-                // } else if (this.index === 0) {
-                //   this.new.newLen = 0
-                // } else if (this.index === 3) {
-                //   this.personLen = 0
-                // }
+
                 if (this.index === 0) {
                     this.new.newLen = 0
                 }
@@ -260,7 +178,6 @@
                             len: this.new.newLen,
                             cateID: this.newCateId
                         }).then(res => {
-                            console.log(res)
                             if (res.code !== 0) return
                             this.list = res.data
                             this.new.newCount = res.data.length
@@ -271,7 +188,6 @@
                     } else if (this.sIndex == 1) {
                         //专栏文章
                         this.$store.dispatch(types.COLUMN_LIST, {len: this.new.newLen}).then(res => {
-                            console.log(res)
                             if (res.code !== 0) return
                             this.list = res.data
                             this.new.newCount = res.data.length
@@ -284,7 +200,6 @@
                         this.$store.dispatch(types.COLUMN_MARKET, {
                             len: this.new.newLen
                         }).then(res => {
-                            console.log(res)
                             if (res.code !== 0) return
                             this.list = res.data
                             this.new.newCount = res.data.length
@@ -293,30 +208,6 @@
                                 this.scroll.endUpScroll(true)
                         })
                     }
-
-                } else if (this.index === 2) {
-                    //名人库列表
-                    this.person.personLen += 20
-                    this.$store.dispatch(types.PERSON_LIST, {
-                        len: this.person.personLen
-                    }).then(res => {
-                        if (res.code !== 0) return
-                        this.personList = res.data
-                        this.person.personCount = res.data.length
-                        console.log(this.personLen, '名人')
-                        this.scroll.endSuccess(res.data.length, this.person.personCount >= this.person.personLen);
-                        if (this.person.personCount < this.person.personLen)
-                            this.scroll.endUpScroll(true)
-                    })
-                } else if (this.index === 1) {
-                    this.$store.dispatch(types.COLUMN_CATE).then(res => {
-                        if (res.code !== 0) return
-                        this.columnList = res.data
-                        console.log('res')
-                        console.log(res)
-                        this.scroll.endSuccess()
-                        this.scroll.endUpScroll(true)
-                    })
                 }
             },
             //选择bar
@@ -328,6 +219,8 @@
                     this.$router.push({name: 'informationList'})
                 } else {
                     console.log('专栏')
+                    this.$router.push({name: 'specialColumn'})
+
                 }
                 // this.$store.commit('SET_INFORMATION_ACTIVE', key)
                 this.index = key
@@ -346,30 +239,13 @@
             },
             //新闻详情
             informationDetail(aid) {
-                console.log(aid)
                 if (this.sIndex === 0) {
-                    this.$router.push({
-                        path: 'InformationDetail',
-                        query: {
-                            aid: aid
-                        }
-                    })
+                    this.$router.push({path: 'InformationDetail', query: {aid: aid}})
                 } else if (this.sIndex === 1) {
-                    this.$router.push({
-                        path: 'InformationDetail',
-                        query: {
-                            wid: aid
-                        }
-                    })
+                    this.$router.push({path: 'InformationDetail', query: {wid: aid}})
                 } else {
-                    this.$router.push({
-                        path: 'InformationDetail',
-                        query: {
-                            wid: aid
-                        }
-                    })
+                    this.$router.push({path: 'InformationDetail', query: {wid: aid}})
                 }
-
                 let top = this.scroll.getScrollTop()
                 this.SET_SCROLL_TOP(top)
                 this.SET_SCROLL_BOX('newsScroll')
