@@ -11,7 +11,7 @@ const mixin = {
     },
     methods: {
         haha() {
-            console.log('我是mixin')
+            console.log('我是mixin!!!!!')
         },
         //克隆
         clone(obj) {
