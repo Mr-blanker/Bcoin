@@ -1,46 +1,41 @@
 <template>
     <div>
         <Header v-bind="{center:2,centerValue:'社群'}"></Header>
-        <div class="pt">
-            <ul class="all-list-box ">
-                <li @click="type=1,initDataList()" :class="{'active-li':type===1}">已加入</li>
-                <li @click="type=2,initDataList()" :class="{'active-li':type===2}">热门</li>
-                <li @click="type=0,initDataList()" :class="{'active-li':type===0}">全部</li>
-            </ul>
-        </div>
-        <ul class="community-list ">
-            <!--<li class="community-item" v-for="item in 5">{{item}}</li>-->
-            <li class="build-community padlr02" @click="$router.push({path:'/communityAdd'})">
-                <div class="build-community-left">
-          <span class="add-box">
-              <i class="icon iconfont icon-tianjia"></i>
-              </span>
-                    <span>创建社群</span>
-                </div>
-                <i class="icon iconfont icon-gengduo"></i>
-            </li>
-        </ul>
-        <div class="community-box mescroll" id="communityScroll">
-            <div>
-                <div class="recommend-box">
-                    <span class="recommend-text">推荐</span>
-                    <ul class="recommend-list ">
-                        <div>
-                            <li class="recommend-item" v-for="item in communityList"
-                                @click="$router.push({path:'/communityDynamic',query:{id:item.id}})">
-                                <!--<img src="../../assets/default_avatar_male.jpg" alt="">-->
-                                <img :src="item.logo" alt="">
-                                <div class="recommend-content">
-                                    <h4>{{item.name}}</h4>
-                                    <span>{{item.descs}}</span>
-                                </div>
-                                <span class="recommend-member">成员{{item.member}}</span>
-                            </li>
+        <Header v-bind="{center:3,list:titleList,liKey:index}" @clickItem="clickItem"></Header>
+        <main class="container main1">
+            <div class=" mescroll" id="communityScroll">
+                <ul class="community-list" v-if="index==0">
+                    <li class="build-community padlr02" @click="$router.push({path:'/communityAdd'})">
+                        <div class="build-community-left">
+                            <span class="add-box">
+                                <i class="icon iconfont icon-tianjia"></i>
+                            </span>
+                            <span>创建社群</span>
                         </div>
-                    </ul>
-                </div>
+                        <i class="icon iconfont icon-gengduo"></i>
+                    </li>
+                </ul>
+                <ul class="community">
+                    <li class="item borderTop1px" v-for="item in dataList"
+                        @click="$router.push({path:'/communityDynamic',query:{id:item.id}})">
+                        <div class="item_pic">
+                            <a><img :src="item.logo"/></a>
+                        </div>
+                        <div class="item_text">
+                            <a>
+                                <span class="name">{{item.name}}</span>
+                                <span class="summary limit">{{item.descs}}</span>
+                            </a>
+                        </div>
+                        <div class="item_other">
+                            <span class="quantity">
+                            {{item.member}}人加入
+                        </span>
+                        </div>
+                    </li>
+                </ul>
             </div>
-        </div>
+        </main>
     </div>
 </template>
 
@@ -51,10 +46,11 @@
         name: "community",
         data() {
             return {
-                communityList: [],
-                len: 0,
-                listCount: 1,
-                type: 1
+                titleList: ['我的', '热门', '全部'],
+                index: 0,
+                dataList: [],
+                params: {type: 1},
+                totalCount: -1
             }
         },
         mounted() {
@@ -65,38 +61,44 @@
                 },
                 up: {
                     callback: that.loadDataList,
-                    page: {
-                        num: 0,
-                        size: 10,
-                        time: null
-                    },
-                    htmlNodata: '<p class="upwarp-nodata">-- 没有更多推荐了 --</p>'
+                    auto: false, //初始化不进行加载
+                    htmlNodata: '<p class="upwarp-nodata">-- 没有更多了 --</p>'
                 }
             });
-            // this.scroll.triggerDownScroll();
         },
         methods: {
+            //tab选择
+            clickItem(key) {
+                console.log(key)
+                this.index = key
+                if (key == 0) {
+                    this.params = {type: 1}
+                } else if (key == 1) {
+                    this.params = {type: 2}
+                } else if (key == 2) {
+                    this.params = {type: 0}
+                }
+                this.initDataList()
+            },
+
             initDataList() {
-                this.len = 0
+                this.dataList = []
+                this.totalCount = -1
                 this.loadDataList();
             },
             loadDataList() {
+                console.log(1)
+
                 //获取社群列表
-                // if (this.len !== 0) {
-                //   this.scroll.endUpScroll(this.listCount < this.commentLen);
-                // }
-                this.len += 20
-                this.$store.dispatch(types.COMMUNITY_LIST, {
-                    len: this.len,
-                    type: this.type
-                }).then(res => {
+                this.$store.dispatch(types.COMMUNITY_LIST, this.params).then(res => {
                     if (res.code !== 0) return
                     console.log(res)
-                    this.communityList = res.data
-                    this.listCount = res.data.length
-                    this.scroll.endSuccess(res.data.length, this.listCount >= this.len);
-                    if (this.listCount < this.len)
-                        this.scroll.endUpScroll(true)
+                    let data = res.data
+                    this.dataList = this.dataList.concat(data)
+                    this.totalCount = data.length
+                    this.scroll.endSuccess(this.totalCount, 20);
+                    this.params.maxID = data[this.totalCount - 1].id
+
                 })
             },
         },
@@ -106,7 +108,7 @@
 <style scoped lang="scss">
     .mescroll {
         position: fixed;
-        top: 3.3rem;
+        top: .9rem;
         bottom: .9rem;
         height: auto;
     }
@@ -134,5 +136,19 @@
         .active-li {
             color: #208de3;
         }
+    }
+
+    .item_text {
+        text-align: left;
+    }
+
+    .build-community {
+        font-size: .3rem;
+    }
+
+    .build-community-left {
+        display: flex;
+        align-items: center;
+        width: 100%;
     }
 </style>

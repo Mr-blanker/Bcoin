@@ -3,11 +3,11 @@
         <header class="header indexheader">
             <div>
                 <div class="center">
-                    <a class="logo_icon" href="index.html">
+                    <a class="logo_icon" >
                     </a>
                 </div>
                 <div class="right">
-                    <a class="iconfont icon-search01 search_icon" href="search.html">
+                    <a class="iconfont icon-search01 search_icon">
                     </a>
                 </div>
             </div>
@@ -100,7 +100,7 @@
             ...mapGetters(['informationActive'])
         },
         mounted() {
-            console.log(this.index)
+            console.log('mounted')
             this.SET_SCROLL_BOX('newsScroll')
             let that = this;
             document.addEventListener('plusready', function () {
@@ -111,7 +111,6 @@
             //     this.index = parseInt(this.informationActive)
             // }
             if (this.index == 0 && !this.broadcastAdList.length) {
-                console.log(123)
                 this.getBroadcastAd()
             }
             this.scroll = new MeScroll("newsScroll", {
@@ -159,16 +158,14 @@
                 this.scroll.triggerDownScroll();
             },
             initDataList(page, mescroll) {
-                console.log(this.index)
-
                 if (this.index === 0) {
                     this.new.newLen = 0
                 }
                 this.loadDataList(page, mescroll);
             },
             loadDataList(page, mescroll) {
+                console.log('load')
                 //快讯列表
-
                 if (this.index === 0) {
                     this.new.newLen += 20
 

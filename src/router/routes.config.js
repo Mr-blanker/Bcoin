@@ -2,7 +2,6 @@ import store from '../store'
 //路由
 
 //user
-import HelloWorld from '@/components/HelloWorld'
 import login from '@/views/user/login'
 import register from '@/views/user/register'
 import person from '@/views/user/person'
@@ -62,11 +61,10 @@ export default [
     {
         path: '/',
         redirect: '/Information',
-    },
-    {
-        name: 'HelloWorld',
-        path: '/HelloWorld',
-        component: HelloWorld,
+    }, {
+        name: 'Information',
+        path: '/Information',
+        component: Information,
     },
     {
         name: 'login',
@@ -214,25 +212,6 @@ export default [
         name: 'addressDetail',
         path: '/addressDetail',
         component: addressDetail
-    }, {
-        name: 'Information',
-        path: '/Information',
-        component: Information,
-        meta: {
-            keepalive: true
-        },
-        beforeEnter: (to, from, next) => {
-            let scrollMain = store.getters.scrollBox
-            let topVal = store.getters.scrollTop
-            if (scrollMain && topVal != 0) {
-                setTimeout(() => {
-                    document.getElementById(scrollMain).scrollTop = topVal
-                    store.commit('SET_SCROLL_TOP', 0)
-                    store.commit('SET_SCROLL_BOX', '')
-                }, 1)
-            }
-            next()
-        }
     },
     {
         name: 'InformationDetail',

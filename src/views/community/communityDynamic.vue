@@ -1,97 +1,152 @@
 <template>
     <div style="display: flex;flex-direction: column;height: 100%;">
-        <Header v-bind="{left:1,right:1,center:3,list:titleList,liKey:index}" @clickItem="clickItem"></Header>
+        <Header v-bind="{left:1,right:1,center:2,centerValue:'社群'}" @leftClick="clickItem"></Header>
         <!--介绍-->
-        <div class="cd-box pt" v-show="index===1">
-            <div class="pullScroll">
-                <div>
-                    <div>
-                        <div class="cd-header">
-                            <div class="cd-header-top"></div>
-                            <div class="cd-header-info">
-                                <h3 class="cd-header-title">{{detailInfo.name}}</h3>
-                                <span class="cd-header-author">{{detailInfo.ownerID}}</span>
-                                <ul>
-                                    <li class="cd-header-item ">
-                                        <i class="icon iconfont icon-zixun zhuti"></i>
-                                        <span>主题{{detailInfo.subject_num}}</span>
-                                    </li>
-                                    <li class="cd-header-item ">
-                                        <i class="icon iconfont icon-dianzan dianzan"></i>
-                                        <span>点赞{{detailInfo.like_num}}</span>
-                                    </li>
-                                    <li class="cd-header-item ">
-                                        <i class="icon iconfont icon-web-icon- pinglun"></i>
-                                        <span>评论{{detailInfo.comment_num}}</span>
-                                    </li>
-                                </ul>
+        <main class="container main2" v-show="index==1">
+            <div class="newsitembox">
+                <section class="newsitem">
+                    <div class="newsitem_head">
+                        <div class="other" style="margin-top:0;text-align: left">
+                            <img :src="detailInfo.logo"/>
+                            <div class="text">
+                                <div class="companyname">
+                                    <span>{{detailInfo.name}}</span>
+                                </div>
                             </div>
-                            <div class="cd-header-logo">
-                                <img :src="detailInfo.logo" alt="">
-                            </div>
-                        </div>
-                        <div class="cd-ind">
-                            <h3>社群介绍</h3>
-                            <span>{{detailInfo.descs}}</span>
-                        </div>
-                        <div class="cd-ind cd-men">
-                            <h3>社群成员</h3>
-                            <span>({{detailInfo.member}})</span>
                         </div>
                     </div>
-                </div>
+                    <div class="newsitem_body">
+                        <div class="newsinformation">
+                            <p>{{detailInfo.descs}}</p>
+                        </div>
+                    </div>
+                </section>
             </div>
-        </div>
+        </main>
         <!--动态-->
-        <div class="cd-dynamic mescroll" v-show="index!==1">
-            <div class="">
-                <div id="dynamicScroll">
-                    <div>
-                        <div class="cd-dynamic-item" v-for="(item,index) in articleList"
-                             @click.stop="$router.push({path:'/articleDetail',query:{item:JSON.stringify(item)}})">
-                            <div class="cd-dynamic-user">
-                                <img :src="item.u_pic" alt="">
-                                <!--i是否置顶-->
-                                <div class="cd-dynamic-user-info">
-                                    <span class="cd-dynamic-title">{{item.u_name}}<i v-if="item.isTop">置顶</i></span>
-                                    <i class="istop" v-if="!item.isTop&&userInfo.uid==detailInfo.ownerID"
-                                       @click.stop="isTop(1,item.id)">置顶</i>
-                                    <i class="istop" v-if="item.isTop&&userInfo.uid==detailInfo.ownerID"
-                                       @click.stop="isTop(0,item.id)">取消置顶</i>
-                                    <span class="cd-dynamic-time">{{item.createTime|moment('YYYY-MM-DD HH:mm')}}</span>
-                                </div>
-                            </div>
-                            <div class="cd-dynamic-content" style="text-align: left ;">
-                                <span class="cd-dynamic-text">{{item.content}}</span>
-                                <img :src="attr" alt="" v-for="attr in item.imgs" style="width: 30%;height: 2.3rem;margin-right: .1rem;margin-bottom: .1rem;">
-                                <div class="cd-dynamic-icon">
-                                    <i class="icon iconfont icon-dianzan dianzan " @click.stop="dianzan(item,index)"
-                                       :class="{'is-dianzan':item.isLike}"></i>
-                                    <i class="icon iconfont icon-web-icon- pinglun" @click.stop="comment(item.id)"></i>
-                                </div>
-                            </div>
-                            <div class="cd-dynamic-zan">
-                                <i class="icon iconfont icon-dianzan dianzan zan"></i>
-                                <span style="padding-left: .1rem;">{{item.likes.items.toString()}} <span
-                                    v-if="item.likes.num>20">等{{item.likes.num}}人点赞</span></span>
-                            </div>
-                            <ul class="cd-dynamic-comment">
-                                <li v-for="attr in item.comments.items">
-                                    <span> <a style="color: #208de3;">{{attr.u_name}}</a>：{{attr.content}}</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+        <main class="container main1" v-show="index!==1">
+            <div class="community_summary" @click="index=1">
+                <div class="pic">
+                    <img :src="detailInfo.logo"/>
+                </div>
+                <div class="text">
+                    <span class="name">{{detailInfo.name}}</span>
+                    <span class="summary limit">{{detailInfo.descs}}</span>
+                </div>
+                <div class="other">
+                    <a class="iconfont icon-arrow02"></a>
                 </div>
             </div>
-        </div>
+            <div class="mescroll" id="dynamicScroll">
+                <div class="community_basic">
+                    <ul class="community_topping">
+                        <li v-for="item in isTopList"
+                            @click.stop="$router.push({path:'/articleDetail',query:{item:JSON.stringify(item)}})">
+                            <a class="links border1px">
+                                <div class="disLeft">
+                                    <span class="icons">置顶</span>
+                                    <span>{{item.content}}</span>
+                                </div>
+                                <div class="disRight">
+                                <span class="iconfont icon-arrow02">
+                                </span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="community_list">
+                    <li class="item" style="position: relative;" v-for="(item,index) in articleList"
+                        @click.stop="$router.push({path:'/articleDetail',query:{item:JSON.stringify(item)}})">
+                        <div class="item_head">
+                            <a class="disLeft">
+                                <div class="pic">
+                                    <img :src="item.u_pic"/>
+                                    <!--i是否置顶-->
+                                </div>
+                                <div class="text">
+                                    <span>{{item.u_name}}</span>
+                                    <span>{{item.createTime|moment('YYYY-MM-DD HH:mm')}}</span>
+                                </div>
+                            </a>
+                            <a class="disRight">
+                                <span class="iconfont icon-comment01"></span>
+                                <span>{{item.comments.num}}</span>
+                            </a>
+                        </div>
+                        <div class="item_body">
+                            <a>
+                                <div class="title limit">{{item.content}}</div>
+                                <div class="subtitle limit">{{item.content}}</div>
+                                <div class="pic">
+                                    <img :src="attr" alt="" v-for="attr in item.imgs"/>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="cd-dynamic-user-info">
+                            <i class="istop" v-if="!item.isTop&&userInfo.uid==detailInfo.ownerID"
+                               @click.stop="isTop(1,item.id)">置顶</i>
+                            <i class="istop" v-if="item.isTop&&userInfo.uid==detailInfo.ownerID"
+                               @click.stop="isTop(0,item.id)">取消置顶</i>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+
+        </main>
+        <!--<div class="cd-dynamic mescroll" v-show="index!==1">-->
+        <!--<div class="cd-dynamic mescroll" v-show="false">-->
+        <!--<div class="">-->
+        <!--<div id="">-->
+        <!--<div>-->
+        <!--<div class="cd-dynamic-item" v-for="(item,index) in articleList"-->
+        <!--@click.stop="$router.push({path:'/articleDetail',query:{item:JSON.stringify(item)}})">-->
+        <!--<div class="cd-dynamic-user">-->
+        <!--<img :src="item.u_pic" alt="">-->
+        <!--&lt;!&ndash;i是否置顶&ndash;&gt;-->
+        <!--<div class="cd-dynamic-user-info">-->
+        <!--<span class="cd-dynamic-title">{{item.u_name}}<i v-if="item.isTop">置顶</i></span>-->
+        <!--<i class="istop" v-if="!item.isTop&&userInfo.uid==detailInfo.ownerID"-->
+        <!--@click.stop="isTop(1,item.id)">置顶</i>-->
+        <!--<i class="istop" v-if="item.isTop&&userInfo.uid==detailInfo.ownerID"-->
+        <!--@click.stop="isTop(0,item.id)">取消置顶</i>-->
+        <!--<span class="cd-dynamic-time">{{item.createTime|moment('YYYY-MM-DD HH:mm')}}</span>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="cd-dynamic-content" style="text-align: left ;">-->
+        <!--<span class="cd-dynamic-text">{{item.content}}</span>-->
+        <!--<img :src="attr" alt="" v-for="attr in item.imgs"-->
+        <!--style="width: 30%;height: 2.3rem;margin-right: .1rem;margin-bottom: .1rem;">-->
+        <!--<div class="cd-dynamic-icon">-->
+        <!--<i class="icon iconfont icon-dianzan dianzan " @click.stop="dianzan(item,index)"-->
+        <!--:class="{'is-dianzan':item.isLike}"></i>-->
+        <!--<i class="icon iconfont icon-web-icon- pinglun" @click.stop="comment(item.id)"></i>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="cd-dynamic-zan">-->
+        <!--<i class="icon iconfont icon-dianzan dianzan zan"></i>-->
+        <!--<span style="padding-left: .1rem;">{{item.likes.items.toString()}} <span-->
+        <!--v-if="item.likes.num>20">等{{item.likes.num}}人点赞</span></span>-->
+        <!--</div>-->
+        <!--<ul class="cd-dynamic-comment">-->
+        <!--<li v-for="attr in item.comments.items">-->
+        <!--<span> <a style="color: #208de3;">{{attr.u_name}}</a>：{{attr.content}}</span>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
         <div class="cd-add" v-if="!detailInfo.isIn" @click="add">
             <span v-if="detailInfo.charge">{{detailInfo.charge}}积分加入本群</span>
             <span v-else>免费加入本群</span>
         </div>
-        <span class="add-box" @click="$router.push({path:'Release',query:{gid:id,name:detailInfo.name}})">
-              <i class="icon iconfont icon-tianjia"></i>
-            </span>
+        <div class="release_btns" @click="$router.push({path:'Release',query:{gid:id,name:detailInfo.name}})">
+            <a class="iconfont icon-release01">
+            </a>
+        </div>
     </div>
 </template>
 
@@ -109,11 +164,12 @@
                 index: 0,
                 detailInfo: {},
                 id: this.$route.query.id,
+                params: {gid: this.$route.query.id},
                 articleList: [],
                 dianzanList: "",
                 show2: false,
-                len: 0,
-                listCount: 1
+                totalCount: -1,
+                isTopList: []
             }
         },
         computed: {
@@ -128,36 +184,31 @@
                 },
                 up: {
                     callback: that.loadDataList,
-                    page: {
-                        num: 0,
-                        size: 10,
-                        time: null
-                    }
+                    auto: false
                 }
             });
-            // this.scroll.triggerDownScroll()
         },
         methods: {
-            initDataList(page, meScroll) {
-                this.loadDataList(page, meScroll);
-            },
-            refresh(page, meScroll) {
-                this.len = 0
+            refresh() {
+                this.params = {gid: this.$route.query.id}
+                this.totalCount = -1
+                this.isTopList = []
                 this.articleList = []
-                this.initDataList(page, meScroll)
+                this.loadDataList()
             },
             loadDataList(page, meScroll) {
-                this.len += 20
-                this.$store.dispatch(types.COMMUNITY_ARTICLE_LIST, {
-                    gid: this.id,
-                    len: this.len
-                }).then(res => {
+                this.$store.dispatch(types.COMMUNITY_ARTICLE_LIST, this.params).then(res => {
                     console.log(res)
                     if (res.code !== 0) return
-                    this.articleList = res.data
-                    this.listCount = res.data.length
-                    this.scroll.endSuccess(res.data.length, this.listCount >= this.len);
-                    if (this.listCount < this.len) this.scroll.endUpScroll(true)
+                    let data = res.data
+                    this.articleList = this.articleList.concat(data)
+                    this.totalCount = data.length
+                    this.scroll.endSuccess(this.totalCount, 20);
+                    this.params.maxID = data[this.totalCount - 1].id
+                    console.log(data)
+                    this.articleList.forEach(item => {
+                        if (item.isTop) this.isTopList.push(item)
+                    })
                 })
             },
             getDetail() {
@@ -179,11 +230,9 @@
                     this.articleList = res.data
                 })
             },
-            clickItem(key) {
-                this.index = key
-                console.log('index')
-                console.log(key)
-                // this.getScroll()
+            clickItem() {
+                if (this.index == 1) return this.index = 0
+                this.$router.go(-1)
             },
             //文章点赞
             dianzan(item, index) {
@@ -245,38 +294,22 @@
             },
             //文章评论
             comment(id) {
-                if (!this.detailInfo.isIn) {
-                    this.fail('请先加入本群')
-                    return
-                }
                 let that = this
-                console.log(id)
+                if (!this.detailInfo.isIn) return this.fail('请先加入本群')
                 utils.dialog.prompt('写下你的观点', (value) => {
                     if (value == '') return
-                    let info = {
-                        aid: id,
-                        content: value
-                    }
-                    console.log(info)
+                    let info = {aid: id, content: value}
                     $.ajax({
                         contentType: 'application/json',
                         url: "http://ssl.pandawork.vip/api/user/group.comment",
                         type: 'POST',
                         data: JSON.stringify(info),
-                        headers: {
-                            sid: that.userSid
-                        },
+                        headers: {sid: that.userSid},
                         dataType: 'JSON',
                         cache: false,
                         processData: false,
                         success: (res) => {
-                            console.log(res)
-                            if (res.code === 401) {
-                                that.$router.push({
-                                    path: 'Login'
-                                })
-                            }
-                            // that.scroll.triggerRefresh()
+                            if (res.code === 401) return that.$router.push({path: 'Login'})
                             that.getArticleList()
                         }
                     })
@@ -284,10 +317,7 @@
             },
             //加入社群
             add() {
-                this.$store.dispatch(types.COMMUNITY_ADD, {
-                    gid: this.detailInfo.id
-                }).then(res => {
-                    console.log(res)
+                this.$store.dispatch(types.COMMUNITY_ADD, {gid: this.detailInfo.id}).then(res => {
                     if (res.code === 0) {
                         this.success('加入成功')
                         this.getDetail()
@@ -300,12 +330,8 @@
             isTop(id, aid) {
                 let that = this
                 let content = '确定取消置顶该文章吗？'
-                let info = {
-                    aid: aid,
-                    isTop: false
-                }
+                let info = {aid: aid, isTop: false}
                 if (id) {
-                    console.log(1)
                     info.isTop = true
                     content = '确定置顶该文章吗？'
                 }
@@ -315,19 +341,12 @@
                         url: "http://ssl.pandawork.vip/api/user/group.top",
                         type: 'POST',
                         data: JSON.stringify(info),
-                        headers: {
-                            sid: that.userSid
-                        },
+                        headers: {sid: that.userSid},
                         dataType: 'JSON',
                         cache: false,
                         processData: false,
                         success: (res) => {
-                            console.log(res)
-                            if (res.code === 401) {
-                                that.$router.push({
-                                    path: 'Login'
-                                })
-                            }
+                            if (res.code === 401) return that.$router.push({path: 'Login'})
                             that.getArticleList()
                         }
                     })
@@ -372,4 +391,34 @@
             }
         }
     }
+
+    .text {
+        text-align: left;
+    }
+
+    .item_body {
+        text-align: left;
+    }
+
+    .cd-dynamic-user-info {
+        position: absolute;
+        top: 0rem;
+        right: .3rem;
+        font-size: .2rem;
+        color: #208eda;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        bottom: 0;
+    }
+
+    .mescroll {
+        position: fixed;
+        top: 2.5rem;
+        bottom: 0rem;
+        height: auto;
+    }
+
 </style>

@@ -18,7 +18,6 @@ router.beforeEach((to, from, next) => {
     // let informationId = window.sessionStorage.getItem('informationActive')
     // let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
     setTimeout(() => {
-        console.log(store.getters.scrollTop, 'index')
         let heightScrollTop = store.state.quotation.scrollTop //滚动高度
         window.sessionStorage.setItem('heightScrollTop_' + from.name, heightScrollTop);
     }, 200)

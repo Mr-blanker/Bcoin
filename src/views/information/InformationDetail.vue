@@ -25,7 +25,7 @@
                     </div>
                 </section>
             </div>
-            <section class="comment-wrap " v-if="titleName=='新闻'" >
+            <section class="comment-wrap " v-if="titleName=='新闻'">
                 <div class="title">评论专区</div>
                 <div class="mescroll " id="informationDetailScroll">
                     <div id="list">

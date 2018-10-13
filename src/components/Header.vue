@@ -3,7 +3,7 @@
         <div class="left">
             <!--<i class="icon iconfont icon-fanhui" @click="leftClick" v-if="left===1" style="font-size: .45rem"></i>-->
             <!--<i class="icon iconfont icon-gengduo-" @click="leftClick" v-if="left===2" style="font-size:.55rem"></i>-->
-            <a class="iconfont icon-arrow01 return_icon" @click="leftClick"></a>
+            <a class="iconfont icon-arrow01 return_icon" @click="leftClick" v-if="left===1"></a>
 
         </div>
         <div class="tabheader_cate">
@@ -46,10 +46,9 @@
         ],
         methods: {
             leftClick() {
+                if (this.$route.name != 'communityDynamic') return this.$router.go(-1)
                 // console.log('left')
-                this.$router.go(-1)
-                if (this.$route.name == 'personMessage') {
-                }
+                this.$emit('leftClick')
             },
             rightClick() {
                 console.log('right')

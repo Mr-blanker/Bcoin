@@ -13,7 +13,8 @@
                 <div class="left-coin">
                     <div>
                         <div>市场价:<span style="margin:0 0 0 .1rem">$</span>{{coin.price_usd}}</div>
-                        <div>成交量:<span style="margin:0 0 0 .1rem">$</span>{{coin.cheng_usd||coin['24h_volume_usd']}}</div>
+                        <div>成交量:<span style="margin:0 0 0 .1rem">$</span>{{coin.cheng_usd||coin['24h_volume_usd']}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -46,6 +47,7 @@
         mapActions
     } from 'vuex'
     import utils from 'utility'
+
     export default {
         name: 'trend',
         data() {
@@ -213,7 +215,7 @@
             },
             stampToDate(stamp) {
                 let d = new Date(stamp);
-                let scMonth = (d.getMonth() + 1) < 10 ? `0${d.getMonth()+1}` : (d.getMonth() + 1),
+                let scMonth = (d.getMonth() + 1) < 10 ? `0${d.getMonth() + 1}` : (d.getMonth() + 1),
                     scDate = d.getDate() < 10 ? '0' + d.getDate() : d.getDate(),
                     scHours = d.getHours() < 10 ? '0' + d.getHours() : d.getHours(),
                     scMinutes = d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes(),
@@ -244,7 +246,7 @@
                             fontSize: 12,
                             color: '#333'
                         },
-                        position: function(pos, params, el, elRect, size) {
+                        position: function (pos, params, el, elRect, size) {
                             var obj = {
                                 top: 60
                             };
@@ -483,12 +485,13 @@
     }
 </script>
 <style lang="scss" scoped>
-    $fcolor:#8a8d99;
+    $fcolor: #8a8d99;
     $bg: #208de3; //header   背景颜色   主色调
     #myChart {
         background-color: #fff;
         margin: 1px 0 0 0;
     }
+
     @mixin small-font {
         font-size: .24rem;
         transform: scale(0.90);
@@ -510,11 +513,13 @@
         -o-transform-origin: 0 0;
         /* Opera */
     }
+
     @mixin flex-center {
         display: flex;
         justify-content: center;
         align-items: center;
     }
+
     .market-tab {
         width: 100%;
         height: .9rem;
@@ -531,12 +536,13 @@
             flex-direction: column;
             justify-content: center;
             color: #fff;
-            &>div:last-child {
+            & > div:last-child {
                 margin: 3px 0 0 0;
                 @include small-font;
             }
         }
     }
+
     .coin-info {
         width: 100%;
         height: .9rem;
@@ -544,7 +550,7 @@
         @include flex-center;
         color: #fff;
         font-size: .26rem;
-        &>div {
+        & > div {
             width: 50%;
             height: .8rem;
             display: flex;
@@ -557,27 +563,28 @@
                 height: .75rem;
                 justify-content: flex-start;
                 align-items: center;
-                &>div {
+                & > div {
                     display: flex;
-                    height:100%;
+                    height: 100%;
                     justify-content: center;
                     align-items: flex-start;
                     flex-direction: column;
-                    &>div:first-child {
+                    & > div:first-child {
                         margin: 0 .2rem 0 0;
                     }
                 }
             }
         }
-        &>div:first-child {
+        & > div:first-child {
             border-right: 1px solid #d0d0fa;
         }
     }
+
     .date-check {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        &>div {
+        & > div {
             background-color: #fff;
             height: .6rem;
             width: 50%;
@@ -587,28 +594,32 @@
             }
         }
     }
+
     .trend-box {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
     }
+
     .none-tip {
         background-color: #fff;
         font-size: .44rem;
         height: 20rem;
         padding: 2.5rem 0;
     }
+
     .sale-operation {
         display: flex;
         align-items: center;
         height: 100%;
         justify-content: center;
-        &>div {
+        & > div {
             width: 1rem;
             height: .4rem;
         }
     }
+
     .user-operation {
         position: fixed;
         bottom: 0;
@@ -617,7 +628,7 @@
         height: .8rem;
         display: flex;
         color: #fff;
-        &>div:first-child {
+        & > div:first-child {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -625,7 +636,7 @@
             font-size: .32rem;
             background-color: #f44;
         }
-        &>div:last-child {
+        & > div:last-child {
             display: flex;
             justify-content: center;
             align-items: center;
