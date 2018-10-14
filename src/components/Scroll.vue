@@ -230,9 +230,8 @@
       text-align: left;
       display: flex;
       .coin-symbol {
-        font-size: .32rem;
-        color: #323232;
-        font-weight: 700;
+        font-size: .24rem;
+        color: #333;
       }
       .coin-name {
         font-size: .26rem;
@@ -256,13 +255,14 @@
       }
       .circulation-sum,
       .mark-sum {
-        font-size: .32rem;
-        font-weight: bolder;
-        color: #4a4a4a;
+        font-size: .24rem;
+        font-weight: 500;
+        color: #333;
       }
       .circulation-percent,
       .mark-percent {
-        color: $fcolor;
+        color: #999;
+        font-size: .2rem;
       }
     }
   }

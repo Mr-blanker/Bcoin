@@ -326,8 +326,7 @@
   }
   .tab-active {
       font-weight: bold;
-      color: #828282;
-      // border-bottom:4px solid #208eda !important;
+      color: #333;
       &::after{
               content: "";
               width: 0.4rem;
