@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header v-bind="{left:1,center:2,centerValue:'详情'}"></Header>
+        <Header v-bind="{left:1,center:2,centerValue:'社群'}"></Header>
         <yd-popup v-model="show4" position="right">
             <div class="zl-header">
                 <i class="icon iconfont icon-fanhui" @click="show4=false"></i>
@@ -31,7 +31,8 @@
                     </div>
                     <div class="cd-dynamic-content" style="padding-left: 0;text-align: left;">
                         <span class="cd-dynamic-text">{{list.content}}</span>
-                        <img :src="attr" alt="" v-for="attr in list.imgs" style="width: 30%;height: 2.3rem;margin-right: .1rem;margin-bottom: .1rem;">
+                        <img :src="attr" alt="" v-for="attr in list.imgs"
+                             style="width: 30%;height: 2.3rem;margin-right: .1rem;margin-bottom: .1rem;">
                     </div>
                     <div class="cd-dynamic-zan" style="padding-left: 0;">
                         <i class="icon iconfont icon-dianzan dianzan zan"></i>
@@ -39,31 +40,102 @@
                             @click="getDianzanList"
                             style="color:#000;font-size: .25rem">{{list.likes.num}}人赞过<i
                             class="icon iconfont icon-gengduo" style="font-size: .2rem"></i>
-   </span></span>
+                        </span>
+                        </span>
                     </div>
                 </li>
             </ul>
-            <div class="cd-dynamic-comment ad-dynamic-comment mescroll" style="padding-bottom:.6rem">
-                <span class="ad-comment-title">评论</span>
-                <div id="scroll1" style="width: 100%;">
-                    <ul>
-                        <li v-for="attr in commentList" class="ad-comment-item">
-                            <img src="../../assets/default_avatar_male.jpg" alt="" v-if="!attr.pic">
-                            <img :src="attr.pic" alt="" v-if="attr.pic">
-                            <div class="ad-comment-content">
-                                <a>{{attr.name}}：</a>
-                                <span> {{attr.content}}</span>
-                                <i @click="forbid(attr.uid)" v-if="userInfo.uid===list.uid">禁言</i>
+
+            <main class="container main2">
+                <div class="newsitembox">
+                    <section class="newsitem">
+                        <div class="newsitem_head">
+                            <h3 class="title">{{list.content}}</h3>
+                            <div class="other">
+                                <img :src="list.u_pic"/>
+                                <div class="text">
+                                    <div class="companyname">
+                                        <span>{{list.u_name}} </span>
+                                    </div>
+                                    <div class="releasedate">
+                                        <span>{{list.createTime|moment('YYYY-MM-DD HH:mm')}}</span>
+                                        <!--<span class="iconfont icon-pageviews01">986</span>-->
+                                    </div>
+                                </div>
                             </div>
-                        </li>
-                    </ul>
+                        </div>
+                        <div class="newsitem_body">
+                            <div class="newsinformation">
+                                <p>{{list.content}}</p>
+                                <img :src="attr" alt="" v-for="attr in list.imgs" style="margin: 0;"/>
+
+                            </div>
+                        </div>
+                        <div class="cd-dynamic-zan" style="padding-left: 0;">
+                            <i class="icon iconfont icon-dianzan dianzan zan"></i>
+                            <span style="padding-left: .1rem;">{{list.likes.items.slice(0,2).toString()}}
+                                <span @click="getDianzanList" style="color:#000;font-size: .25rem">{{list.likes.num}}人赞过<i
+                                    class="icon iconfont icon-gengduo" style="font-size: .2rem"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </section>
+
+                    <section class="comment-wrap ">
+                        <div class="title">评论专区</div>
+                        <div class="mescroll " id="scroll1">
+                            <div id="list">
+                                <div class="box border1px" v-for="attr in commentList">
+                                    <img class="avatar" :src="attr.pic" alt=""/>
+                                    <div class="content">
+                                        <div class="main">
+                                            <div class="txt">
+                                                <div class="user">{{attr.name}}</div>
+                                                <div class="message">{{attr.content}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="info">
+                                            <i @click="forbid(attr.uid)" v-if="userInfo.uid===list.uid">禁言</i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-            </div>
-            <div class="id-comment" @click.stop="newComment">
-                <input type="text" placeholder="写评论..." disabled="disabled">
-                <i class="icon iconfont icon-dianzan" style="font-size: .5rem;" :class="{'is-dianzan':list.isLike}"
-                   @click.stop="dianzan()"></i>
-            </div>
+            </main>
+            <!--<div class="cd-dynamic-comment ad-dynamic-comment mescroll" style="padding-bottom:.6rem">-->
+            <!--<span class="ad-comment-title">评论</span>-->
+            <!--<div id="scroll1" style="width: 100%;">-->
+            <!--<ul>-->
+            <!--<li v-for="attr in commentList" class="ad-comment-item">-->
+            <!--<img src="../../assets/default_avatar_male.jpg" alt="" v-if="!attr.pic">-->
+            <!--<img :src="attr.pic" alt="" v-if="attr.pic">-->
+            <!--<div class="ad-comment-content">-->
+            <!--<a>{{attr.name}}：</a>-->
+            <!--<span> {{attr.content}}</span>-->
+            <!--<i @click="forbid(attr.uid)" v-if="userInfo.uid===list.uid">禁言</i>-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="id-comment" @click.stop="newComment">-->
+            <!--<input type="text" placeholder="写评论..." disabled="disabled">-->
+            <!--<i class="icon iconfont icon-dianzan" style="font-size: .5rem;" :class="{'is-dianzan':list.isLike}"-->
+            <!--@click.stop="dianzan()"></i>-->
+            <!--</div>-->
+            <footer class="commentInput">
+                <div class="sb">
+                    <form @click.stop="newComment" class="submit-form">
+                        <input type="text" name="comment" id="comment" placeholder="说说你的看法" disabled="disabled"
+                               class="editbox">
+                        <button type="button" class="iconfont icon-submit01 subbtns"></button>
+                    </form>
+                    <i class="icon iconfont icon-dianzan submit-zan" :class="{'is-dianzan':list.isLike}"
+                       @click.stop="dianzan()"></i>
+                </div>
+            </footer>
         </div>
     </div>
 </template>
@@ -85,7 +157,11 @@
                 zanLen: 0,
                 commentLen: 0,
                 commentCount: 1,
-                zanCount: 1
+                zanCount: 1,
+                params: {},
+                params1: {aid: ''},
+                totalCount1: -1,
+                totalCount: -1,
             }
         },
         computed: {
@@ -94,27 +170,14 @@
         mounted() {
             console.log(this.list)
             let that = this
-            // this.scroll = new PullScroll("", {
-            //   refresh: function (pullScroll) {
-            //     that.zanLen = 0
-            //     that.dianzanList = []
-            //     that.initDataList(pullScroll)
-            //   },
-            //   loading: function (pullScroll) {
-            //     that.loadDataList(pullScroll);
-            //   }
-            // });
             this.scroll = new MeScroll("scroll", {
                 down: {
                     callback: that.refresh,
                 },
                 up: {
                     callback: that.loadDataList,
-                    page: {
-                        num: 0,
-                        size: 10,
-                        time: null
-                    }
+                    auto: false, //初始化不进行加载
+                    htmlNodata: '<p class="upwarp-nodata">没有更多了</p>'
                 }
             });
             this.scroll1 = new MeScroll("scroll1", {
@@ -123,11 +186,8 @@
                 },
                 up: {
                     callback: that.loadDataList1,
-                    page: {
-                        num: 0,
-                        size: 10,
-                        time: null
-                    }
+                    auto: false, //初始化不进行加载
+                    htmlNodata: '<p class="upwarp-nodata">没有更多了</p>'
                 }
             });
         },
@@ -138,23 +198,23 @@
                 this.initDataList(page, meScroll)
             },
             refresh1(page, meScroll) {
-                this.commentLen = 0
+                this.params1 = {aid: this.list.id, len: 1}
                 this.commentList = []
-                this.loadDataList1(page, meScroll)
+                this.loadDataList1()
             },
             //获取文章评论列表
-            loadDataList1(pullScroll) {
-                this.commentLen += 2
-                this.$store.dispatch(types.COMMUNITY_PINGLUN_LIST, {
-                    aid: this.list.id,
-                    len: this.commentLen
-                }).then(res => {
+            loadDataList1() {
+                console.log(this.params1)
+                this.$store.dispatch(types.COMMUNITY_PINGLUN_LIST, this.params1).then(res => {
                     console.log(res)
                     if (res.code !== 0) return
-                    this.commentList = res.data
-                    this.commentCount = res.data.length
-                    this.scroll1.endSuccess(res.data.length, this.commentCount >= this.commentLen);
-                    if (this.commentCount < this.commentLen) this.scroll1.endUpScroll(true)
+                    let data = res.data
+                    this.commentList = this.commentList.concat(data)
+                    this.totalCount1 = data.length
+                    console.log(this.totalCount1)
+                    this.scroll1.endUpScroll(true)
+                    // this.scroll1.endSuccess(3, true);
+                    this.params1.maxID = data[this.totalCount1 - 1].id
                 })
             },
             //评论列表（评论加载）
@@ -187,7 +247,8 @@
             },
             //获取文章点赞列表
             getDianzanList() {
-                this.show4 = true
+                if (this.list.likes.num) this.show4 = true
+
             },
             //禁言
             forbid(id) {
@@ -523,5 +584,36 @@
 
     .is-dianzan {
         color: #208de3;
+    }
+
+    .sb {
+        position: relative;
+    }
+
+    .submit-form {
+        width: 90%;
+    }
+
+    .submit-zan {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(-50%, -50%) !important;
+        font-size: .5rem;
+    }
+
+    .newsitembox {
+        text-align: left;
+    }
+
+    .content {
+        position: relative;
+    }
+
+    .info {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #adadad;
     }
 </style>

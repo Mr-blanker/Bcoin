@@ -62,7 +62,7 @@
                 up: {
                     callback: that.loadDataList,
                     auto: false, //初始化不进行加载
-                    htmlNodata: '<p class="upwarp-nodata">-- 没有更多了 --</p>'
+                    htmlNodata: '<p class="upwarp-nodata">没有更多了</p>'
                 }
             });
         },
@@ -97,6 +97,7 @@
                     this.dataList = this.dataList.concat(data)
                     this.totalCount = data.length
                     this.scroll.endSuccess(this.totalCount, 20);
+                    if (this.totalCount < 20) this.scroll.endUpScroll(true)
                     this.params.maxID = data[this.totalCount - 1].id
 
                 })

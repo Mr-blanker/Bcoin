@@ -100,7 +100,7 @@
                 this.scroll = new MeScroll("informationDetailScroll", {
                     down: {
                         callback: that.loadDataList,
-                        htmlNodata: '<p class="upwarp-nodata">-- 没有更多数据了 --</p>'
+                        htmlNodata: '<p class="upwarp-nodata">没有更多了</p>'
 
                     }
                 });

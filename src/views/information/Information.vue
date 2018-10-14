@@ -120,11 +120,6 @@
                 up: {
                     callback: that.loadDataList,
                     auto: false,
-                    page: {
-                        num: 0,
-                        size: 10,
-                        time: null
-                    },
                     htmlNodata: '<p class="upwarp-nodata">-- 没有更多数据了 --</p>'
                 }
             });
