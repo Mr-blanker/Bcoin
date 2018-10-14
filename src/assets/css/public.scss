@@ -189,7 +189,11 @@ $wdc: #909090; //字体颜色
 }
 
 .van-tab--active {
-    color: $bg !important;
+    color: #333 !important;
+    font-weight: bold !important;
+    &>span {
+        color: #333 !important;
+    }
 }
 
 .van-tabs__wrap--scrollable .van-tab {
@@ -1349,12 +1353,10 @@ $wdc: #909090; //字体颜色
 
 .van-tab {
     line-height: .56rem !important;
-    color: #8a8d99 !important;
+    color: #999 !important;
+    font-weight: 300;
     padding: 0 !important;
-}
-
-.van-tab--active {
-    color: $bg !important;
+    font-size: .3rem;
 }
 
 .van-tabs__wrap--scrollable .van-tab {

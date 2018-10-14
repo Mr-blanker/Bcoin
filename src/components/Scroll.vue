@@ -3,7 +3,11 @@
     <div>
       <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==1" @click="goTrend(item,1)">
         <div class="box-left">
-          <div>
+          <div :class="[item.plogo?'logo-margin':'']">
+            <img :src="item.plogo" alt="">
+          </div>
+         <div>
+            <div class="ellipsis">
             <span class="coin-symbol">{{item.symbol}}</span>
             <span class="coin-name">{{item.name}}</span>
             <span class="coin-name" v-if="item.coin_name">{{item.coin_name}}</span>
@@ -16,6 +20,7 @@
             <span>成交量:</span>
             <span>{{item.cheng|formatMoney}}</span>
           </div>
+         </div>
         </div>
         <div class="box-right flex flex-between">
           <div class="tr mark-box">
@@ -33,13 +38,18 @@
       </div>
       <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==2" @click="goTrend(item,2)">
         <div class="box-left">
-          <div>
-            <span class="coin-symbol">{{item.name}}</span>
-            <span class="coin-name">{{item.dui}}</span>
+          <div :class="[item.plogo?'logo-margin':'']">
+            <img :src="item.plogo" alt="">
           </div>
-          <div class="coin-issue" style="font-size: .26rem">
-            <span>成交量:</span>
-            <span>{{item.cheng|formatMoney}}</span>
+          <div>
+            <div class="ellipsis">
+              <span class="coin-symbol">{{item.name}}</span>
+              <span class="coin-name">{{item.dui}}</span>
+            </div>
+            <div class="coin-issue" style="font-size: .26rem">
+              <span>成交量:</span>
+              <span>{{item.cheng|formatMoney}}</span>
+            </div>
           </div>
         </div>
         <div class="box-right flex flex-between">
@@ -55,13 +65,19 @@
       </div>
       <div class="scroll-item flex flex-b" v-for="(item,index) in scrollData" :key="index" v-if="scrollBoxShow==3" @click="goTrend(item,3)">
         <div class="box-left">
+          <div :class="[item.plogo?'logo-margin':'']">
+            <img :src="item.plogo" alt="">
+          </div>
           <div>
+
+            <div>
             <span class="coin-symbol">{{item.name}}</span>
             <span class="coin-name">{{item.dui}}</span>
           </div>
           <div class="coin-issue">
             <span>成交量:</span>
             <span>{{item.cheng|formatMoney}}</span>
+          </div>
           </div>
         </div>
         <div class="box-right flex flex-between">
@@ -77,12 +93,13 @@
         </div>
       </div>
       <!--  <div v-show="scrollData.length==0&&scrollBoxShow==1" class="add-choice" @click="userInfo.name? $router.push({path:'manageUserChoice'}): $router.push({path:'login'})">
-                    <span> <i class="icon iconfont icon-tianjia"></i></span>
-                    <div>点击添加自选</div>
-            </div>-->
+                      <span> <i class="icon iconfont icon-tianjia"></i></span>
+                      <div>点击添加自选</div>
+              </div>-->
     </div>
   </div>
 </template>
+
 <script>
   import {
     mapGetters,
@@ -133,7 +150,7 @@
       },
       downCallback(page, mescroll) {
         this.len = 20
-        this.upCb(true, this.len,true)
+        this.upCb(true, this.len, true)
       },
       goTrend(item, index) {
         if (this.scrollBoxShow == 2) {
@@ -168,13 +185,14 @@
         type: Number,
         default: 1
       },
-      currItem:{
-        type:Array,
-        default:[]
+      currItem: {
+        type: Array,
+        default: []
       }
     }
   }
 </script>
+
 <style lang="scss" scoped>
   $fcolor: #8a8d99;
   @mixin small-font {
@@ -204,11 +222,13 @@
     margin: 1px 0;
     padding: 0 .2rem;
     align-items: center;
+    margin: 0.2rem;
     .box-left {
       width: 49%;
       align-items: center;
       margin: 0 1% 0 0;
       text-align: left;
+      display: flex;
       .coin-symbol {
         font-size: .32rem;
         color: #323232;
@@ -258,8 +278,9 @@
     justify-content: center;
     align-items: center;
     border-radius: 3px;
-    color: #fff;
-    background-color: $fcolor;
+    font-size:.24rem;
+    font-weight: 500;
+    color: #666;
   }
   .flex {
     display: flex;
@@ -279,6 +300,11 @@
   .tr {
     text-align: right;
   }
+  .ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
   .mescroll::-webkit-scrollbar {
     display: none;
   }
@@ -289,14 +315,17 @@
     color: #32a853 !important;
   }
   .percentrise-color {
-    background-color: #eb4236 !important;
+    color: #eb4236 !important;
     font-size: .28rem !important;
   }
   .percentfall-color {
-    background-color: #32a853 !important;
+    color: #32a853 !important;
   }
   #scroll::-webkit-scrollbar {
     display: none;
+  }
+  .logo-margin {
+    margin:0 5% 0 0;
   }
   .add-choice {
     text-align: center;
@@ -316,19 +345,19 @@
   .add-box {
     width: .9rem;
     height: .9rem;
-    background: #208de3;
+    background: #fff;
     position: fixed;
     bottom: 2rem;
     right: .5rem;
     border: 0;
     border-radius: .8rem;
     i {
-      color: #fff;
+      color: #999;
     }
   }
   .mescroll {
     position: fixed;
-    top: 2.1rem;
+    top: 2.3rem;
     bottom: 1rem;
     height: auto;
     -webkit-box-sizing: border-box;

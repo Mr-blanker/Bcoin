@@ -300,14 +300,14 @@
   .add-box {
     width: .9rem;
     height: .9rem;
-    background: #208de3;
+    background: #fff;
     position: fixed;
     bottom: 2rem;
     right: .5rem;
     border: 0;
     border-radius: .8rem;
     i {
-      color: #fff;
+      color: #999;
     }
     .van-tab {
       line-height: .72rem !important;

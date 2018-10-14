@@ -5,7 +5,7 @@
         <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index" @click="tabChange(index+1)">{{item}}</span>
       </div>
       <yd-icon :name="rightIcon" size="20px" color="#fff" style="visibility:hidden;"></yd-icon>
-      <i class="icon iconfont icon-search" style="color:#fff" @click="$router.push('/searchCoin')"></i>
+      <i class="icon iconfont icon-search" style="color:#696772" @click="$router.push('/searchCoin')"></i>
     </div>
     <div class="flex flex-m tab-box">
       <div style="width:92%">
@@ -15,11 +15,11 @@
         </van-tabs>
       </div>
       <div style="width:8%" class="add-tab" @click="goTagManange">
-        <i class="icon iconfont icon-tianjia"></i>
+        <i class="icon iconfont icon-round01"></i>
       </div>
     </div>
     <div class="coin-header flex flex-between">
-      <div class="header-left">名称</div>
+      <div class="header-left">币种名称</div>
       <div class="header-right flex flex-between">
         <div class="new-price">
           <div class="price-tip">最新价(￥)</div>
@@ -50,7 +50,7 @@
     </div>
     <div class="coin-header flex flex-between" v-show="false">
       <div>名称</div>
-      <div>成交�?</div>
+      <div>成交量</div>
     </div>
   </div>
 </template>
@@ -286,7 +286,7 @@
 </script>
 <style lang="scss" scoped>
   $fcolor: #8a8d99;
-  $bg: #208de3; //header   背景颜色   主色�?
+  $bg: #fff; //header   背景颜色   主色�?
   .market-tab {
     width: 100%;
     height: .9rem;
@@ -299,8 +299,7 @@
       height: .6rem;
       display: flex;
       align-items: center;
-      border: 1px solid #1464cc;
-      color: #fff;
+      color: #696772;
       border-radius: 5px;
       span {
         display: inline-block;
@@ -310,24 +309,42 @@
         width: 1.2rem;
         height: .56rem;
         cursor: pointer;
-        font-size: .28rem;
+        font-size: .32rem;
+        position: relative;
       }
-      span:nth-child(2n) {
-        border-left: 1px solid #1464cc;
-        border-right: 1px solid #1464cc;
-      }
+      &>span:after{
+              content: "";
+              width: 0.4rem;
+              height: 4px;
+              background:transparent;
+              position: absolute;
+              left: 50%;
+              bottom: -0.22em;
+              margin-left: -0.2rem;
+        }
     }
   }
   .tab-active {
-    background-color: #1464cc;
+      font-weight: bold;
+      color: #828282;
+      // border-bottom:4px solid #208eda !important;
+      &::after{
+              content: "";
+              width: 0.4rem;
+              height: 4px;
+              background: #208eda !important;
+              position: absolute;
+              left: 50%;
+              bottom: -0.02em;
+              margin-left: -0.2rem;
+        }
   }
   .coin-header {
     width: 100%;
-    height: .56rem;
-    background-color: #fff;
+    padding: 0.15rem 0.4rem;
     align-items: center;
     color: $fcolor;
-    padding: 0 .2rem;
+    font-size: 0.2rem;
     .header-left {
       width: 50%;
       text-align: left;
