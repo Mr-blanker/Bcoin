@@ -32,7 +32,16 @@
                     </div>
                 </div>
             </div>
+            <div class="none-tip" v-if="searchData.length==0">
+                <div class="tip-icon"></div>
+                <div>
+                    您输入的关键字未能搜索到相关信息
+                </div>
+                <div>请重新搜索
+                </div>
+            </div>
         </div>
+
     </div>
 </template>
 <script>
@@ -78,8 +87,8 @@
     }
 </script>
 <style lang="scss" scoped>
-    $fcolor:#8a8d99;
-    $bg: #208de3; //header   背景颜色   主色调
+    $fcolor:#acacac;
+    $bg: #fff; //header   背景颜色   主色调
     .market-tab {
         width: 100%;
         height: 1rem;
@@ -89,14 +98,14 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #fff;
+        color: $fcolor;
         .tab-contianer {
             height: .9rem;
             display: flex;
             align-items: center;
             flex-direction: column;
             justify-content: center;
-            color: #fff;
+            color: $fcolor;
             font-size: .32rem;
         }
         .save-text {
@@ -114,7 +123,6 @@
     }
     .tag-container {
         height: calc(100vh - .9rem);
-        background-color: #fff;
         overflow: auto;
         .tag-title {
             width: 100%;
@@ -158,7 +166,7 @@
     .scroll-item {
         height: 1.1rem;
         background-color: #fff;
-        margin: 1px 0;
+        margin:.2rem;
         padding: 0 .2rem;
         border-bottom:.01rem solid #d9d9d9;
         align-items: center;
@@ -168,17 +176,17 @@
             margin: 0 1% 0 0;
             text-align: left;
             .coin-symbol {
-                font-size: .32rem;
-                color: #323232;
-                font-weight: 700;
+                font-size: .24rem;
+                color: #333;
+                font-weight: 300;
             }
             .coin-name {
-                font-size: .26rem;
+                font-size: .2rem;
                 color: $fcolor; //@include small-font;
             }
             .coin-issue {
                 color: $fcolor; //@include small-font;
-                font-size: .24rem;
+                font-size: .2rem;
             }
         }
         .box-right {
@@ -194,12 +202,13 @@
             }
             .circulation-sum,
             .mark-sum {
-                font-size: .32rem;
-                font-weight: bolder;
-                color: #4a4a4a;
+                font-size: .24rem;
+                font-weight: 500;
+                color: #333;
             }
             .circulation-percent,
             .mark-percent {
+                font-size: .2rem;
                 color: $fcolor;
             }
         }
@@ -217,8 +226,11 @@
     color: #32a853 !important;
   }
   .percentrise-color {
-    background-color: #eb4236 !important;
-    font-size: .28rem !important;
+    color: #eb4236 !important;
+
+  }
+  .percentfall-color {
+    color: #32a853 !important;
   }
    .percent-box {
     width: 1.3rem;
@@ -227,7 +239,16 @@
     justify-content: center;
     align-items: center;
     border-radius: 3px;
-    color: #fff;
-    background-color: $fcolor;
+    color: #333;
   }
+  .none-tip {
+        margin: 40% 0 0;
+    }
+    .tip-icon {
+        width: 4.2rem;
+        height: 2.6rem;
+        background: url('../../../static/images/blank.png') no-repeat;
+        background-size: 100% 100%;
+        margin:0 auto;
+    }
 </style>

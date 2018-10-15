@@ -12,7 +12,12 @@
       </yd-cell-item>
     </yd-cell-group>
 
-    <yd-button class="btn-submit" size="large" shape="circle" bgcolor="#06adf7" @click.native="submit">注册</yd-button>
+    <!-- <yd-button class="btn-submit" size="large" shape="circle" bgcolor="#06adf7" @click.native="submit">注册</yd-button> -->
+    <footer class="addCurrency" style="position:relative;top:.2rem">
+      <div @click="submit">
+        <a class="btns" >注册</a>
+      </div>
+    </footer>
   </div>
 </template>
 <script>

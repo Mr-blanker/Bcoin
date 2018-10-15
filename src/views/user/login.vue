@@ -15,14 +15,21 @@
       <span @click="$router.push({path:'register'})">注册</span>
       <!--<span>忘记密码？</span>-->
     </div>
-    <yd-button class="btn-submit" size="large" shape="circle" bgcolor="#06adf7" @click.native="submit">登录
-    </yd-button>
+    <!-- <yd-button class="btn-submit" size="large" shape="circle" bgcolor="#06adf7" @click.native="submit">登录
+      </yd-button> -->
+    <footer class="addCurrency" style="position:relative;top:.2rem">
+      <div @click="submit">
+        <a class="btns" >
+                                          登录
+                                      </a>
+      </div>
+    </footer>
   </div>
 </template>
+
 <script>
   import Header from "@/components/Header"
   import * as types from '../../store/mutations-type'
-
   export default {
     name: "login",
     data() {
@@ -31,7 +38,6 @@
           name: '',
           pwd: ''
         }
-
       }
     },
     components: {

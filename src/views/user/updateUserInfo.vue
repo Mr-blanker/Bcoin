@@ -10,8 +10,13 @@
                 <yd-radio val="女"></yd-radio>
 
             </yd-radio-group>
-            <yd-button class="btn-submit" size="large" shape="circle" bgcolor="#06adf7" @click.native="submit">保存
-            </yd-button>
+            <!-- <yd-button class="btn-submit" size="large" shape="circle" bgcolor="#06adf7" @click.native="submit">保存
+            </yd-button> -->
+            <footer class="addCurrency" style="position:relative;top:.2rem">
+                <div @click="submit">
+                    <a class="btns" >保存</a>
+                </div>
+            </footer>
         </div>
     </div>
 </template>

@@ -5,19 +5,39 @@
             <div class="tab-contianer">
                 <div>自选管理</div>
             </div>
-            <div :class="{'save-text':true,'is-hidden':true}" @click="$router.go(-2)">保存</div>
+            <div :class="{'save-text':true,'is-hidden':true}" style="color:#208eda" @click="$router.go(-2)">保存</div>
         </div>
         <div class="tag-container">
             <div class="tag-list">
-                <div class="tag-item" v-for="(item,index) in choiceList" :key="index">
+                <!-- <div class="tag-item" v-for="(item,index) in choiceList" :key="index">
                     <span @click="delTag(item)">X</span>
                     <div class="tag-content">{{item.coin_name}}</div>
-                </div>
-                <div class="tag-item" @click="userInfo.name?$router.push('/addChoice'):$router.push('/login')">
+                </div> -->
+                <main class="container main1">
+                    <div class="quoteEdit">
+                        <ul class="quoteEdit_list clearfix">
+                            <li class="item current" v-for="(item,index) in choiceList" :key="index">
+                                <span class="name limit">
+                                    {{item.coin_name}}
+                                </span>
+                                <span class="iconfont icon-delete01 deletebtns" @click="delTag(item)">
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </main>
+                <!-- <div class="tag-item" @click="userInfo.name?$router.push('/addChoice'):$router.push('/login')">
                     <div class="add-tag">+</div>
-                </div>
+                </div> -->
             </div>
         </div>
+        <footer class="addCurrency">
+                    <div @click="userInfo.name?$router.push('/addChoice'):$router.push('/login')">
+                        <a class="btns" @click="goAddTag">
+                            添加币种
+                        </a>
+                    </div>
+                </footer>
     </div>
 </template>
 <script>
@@ -64,8 +84,8 @@
     }
 </script>
 <style lang="scss" scoped>
-    $fcolor:#8a8d99;
-    $bg: #208de3; //header   背景颜色   主色调
+    $fcolor:#acacac;
+    $bg: #fff; //header   背景颜色   主色调
     .market-tab {
         width: 100%;
         height: .9rem;
@@ -74,18 +94,18 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #fff;
+        color: $fcolor;
         .tab-contianer {
             height: .9rem;
             display: flex;
             align-items: center;
             flex-direction: column;
             justify-content: center;
-            color: #fff;
+            color: #333;
             font-size: .32rem;
         }
         .save-text {
-            color: #fff;
+            color: $fcolor;
             font-size: .32rem;
         }
     }
