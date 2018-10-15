@@ -63,9 +63,16 @@
                     </div>
                     <div @click="auction">竞拍</div>
                 </div>
-                <div class="hg-footer" v-if="type==2">
+                <!-- <div class="hg-footer" v-if="type==2">
                     <div @click="$router.push(`/createOrder?id=${detailData.id}&name=${detailData.name}`)">换购</div>
-                </div>
+                </div> -->
+                <footer class="addCurrency" v-if="type==2">
+                    <div @click="$router.push(`/createOrder?id=${detailData.id}&name=${detailData.name}`)">
+                        <a class="btns" @click="goAddTag">
+                                        换购
+                                    </a>
+                    </div>
+                </footer>
             </div>
         </div>
     </div>
@@ -127,8 +134,8 @@
     }
 </script>
 <style lang="scss" scoped>
-    $fcolor: #8a8d99;
-    $bg: #208de3; //header   背景颜色   主色调
+    $fcolor: #acacac;
+    $bg: #fff; //header   背景颜色   主色调
     .market-tab {
         width: 100%;
         height: .9rem;
@@ -137,7 +144,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #fff;
+        color: #acacac;
         .tab-contianer {
             position: absolute;
             top: 50%;
@@ -148,12 +155,8 @@
             align-items: center;
             flex-direction: column;
             justify-content: center;
-            color: #fff;
+            color: #acacac;
             font-size: .35rem;
-        }
-        .save-text {
-            color: #fff;
-            font-size: .32rem;
         }
     }
     .shop-header {
@@ -244,7 +247,7 @@
             border-radius: 0;
             font-size: .32rem;
             color: #fff;
-            background-color: #f44;
+            background-color: rgba(32, 142, 219, 1);
         }
     }
     .footer {
@@ -276,7 +279,7 @@
             border-radius: 0;
             font-size: .32rem;
             color: #fff;
-            background-color: #f44;
+            background-color: rgba(32, 142, 219, 1);
         }
     }
 </style>

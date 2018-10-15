@@ -148,8 +148,8 @@
     }
 </script>
 <style lang="scss" scoped>
-    $fcolor: #8a8d99;
-    $bg: #208de3; //header   背景颜色   主色调
+    $fcolor: #acacac;
+    $bg: #fff; //header   背景颜色   主色调
     .market-tab {
         width: 100%;
         height: .9rem;
@@ -158,28 +158,34 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #fff;
+        color: #acacac;
         .tab-contianer {
             height: .6rem;
             display: flex;
             align-items: center;
-            border: 1px solid #1464cc;
-            color: #fff;
+            color: #acacac;
             border-radius: .1rem;
+            position: relative;
+            font-size: .32rem;
             span {
                 display: inline-block;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                color:#696772;
                 width: 1.2rem;
                 height: .56rem;
                 cursor: pointer;
-                font-size: .28rem;
+                font-size: .32rem;
             }
-            span:nth-child(2n) {
-                border-left: 1px solid #1464cc;
-                border-right: 1px solid #1464cc;
-            }
+            &>span:after{
+              content: "";
+              width: 0.4rem;
+              height: 4px;
+              background:transparent;
+              position: absolute;
+              bottom: -0.22em;
+        }
         }
         .save-text {
             color: #fff;
@@ -195,6 +201,7 @@
         padding: .2rem; // align-items: center;
         align-items: center;
         flex: 1;
+        margin:.2rem;
         .commodity-img {
             img {
                 width: 1.4rem;
@@ -237,9 +244,19 @@
     .prd-box {
         padding: 1.5rem 0 0 0;
     }
+    
     .tab-active {
-        background-color: #1464cc;
-    }
+      font-weight: bold;
+      color: #333;
+      &::after{
+              content: "";
+              width: 0.4rem;
+              height: 4px;
+              background: #208eda !important;
+              position: absolute;
+              bottom: -0.22em;
+        }
+  }
     .mescroll {
         position: fixed;
         top: 1.6rem;

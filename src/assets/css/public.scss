@@ -1553,11 +1553,12 @@ $wdc: #909090; //字体颜色
 
 .own-bar-item {
     color: #8a8d99 !important;
-    font-size: .28rem;
+    font-size: .3rem;
 }
 
 .own-bar-item-active {
-    color: $bg !important;
+    color: #333 !important;
+    font-weight: 500;
 }
 
 .tab-box > .van-tabs--line > div {

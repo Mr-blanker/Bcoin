@@ -27,16 +27,22 @@
                 </ul>
             </div>
         </div>
-        <div class="hg-footer">
-            <div @click="createOrder">立即换购</div>
-        </div>
+        <!-- <div class="hg-footer">
+                <div @click="createOrder">立即换购</div>
+            </div> -->
+        <footer class="addCurrency">
+            <div @click="createOrder">
+                <a class="btns" @click="goAddTag">
+                                立即换购
+                            </a>
+            </div>
+        </footer>
     </div>
 </template>
+
 <script>
     import * as types from "../../store/mutations-type"
-    import {
-        mapActions
-    } from 'vuex'
+    import {mapActions} from 'vuex'
     export default {
         name: 'createOrder',
         data() {
@@ -46,7 +52,7 @@
                     id: '',
                     addrID: ''
                 },
-                titleName:''
+                titleName: ''
             }
         },
         mounted() {
@@ -85,9 +91,10 @@
         }
     }
 </script>
+
 <style lang="scss" scoped>
-    $fcolor:#8a8d99;
-    $bg: #208de3; //header   背景颜色   主色调
+    $fcolor:#acacac;
+    $bg: #fff; //header   背景颜色   主色调
     .market-tab {
         width: 100%;
         height: .9rem;
@@ -96,14 +103,15 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #fff;
+        color: #acacac;
+        margin: 0 0 .2rem;
         .tab-contianer {
             height: .9rem;
             display: flex;
             align-items: center;
             flex-direction: column;
             justify-content: center;
-            color: #fff;
+            color: #acacac;
             font-size: .32rem;
         }
         .save-text {

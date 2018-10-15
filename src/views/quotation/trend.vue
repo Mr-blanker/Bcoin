@@ -7,7 +7,7 @@
                 <div>{{coin.dui}}</div>
             </div>
             <div style="font-size:0.32rem">行情</div>
-            <span @click="getTrends">刷新</span>
+            <i class="iconfont icon-refresh refresh_icon" style="color:#909090;font-size:.3rem" @click="getTrends"></i>
         </div>
         <!-- <div class="coin-info">
                 <div>

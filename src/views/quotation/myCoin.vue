@@ -103,8 +103,8 @@
   }
 </script>
 <style lang="scss" scoped>
-  $fcolor: #8a8d99;
-  $bg: #208de3; //header   背景颜色   主色调
+  $fcolor: #acacac;
+  $bg: #fff; //header   背景颜色   主色调
   #myChart {
     background-color: #fff;
     margin: 1px 0 0 0;
@@ -146,7 +146,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: #fff;
+    color: $fcolor;
+    margin:0 0 .2rem 0;
     .tab-contianer {
       height: .9rem;
       display: flex;
@@ -154,7 +155,7 @@
       align-items: center;
       flex-direction: column;
       justify-content: center;
-      color: #fff;
+      color: $fcolor;
     }
   }
 
@@ -273,7 +274,7 @@
 
   .mescroll {
     position: fixed;
-    top: .9rem;
+    top: 1rem;
     bottom: .9rem;
     height: auto;
   }

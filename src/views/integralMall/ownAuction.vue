@@ -136,8 +136,8 @@
     }
 </script>
 <style lang="scss" scoped>
-    $fcolor: #8a8d99;
-    $bg: #208de3; //header   背景颜色   主色调
+    $fcolor: #acacac;
+    $bg: #fff; //header   背景颜色   主色调
     .market-tab {
         width: 100%;
         height: .9rem;
@@ -146,7 +146,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #fff;
+        color: $fcolor;
         .save-text {
             color: #fff;
             font-size: .32rem;

@@ -86,8 +86,8 @@
     }
 </script>
 <style lang="scss" scoped>
-    $fcolor:#8a8d99;
-    $bg: #208de3; //header   背景颜色   主色调
+    $fcolor:#acacac;
+    $bg: #fff; //header   背景颜色   主色调
     #myChart {
         background-color: #fff;
         margin: 1px 0 0 0;
@@ -126,7 +126,8 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #fff;
+        color:  $fcolor;
+        margin: 0 0 .2rem;
         .tab-contianer {
             height: .9rem;
             font-size:.35rem;
@@ -134,7 +135,7 @@
             align-items: center;
             flex-direction: column;
             justify-content: center;
-            color: #fff;
+            color:  $fcolor;
         }
     }
     .coin-info {
@@ -241,7 +242,7 @@
             border-radius: 0;
             font-size: .32rem;
             color: #fff;
-            background-color: #f44;
+            background-color: rgba(32, 142, 219, 1);
         }
     }
     .coin-desc {}
