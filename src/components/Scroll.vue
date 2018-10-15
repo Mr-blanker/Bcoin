@@ -7,7 +7,7 @@
             <img :src="item.plogo" alt="">
           </div>
          <div>
-            <div class="ellipsis">
+            <div class="ellipsis" >
             <span class="coin-symbol">{{item.symbol}}</span>
             <span class="coin-name">{{item.name}}</span>
             <span class="coin-name" v-if="item.coin_name">{{item.coin_name}}</span>
@@ -301,9 +301,10 @@
     text-align: right;
   }
   .ellipsis {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+    width: 3.2rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
   .mescroll::-webkit-scrollbar {
     display: none;

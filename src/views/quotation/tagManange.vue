@@ -1,22 +1,34 @@
 <template>
     <div>
         <div class="market-tab ">
-            <i class="icon iconfont icon-fanhui" @click="$router.go(-1)"></i>
+            <i class="icon iconfont icon-fanhui" style="color:##909090;font-size:.3rem" @click="$router.go(-1)"></i>
             <div class="tab-contianer">
                 <div>{{titleName[titleIndex]}}-栏目管理</div>
             </div>
             <div :class="{'save-text':true,'is-hidden':titleIndex==0}" @click="$router.go(-1)">保存</div>
         </div>
         <div class="tag-container">
-            <div class="tag-title">已选栏目</div>
             <div class="tag-list">
-                <div class="tag-item" v-for="(item,index) in tabList" :key="index">
-                    <span @click="delTag(item)" v-show="titleIndex!=0">X</span>
-                    <div class="tag-content">{{item.symbol||item.eid}}</div>
-                </div>
-                <div class="tag-item" @click="goAddTag" v-show="titleIndex!=0">
-                    <div class="add-tag">+</div>
-                </div>
+                  <main class="container main1">
+                    <div class="quoteEdit">
+                        <ul class="quoteEdit_list clearfix">
+                            <li class="item current" v-for="(item,index) in tabList" :key="index">
+                                <span class="name limit">
+                                    {{item.symbol||item.eid}}
+                                </span>
+                                <span class="iconfont icon-delete01 deletebtns" @click="delTag(item)" v-show="titleIndex!=0">
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </main>
+                <footer class="addCurrency">
+                    <div>
+                        <a class="btns" @click="goAddTag">
+                            添加币种
+                        </a>
+                    </div>
+                </footer>
             </div>
         </div>
     </div>
@@ -92,8 +104,8 @@
     }
 </script>
 <style lang="scss" scoped>
-    $fcolor:#8a8d99;
-    $bg: #208de3; //header   背景颜色   主色调
+    $fcolor:#333;
+    $bg: #fff; //header   背景颜色   主色调
     .market-tab {
         width: 100%;
         height: .9rem;
@@ -102,19 +114,19 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #fff;
+        color: #333;
         .tab-contianer {
             height: .9rem;
             display: flex;
             align-items: center;
             flex-direction: column;
             justify-content: center;
-            color: #fff;
+            color: #333;
             font-size: .32rem;
         }
         .save-text {
-            color: #fff;
-            font-size: .32rem;
+            color: #208eda;
+            font-size: .3rem;
         }
     }
     .tag-list {

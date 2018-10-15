@@ -10,9 +10,20 @@
         <div class="tag-container">
             <div class="tag-list">
                 <yd-infinitescroll :callback="loadList" ref="infinitescroll">
-                    <div slot="list" :class="{'tag-item':true,'active-tag':isActive(item)}" v-for="(item,index) in tabList" :key="index" @click="addBase(item)">
+                    <!-- <div slot="list" :class="{'tag-item':true,'active-tag':isActive(item)}" v-for="(item,index) in tabList" :key="index" @click="addBase(item)">
                         <div class="tag-content">{{item[tabKey]}}</div>
-                    </div>
+                    </div> -->
+                    <main class="container main4" slot="list">
+                        <div class="quoteEdit">
+                            <ul class="quoteEdit_list clearfix">
+                                <li  :class="{'item':true,'current':isActive(item)}" v-for="(item,index) in tabList" :key="index" @click="addBase(item)">
+                                    <span class="name limit">
+                                        {{item[tabKey]}}
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </main>
                 </yd-infinitescroll>
             </div>
             <div v-show="titleIndex==0">综合模块，当前不支持添加</div>
@@ -141,8 +152,8 @@
     }
 </script>
 <style lang="scss" scoped>
-    $fcolor:#8a8d99;
-    $bg: #208de3; //header   背景颜色   主色调
+    $fcolor:#333;
+    $bg: #fff; //header   背景颜色   主色调
     .market-tab {
         width: 100%;
         height: .9rem;
@@ -151,18 +162,18 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #fff;
+        color: #333;
         .tab-contianer {
             height: .9rem;
             display: flex;
             align-items: center;
             flex-direction: column;
             justify-content: center;
-            color: #fff;
+            color: #333;
             font-size: .32rem;
         }
         .save-text {
-            color: #fff;
+            color: #208eda;
             font-size: .32rem;
         }
     }
