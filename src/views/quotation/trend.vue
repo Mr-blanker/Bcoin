@@ -2,27 +2,60 @@
     <div class="trend-box">
         <div class="market-tab ">
             <i class="icon iconfont icon-fanhui" @click="$router.go(-1)"></i>
-            <div class="tab-contianer">
+            <div class="tab-contianer" v-if="false">
                 <div>{{coin.name}}</div>
                 <div>{{coin.dui}}</div>
             </div>
+            <div style="font-size:0.32rem">行情</div>
             <span @click="getTrends">刷新</span>
         </div>
-        <div class="coin-info">
-            <div>
-                <div class="left-coin">
-                    <div>
-                        <div>市场价:<span style="margin:0 0 0 .1rem">$</span>{{coin.price_usd}}</div>
-                        <div>成交量:<span style="margin:0 0 0 .1rem">$</span>{{coin.cheng_usd||coin['24h_volume_usd']}}
+        <!-- <div class="coin-info">
+                <div>
+                    <div class="left-coin">
+                        <div>
+                            <div>市场价:<span style="margin:0 0 0 .1rem">$</span>{{coin.price_usd}}</div>
+                            <div>成交量:<span style="margin:0 0 0 .1rem">$</span>{{coin.cheng_usd||coin['24h_volume_usd']}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>￥{{coin.price||coin.price_cny}}</div>
+                    <div>￥{{coin.cheng||coin['24h_volume_cny']}}</div>
+                </div>
+            </div> -->
+        <main class="coin-box main1">
+            <div class="quoteitem">
+                <div class="quoteitem_head">
+                    <div class="quoteitem_head_title">
+                        <span class="price tl">
+                                市场价
+                            </span>
+                        <span class="volume">
+                                成交量
+                            </span>
+                    </div>
+                    <div class="quoteitem_head_sales">
+                        <div class="dollarMarket">
+                            <span class="price limit tl">
+                                    ${{coin.price_usd}}
+                                </span>
+                            <span class="volume limit">
+                                    ${{coin.cheng_usd||coin['24h_volume_usd']}}
+                                </span>
+                        </div>
+                        <div class="rmbMarket">
+                            <span class="price limit tl">
+                                    ￥{{coin.price||coin.price_cny}}
+                                </span>
+                            <span class="volume limit" style="width:2.1rem">
+                                    ￥{{coin.cheng||coin['24h_volume_cny']}}
+                                </span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div>
-                <div>￥{{coin.price||coin.price_cny}}</div>
-                <div>￥{{coin.cheng||coin['24h_volume_cny']}}</div>
-            </div>
-        </div>
+        </main>
         <div class="date-check">
             <div class="start-time">
                 <span>范围:</span>
@@ -33,21 +66,29 @@
                 <yd-datetime type="datetime" v-model="endTime" :callback="endCB"></yd-datetime>
             </div>
         </div>
-        <div v-show="market_cap.length==0&&volume.length==0&&price.length==0" class="none-tip">暂无走势数据</div>
-        <div id="myChartPie" :style="{width: '100%', height: '2.5rem',background:'#fff'}"></div>
-        <div id="myChart" :style="{width: '100%', height: '8rem'}"></div>
-        <div class="user-operation">
-            <div @click="goBuyCoin">购买</div>
-            <div @click="goSaleCoin">出售</div>
+        <div class="chart-box">
+            <div v-show="market_cap.length==0&&volume.length==0&&price.length==0" class="none-tip">暂无走势数据</div>
+            <div id="myChartPie" :style="{width: '100%', height: '2.5rem',background:'#fff'}"></div>
+            <div id="myChart" :style="{width: '100%', height: '8rem'}"></div>
         </div>
+        <footer class="shopping user-operation">
+            <div>
+                <a class="buybtns" @click="goBuyCoin">
+                        立即购买
+                    </a>
+                <a class="sellbtns" @click="goSaleCoin">
+                        出售
+                    </a>
+            </div>
+        </footer>
     </div>
 </template>
+
 <script>
     import {
         mapActions
     } from 'vuex'
     import utils from 'utility'
-
     export default {
         name: 'trend',
         data() {
@@ -246,7 +287,7 @@
                             fontSize: 12,
                             color: '#333'
                         },
-                        position: function (pos, params, el, elRect, size) {
+                        position: function(pos, params, el, elRect, size) {
                             var obj = {
                                 top: 60
                             };
@@ -484,14 +525,14 @@
         }
     }
 </script>
+
 <style lang="scss" scoped>
-    $fcolor: #8a8d99;
-    $bg: #208de3; //header   背景颜色   主色调
+    $fcolor: #333;
+    $bg: #fff; //header   背景颜色   主色调
     #myChart {
         background-color: #fff;
         margin: 1px 0 0 0;
     }
-
     @mixin small-font {
         font-size: .24rem;
         transform: scale(0.90);
@@ -513,13 +554,11 @@
         -o-transform-origin: 0 0;
         /* Opera */
     }
-
     @mixin flex-center {
         display: flex;
         justify-content: center;
         align-items: center;
     }
-
     .market-tab {
         width: 100%;
         height: .9rem;
@@ -528,29 +567,40 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #fff;
+        color: #333;
         .tab-contianer {
             height: .9rem;
             display: flex;
             align-items: center;
             flex-direction: column;
             justify-content: center;
-            color: #fff;
-            & > div:last-child {
+            color: #333;
+            &>div:last-child {
                 margin: 3px 0 0 0;
                 @include small-font;
             }
         }
     }
-
+    .coin-box {
+        background-color: #fff;
+        border-top: 1px solid #efefef;
+        border-bottom: 1px solid #efefef;
+    }
+    .tl {
+        text-align: left;
+    }
+    .chart-box {
+        height: 8.5rem;
+        overflow: auto;
+    }
     .coin-info {
         width: 100%;
         height: .9rem;
         background-color: rgb(18, 123, 206);
         @include flex-center;
-        color: #fff;
+        color: #333;
         font-size: .26rem;
-        & > div {
+        &>div {
             width: 50%;
             height: .8rem;
             display: flex;
@@ -563,28 +613,27 @@
                 height: .75rem;
                 justify-content: flex-start;
                 align-items: center;
-                & > div {
+                &>div {
                     display: flex;
                     height: 100%;
                     justify-content: center;
                     align-items: flex-start;
                     flex-direction: column;
-                    & > div:first-child {
+                    &>div:first-child {
                         margin: 0 .2rem 0 0;
                     }
                 }
             }
         }
-        & > div:first-child {
+        &>div:first-child {
             border-right: 1px solid #d0d0fa;
         }
     }
-
     .date-check {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        & > div {
+        &>div {
             background-color: #fff;
             height: .6rem;
             width: 50%;
@@ -594,55 +643,32 @@
             }
         }
     }
-
     .trend-box {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
     }
-
     .none-tip {
         background-color: #fff;
         font-size: .44rem;
         height: 20rem;
         padding: 2.5rem 0;
     }
-
     .sale-operation {
         display: flex;
         align-items: center;
         height: 100%;
         justify-content: center;
-        & > div {
+        &>div {
             width: 1rem;
             height: .4rem;
         }
     }
-
     .user-operation {
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
-        height: .8rem;
-        display: flex;
-        color: #fff;
-        & > div:first-child {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 50%;
-            font-size: .32rem;
-            background-color: #f44;
-        }
-        & > div:last-child {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: .32rem;
-            width: 50%;
-            background-color: #208de3;
-        }
     }
 </style>
