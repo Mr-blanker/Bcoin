@@ -12,13 +12,11 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
     //登录判断
     if (to.meta.requireAuth && !store.getters.userSid) {
-        // this.fail("请先登录");
         router.push({name: 'login'});
     }
-    // let informationId = window.sessionStorage.getItem('informationActive')
-    // let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
     setTimeout(() => {
         let heightScrollTop = store.state.quotation.scrollTop //滚动高度
+        console.log(heightScrollTop)
         window.sessionStorage.setItem('heightScrollTop_' + from.name, heightScrollTop);
     }, 200)
     next()

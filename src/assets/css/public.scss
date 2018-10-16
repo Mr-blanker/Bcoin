@@ -1254,7 +1254,6 @@ $wdc: #909090; //字体颜色
     align-items: center;
     height: .8rem;
     width: .8rem;
-    background: #f3f3f3;
     border-radius: .04rem;
     margin-right: .1rem;
     border: 1px solid #dad3d3;
@@ -1487,14 +1486,12 @@ $wdc: #909090; //字体颜色
     .re-text {
         display: flex;
         flex-direction: column;
-        flex: 1;
         padding-bottom: 1.1rem;
         textarea {
             width: 100%;
             border: 0;
             font-size: .32rem;
             padding: 0 .2rem;
-            flex: 1;
         }
         .img-list {
             display: flex;

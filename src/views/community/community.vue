@@ -1,11 +1,10 @@
 <template>
     <div>
-        <Header v-bind="{center:2,centerValue:'社群'}"></Header>
         <Header v-bind="{center:3,list:titleList,liKey:index}" @clickItem="clickItem"></Header>
         <main class="container main1">
-            <div class=" mescroll" id="communityScroll">
+            <div class="mescroll" id="communityScroll">
                 <ul class="community-list" v-if="index==0">
-                    <li class="build-community padlr02" @click="$router.push({path:'/communityAdd'})">
+                    <li class="build-community padlr02" @click="buildCommunity()">
                         <div class="build-community-left">
                             <span class="add-box">
                                 <i class="icon iconfont icon-tianjia"></i>
@@ -41,6 +40,7 @@
 
 <script>
     import * as types from "../../store/mutations-type"
+    import {mapGetters} from "vuex"
 
     export default {
         name: "community",
@@ -49,9 +49,14 @@
                 titleList: ['我的', '热门', '全部'],
                 index: 0,
                 dataList: [],
-                params: {type: 1},
-                totalCount: -1
+                params: {},
+                totalCount: -1,
+                setLen: 20,
+                type: 1
             }
+        },
+        computed: {
+            ...mapGetters(['userSid'])
         },
         mounted() {
             let that = this
@@ -72,23 +77,22 @@
                 console.log(key)
                 this.index = key
                 if (key == 0) {
-                    this.params = {type: 1}
+                    this.type = 1
                 } else if (key == 1) {
-                    this.params = {type: 2}
+                    this.type = 2
                 } else if (key == 2) {
-                    this.params = {type: 0}
+                    this.type = 0
+
                 }
                 this.initDataList()
             },
-
             initDataList() {
+                this.params = {len: this.setLen, type: this.type}
                 this.dataList = []
                 this.totalCount = -1
                 this.loadDataList();
             },
             loadDataList() {
-                console.log(1)
-
                 //获取社群列表
                 this.$store.dispatch(types.COMMUNITY_LIST, this.params).then(res => {
                     if (res.code !== 0) return
@@ -96,12 +100,16 @@
                     let data = res.data
                     this.dataList = this.dataList.concat(data)
                     this.totalCount = data.length
-                    this.scroll.endSuccess(this.totalCount, 20);
-                    if (this.totalCount < 20) this.scroll.endUpScroll(true)
-                    this.params.maxID = data[this.totalCount - 1].id
+                    this.scroll.endSuccess(this.totalCount, this.setLen);
+                    if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
+                    if (this.totalCount) this.params.maxID = data[this.totalCount - 1].id
 
                 })
             },
+            buildCommunity() {
+                if (!this.userSid) return this.$router.push({name: 'login'})
+                this.$router.push({name: 'communityAdd'})
+            }
         },
     }
 </script>
@@ -151,5 +159,9 @@
         display: flex;
         align-items: center;
         width: 100%;
+    }
+
+    .community .item .item_pic {
+        border: 0;
     }
 </style>

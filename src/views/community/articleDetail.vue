@@ -104,27 +104,6 @@
                     </section>
                 </div>
             </main>
-            <!--<div class="cd-dynamic-comment ad-dynamic-comment mescroll" style="padding-bottom:.6rem">-->
-            <!--<span class="ad-comment-title">评论</span>-->
-            <!--<div id="scroll1" style="width: 100%;">-->
-            <!--<ul>-->
-            <!--<li v-for="attr in commentList" class="ad-comment-item">-->
-            <!--<img src="../../assets/default_avatar_male.jpg" alt="" v-if="!attr.pic">-->
-            <!--<img :src="attr.pic" alt="" v-if="attr.pic">-->
-            <!--<div class="ad-comment-content">-->
-            <!--<a>{{attr.name}}：</a>-->
-            <!--<span> {{attr.content}}</span>-->
-            <!--<i @click="forbid(attr.uid)" v-if="userInfo.uid===list.uid">禁言</i>-->
-            <!--</div>-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--<div class="id-comment" @click.stop="newComment">-->
-            <!--<input type="text" placeholder="写评论..." disabled="disabled">-->
-            <!--<i class="icon iconfont icon-dianzan" style="font-size: .5rem;" :class="{'is-dianzan':list.isLike}"-->
-            <!--@click.stop="dianzan()"></i>-->
-            <!--</div>-->
             <footer class="commentInput">
                 <div class="sb">
                     <form @click.stop="newComment" class="submit-form">
@@ -162,6 +141,8 @@
                 params1: {aid: ''},
                 totalCount1: -1,
                 totalCount: -1,
+                setLen1: 20,
+                setLen: 20
             }
         },
         computed: {
@@ -192,13 +173,13 @@
             });
         },
         methods: {
-            refresh(page, meScroll) {
-                this.zanLen = 0
+            refresh() {
+                this.params = {aid: this.list.id, len: this.setLen}
                 this.dianzanList = []
-                this.initDataList(page, meScroll)
+                this.loadDataList()
             },
-            refresh1(page, meScroll) {
-                this.params1 = {aid: this.list.id, len: 1}
+            refresh1() {
+                this.params1 = {aid: this.list.id, len: this.setLen1}
                 this.commentList = []
                 this.loadDataList1()
             },
@@ -211,38 +192,24 @@
                     let data = res.data
                     this.commentList = this.commentList.concat(data)
                     this.totalCount1 = data.length
-                    console.log(this.totalCount1)
-                    this.scroll1.endUpScroll(true)
-                    // this.scroll1.endSuccess(3, true);
-                    this.params1.maxID = data[this.totalCount1 - 1].id
-                })
-            },
-            //评论列表（评论加载）
-            getCommentList() {
-                this.$store.dispatch(types.COMMUNITY_PINGLUN_LIST, {
-                    aid: this.list.id,
-                    len: this.commentLen
-                }).then(res => {
-                    console.log(res)
-                    this.commentList = res.data
+                    this.scroll1.endSuccess(this.totalCount1, this.setLen1);
+                    if (this.totalCount1 < this.setLen1) this.scroll1.endUpScroll(true)
+                    if (this.totalCount1) this.params1.maxID = data[this.totalCount1 - 1].id
                 })
             },
             //点赞列表
-            initDataList() {
-                this.loadDataList();
-            },
             loadDataList() {
                 this.zanLen += 20
-                this.$store.dispatch(types.COMMUNITY_DIANZAN_LIST, {
-                    aid: this.list.id,
-                    len: this.zanLen
-                }).then(res => {
+                this.$store.dispatch(types.COMMUNITY_DIANZAN_LIST, this.params).then(res => {
                     console.log(res)
                     if (res.code !== 0) return
-                    this.dianzanList = res.data
-                    this.zanCount = res.data.length
-                    this.scroll.endSuccess(res.data.length, this.zanCount >= this.zanLen);
-                    if (this.zanCount < this.zanLen) this.scroll.endUpScroll(true)
+                    let data = res.data
+                    this.dianzanList = this.dianzanList.concat(data)
+                    this.totalCount = data.length
+                    this.scroll.endSuccess(this.totalCount, this.setLen);
+                    if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
+                    if (this.totalCount) this.params1.maxID = data[this.totalCount - 1].id
+
                 })
             },
             //获取文章点赞列表
@@ -313,7 +280,7 @@
                                     path: 'Login'
                                 })
                             }
-                            that.scroll.triggerDownScroll();
+                            that.scroll1.triggerDownScroll();
                         }
                     })
                 });

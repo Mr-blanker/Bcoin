@@ -61,10 +61,12 @@ export default [
     {
         path: '/',
         redirect: '/Information',
+        meta: {keepalive: true}
     }, {
         name: 'Information',
         path: '/Information',
         component: Information,
+        meta: {keepalive: true}
     },
     {
         name: 'login',
@@ -133,9 +135,7 @@ export default [
         name: 'personMessage',
         path: '/personMessage',
         component: personMessage,
-        meta: {
-            requireAuth: true
-        }
+        meta: {requireAuth: true}
     },
     {
         name: 'search',
@@ -152,9 +152,7 @@ export default [
         name: 'mallIndex',
         path: '/mallIndex',
         component: mallIndex,
-        meta: {
-            requireAuth: true
-        }
+        meta: {requireAuth: true}
     },
     {
         name: 'tagManange',
@@ -177,24 +175,18 @@ export default [
         name: 'acView',
         path: '/acView',
         component: acView,
-        meta: {
-            keepalive: true
-        }
+        meta: {keepalive: true}
     }, {
         name: 'addressList',
         path: '/addressList',
         component: addressList,
-        meta: {
-            requireAuth: true
-        }
+        meta: {requireAuth: true}
     },
     {
         name: 'searchCoin',
         path: '/searchCoin',
         component: searchCoin,
-        meta: {
-            keepalive: true
-        },
+        meta: {keepalive: true},
         beforeEnter: (to, from, next) => {
             let scrollMain = store.getters.scrollBox
             let topVal = store.getters.scrollTop
@@ -236,9 +228,7 @@ export default [
         name: 'community',
         path: '/community',
         component: community,
-        meta: {
-            keepalive: true
-        }
+        meta: {keepalive: true}
     }, {
         name: 'communityAdd',
         path: '/communityAdd',
@@ -253,17 +243,13 @@ export default [
         name: 'ownAuction',
         path: '/ownAuction',
         component: ownAuction,
-        meta: {
-            requireAuth: true
-        }
+        meta: {requireAuth: true}
     },
     {
         name: 'ownOrder',
         path: '/ownOrder',
         component: ownOrder,
-        meta: {
-            requireAuth: true
-        }
+        meta: {requireAuth: true}
     },
     {
         name: 'userAddressList',
@@ -283,6 +269,7 @@ export default [
         name: 'communityDynamic',
         path: '/communityDynamic',
         component: communityDynamic,
+        meta: {keepalive: true}
     }, {
         name: 'Release',
         path: '/Release',
@@ -295,6 +282,7 @@ export default [
         name: 'flashMsg',
         path: '/flashMsg',
         component: flashMsg,
+        meta: {keepalive: true}
     }, {
         name: 'updateUserInfo',
         path: '/updateUserInfo',
@@ -304,25 +292,19 @@ export default [
         name: 'famousLibrary',
         path: '/famousLibrary',
         component: famousLibrary,
-        meta: {
-            keepalive: true
-        }
+        meta: {keepalive: true}
     },
     {
         name: 'informationList',
         path: '/informationList',
         component: informationList,
-        meta: {
-            keepalive: true
-        }
+        meta: {keepalive: true}
     },
     {
         name: 'specialColumn',
         path: '/specialColumn',
         component: specialColumn,
-        meta: {
-            keepalive: true
-        }
+        meta: {keepalive: true}
     }
 
 ]

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header v-bind="{center:3,right:1,list:titleList,liKey:index}" @clickItem="clickItem"></Header>
+        <Header v-bind="{center:3,list:titleList,liKey:index,left:1}" @clickItem="clickItem"></Header>
         <section id="newsScroll" class=" container main1 mescroll">
             <ul class="news_list">
                 <li v-for="(item,key) in list" :key="key" @click="informationDetail(item.aid)">
@@ -31,7 +31,7 @@
 
 <script>
     import * as types from "../../store/mutations-type"
-    import {mapMutations} from "vuex"
+    import {mapMutations, mapGetters} from "vuex"
 
     export default {
         name: "informationList",
@@ -39,11 +39,26 @@
             return {
                 titleList: ['头条', '推荐', '行情'],
                 index: 0,
-                new: {newLen: 0, newCount: -1},
-                list: []
+                list: [],
+                params: {},
+                totalCount: -1,
+                setLen: 20,  //设置加载条数  最多20
+                choiceCateId: ''  //专栏分类id
+
             }
         },
+        computed: {
+            ...mapGetters(['scrollTop'])
+        },
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                let scrollTop = parseInt(window.sessionStorage.getItem('heightScrollTop_' + to.name));
+                vm.scroll && vm.scroll.scrollTo(scrollTop, 0)
+            })
+        },
         mounted() {
+            this.getSpecialList()
+
             let that = this
             this.scroll = new MeScroll("newsScroll", {
                 down: {
@@ -52,56 +67,66 @@
                 up: {
                     callback: that.loadDataList,
                     auto: false,
-                    page: {
-                        num: 0,
-                        size: 10,
-                        time: null
-                    },
-                    htmlNodata: '<p class="upwarp-nodata">-- 没有更多数据了 --</p>'
+                    htmlNodata: '<p class="upwarp-nodata">没有更多数据了</p>'
                 }
             });
         },
         methods: {
             ...mapMutations(['SET_SCROLL_TOP', 'SET_SCROLL_BOX']),
-
+            //获取专栏类别
+            getSpecialList() {
+                this.$store.dispatch(types.COLUMN_CATE).then(res => {
+                    if (res.code !== 0) return
+                    let data = res.data
+                    if (data.length && data[0].items.length) this.choiceCateId = data[0].items[0].id
+                })
+            },
             initDataList() {
-                this.new = {newLen: 0, newCount: -1},
-                    this.loadDataList()
+                this.params = {len: this.setLen}
+                this.list = []
+                this.totalCount = -1
+                if (this.sIndex == 0) this.params.cateID = 0
+                this.loadDataList();
             },
             loadDataList() {
-                this.new.newLen += 20
                 if (this.index == 0) {
                     //获取新闻资讯列表
-                    this.$store.dispatch(types.INFORMATION_LIST, {len: this.new.newLen, cateID: 0}).then(res => {
-                        console.log(res)
+                    this.$store.dispatch(types.INFORMATION_LIST, this.params).then(res => {
                         if (res.code !== 0) return
-                        this.list = res.data
-                        this.new.newCount = res.data.length
-                        this.scroll.endSuccess(res.data.length, this.new.newCount >= this.new.newLen);
-                        if (this.new.newCount < this.new.newLen)
-                            this.scroll.endUpScroll(true)
+                        let data = res.data
+                        this.list = this.list.concat(data)
+                        this.totalCount = data.length
+                        this.scroll.endSuccess(this.totalCount, this.totalCount >= this.setLen);
+                        if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
+                        if (this.totalCount) this.params.minID = data[this.totalCount - 1].aid
+
+
                     })
                 } else if (this.index == 1) {
-                    //专栏文章
-                    this.$store.dispatch(types.COLUMN_LIST, {len: this.new.newLen}).then(res => {
-                        console.log(res)
+                    //专栏文章(推荐)
+                    let obj = this.params
+                    obj.pid = this.choiceCateId
+                    this.$store.dispatch(types.COLUMN_LIST, obj).then(res => {
                         if (res.code !== 0) return
-                        this.list = res.data
-                        this.new.newCount = res.data.length
-                        this.scroll.endSuccess(res.data.length, this.new.newCount >= this.new.newLen);
-                        if (this.new.newCount < this.new.newLen)
-                            this.scroll.endUpScroll(true)
+                        let data = res.data
+                        this.list = this.list.concat(data)
+                        this.totalCount = data.length
+                        this.scroll.endSuccess(this.totalCount, this.totalCount >= this.setLen);
+                        if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
+                        if (this.totalCount) this.params.minID = data[this.totalCount - 1].aid
+
                     })
                 } else {
                     //行情分析
-                    this.$store.dispatch(types.COLUMN_MARKET, {len: this.new.newLen}).then(res => {
-                        console.log(res)
+                    this.$store.dispatch(types.COLUMN_MARKET, this.params).then(res => {
                         if (res.code !== 0) return
-                        this.list = res.data
-                        this.new.newCount = res.data.length
-                        this.scroll.endSuccess(res.data.length, this.new.newCount >= this.new.newLen);
-                        if (this.new.newCount < this.new.newLen)
-                            this.scroll.endUpScroll(true)
+                        let data = res.data
+                        this.list = this.list.concat(data)
+                        this.totalCount = data.length
+                        this.scroll.endSuccess(this.totalCount, this.totalCount >= this.setLen);
+                        if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
+                        if (this.totalCount) this.params.minID = data[this.totalCount - 1].aid
+
                     })
                 }
             },
@@ -120,11 +145,12 @@
                 } else {
                     this.$router.push({path: 'InformationDetail', query: {wid: aid}})
                 }
-                let top = this.scroll.getScrollTop()
-                this.SET_SCROLL_TOP(top)
                 this.SET_SCROLL_BOX('newsScroll')
             },
-
+        },
+        beforeRouteLeave(from, to, next) {
+            this.SET_SCROLL_TOP(this.scroll.getScrollTop())
+            next()
         }
     }
 </script>

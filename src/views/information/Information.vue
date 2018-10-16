@@ -3,12 +3,11 @@
         <header class="header indexheader">
             <div>
                 <div class="center">
-                    <a class="logo_icon" >
+                    <a class="logo_icon">
                     </a>
                 </div>
                 <div class="right">
-                    <a class="iconfont icon-search01 search_icon">
-                    </a>
+
                 </div>
             </div>
         </header>
@@ -34,12 +33,12 @@
                     </nav>
                     <div class="news">
                         <div class="newstitle">
-                            <a @click="sIndex=0,chooseNewCate(0)" :class="{'current':sIndex===0}">头条</a>
-                            <a @click="sIndex=1,chooseNewCate(0)" :class="{'current':sIndex===1}">推荐</a>
-                            <a @click="sIndex=2,chooseNewCate(0)" :class="{'current':sIndex===2}">行情</a>
+                            <a @click="sIndex=0,chooseNewCate()" :class="{'current':sIndex===0}">头条</a>
+                            <a @click="sIndex=1,chooseNewCate()" :class="{'current':sIndex===1}">推荐</a>
+                            <a @click="sIndex=2,chooseNewCate()" :class="{'current':sIndex===2}">行情</a>
                         </div>
                         <!--新闻资讯-->
-                        <div v-if="index==0">
+                        <div>
                             <ul class="newslist">
                                 <li v-for="(item,key) in list" :key="key" @click="informationDetail(item.aid)">
                                     <a class="newsitem">
@@ -89,117 +88,114 @@
                 index: 0,
                 broadcastAdList: [],
                 len: 1,
-                new: {newLen: 0, newCount: -1},
                 newCateList: [],
-                newCateId: 0,
                 plus: '',
-                sIndex: 0
+                sIndex: 0,
+                params: {},
+                totalCount: -1,
+                setLen: 20,  //设置加载条数  最多20
+                choiceCateId: ''  //专栏分类id
             }
         },
         computed: {
-            ...mapGetters(['informationActive'])
+            ...mapGetters(['informationActive', 'scrollTop'])
+        },
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                let scrollTop = parseInt(window.sessionStorage.getItem('heightScrollTop_' + to.name));
+                vm.scroll && vm.scroll.scrollTo(scrollTop, 0)
+            })
         },
         mounted() {
-            console.log('mounted')
+            this.getSpecialList()
             this.SET_SCROLL_BOX('newsScroll')
             let that = this;
             document.addEventListener('plusready', function () {
                 that.plus = plus
             })
-            this.getNewCate()
-            // if (this.informationActive) {
-            //     this.index = parseInt(this.informationActive)
-            // }
-            if (this.index == 0 && !this.broadcastAdList.length) {
+            if (!this.broadcastAdList.length) {
                 this.getBroadcastAd()
             }
             this.scroll = new MeScroll("newsScroll", {
-                down: {
-                    callback: that.initDataList,
-                },
+                down: {callback: that.initDataList},
                 up: {
                     callback: that.loadDataList,
-                    auto: false,
-                    htmlNodata: '<p class="upwarp-nodata">-- 没有更多数据了 --</p>'
+                    auto: false, //初始化不自动加载
+                    loadFull: {use: true},  //列表数据过少,不足以滑动触发上拉加载,是否自动加载下一页
+                    htmlNodata: '<p class="upwarp-nodata">没有更多了</p>'
                 }
             });
         },
         methods: {
             ...mapMutations(['SET_SCROLL_TOP', 'SET_SCROLL_BOX']),
+            //获取专栏类别
+            getSpecialList() {
+                this.$store.dispatch(types.COLUMN_CATE).then(res => {
+                    if (res.code !== 0) return
+                    let data = res.data
+                    if (data.length && data[0].items.length) this.choiceCateId = data[0].items[0].id
+                })
+            },
             goPersonDetail(item) {
                 this.$router.push({path: 'InformationDetail', query: {id: item.aid}})
-                let top = this.scroll.getScrollTop()
-                this.SET_SCROLL_TOP(top)
                 this.SET_SCROLL_BOX('newsScroll')
             },
             sliderRouter(url) {
-                console.log(url)
                 this.plus.runtime.openURL(url, function (err) {
-                    console.log(err)
                 })
             },
-            //获取新闻分类
-            getNewCate() {
-                this.$store.dispatch(types.INFORMATION_CATES).then(res => {
-                    console.log(res)
-                    if (res.code !== 0) return
-                    this.newCateList = res.data
-                })
-            },
+
             //选择新闻分类
-            chooseNewCate(id) {
+            chooseNewCate() {
                 this.scroll.scrollTo(0);
-                this.newCateId = id
                 this.scroll.triggerDownScroll();
             },
-            initDataList(page, mescroll) {
-                if (this.index === 0) {
-                    this.new.newLen = 0
-                }
-                this.loadDataList(page, mescroll);
+            initDataList() {
+                this.params = {len: this.setLen}
+                this.list = []
+                this.totalCount = -1
+                if (this.sIndex == 0) this.params.cateID = 0
+                this.loadDataList();
             },
-            loadDataList(page, mescroll) {
-                console.log('load')
-                //快讯列表
-                if (this.index === 0) {
-                    this.new.newLen += 20
+            loadDataList() {
+                if (this.sIndex == 0) {
+                    //获取新闻资讯列表
+                    this.$store.dispatch(types.INFORMATION_LIST, this.params).then(res => {
+                        if (res.code !== 0) return
+                        let data = res.data
+                        this.list = this.list.concat(data)
+                        this.totalCount = data.length
+                        this.scroll.endSuccess(this.totalCount, this.totalCount >= this.setLen);
+                        if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
+                        if (this.totalCount) this.params.minID = data[this.totalCount - 1].aid
 
-                    if (this.sIndex == 0) {
-                        //获取新闻资讯列表
-                        this.$store.dispatch(types.INFORMATION_LIST, {
-                            len: this.new.newLen,
-                            cateID: this.newCateId
-                        }).then(res => {
-                            if (res.code !== 0) return
-                            this.list = res.data
-                            this.new.newCount = res.data.length
-                            this.scroll.endSuccess(res.data.length, this.new.newCount >= this.new.newLen);
-                            if (this.new.newCount < this.new.newLen)
-                                this.scroll.endUpScroll(true)
-                        })
-                    } else if (this.sIndex == 1) {
-                        //专栏文章
-                        this.$store.dispatch(types.COLUMN_LIST, {len: this.new.newLen}).then(res => {
-                            if (res.code !== 0) return
-                            this.list = res.data
-                            this.new.newCount = res.data.length
-                            this.scroll.endSuccess(res.data.length, this.new.newCount >= this.new.newLen);
-                            if (this.new.newCount < this.new.newLen)
-                                this.scroll.endUpScroll(true)
-                        })
-                    } else {
-                        //行情分析
-                        this.$store.dispatch(types.COLUMN_MARKET, {
-                            len: this.new.newLen
-                        }).then(res => {
-                            if (res.code !== 0) return
-                            this.list = res.data
-                            this.new.newCount = res.data.length
-                            this.scroll.endSuccess(res.data.length, this.new.newCount >= this.new.newLen);
-                            if (this.new.newCount < this.new.newLen)
-                                this.scroll.endUpScroll(true)
-                        })
-                    }
+                    })
+                } else if (this.sIndex == 1) {
+                    //专栏文章(推荐)
+                    let obj = this.params
+                    obj.pid = this.choiceCateId
+                    this.$store.dispatch(types.COLUMN_LIST, obj).then(res => {
+                        if (res.code !== 0) return
+                        let data = res.data
+                        this.list = this.list.concat(data)
+                        this.totalCount = data.length
+                        this.scroll.endSuccess(this.totalCount, this.totalCount >= this.setLen);
+                        if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
+                        if (this.totalCount) this.params.minID = data[this.totalCount - 1].aid
+
+                    })
+                } else {
+                    //行情分析
+                    this.$store.dispatch(types.COLUMN_MARKET, this.params).then(res => {
+                        if (res.code !== 0) return
+                        let data = res.data
+                        this.list = this.list.concat(data)
+                        this.totalCount = data.length
+                        this.scroll.endSuccess(this.totalCount, this.totalCount >= this.setLen);
+                        if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
+                        if (this.totalCount) this.params.minID = data[this.totalCount - 1].aid
+
+                    })
                 }
             },
             //选择bar
@@ -210,22 +206,12 @@
                 } else if (key === 0) {
                     this.$router.push({name: 'informationList'})
                 } else {
-                    console.log('专栏')
                     this.$router.push({name: 'specialColumn'})
-
                 }
-                // this.$store.commit('SET_INFORMATION_ACTIVE', key)
-                this.index = key
-                if (key == 0 && !this.broadcastAdList.length) {
-                    this.getBroadcastAd()
-                }
-                this.scroll.scrollTo(0);
-                this.scroll.triggerDownScroll();
             },
             //轮播图
             getBroadcastAd() {
                 this.$store.dispatch(types.BROADCAST_AD).then(res => {
-                    console.log(res)
                     this.broadcastAdList = res
                 })
             },
@@ -238,11 +224,13 @@
                 } else {
                     this.$router.push({path: 'InformationDetail', query: {wid: aid}})
                 }
-                let top = this.scroll.getScrollTop()
-                this.SET_SCROLL_TOP(top)
                 this.SET_SCROLL_BOX('newsScroll')
             },
+        },
 
+        beforeRouteLeave(from, to, next) {
+            this.SET_SCROLL_TOP(this.scroll.getScrollTop())
+            next()
         }
     }
 </script>

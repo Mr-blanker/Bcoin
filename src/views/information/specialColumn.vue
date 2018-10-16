@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header v-bind="{left:1,right:1,center:2,centerValue:'专栏'}"></Header>
+        <Header v-bind="{left:1,scenter:2,centerValue:'专栏'}"></Header>
         <main class="container main1">
             <section class="zlcategory">
                 <div>
@@ -34,7 +34,6 @@
             }
         },
         created() {
-            console.log(1)
             this.getSpecialList()
         },
         methods: {

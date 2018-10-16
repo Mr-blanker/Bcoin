@@ -17,29 +17,10 @@
         data() {
             return {
                 isShowFooterNav: true,
-                includeComponents: ['Information', 'marketIndex', 'community', 'searchCoin', 'famousLibrary', 'specialColumn']
             }
         },
-        components: {
-            Footer
-        },
-        watch: {},
-        mounted() {
-            // console.log(window.localStorage.userInfo)
-            // this.$store.dispatch(types.USER_USERINFO)
+        components: {Footer},
 
-        },
-        updated() {
-            let informationId = window.sessionStorage.getItem('informationActive')
-            let scrollTop
-            if (this.$route.name == 'Information') {
-                scrollTop = window.sessionStorage.getItem('scrollTop_' + this.$route.name + '_' + informationId)
-            } else {
-                scrollTop = window.sessionStorage.getItem('scrollTop_' + this.$route.name);
-            }
-            // document.body.scrollTop = scrollTop;
-            // document.documentElement.scrollTop = scrollTop;
-        },
     }
 </script>
 

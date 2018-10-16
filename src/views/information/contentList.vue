@@ -1,6 +1,6 @@
 <template>
     <div style="display: flex; flex-direction: column;height:100%">
-        <Header v-bind="{left:1,right:1,centerValue:'推荐专栏',center:2}"></Header>
+        <Header v-bind="{left:1,centerValue:'推荐专栏',center:2}"></Header>
         <ul class="content-list">
             <li class="content-item" v-for="item in list">
                 <div class="item-top">

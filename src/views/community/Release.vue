@@ -3,36 +3,36 @@
         <div class="re-header">
             <a href="javascript:history.back(-1);">取消</a>
             <div class="re-header-center">
-                <span>发布至</span>
-                <p>{{name}}</p>
+                <span>社群</span>
             </div>
-            <span @click="release">发布</span>
+            <span @click="releaseComment" style="color: #208eda;">发布</span>
         </div>
         <div class="re-text">
-      <textarea name="" id="" cols="30" rows="10" placeholder="写下你的观点" ref="searchInput"
-                v-model="info.content" autofocus="autofocus"></textarea>
+            <textarea name="" id="" cols="30" rows="5" placeholder="写下你的观点" ref="searchInput"
+                      v-model="info.content" autofocus="autofocus"></textarea>
             <ul class="img-list">
                 <li v-for="(item,index) in imgShowList" :key="index">
                     <img :src="item" alt="">
                     <i @click="delImg(index)">X</i>
                 </li>
+                <li onclick="f.click()">
+                    <div class="build-community-left">
+                        <span class="add-box">
+                            <i class="icon iconfont icon-tianjia">
+                                <form id="form1">
+                                <input type="button"/>
+                                <p>
+                                    <input type="file" id="f" name="f" @change="upload_img($event);"
+                                           style="display:none"/>
+                                </p>
+                                </form>
+                            </i>
+                        </span>
+                    </div>
+                </li>
             </ul>
         </div>
-        <li class="build-community padlr02" onclick="f.click()">
-            <div class="build-community-left">
-            <span class="add-box">
-            <i class="icon iconfont icon-tianjia">
-               <form id="form1">
-                <input type="button"/>
-                <p>
-                  <input type="file" id="f" name="f" @change="upload_img($event);" style="display:none"/>
-                </p>
-                </form>
-            </i>
-            </span>
-            </div>
-            <i class="icon iconfont icon-gengduo"></i>
-        </li>
+
 
     </div>
 </template>
@@ -50,8 +50,12 @@
                     imgs: [],
                 },
                 imgShowList: [],
-                name: this.$route.query.name
+                name: ''
             }
+        },
+        created() {
+            this.info.gid = this.$route.query.gid
+            this.name = this.$route.query.name
         },
         mounted() {
             this.$refs.searchInput.focus();
@@ -86,18 +90,14 @@
                 return false;
             },
             //发布
-            release() {
-                if (this.info.content == '') {
-                    this.fail('请输入文章内容')
-                    return
-                }
-                this.info.gid = this.$route.query.gid
-                console.log(this.info)
+            releaseComment() {
+                if (this.info.content == '') return this.fail('请输入文章内容')
                 this.$store.dispatch(types.COMMUNITY_PUBLISH, this.info).then(res => {
                     console.log(res)
-                    if (res.code === 0) {
+                    if (res.code == 0) {
                         this.success('发布成功')
-                        this.$router.go(-1)
+                        // this.$router.go(-1)
+                        console.log(this.$route)
                     } else {
                         this.fail('发布失败')
                     }
@@ -158,22 +158,20 @@
         flex: 1;
         padding-bottom: 1.1rem;
         textarea {
-            width: 100%;
             border: 0;
             font-size: .32rem;
-            padding: 0 .2rem;
-            flex: 1;
+            margin: .3rem;
+            padding: .3rem;
         }
         .img-list {
             display: flex;
             flex-wrap: wrap;
-            padding: 0 .2rem;
-            background: #fff;
+            padding: 0 .3rem;
             li {
                 position: relative;
-                width: 1.5rem;
-                height: 1.5rem;
-                margin-right: .1rem;
+                width: 2rem;
+                height: 2rem;
+                margin-right: .2rem;
                 margin-bottom: .15rem;
                 img {
                     height: 100%;
@@ -209,5 +207,23 @@
             height: 100%;
             width: 100%;
         }
+    }
+
+    .add-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        .icon-tianjia {
+            position: inherit !important;
+            font-size: 1rem;
+            background: #00000000 !important;
+        }
+    }
+
+    .build-community-left {
+        height: 100%;
+        width: 100%;
     }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div style="display: flex;flex-direction: column;height: 100%;">
-        <Header v-bind="{left:1,right:1,center:2,centerValue:'社群'}" @leftClick="clickItem"></Header>
+        <Header v-bind="{left:1,center:2,centerValue:'社群'}" @leftClick="clickItem"></Header>
         <!--介绍-->
         <main class="container main2" v-show="index==1">
             <div class="newsitembox">
@@ -144,7 +144,7 @@
             <span v-else>免费加入本群</span>
         </div>
         <div class="release_btns" @click="$router.push({path:'Release',query:{gid:id,name:detailInfo.name}})">
-            <a class="iconfont icon-release01">
+            <a class="iconfont icon-edit">
             </a>
         </div>
     </div>
@@ -163,17 +163,30 @@
                 titleList: ['动态', '介绍'],
                 index: 0,
                 detailInfo: {},
-                id: this.$route.query.id,
-                params: {gid: this.$route.query.id},
+                id: '',
+                params: {gid: ''},
                 articleList: [],
                 dianzanList: "",
                 show2: false,
                 totalCount: -1,
-                isTopList: []
+                isTopList: [],
+                setLen: 20
             }
         },
         computed: {
             ...mapGetters(['userSid', 'userInfo'])
+        },
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                vm.id = vm.$route.query.id
+                if (from.name == 'community' || from.name == 'Release') {
+                    vm.refresh()
+                    vm.getDetail()
+                } else {
+                    let scrollTop = parseInt(window.sessionStorage.getItem('heightScrollTop_' + to.name));
+                    vm.scroll && vm.scroll.scrollTo(scrollTop, 0)
+                }
+            })
         },
         mounted() {
             this.getDetail()
@@ -184,27 +197,30 @@
                 },
                 up: {
                     callback: that.loadDataList,
-                    auto: false
+                    auto: false,
+                    htmlNodata: '<p class="upwarp-nodata">没有更多了</p>'
+
                 }
             });
         },
         methods: {
             refresh() {
-                this.params = {gid: this.$route.query.id}
+                this.params = {gid: this.id}
                 this.totalCount = -1
                 this.isTopList = []
                 this.articleList = []
                 this.loadDataList()
             },
-            loadDataList(page, meScroll) {
+            loadDataList() {
                 this.$store.dispatch(types.COMMUNITY_ARTICLE_LIST, this.params).then(res => {
                     console.log(res)
                     if (res.code !== 0) return
                     let data = res.data
                     this.articleList = this.articleList.concat(data)
                     this.totalCount = data.length
-                    this.scroll.endSuccess(this.totalCount, 20);
-                    this.params.maxID = data[this.totalCount - 1].id
+                    this.scroll.endSuccess(this.totalCount, this.setLen);
+                    if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
+                    if (this.totalCount) this.params.maxID = data[this.totalCount - 1].id
                     console.log(data)
                     this.articleList.forEach(item => {
                         if (item.isTop) this.isTopList.push(item)
@@ -212,9 +228,7 @@
                 })
             },
             getDetail() {
-                this.$store.dispatch(types.COMMUNITY_DETAIL, {
-                    id: this.id
-                }).then(res => {
+                this.$store.dispatch(types.COMMUNITY_DETAIL, {id: this.id}).then(res => {
                     console.log(res)
                     if (res.code !== 0) return
                     this.detailInfo = res.data
@@ -352,6 +366,10 @@
                     })
                 })
             }
+        },
+        beforeRouteLeave(from, to, next) {
+            this.$store.commit('SET_SCROLL_TOP', this.scroll.getScrollTop())
+            next()
         }
     }
 </script>
@@ -419,6 +437,10 @@
         top: 2.5rem;
         bottom: 0rem;
         height: auto;
+    }
+
+    .release_btns a {
+        font-size: .42rem;
     }
 
 </style>

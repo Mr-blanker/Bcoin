@@ -1,56 +1,58 @@
 <template>
-  <div>
-    <Header v-bind="{center:2,centerValue:'创建社群',left:1}"></Header>
-    <div class="communityAdd-box pt">
-      <yd-cell-group>
-        <div class="community-logo-box">
-          <div class="community-logo-main">
-            <span slot="left">社群名称：</span>
-            <input slot="right" type="text" placeholder="请输入社群名称" v-model="communityInfo.name"
-                   style="text-align: right;flex: 1;height: 100%;border: 0;">
-          </div>
-        </div>
-        <div class="community-logo-box">
-          <div class="community-logo-main">
-            <span>社群logo</span>
-            <img v-if="imgUrl" :src="imgUrl" alt="">
-            <div v-else class="add-icon">
-              <i class="icon iconfont icon-tianjia">
-              </i>
-              <form id="form1">
-                <input type="button" onclick="f.click()"/>
-                <br>
-                <p>
-                  <input type="file" id="f" name="f" @change="upload_img($event);" style="display:none"/>
-                </p>
-              </form>
-            </div>
+    <div>
+        <Header v-bind="{center:2,centerValue:'创建社群',left:1}"></Header>
+        <div class="communityAdd-box pt">
+            <yd-cell-group>
+                <div class="community-logo-box">
+                    <div class="community-logo-main">
+                        <span slot="left">社群名称：</span>
+                        <input slot="right" type="text" placeholder="请输入社群名称" v-model="communityInfo.name"
+                               style="text-align: right;flex: 1;height: 100%;border: 0;">
+                    </div>
+                </div>
+                <div class="community-logo-box">
+                    <div class="community-logo-main">
+                        <span>社群logo</span>
+                        <img v-if="imgUrl" :src="imgUrl" alt="">
+                        <div v-else class="add-icon">
+                            <i class="icon iconfont icon-tianjia">
+                            </i>
+                            <form id="form1">
+                                <input type="button" onclick="f.click()"/>
+                                <br>
+                                <p>
+                                    <input type="file" id="f" name="f" @change="upload_img($event);"
+                                           style="display:none"/>
+                                </p>
+                            </form>
+                        </div>
 
-          </div>
+                    </div>
+                </div>
+                <yd-cell-item style="height: 2.5rem;">
+                    <yd-textarea slot="right" placeholder="请输入社群描述"
+                                 style="height: 100% !important;text-align: right"
+                                 v-model="communityInfo.desc"></yd-textarea>
+                </yd-cell-item>
+                <div type="label" class="community-logo-box">
+                    <div class="community-logo-main" :class="{'clm-active':!communityInfo.charge}">
+                        <div slot="left">是否收费</div>
+                        <yd-switch slot="right" v-model="communityInfo.charge"></yd-switch>
+                    </div>
+                </div>
+                <div class="community-logo-box" v-if="communityInfo.charge">
+                    <div class="community-logo-main" style="border-bottom: 0;">
+                        <span slot="left">入群积分：</span>
+                        <input slot="right" type="text" placeholder="请输入入群积分" v-model="point"
+                               style="text-align: right;flex: 1;height: 100%;border: 0;">
+                    </div>
+                </div>
+            </yd-cell-group>
         </div>
-        <yd-cell-item style="height: 2.5rem;">
-          <yd-textarea slot="right" placeholder="请输入社群描述"
-                       style="height: 100% !important;text-align: right" v-model="communityInfo.desc"></yd-textarea>
-        </yd-cell-item>
-        <div type="label" class="community-logo-box">
-          <div class="community-logo-main" :class="{'clm-active':!communityInfo.charge}">
-            <div slot="left">是否收费</div>
-            <yd-switch slot="right" v-model="communityInfo.charge"></yd-switch>
-          </div>
+        <div class="btn_box">
+            <a style="display:inline-block;width:100%" @click="add">创建</a>
         </div>
-        <div class="community-logo-box" v-if="communityInfo.charge">
-          <div class="community-logo-main" style="border-bottom: 0;">
-            <span slot="left">入群积分：</span>
-            <input slot="right" type="text" placeholder="请输入入群积分" v-model="point"
-                   style="text-align: right;flex: 1;height: 100%;border: 0;">
-          </div>
-        </div>
-      </yd-cell-group>
     </div>
-    <div class="btn_box">
-      <a style="display:inline-block;width:100%" @click="add">创建</a>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -143,18 +145,18 @@
 </script>
 
 <style scoped lang="scss">
-  #form1 {
-    width: .8rem;
-    height: .8rem;
-    position: absolute;
-    opacity: 0;
-    input {
-      height: 100%;
-      width: 100%;
+    #form1 {
+        width: .8rem;
+        height: .8rem;
+        position: absolute;
+        opacity: 0;
+        input {
+            height: 100%;
+            width: 100%;
+        }
     }
-  }
 
-  .clm-active {
-    border-bottom: 0 !important;
-  }
+    .clm-active {
+        border-bottom: 0 !important;
+    }
 </style>

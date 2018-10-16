@@ -3,7 +3,7 @@
         <footer class="footer1">
             <div>
                 <a @click="$router.push({path:'Information'})" :class="{current:$route.name=='Information'}">
-                    <span class="iconfont icon-news01 icon"></span>
+                    <span class="iconfont icon-zixun icon" style="font-size: .42rem"></span>
                     <span class="name">资讯</span>
                 </a>
                 <a class="" @click="$router.push({path:'flashMsg'})" :class="{current:$route.name=='flashMsg'}">
@@ -55,6 +55,8 @@
     }
 
     .footer1 > div a span.icon {
-        padding-top: 0 !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 </style>

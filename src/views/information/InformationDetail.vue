@@ -1,6 +1,6 @@
 <template>
     <div class="informationDetail-box">
-        <Header v-bind="{left:1,center:2,right:1,centerValue:titleName}"></Header>
+        <Header v-bind="{left:1,center:2,centerValue:titleName}"></Header>
         <main class="container main1">
             <div class="newsitembox">
                 <section class="newsitem">
@@ -25,7 +25,7 @@
                     </div>
                 </section>
             </div>
-            <section class="comment-wrap " v-if="titleName=='新闻'">
+            <section class="comment-wrap " v-show="titleName=='新闻'">
                 <div class="title">评论专区</div>
                 <div class="mescroll " id="informationDetailScroll">
                     <div id="list">
@@ -78,10 +78,6 @@
                 titleName: '新闻'
             }
         },
-        components: {
-            Header
-        },
-
         computed: {
             ...mapGetters(['userSid'])
         },
@@ -101,7 +97,6 @@
                     down: {
                         callback: that.loadDataList,
                         htmlNodata: '<p class="upwarp-nodata">没有更多了</p>'
-
                     }
                 });
 
@@ -109,8 +104,6 @@
                     this.scroll.triggerDownScroll();
                 }
             }, 200)
-
-
             if (this.aid) {
                 this.$store.dispatch(types.INFORMATION_DETAIL, this.aid).then(res => {
                     console.log(res)
@@ -147,7 +140,7 @@
         },
         methods: {
             //新闻评论列表
-            loadDataList(page, mescroll) {
+            loadDataList() {
                 let id = this.aid ? this.aid : this.wid
                 this.$store.dispatch(types.NEWS_LIST, {newID: id}).then(res => {
                     console.log(res)

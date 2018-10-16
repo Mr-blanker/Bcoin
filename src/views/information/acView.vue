@@ -1,6 +1,6 @@
 <template>
     <div class="acView-box">
-        <Header v-bind="{left:1,right:1,center:2,centerValue:'专栏'}"></Header>
+        <Header v-bind="{left:1,center:2,centerValue:'专栏'}"></Header>
         <section class="container main1 mescroll" id="newsScroll">
             <div class="zldetails">
                 <div class="zldetails_basic">
@@ -14,7 +14,7 @@
                     </div>
                     <div class="body limit">{{columnInfo.description}}</div>
                 </div>
-                <ul class="zldetails_list clearfix">
+                <ul class="zldetails_list clearfix" :class="{'zldetails_list_length':!columnList.length}">
                     <li class="item" v-for="item in columnList"
                         @click="$router.push({path:'InformationDetail',query:{wid:item.aid}})">
                         <a>
@@ -32,8 +32,8 @@
 </template>
 
 <script>
-    import Header from "@/components/Header"
     import * as types from "../../store/mutations-type"
+    import {mapGetters} from "vuex"
 
     export default {
         name: "acView",
@@ -42,57 +42,62 @@
                 columnInfo: '',
                 columnList: [],
                 params: {pid: ''},
-                totalCount: -1
+                totalCount: -1,
+                setLen: 20,  //设置加载条数  最多20
+
             }
         },
-
-        created() {
-            console.log(2)
-            this.columnInfo = JSON.parse(this.$route.query.val)
+        computed: {
+            ...mapGetters(['scrollTop'])
         },
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                vm.columnInfo = JSON.parse(vm.$route.query.val)
+                if (from.name == 'specialColumn') {
+                    vm.initDataList()
+                } else {
+                    let scrollTop = parseInt(window.sessionStorage.getItem('heightScrollTop_' + to.name));
+                    vm.scroll && vm.scroll.scrollTo(scrollTop, 0)
+                }
+            })
+        },
+
         mounted() {
             let that = this
             this.scroll = new MeScroll("newsScroll", {
-                down: {
-                    callback: that.initDataList,
-                },
+                down: {callback: that.initDataList,},
                 up: {
                     callback: that.loadDataList,
                     auto: false,
-                    page: {
-                        num: 0,
-                        size: 10,
-                        time: null
-                    },
-                    htmlNodata: '<p class="upwarp-nodata">-- 没有更多数据了 --</p>'
+                    htmlNodata: '<p class="upwarp-nodata">没有更多了</p>'
                 }
             });
-            console.log(this.columnInfo)
         },
+
         methods: {
             initDataList() {
-                this.params = {
-                    pid: this.columnInfo.id
-                }
+                this.params = {pid: this.columnInfo.id}
                 this.columnList = []
                 this.totalCount = -1
                 this.loadDataList()
             },
             loadDataList() {
                 this.$store.dispatch(types.COLUMN_LIST, this.params).then(res => {
-                    console.log(res)
                     if (res.code !== 0) return
                     let data = res.data
                     this.columnList = this.columnList.concat(data)
                     this.totalCount = data.length
-                    this.scroll.endSuccess(this.totalCount, 20);
-                    // if (this.person.personCount < this.person.personLen)
-                    //     this.scroll.endUpScroll(true)
-                    console.log(data)
-                    this.params.minID = data[this.totalCount - 1].aid
+                    this.scroll.endSuccess(this.totalCount, this.totalCount >= this.setLen);
+                    if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
+                    if (this.totalCount) this.params.minID = data[this.totalCount - 1].aid
+
                 })
             },
 
+        },
+        beforeRouteLeave(from, to, next) {
+            this.$store.commit('SET_SCROLL_TOP', this.scroll.getScrollTop())
+            next()
         }
     }
 </script>
@@ -110,6 +115,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        padding-bottom: 0 !important;
     }
 
     .mescroll {
@@ -119,4 +125,11 @@
         height: auto;
     }
 
+    .zldetails_list_length {
+        padding: 0;
+    }
+
+    .head {
+        text-align: left !important;
+    }
 </style>
