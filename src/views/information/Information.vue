@@ -25,7 +25,7 @@
                     <nav class="topnav">
                         <div>
                             <a v-for="(item,index) in titleList" :key="index" @click="clickItem(index)">
-                                <img :src="'../../../static/images/'+item.icon"/>
+                                <img :src="require('../../../static/images/'+item.icon)"/>
                                 <span>{{item.title}}</span>
                             </a>
 

@@ -143,7 +143,7 @@
             <span v-if="detailInfo.charge">{{detailInfo.charge}}积分加入本群</span>
             <span v-else>免费加入本群</span>
         </div>
-        <div class="release_btns" @click="$router.push({path:'Release',query:{gid:id,name:detailInfo.name}})">
+        <div class="release_btns" @click="$router.push({name:'Release',params:{gid:id,name:detailInfo.name}})">
             <a class="iconfont icon-edit">
             </a>
         </div>
@@ -178,7 +178,7 @@
         },
         beforeRouteEnter(to, from, next) {
             next(vm => {
-                vm.id = vm.$route.query.id
+                vm.id = vm.$route.params.id
                 if (from.name == 'community' || from.name == 'Release') {
                     vm.refresh()
                     vm.getDetail()
@@ -189,7 +189,12 @@
             })
         },
         mounted() {
+            console.log('1111111');
+            console.log(this.$route);
             this.getDetail()
+            console.log('2222');
+            console.log(this.$route);
+            
             let that = this
             this.scroll = new MeScroll("dynamicScroll", {
                 down: {

@@ -16,8 +16,7 @@
                                 <span class="name limit">
                                     {{item.symbol||item.eid}}
                                 </span>
-                                <span class="iconfont icon-delete01 deletebtns" @click="delTag(item)" v-show="titleIndex!=0">
-                                </span>
+                                <span class="delete-tip" @click="delTag(item)" v-show="titleIndex!=0">x</span>
                             </li>
                         </ul>
                     </div>
@@ -185,5 +184,19 @@
     }
     .is-hidden {
         visibility:hidden;
+    }
+    .delete-tip {
+        display: inline-block;
+        width: .32rem;
+        height: .32rem;
+        line-height: .32rem;
+        text-align: center;
+        background-color: #d0031a;
+        color:#fff;
+        position: absolute;
+        top: -0.15rem;
+        left: -0.15rem;
+        border-radius: 50%;
+        font-size: 0.36rem;
     }
 </style>

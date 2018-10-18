@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="mall-header">
-            <div class="market-tab " style="position:relative;">
+            <div class="integer-tab " style="position:relative;">
                 <i class="icon iconfont icon-fanhui" @click="$router.go(-1)"></i>
                 <div class="tab-contianer"
                      style="position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%)">
@@ -156,7 +156,7 @@
 <style lang="scss" scoped>
     $fcolor: #acacac;
     $bg: #fff; //header   背景颜色   主色调
-    .market-tab {
+    .integer-tab {
         width: 100%;
         height: .9rem;
         padding: 0 .2rem;

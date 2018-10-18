@@ -267,12 +267,12 @@ export default [
         component: () => import('../components/upload/Upload'),
     }, {
         name: 'communityDynamic',
-        path: '/communityDynamic',
+        path: '/communityDynamic/:id',
         component: communityDynamic,
         meta: {keepalive: true}
     }, {
         name: 'Release',
-        path: '/Release',
+        path: '/Release/:gid/:name',
         component: Release,
     }, {
         name: 'articleDetail',

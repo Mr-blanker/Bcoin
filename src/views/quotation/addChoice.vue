@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="none-tip" v-if="searchData.length==0">
-                <div class="tip-icon"></div>
+                <img class="tip-icon" :src="require('../../../static/images/blank.png')" alt="">
                 <div>
                     您输入的关键字未能搜索到相关信息
                 </div>
@@ -247,8 +247,6 @@
     .tip-icon {
         width: 4.2rem;
         height: 2.6rem;
-        background: url('../../../static/images/blank.png') no-repeat;
-        background-size: 100% 100%;
         margin:0 auto;
     }
 </style>
