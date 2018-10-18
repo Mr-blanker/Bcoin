@@ -218,12 +218,17 @@
         .icon-tianjia {
             position: inherit !important;
             font-size: 1rem;
-            background: #00000000 !important;
+            background: #f2f5f7 !important;
         }
     }
 
     .build-community-left {
         height: 100%;
         width: 100%;
+    }
+    #form1{
+        width: 100% !important;
+        height: 100% !important;
+
     }
 </style>
