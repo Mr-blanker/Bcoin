@@ -1,22 +1,26 @@
 <template>
     <div>
-        <Header v-bind="{left:1,scenter:2,centerValue:'专栏'}"></Header>
-        <main class="container main1">
-            <section class="zlcategory">
-                <div>
-                    <div class="zlcategory_name">
-                        <a class="" :class="{current:item.id===choiceId}" v-for="item in dataList"
-                           @click="choiceSLevelList(item.id)">{{item.name}}</a>
+        <Header v-bind="{left:1,center:2,centerValue:'专栏'}"></Header>
+        <div>
+            <main class="container main1">
+                <section class="zlcategory">
+                    <div>
+                        <div class="zlcategory_name">
+                            <a class="" :class="{current:item.id===choiceId}" v-for="item in dataList"
+                               @click="choiceSLevelList(item.id)">{{item.name}}</a>
+                        </div>
+                        <div class="zlcategory_list">
+                            <a v-for="item in sLevelDataList"
+                               @click="$router.push({path:'acView',query:{val:JSON.stringify(item)}})">
+                                <img :src="item.thumbnail"/>
+                                <span class="limit">{{item.title}}</span>
+                            </a>
+                        </div>
                     </div>
-                    <div class="zlcategory_list">
-                        <a v-for="item in sLevelDataList" @click="$router.push({path:'acView',query:{val:JSON.stringify(item)}})">
-                            <img :src="item.thumbnail"/>
-                            <span class="limit">{{item.title}}</span>
-                        </a>
-                    </div>
-                </div>
-            </section>
-        </main>
+                </section>
+            </main>
+        </div>
+
     </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header v-bind="{right:1,center:2,centerValue:'快讯'}"></Header>
+        <Header v-bind="{center:2,centerValue:'快讯'}"></Header>
         <div>
             <!--<div class="flash-list mescroll" id="newsScroll">-->
             <!--<div>-->
