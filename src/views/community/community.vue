@@ -16,7 +16,7 @@
                 </ul>
                 <ul class="community">
                     <li class="item borderTop1px" v-for="item in dataList"
-                        @click="$router.push({path:'/communityDynamic',query:{id:item.id}})">
+                        @click="$router.push({name:'communityDynamic',params:{id:item.id}})">
                         <div class="item_pic">
                             <a><img :src="item.logo"/></a>
                         </div>

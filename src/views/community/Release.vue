@@ -54,8 +54,8 @@
             }
         },
         created() {
-            this.info.gid = this.$route.query.gid
-            this.name = this.$route.query.name
+            this.info.gid = this.$route.params.gid
+            this.name = this.$route.params.name
         },
         mounted() {
             this.$refs.searchInput.focus();
@@ -96,8 +96,21 @@
                     console.log(res)
                     if (res.code == 0) {
                         this.success('发布成功')
+                        this.$router.go(-1)         
                         // this.$router.go(-1)
+                        // this.$router.replace({path:'/communityDynamic',query:{id:this.info.gid}})
+                        // console.log('window.location.href');
+                        // console.log(window.location.href);
+                        // let url  = window.location.href
                         console.log(this.$route)
+                        // console.log(window.location.href);
+                        //  setTimeout(()=>{
+                        //        console.log('window.location.href');
+                        //        window.location.href =url
+                        // console.log(window.location.href);
+                        // this.$router.go(-1)
+
+                        //  },1000)
                     } else {
                         this.fail('发布失败')
                     }
