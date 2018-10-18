@@ -1,7 +1,7 @@
 <template>
     <div class="informationDetail-box">
         <Header v-bind="{left:1,center:2,centerValue:titleName}"></Header>
-        <main class="container main1">
+        <main class="container main1 mescroll" id="informationDetailScroll">
             <div class="newsitembox">
                 <section class="newsitem">
                     <div class="newsitem_head">
@@ -27,7 +27,7 @@
             </div>
             <section class="comment-wrap " v-show="titleName=='新闻'">
                 <div class="title">评论专区</div>
-                <div class="mescroll " id="informationDetailScroll">
+                <div>
                     <div id="list">
                         <div class="box border1px" v-for="attr in commentList">
                             <img class="avatar" :src="attr.pic" alt=""/>
@@ -75,7 +75,9 @@
                 a: '',
                 commentList: [],
                 commentTotal: '',
-                titleName: '新闻'
+                titleName: '新闻',
+                totalCount: -1,
+                params: {}
             }
         },
         computed: {
@@ -94,15 +96,13 @@
             let that = this
             this.$nextTick(() => {
                 this.scroll = new MeScroll("informationDetailScroll", {
-                    down: {
+                    down: {callback: that.initDataList},
+                    up: {
                         callback: that.loadDataList,
+                        auto: false, //初始化不自动加载
                         htmlNodata: '<p class="upwarp-nodata">没有更多了</p>'
                     }
                 });
-
-                if (this.aid) {
-                    this.scroll.triggerDownScroll();
-                }
             }, 200)
             if (this.aid) {
                 this.$store.dispatch(types.INFORMATION_DETAIL, this.aid).then(res => {
@@ -139,15 +139,23 @@
 
         },
         methods: {
+            initDataList() {
+                let id = this.aid ? this.aid : this.wid
+                this.params = {newID: id}
+                this.commentList = []
+                this.loadDataList()
+            },
             //新闻评论列表
             loadDataList() {
-                let id = this.aid ? this.aid : this.wid
-                this.$store.dispatch(types.NEWS_LIST, {newID: id}).then(res => {
+                this.$store.dispatch(types.NEWS_LIST, this.params).then(res => {
                     console.log(res)
                     if (res.code !== 0) return
-                    this.commentList = res.data
-                    this.scroll.endSuccess();
-                    this.scroll.endUpScroll(true)
+                    let data = res.data
+                    this.commentList = this.commentList.concat(data)
+                    this.totalCount = data.length
+                    this.scroll.endSuccess(this.totalCount, this.totalCount >= 20);
+                    if (this.totalCount < 20) this.scroll.endUpScroll(true)
+                    if (this.totalCount) this.params.maxID = data[this.totalCount - 1].id
                 })
             },
             //新闻评论
@@ -275,5 +283,12 @@
     .comment-wrap {
         padding-bottom: 1rem;
         margin-bottom: .88rem;
+    }
+
+    .mescroll {
+        position: fixed;
+        top: .9rem;
+        bottom: .88rem;
+        overflow: auto;
     }
 </style>

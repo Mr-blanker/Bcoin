@@ -7,7 +7,7 @@ import router from '../router'
 import {Loading, Confirm} from 'vue-ydui/dist/lib.rem/dialog';
 
 // axios 配置
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 20000;
 //配置请求的地址
 axios.defaults.baseURL = "http://ssl.pandawork.vip";
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';

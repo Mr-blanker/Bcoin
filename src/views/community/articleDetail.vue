@@ -19,36 +19,9 @@
             </div>
         </yd-popup>
         <div>
-            <ul class="cd-dynamic">
-                <li class="cd-dynamic-item">
-                    <div class="cd-dynamic-user">
-                        <img :src="list.u_pic" alt="">
-                        <!--i是否置顶-->
-                        <div class="cd-dynamic-user-info">
-                            <span class="cd-dynamic-title">{{list.u_name}}<i v-if="list.isTop">置顶</i></span>
-                            <span class="cd-dynamic-time">{{list.createTime|moment('YYYY-MM-DD HH:mm')}}</span>
-                        </div>
-                    </div>
-                    <div class="cd-dynamic-content" style="padding-left: 0;text-align: left;">
-                        <span class="cd-dynamic-text">{{list.content}}</span>
-                        <img :src="attr" alt="" v-for="attr in list.imgs"
-                             style="width: 30%;height: 2.3rem;margin-right: .1rem;margin-bottom: .1rem;">
-                    </div>
-                    <div class="cd-dynamic-zan" style="padding-left: 0;">
-                        <i class="icon iconfont icon-dianzan dianzan zan"></i>
-                        <span style="padding-left: .1rem;">{{list.likes.items.slice(0,2).toString()}} <span
-                            @click="getDianzanList"
-                            style="color:#000;font-size: .25rem">{{list.likes.num}}人赞过<i
-                            class="icon iconfont icon-gengduo" style="font-size: .2rem"></i>
-                        </span>
-                        </span>
-                    </div>
-                </li>
-            </ul>
-
-            <main class="container main2">
+            <main class="container main2 mescroll1" id="scroll1">
                 <div class="newsitembox">
-                    <section class="newsitem">
+                    <section class="newsitem" ref="newItem">
                         <div class="newsitem_head">
                             <h3 class="title">{{list.content}}</h3>
                             <div class="other">
@@ -81,9 +54,9 @@
                         </div>
                     </section>
 
-                    <section class="comment-wrap ">
+                    <section class="comment-wrap " :style="{top:scrollTop}" >
                         <div class="title">评论专区</div>
-                        <div class="mescroll " id="scroll1">
+                        <div class=" "  >
                             <div id="list">
                                 <div class="box border1px" v-for="attr in commentList">
                                     <img class="avatar" :src="attr.pic" alt=""/>
@@ -142,7 +115,7 @@
                 totalCount1: -1,
                 totalCount: -1,
                 setLen1: 20,
-                setLen: 20
+                setLen: 20,
             }
         },
         computed: {
@@ -171,6 +144,7 @@
                     htmlNodata: '<p class="upwarp-nodata">没有更多了</p>'
                 }
             });
+
         },
         methods: {
             refresh() {
@@ -192,14 +166,15 @@
                     let data = res.data
                     this.commentList = this.commentList.concat(data)
                     this.totalCount1 = data.length
-                    this.scroll1.endSuccess(this.totalCount1, this.setLen1);
+                    console.log(this.totalCount1)
+                    console.log(this.setLen1)
+                    this.scroll1.endSuccess(this.totalCount1, this.totalCount1 >= this.setLen1);
                     if (this.totalCount1 < this.setLen1) this.scroll1.endUpScroll(true)
                     if (this.totalCount1) this.params1.maxID = data[this.totalCount1 - 1].id
                 })
             },
             //点赞列表
             loadDataList() {
-                this.zanLen += 20
                 this.$store.dispatch(types.COMMUNITY_DIANZAN_LIST, this.params).then(res => {
                     console.log(res)
                     if (res.code !== 0) return
@@ -208,7 +183,7 @@
                     this.totalCount = data.length
                     this.scroll.endSuccess(this.totalCount, this.setLen);
                     if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
-                    if (this.totalCount) this.params1.maxID = data[this.totalCount - 1].id
+                    if (this.totalCount) this.params.maxID = data[this.totalCount - 1].id
 
                 })
             },
@@ -582,5 +557,21 @@
         top: 0;
         right: 0;
         color: #adadad;
+    }
+
+    .mescroll {
+        position: fixed;
+        top: .9rem;
+        bottom: 0;
+        height: auto;
+    }
+
+    .mescroll1 {
+        position: fixed;
+        top: .9rem;
+        bottom: .88rem;
+        left: 0;
+        right: 0;
+        overflow: auto;
     }
 </style>
