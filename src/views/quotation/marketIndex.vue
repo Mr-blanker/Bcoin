@@ -11,11 +11,7 @@
     </div>
 </template>
 <script>
-    import {
-        mapGetters,
-        mapMutations,
-        mapActions
-    } from 'vuex'
+    import {mapGetters, mapMutations, mapActions} from 'vuex'
     import scroll from '@/components/Scroll'
     import commonHeader from '@/components/CommonHeader'
     import * as types from "../../store/mutations-type"
@@ -333,12 +329,5 @@
         height: auto;
     }
 
-    .tab-active {
-        position: relative;
-    }
 
-    .tab-active:after {
-        left: 50%;
-        transform: translate(-50%, 0);
-    }
 </style>

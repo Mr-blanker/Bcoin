@@ -3,8 +3,10 @@
         <div class="mall-header">
             <div class="market-tab " style="position:relative;">
                 <i class="icon iconfont icon-fanhui" @click="$router.go(-1)"></i>
-                <div class="tab-contianer" style="position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%)">
-                    <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index" @click="tabChange(index+1)">{{item}}</span>
+                <div class="tab-contianer"
+                     style="position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%)">
+                    <span v-for="(item,index) in tabName" :class="{'tab-active':activeTab==index+1}" :key="index"
+                          @click="tabChange(index+1)">{{item}}</span>
                 </div>
                 <yd-icon name="" size="20px" color="#fff" style="visibility:hidden;"></yd-icon>
             </div>
@@ -18,7 +20,9 @@
         <div class="pullScroll">
             <div id="scrollBox" class="mescroll" :style="{'top':activeTab==1?'1.6rem':'.94rem'}">
                 <div style="margin-top: .02rem;">
-                    <div class="commodity-item" v-for="(item,index) in prdList" :key="index" @click="$router.push(`/shopDetail?id=${item.id}&type=1&detailId=${detailId}`)" v-if="activeTab==1">
+                    <div class="commodity-item" v-for="(item,index) in prdList" :key="index"
+                         @click="$router.push(`/shopDetail?id=${item.id}&type=1&detailId=${detailId}`)"
+                         v-if="activeTab==1">
                         <div class="commodity-img">
                             <img :src="item.img" alt="">
                         </div>
@@ -30,7 +34,8 @@
                         </div>
                         <i class="status" :class="{'status-ing':item.status===2}">{{item.status===1?'拍卖中':'已结束'}}</i>
                     </div>
-                    <div class="commodity-item" v-for="(item,index) in prdList" :key="index" @click="$router.push(`/shopDetail?id=${item.id}&type=2`)" v-if="activeTab==2">
+                    <div class="commodity-item" v-for="(item,index) in prdList" :key="index"
+                         @click="$router.push(`/shopDetail?id=${item.id}&type=2`)" v-if="activeTab==2">
                         <div class="commodity-img">
                             <img :src="item.img" alt="">
                         </div>
@@ -59,6 +64,7 @@
         mapMutations,
         mapActions
     } from 'vuex'
+
     export default {
         name: 'index',
         data() {
@@ -129,7 +135,7 @@
             vantTabClick(index) {
                 console.log(index)
                 this.detailId = index
-                this.reqParam.status = index - 1                
+                this.reqParam.status = index - 1
                 if (index == 0) {
                     delete this.reqParam.status
                     console.log(this.reqParam)
@@ -172,26 +178,27 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color:#696772;
+                color: #696772;
                 width: 1.2rem;
                 height: .56rem;
                 cursor: pointer;
                 font-size: .32rem;
             }
-            &>span:after{
-              content: "";
-              width: 0.4rem;
-              height: 4px;
-              background:transparent;
-              position: absolute;
-              bottom: -0.22em;
-        }
+            & > span:after {
+                content: "";
+                width: 0.4rem;
+                height: 4px;
+                background: transparent;
+                position: absolute;
+                bottom: -0.22em;
+            }
         }
         .save-text {
             color: #fff;
             font-size: .32rem;
         }
     }
+
     .commodity-item {
         position: relative;
         display: flex;
@@ -201,7 +208,7 @@
         padding: .2rem; // align-items: center;
         align-items: center;
         flex: 1;
-        margin:.2rem;
+        margin: .2rem;
         .commodity-img {
             img {
                 width: 1.4rem;
@@ -230,39 +237,43 @@
         }
         .commodity-inter {
             font-size: .25rem;
-            &>div:last-child {
+            & > div:last-child {
                 /*margin: .2rem 0 0 0;*/
             }
         }
     }
+
     .mall-header {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
     }
+
     .prd-box {
         padding: 1.5rem 0 0 0;
     }
-    
+
     .tab-active {
-      font-weight: bold;
-      color: #333;
-      &::after{
-              content: "";
-              width: 0.4rem;
-              height: 4px;
-              background: #208eda !important;
-              position: absolute;
-              bottom: -0.22em;
+        font-weight: bold;
+        color: #333;
+        &::after {
+            content: "";
+            width: 0.4rem;
+            height: 4px;
+            background: #208eda !important;
+            position: absolute;
+            bottom: -0.22em;
         }
-  }
+    }
+
     .mescroll {
         position: fixed;
         top: 1.6rem;
         bottom: .9rem;
         height: auto;
     }
+
     .status {
         position: absolute;
         top: .2rem;
@@ -270,7 +281,17 @@
         font-size: .28rem;
         color: #a09f9f;
     }
+
     .status-ing {
         color: #208de3 !important;
+    }
+
+    .tab-active {
+        position: relative !important;
+    }
+
+    .tab-active:after {
+        left: 50% !important;
+        transform: translate(-50%, 0) !important;
     }
 </style>
