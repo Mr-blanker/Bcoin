@@ -182,7 +182,6 @@
                         this.scroll.endSuccess(this.totalCount, this.totalCount >= this.setLen);
                         if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
                         if (this.totalCount) this.params.minID = data[this.totalCount - 1].aid
-
                     })
                 } else {
                     //行情分析

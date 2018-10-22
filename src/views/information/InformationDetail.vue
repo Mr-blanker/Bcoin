@@ -1,7 +1,7 @@
 <template>
     <div class="informationDetail-box">
         <Header v-bind="{left:1,center:2,centerValue:titleName}"></Header>
-        <main class="container main1 mescroll" id="informationDetailScroll">
+        <main class="container main1 mescroll main2" id="informationDetailScroll">
             <div class="newsitembox">
                 <section class="newsitem">
                     <div class="newsitem_head">
@@ -23,6 +23,23 @@
                         </p>
                         <div v-html="dataList.content" style="width: 100%;" class="v-html"></div>
                     </div>
+                </section>
+                <section class="relatednews">
+                    <div class="relatednews_title">
+                        相关阅读
+                    </div>
+                    <ul class="relatednews_list clearfix">
+
+                        <li class="item" v-for="item in list" @click="informationDetail(item.aid)">
+                            <a>
+                                <div class="pic">
+                                    <img :src="item.thumbnail"/>
+                                </div>
+                                <div class="name limit">{{item.title}}</div>
+                            </a>
+                        </li>
+
+                    </ul>
                 </section>
             </div>
             <section class="comment-wrap " v-show="titleName=='新闻'">
@@ -46,13 +63,16 @@
                     </div>
                 </div>
             </section>
+
         </main>
-        <footer class="commentInput" @click="newComment" v-if="titleName=='新闻'">
+        <footer class="commentInput" v-if="titleName=='新闻'">
             <div>
-                <form>
+                <form target="frameFile" id="search_from" action="#">
                     <input type="text" name="comment" id="comment" placeholder="说说你的看法" class="editbox"
-                           disabled="disabled">
-                    <button type="button" class="iconfont icon-submit01 subbtns"></button>
+                           v-model="content">
+                    <button type="button" class="iconfont icon-submit01 subbtns" @click="newComment"></button>
+                    <iframe name='frameFile' style="display: none;"></iframe>
+
                 </form>
             </div>
         </footer>
@@ -77,7 +97,10 @@
                 commentTotal: '',
                 titleName: '新闻',
                 totalCount: -1,
-                params: {}
+                params: {},
+                choiceCateId: '',
+                list: [],
+                content: ''
             }
         },
         computed: {
@@ -90,6 +113,8 @@
             })
         },
         mounted() {
+            this.getSpecialList()
+            this.getRecommend()
             this.aid = this.$route.query.aid
             this.id = this.$route.query.id
             this.wid = this.$route.query.wid
@@ -137,6 +162,12 @@
                 })
             }
 
+            document.getElementById("search_from").onsubmit = function (e) {
+                that.newComment()
+                e.preventDefault();
+                // document.activeElement.blur(); //软键盘收起
+            };
+
         },
         methods: {
             initDataList() {
@@ -158,38 +189,69 @@
                     if (this.totalCount) this.params.maxID = data[this.totalCount - 1].id
                 })
             },
+            //获取专栏类别
+            getSpecialList() {
+                this.$store.dispatch(types.COLUMN_CATE).then(res => {
+                    if (res.code !== 0) return
+                    let data = res.data
+                    if (data.length && data[0].items.length) this.choiceCateId = data[0].items[0].id
+                })
+            },
+            getRecommend() {
+                //专栏文章(推荐)
+                this.$store.dispatch(types.COLUMN_LIST, {pid: this.choiceCateId}).then(res => {
+                    if (res.code !== 0) return
+                    let data = res.data
+                    console.log(data)
+                    this.list = data.slice(0, 4)
+                    console.log(this.list)
+                })
+            },
+            //新闻详情
+            informationDetail(aid) {
+                this.$store.dispatch(types.COLUMN_CONTENT, aid).then(res => {
+                    console.log(res)
+                    if (res.code !== 0) return
+                    if (res.data !== null) {
+                        this.keywords = res.data.keywords.split(',')
+                        console.log(this.keywords)
+                        this.dataList = res.data
+                        this.a = 1
+                    }
+                })
+            },
             //新闻评论
             newComment() {
+                console.log(this.content)
                 let that = this
                 let id = this.aid ? this.aid : this.wid
-
-                utils.dialog.prompt('写下你的观点', (value) => {
-                    if (value == '') return
-                    let info = {
-                        newID: id,
-                        content: value
-                    }
-                    console.log(info)
-                    $.ajax({
-                        contentType: 'application/json',
-                        url: "http://ssl.pandawork.vip/api/user/new.comment",
-                        type: 'POST',
-                        data: JSON.stringify(info),
-                        headers: {
-                            sid: that.userSid
-                        },
-                        dataType: 'JSON',
-                        cache: false,
-                        processData: false,
-                        success: (res) => {
-                            console.log(res)
-                            if (res.code === 401) {
-                                that.$router.push({path: 'Login'})
-                            }
+                let info = {
+                    newID: id,
+                    content: this.content
+                }
+                $.ajax({
+                    contentType: 'application/json',
+                    url: "http://ssl.pandawork.vip/api/user/new.comment",
+                    type: 'POST',
+                    data: JSON.stringify(info),
+                    headers: {
+                        sid: that.userSid
+                    },
+                    dataType: 'JSON',
+                    cache: false,
+                    processData: false,
+                    success: (res) => {
+                        console.log(res)
+                        if (res.code === 401) return that.$router.push({path: 'Login'})
+                        if (res.code == 0) {
+                            that.success('发布成功')
+                            that.content = ''
                             that.scroll.triggerDownScroll();
+                        } else {
+                            that.fail('发布失败')
                         }
-                    })
-                });
+                    }
+                })
             }
 
         }

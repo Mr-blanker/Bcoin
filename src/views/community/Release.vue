@@ -102,14 +102,12 @@
                         // console.log('window.location.href');
                         // console.log(window.location.href);
                         // let url  = window.location.href
-                        console.log(this.$route)
                         // console.log(window.location.href);
                         //  setTimeout(()=>{
                         //        console.log('window.location.href');
                         //        window.location.href =url
                         // console.log(window.location.href);
                         // this.$router.go(-1)
-
                         //  },1000)
                     } else {
                         this.fail('发布失败')
