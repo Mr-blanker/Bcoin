@@ -54,9 +54,9 @@
                         </div>
                     </section>
 
-                    <section class="comment-wrap " :style="{top:scrollTop}" >
+                    <section class="comment-wrap " :style="{top:scrollTop}">
                         <div class="title">评论专区</div>
-                        <div class=" "  >
+                        <div class=" ">
                             <div id="list">
                                 <div class="box border1px" v-for="attr in commentList">
                                     <img class="avatar" :src="attr.pic" alt=""/>
@@ -79,10 +79,12 @@
             </main>
             <footer class="commentInput">
                 <div class="sb">
-                    <form @click.stop="newComment" class="submit-form">
-                        <input type="text" name="comment" id="comment" placeholder="说说你的看法" disabled="disabled"
-                               class="editbox">
-                        <button type="button" class="iconfont icon-submit01 subbtns"></button>
+                    <form target="frameFile" id="search_from" action="#">
+                        <input type="text" name="comment" id="comment" placeholder="说说你的看法" class="editbox"
+                               v-model="content">
+                        <button type="button" class="iconfont icon-submit01 subbtns" @click="newComment"></button>
+                        <iframe name='frameFile' style="display: none;"></iframe>
+
                     </form>
                     <i class="icon iconfont icon-dianzan submit-zan" :class="{'is-dianzan':list.isLike}"
                        @click.stop="dianzan()"></i>
@@ -116,6 +118,7 @@
                 totalCount: -1,
                 setLen1: 20,
                 setLen: 20,
+                content: ''
             }
         },
         computed: {
@@ -228,38 +231,37 @@
             },
             //评论
             newComment() {
-                console.log(this.id)
+                console.log(this.content)
                 let that = this
-                utils.dialog.prompt('写下你的观点', (value) => {
-                    if (value == '') return
-                    let info = {
-                        aid: that.list.id,
-                        content: value
-                    }
-                    console.log(info)
-                    $.ajax({
-                        contentType: 'application/json',
-                        url: "http://ssl.pandawork.vip/api/user/group.comment",
-                        type: 'POST',
-                        data: JSON.stringify(info),
-                        headers: {
-                            sid: that.userSid
-                        },
-                        dataType: 'JSON',
-                        cache: false,
-                        processData: false,
-                        success: (res) => {
-                            console.log(res)
-                            if (res.code === 401) {
-                                that.$router.push({
-                                    path: 'Login'
-                                })
-                            }
-                            that.scroll1.triggerDownScroll();
+                let info = {
+                    newID: that.list.id,
+                    content: this.content
+                }
+                $.ajax({
+                    contentType: 'application/json',
+                    url: "http://ssl.pandawork.vip/api/user/new.comment",
+                    type: 'POST',
+                    data: JSON.stringify(info),
+                    headers: {
+                        sid: that.userSid
+                    },
+                    dataType: 'JSON',
+                    cache: false,
+                    processData: false,
+                    success: (res) => {
+                        console.log(res)
+                        if (res.code === 401) return that.$router.push({path: 'Login'})
+                        if (res.code == 0) {
+                            that.success('发布成功')
+                            that.content = ''
+                            that.scroll.triggerDownScroll();
+                        } else {
+                            that.fail('发布失败')
                         }
-                    })
-                });
-            },
+                    }
+                })
+            }
+
             //文章点赞
             dianzan() {
                 let like = true
