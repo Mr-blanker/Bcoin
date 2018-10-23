@@ -54,7 +54,7 @@
                         </div>
                     </section>
 
-                    <section class="comment-wrap " :style="{top:scrollTop}">
+                    <section class="comment-wrap ">
                         <div class="title">评论专区</div>
                         <div class=" ">
                             <div id="list">
@@ -498,7 +498,9 @@
             }
         }
     }
-
+.commentInput > div form{
+    width: 85%;
+}
     .id-comment {
         position: fixed;
         bottom: 0;

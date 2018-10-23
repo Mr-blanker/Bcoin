@@ -202,20 +202,16 @@
                 this.$store.dispatch(types.COLUMN_LIST, {pid: this.choiceCateId}).then(res => {
                     if (res.code !== 0) return
                     let data = res.data
-                    console.log(data)
                     this.list = data.slice(0, 4)
-                    console.log(this.list)
                 })
             },
             //新闻详情
             informationDetail(aid) {
                 this.scroll.scrollTo(0);
                 this.$store.dispatch(types.COLUMN_CONTENT, aid).then(res => {
-                    console.log(res)
                     if (res.code !== 0) return
                     if (res.data !== null) {
                         this.keywords = res.data.keywords.split(',')
-                        console.log(this.keywords)
                         this.dataList = res.data
                         this.a = 1
                     }
