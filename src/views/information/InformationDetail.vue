@@ -209,6 +209,7 @@
             },
             //新闻详情
             informationDetail(aid) {
+                this.scroll.scrollTo(0);
                 this.$store.dispatch(types.COLUMN_CONTENT, aid).then(res => {
                     console.log(res)
                     if (res.code !== 0) return
