@@ -146,6 +146,11 @@
                     htmlNodata: '<p class="upwarp-nodata">没有更多了</p>'
                 }
             });
+            document.getElementById("search_from").onsubmit = function (e) {
+                that.newComment()
+                e.preventDefault();
+                // document.activeElement.blur(); //软键盘收起
+            };
 
         },
         methods: {
