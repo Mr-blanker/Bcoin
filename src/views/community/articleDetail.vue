@@ -82,7 +82,6 @@
                     <form target="frameFile" id="search_from" action="#">
                         <input type="text" name="comment" id="comment" placeholder="说说你的看法" class="editbox"
                                v-model="content">
-                        <button type="button" class="iconfont icon-submit01 subbtns" @click="newComment"></button>
                         <iframe name='frameFile' style="display: none;"></iframe>
 
                     </form>
