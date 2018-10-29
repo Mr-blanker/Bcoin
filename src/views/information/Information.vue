@@ -51,9 +51,12 @@
                                                 <span
                                                     class="iconfont icon-pageviews01 pageviews">&nbsp;{{item.n}}</span>
                                             </div>
+
                                             <div class="other" v-if="sIndex!==0">
                                                 <p class="iconfont icon-pageviews01 pageviews">&nbsp;{{item.n}}</p>
-                                                <p class="date">{{item.t*1000|moment('YYYY-MM-DD')}}</p>
+                                                <span class="date">{{item.t*1000|moment('YYYY-MM-DD')}}</span>
+                                                <span class="point" v-if="sIndex==1">·</span>
+                                                <span class="author" v-if="sIndex==1">{{item.befrom}}</span>
                                             </div>
                                         </div>
                                         <div class="newspic">
@@ -113,9 +116,7 @@
             document.addEventListener('plusready', function () {
                 that.plus = plus
             })
-            if (!this.broadcastAdList.length) {
-                this.getBroadcastAd()
-            }
+            if (!this.broadcastAdList.length) this.getBroadcastAd()
             this.scroll = new MeScroll("newsScroll", {
                 down: {callback: that.initDataList},
                 up: {
@@ -173,7 +174,7 @@
                 } else if (this.sIndex == 1) {
                     //专栏文章(推荐)
                     let obj = this.params
-                    obj.pid = this.choiceCateId
+                    // obj.pid = this.choiceCateId
                     this.$store.dispatch(types.COLUMN_LIST, obj).then(res => {
                         if (res.code !== 0) return
                         let data = res.data
