@@ -18,32 +18,11 @@
     <script type="text/javascript" src="static/js/mescroll.min.js"></script>
     <script type="text/javascript" src="static/js/utils-1.0.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="static/js/plusNative.js"></script>
     <title>Bcoin</title>
-    <script type="text/javascript">
-        function setStatusbarRed() {
-            plus.navigator.setStatusBarStyle("UIStatusBarStyleBlackOpaque");
-            plus.navigator.setStatusBarBackground("#cccccc");
-        }
-
-        document.addEventListener('plusready', function () {
-            setStatusbarRed();
-            var webview = plus.webview.currentWebview();
-            plus.key.addEventListener('backbutton', function () {
-                webview.canBack(function (e) {
-                    if (e.canBack) {
-                        webview.back();
-                    } else {
-                        webview.close();
-                    }
-                })
-            });
-        }, false);
-
-    </script>
 </head>
-
 <body>
-<div id="app"></div>
+    <div id="app"></div>
 </body>
 
 </html>
