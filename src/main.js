@@ -17,6 +17,8 @@ import Header from "./components/Header"
 import moment from 'moment'
 import 'moment/locale/zh-cn'
 import filters from './filters/index'
+import FastClick from 'fastclick'
+FastClick.attach(document.body);
 
 Vue.prototype.$echarts = echarts
 Vue.mixin(mixins)

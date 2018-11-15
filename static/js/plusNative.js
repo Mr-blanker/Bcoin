@@ -55,28 +55,31 @@
                 alert("获取分享服务列表失败：" + e.message);
             });
         },
-        shareAction: function(s,shareInfo) {
+        shareAction: function(s,shareInfo,callback) {
             if (!s) {
                 return;
             }
             if (s.authenticated) {
-                this.shareMessage(s,shareInfo);
+                this.shareMessage(s,shareInfo,callback);
             } else {
                 s.authorize(shareMessage, function (e) {
                     alert("未进行认证");
                 });
             }
         },
-        shareMessage: function (s,shareInfo){
+        shareMessage: function (s,shareInfo,callback){
             s.send({
                     content:shareInfo.msg,
-                    href:shareInfo.url,
-                    thumbs:[shareInfo.imgUrl],
+                    // href:shareInfo.url,
+                    thumbs:[shareInfo.imgUrl?shareInfo.imgUrl:'../images/logo.png'],
+                    pictures:[shareInfo.imgPic?shareInfo.imgPic:'/static/images/logo.png'],
                     extra:{scene:shareInfo.type}
                 }, function(){
                 alert("分享成功！");
+                callback('success')
             },function(e){
                 alert("分享失败："+e.message);
+                callback('error')
             });
         }
     }
