@@ -17,9 +17,13 @@ import Header from "./components/Header"
 import moment from 'moment'
 import 'moment/locale/zh-cn'
 import filters from './filters/index'
+import FastClick from 'fastclick'
+import touch from 'vue-directive-touch';
+FastClick.attach(document.body);
 
 Vue.prototype.$echarts = echarts
 Vue.mixin(mixins)
+Vue.use(touch);
 Vue.use(YDUI)
 Vue.component('Header', Header)
 Vue.config.productionTip = false
@@ -34,6 +38,16 @@ Vue.filter('moment', function (value, formatString) {
   formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
   return moment(value).format(formatString);
 });
+//重写alert,解决ios下出现url的情况
+window.alert = function(name){
+  　　var iframe = document.createElement("IFRAME");
+ 　　iframe.style.display="none";
+ 　　iframe.setAttribute("src", 'data:text/plain,');
+ 　　document.documentElement.appendChild(iframe);
+ 　　window.frames[0].window.alert(name);
+ 　　iframe.parentNode.removeChild(iframe);
+ }
+  
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

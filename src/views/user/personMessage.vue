@@ -31,7 +31,7 @@
         <main class="container main1">
             <div class="myIndex myInfo">
                 <div>
-                    <a href="mjavascript:void(0);" class="links avatar border1px">
+                    <a href="javascript:void(0);" class="links avatar border1px">
                         <!-- <input type="file" id="upload" name="image"> -->
                         <div class="disLeft">
                             <span>

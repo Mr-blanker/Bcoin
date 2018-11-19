@@ -3,32 +3,32 @@
     <Header v-bind="{centerValue:'我的',center:2}"></Header>
     <div class="mine" style="padding-top: .85rem;">
       <!-- <div class="head" @click="$router.push({path:'personMessage'})">
-            <div class="head-left">
-              <img :src="userInfo.avatar" alt="" v-if="userInfo.avatar">
-              <img src="../../assets/default_avatar_male.jpg" alt="" v-else>
-              <span>{{userInfo.name?userInfo.name:'点击登录'}}</span>
-            </div>
-            <i class="icon iconfont icon-gengduo"></i>
-          </div> -->
+              <div class="head-left">
+                <img :src="userInfo.avatar" alt="" v-if="userInfo.avatar">
+                <img src="../../assets/default_avatar_male.jpg" alt="" v-else>
+                <span>{{userInfo.name?userInfo.name:'点击登录'}}</span>
+              </div>
+              <i class="icon iconfont icon-gengduo"></i>
+            </div> -->
       <main class="main1">
         <div class="myIndex">
           <div>
             <a @click="$router.push({path:'personMessage'})" class="links avatar">
               <div class="disLeft">
                 <span>
-                                <img width="1.1rem" height="1.1rem" :src="userInfo.avatar" alt="" v-if="userInfo.avatar">
-                                <img width="1.1rem" height="1.1rem" src="../../assets/default_avatar_male.jpg" alt="" v-else>  
-                            </span>
+                                  <img width="1.1rem" height="1.1rem" :src="userInfo.avatar" alt="" v-if="userInfo.avatar">
+                                  <img width="1.1rem" height="1.1rem" src="../../assets/default_avatar_male.jpg" alt="" v-else>  
+                              </span>
                 <span>
-                                {{userInfo.name?userInfo.name:'点击登录'}}
-                            </span>
+                                  {{userInfo.name?userInfo.name:'点击登录'}}
+                              </span>
               </div>
               <div class="disRight">
                 <span>
-                                个人信息
-                            </span>
+                                  个人信息
+                              </span>
                 <span class="iconfont icon-arrow02">
-                            </span>
+                              </span>
               </div>
             </a>
           </div>

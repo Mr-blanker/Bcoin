@@ -92,7 +92,6 @@
                 broadcastAdList: [],
                 len: 1,
                 newCateList: [],
-                plus: '',
                 sIndex: 0,
                 params: {},
                 totalCount: -1,
@@ -113,9 +112,6 @@
             this.getSpecialList()
             this.SET_SCROLL_BOX('newsScroll')
             let that = this;
-            document.addEventListener('plusready', function () {
-                that.plus = plus
-            })
             if (!this.broadcastAdList.length) this.getBroadcastAd()
             this.scroll = new MeScroll("newsScroll", {
                 down: {callback: that.initDataList},
@@ -142,8 +138,7 @@
                 this.SET_SCROLL_BOX('newsScroll')
             },
             sliderRouter(url) {
-                this.plus.runtime.openURL(url, function (err) {
-                })
+                $plusBus.openUrlOnBrowser(url)
             },
 
             //选择新闻分类

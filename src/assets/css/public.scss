@@ -1585,3 +1585,15 @@ $wdc: #909090; //字体颜色
   height: .8rem;
   line-height: .45rem;
 }
+.modal-wx {
+    position: absolute;
+    visibility: hidden;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color:#333;
+    z-index: 2000;
+    opacity: .6;;
+    transition: all .5s;
+}
