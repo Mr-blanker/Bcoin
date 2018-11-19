@@ -91,9 +91,7 @@
                         </div>
                     </li>
                 </ul>
-
             </div>
-
         </main>
         <!--<div class="cd-dynamic mescroll" v-show="index!==1">-->
         <!--<div class="cd-dynamic mescroll" v-show="false">-->
