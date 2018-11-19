@@ -78,7 +78,19 @@
                 alert("分享成功！");
                 callback('success')
             },function(e){
-                alert("分享失败："+e.message);
+                var code = e.message; 	
+                if(code.indexOf('-2')>0){
+                    alert('分享已取消!');
+                }else if(code.indexOf('-3')>0){
+                    alert('发送失败!');
+                }else if(code.indexOf('-4')>0){
+                    alert('授权失败!');
+                }else if(code.indexOf('-98')>0){
+                    alert('授权失败!');
+                }else {
+                    alert('分享失败!');
+                }
+                console.log("分享失败："+e.message);
                 callback('error')
             });
         }

@@ -64,6 +64,7 @@
                 </div>
             </yd-popup>
         </div>
+        
     </div>
 </template>
 
@@ -100,6 +101,7 @@
         },
         mounted() {
             let that = this
+            $(document.body).append('<div class="modal-wx" id="wxModal"></div>')
             this.scroll = new MeScroll("newsScroll", {
                 down: {
                     callback: that.initDataList,
@@ -131,6 +133,7 @@
             },
             //快讯点评
             comment(item, val, key) {
+                alert(JSON.stringify($plusBus))
                 this.$store.dispatch(types.FLASH_COMMENT, {
                     k_id: item.k_id,
                     view: val
@@ -144,7 +147,7 @@
                 })
             },
             share(item,key){
-                let el = document.getElementById('content_'+key)
+                let el = $('#content_'+key).clone()
                 this.shareNew=item
                 $('#shareHtml').empty()
                 $('#shareHtml').append(el)
@@ -164,6 +167,7 @@
                     //分享到朋友圈示例
                     Loading.open('分享图片生成中!');
                     this.shareChooseModal = false;
+                    $('#wxModal').css({'visibility':'visible'})
                     this.shareType = 2
                     this.createImg()
                 } catch (err) {
@@ -174,6 +178,7 @@
                 try {
                     //分享给好友示例
                     Loading.open('分享图片生成中!');
+                    $('#wxModal').css({'visibility':'visible'})
                     this.shareChooseModal = false;
                     this.shareType = 1
                     this.createImg()
@@ -223,9 +228,16 @@
                                 imgPic:res.path
                             }, (status) => {
                                 that.shareChooseModal = false;
+                                $('#wxModal').css({'visibility':'hidden'})
                         })
+                        setTimeout(()=>{
+                            $('#wxModal').css({'visibility':'hidden'})
+                        },6000)
                          
-                    });
+                    }).fail(function(err){
+                         Loading.close()
+                         $('#wxModal').css({'visibility':'hidden'})
+                    })
                     });
             },
             base64ToBlob(urlData) {
@@ -324,4 +336,5 @@
         text-align: left;
         padding: 5px;
     }
+    
 </style>

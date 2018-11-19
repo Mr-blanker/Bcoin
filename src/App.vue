@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" v-touch:right ="vuetouch">
         <keep-alive>
             <router-view v-if="$route.meta.keepalive"></router-view>
         </keep-alive>
@@ -17,9 +17,15 @@
         data() {
             return {
                 isShowFooterNav: true,
+                name:''
             }
         },
         components: {Footer},
+        methods:{
+            vuetouch(s,e){
+                this.$router.go(-1)
+            }
+        }
 
     }
 </script>
