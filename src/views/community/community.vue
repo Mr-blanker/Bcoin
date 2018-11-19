@@ -44,8 +44,7 @@
                                         <span>{{item.content}}</span>
                                     </div>
                                     <div class="disRight">
-                        <span class="iconfont icon-arrow02">
-                        </span>
+                                        <span class="iconfont icon-arrow02"></span>
                                     </div>
                                 </a>
                             </li>
@@ -78,12 +77,6 @@
                                         <img :src="attr" alt="" v-for="attr in item.imgs"/>
                                     </div>
                                 </a>
-                            </div>
-                            <div class="cd-dynamic-user-info">
-                                <i class="istop" v-if="!item.isTop&&userInfo.uid==detailInfo.ownerID"
-                                   @click.stop="isTop(1,item.id)">置顶</i>
-                                <i class="istop" v-if="item.isTop&&userInfo.uid==detailInfo.ownerID"
-                                   @click.stop="isTop(0,item.id)">取消置顶</i>
                             </div>
                         </li>
                     </ul>
@@ -135,6 +128,7 @@
                 }
             });
             this.getList()
+
         },
         methods: {
             //tab选择
@@ -180,10 +174,10 @@
 
                     })
                 } else {
-                  this.getList()
+                    this.getList()
                 }
             },
-            getList(){
+            getList() {
                 this.$store.dispatch(types.COMMUNITY_ARTICLE_LIST, this.params1).then(res => {
                     console.log(res)
                     if (res.code !== 0) return
