@@ -225,6 +225,7 @@
                     if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
                     if (this.totalCount) this.params.maxID = data[this.totalCount - 1].id
                     console.log(data)
+                    this.isTopList = []
                     this.articleList.forEach(item => {
                         if (item.isTop) this.isTopList.push(item)
                     })

@@ -155,7 +155,6 @@
                     this.totalCount1 = -1
                     this.articleList = []
                     this.isTopList = []
-
                 }
                 this.loadDataList();
             },
@@ -187,6 +186,7 @@
                     this.scroll.endSuccess(this.totalCount1, this.setLen1);
                     if (this.totalCount1 < this.setLen1) this.scroll.endUpScroll(true)
                     if (this.totalCount1) this.params1.maxID = data[this.totalCount1 - 1].id
+                    this.isTopList = []
                     this.articleList.forEach(item => {
                         if (item.isTop) this.isTopList.push(item)
                     })
