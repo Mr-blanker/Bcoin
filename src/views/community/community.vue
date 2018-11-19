@@ -134,12 +134,14 @@
                     htmlNodata: '<p class="upwarp-nodata">没有更多了</p>'
                 }
             });
+            this.getList()
         },
         methods: {
             //tab选择
             clickItem(key) {
                 console.log(key)
                 this.index = key
+                if (key == 0) return
                 if (key == 1) {
                     this.type = 1
                 } else if (key == 2) {
@@ -178,22 +180,23 @@
 
                     })
                 } else {
-                    this.$store.dispatch(types.COMMUNITY_ARTICLE_LIST, this.params1).then(res => {
-                        console.log(res)
-                        if (res.code !== 0) return
-                        let data = res.data
-                        this.articleList = this.articleList.concat(data)
-                        this.totalCount1 = data.length
-                        this.scroll.endSuccess(this.totalCount1, this.setLen1);
-                        if (this.totalCount1 < this.setLen1) this.scroll.endUpScroll(true)
-                        if (this.totalCount1) this.params1.maxID = data[this.totalCount1 - 1].id
-                        this.articleList.forEach(item => {
-                            if (item.isTop) this.isTopList.push(item)
-                        })
-                    })
+                  this.getList()
                 }
-
-
+            },
+            getList(){
+                this.$store.dispatch(types.COMMUNITY_ARTICLE_LIST, this.params1).then(res => {
+                    console.log(res)
+                    if (res.code !== 0) return
+                    let data = res.data
+                    this.articleList = this.articleList.concat(data)
+                    this.totalCount1 = data.length
+                    this.scroll.endSuccess(this.totalCount1, this.setLen1);
+                    if (this.totalCount1 < this.setLen1) this.scroll.endUpScroll(true)
+                    if (this.totalCount1) this.params1.maxID = data[this.totalCount1 - 1].id
+                    this.articleList.forEach(item => {
+                        if (item.isTop) this.isTopList.push(item)
+                    })
+                })
             },
             getDetail() {
                 this.$store.dispatch(types.COMMUNITY_DETAIL, {id: this.id}).then(res => {
