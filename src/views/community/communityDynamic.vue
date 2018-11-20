@@ -203,11 +203,14 @@
         },
         methods: {
             refresh() {
+                this.isTopList = []
                 this.params = {gid: this.id}
                 this.totalCount = -1
-                this.isTopList = []
                 this.articleList = []
-                this.loadDataList()
+                console.log(this.isTopList)
+                this.$nextTick(()=>{
+                    this.loadDataList()
+                })
             },
             loadDataList() {
                 this.$store.dispatch(types.COMMUNITY_ARTICLE_LIST, this.params).then(res => {
@@ -215,6 +218,8 @@
                     if (res.code !== 0) return
                     let data = res.data
                     let list = []
+                    console.log(this.isTopList)
+
                     data.forEach(item => {
                         if (item.isTop) {
                             this.isTopList.push(item)
@@ -222,11 +227,12 @@
                             list.push(item)
                         }
                     })
+                    console.log(this.isTopList)
                     this.articleList = this.articleList.concat(list)
                     this.totalCount = data.length
                     this.scroll.endSuccess(this.totalCount, this.setLen);
                     if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
-                    if (this.totalCount) this.params.minID = data[this.totalCount - 1].id
+                    if (this.totalCount && this.totalCount == this.setLen) this.params.minID = data[this.totalCount - 1].id
                 })
             },
             getDetail() {
