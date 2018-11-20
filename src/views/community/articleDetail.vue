@@ -23,7 +23,7 @@
                 <div class="newsitembox">
                     <section class="newsitem" ref="newItem">
                         <div class="newsitem_head" style="position:relative;">
-                            <h3 class="title" style="width: 85%;">{{list.content}}</h3>
+                            <h3 class="title" style="width: 85%;">{{list.title}}</h3>
                             <div class="cd-dynamic-user-info" style="position:absolute;top: 0;right: 0;width:15%">
                                 <i class="istop" v-if="!list.isTop&&userInfo.uid==detailInfo.ownerID"
                                    @click.stop="isTop(1,list.id)">置顶</i>
