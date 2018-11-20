@@ -8,6 +8,7 @@
             <span @click="releaseComment" style="color: #208eda;">发布</span>
         </div>
         <div class="re-text">
+            <input type="text" class="re-text-title" placeholder="请填写标题" v-model="info.title">
             <textarea name="" id="" cols="30" rows="5" placeholder="写下你的观点" ref="searchInput"
                       v-model="info.content" autofocus="autofocus"></textarea>
             <ul class="img-list">
@@ -48,6 +49,7 @@
                     gid: '',
                     content: '',
                     imgs: [],
+                    title: ''
                 },
                 imgShowList: [],
                 name: ''
@@ -91,12 +93,13 @@
             },
             //发布
             releaseComment() {
+                if(this.info.title=='')return this.fail('请输入文章标题')
                 if (this.info.content == '') return this.fail('请输入文章内容')
                 this.$store.dispatch(types.COMMUNITY_PUBLISH, this.info).then(res => {
                     console.log(res)
                     if (res.code == 0) {
                         this.success('发布成功')
-                        this.$router.go(-1)         
+                        this.$router.go(-1)
                         // this.$router.go(-1)
                         // this.$router.replace({path:'/communityDynamic',query:{id:this.info.gid}})
                         // console.log('window.location.href');
@@ -243,5 +246,14 @@
         width: 100% !important;
         height: 100% !important;
 
+    }
+
+    .re-text-title {
+        margin: .3rem .3rem 0;
+        border: 0;
+        background: #fff;
+        height: .6rem;
+        font-size: .32rem;
+        padding: 0 .3rem;
     }
 </style>

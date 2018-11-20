@@ -22,8 +22,14 @@
             <main class="container main2 mescroll1" id="scroll1">
                 <div class="newsitembox">
                     <section class="newsitem" ref="newItem">
-                        <div class="newsitem_head">
-                            <h3 class="title">{{list.content}}</h3>
+                        <div class="newsitem_head" style="position:relative;">
+                            <h3 class="title" style="width: 85%;">{{list.content}}</h3>
+                            <div class="cd-dynamic-user-info" style="position:absolute;top: 0;right: 0;width:15%">
+                                <i class="istop" v-if="!list.isTop&&userInfo.uid==detailInfo.ownerID"
+                                   @click.stop="isTop(1,list.id)">置顶</i>
+                                <i class="istop" v-if="list.isTop&&userInfo.uid==detailInfo.ownerID"
+                                   @click.stop="isTop(0,list.id)">取消置顶</i>
+                            </div>
                             <div class="other">
                                 <img :src="list.u_pic"/>
                                 <div class="text">
@@ -76,6 +82,7 @@
                         </div>
                     </section>
                 </div>
+
             </main>
             <footer class="commentInput">
                 <div class="sb">
@@ -83,7 +90,6 @@
                         <input type="text" name="comment" id="comment" placeholder="说说你的看法" class="editbox"
                                v-model="content">
                         <iframe name='frameFile' style="display: none;"></iframe>
-
                     </form>
                     <i class="icon iconfont icon-dianzan submit-zan" :class="{'is-dianzan':list.isLike}"
                        @click.stop="dianzan()"></i>
@@ -117,14 +123,15 @@
                 totalCount: -1,
                 setLen1: 20,
                 setLen: 20,
-                content: ''
+                content: '',
+                detailInfo: {},
+
             }
         },
         computed: {
             ...mapGetters(['userSid', 'userInfo'])
         },
         mounted() {
-            console.log(this.list)
             let that = this
             this.scroll = new MeScroll("scroll", {
                 down: {
@@ -151,6 +158,8 @@
                 e.preventDefault();
                 // document.activeElement.blur(); //软键盘收起
             };
+
+            this.getDetail()
 
         },
         methods: {
@@ -198,6 +207,13 @@
             getDianzanList() {
                 if (this.list.likes.num) this.show4 = true
 
+            },
+            getDetail() {
+                this.$store.dispatch(types.COMMUNITY_DETAIL, {id: this.$route.query.communityId}).then(res => {
+                    console.log(res)
+                    if (res.code !== 0) return
+                    this.detailInfo = res.data
+                })
             },
             //禁言
             forbid(id) {
@@ -263,6 +279,34 @@
                             that.fail('发布失败')
                         }
                     }
+                })
+            },
+            //是否置顶
+            isTop(id, aid) {
+                let that = this
+                let content = '确定取消置顶该文章吗？'
+                let info = {aid: aid, isTop: false}
+                if (id) {
+                    info.isTop = true
+                    content = '确定置顶该文章吗？'
+                }
+                utils.dialog.confirm(content, () => {
+                    $.ajax({
+                        contentType: 'application/json',
+                        url: "http://ssl.pandawork.vip/api/user/group.top",
+                        type: 'POST',
+                        data: JSON.stringify(info),
+                        headers: {sid: that.userSid},
+                        dataType: 'JSON',
+                        cache: false,
+                        processData: false,
+                        success: (res) => {
+                            if (res.code === 401) return that.$router.push({path: 'Login'})
+                            // that.getArticleList()
+                            console.log(res)
+                            that.list.isTop = !that.list.isTop
+                        }
+                    })
                 })
             },
 
@@ -503,9 +547,11 @@
             }
         }
     }
-.commentInput > div form{
-    width: 85%;
-}
+
+    .commentInput > div form {
+        width: 85%;
+    }
+
     .id-comment {
         position: fixed;
         bottom: 0;

@@ -41,11 +41,11 @@
                 <div class="community_basic">
                     <ul class="community_topping">
                         <li v-for="item in isTopList"
-                            @click.stop="$router.push({path:'/articleDetail',query:{item:JSON.stringify(item)}})">
+                            @click.stop="$router.push({path:'/articleDetail',query:{item:JSON.stringify(item),communityId:id}})">
                             <a class="links border1px">
                                 <div class="disLeft">
                                     <span class="icons">置顶</span>
-                                    <span>{{item.content}}</span>
+                                    <span>{{item.title}}</span>
                                 </div>
                                 <div class="disRight">
                                 <span class="iconfont icon-arrow02">
@@ -57,7 +57,7 @@
                 </div>
                 <ul class="community_list">
                     <li class="item" style="position: relative;" v-for="(item,index) in articleList"
-                        @click.stop="$router.push({path:'/articleDetail',query:{item:JSON.stringify(item)}})">
+                        @click.stop="$router.push({path:'/articleDetail',query:{item:JSON.stringify(item),communityId:id}})">
                         <div class="item_head">
                             <a class="disLeft">
                                 <div class="pic">
@@ -76,19 +76,19 @@
                         </div>
                         <div class="item_body">
                             <a>
-                                <div class="title limit">{{item.content}}</div>
+                                <div class="title limit">{{item.title}}</div>
                                 <div class="subtitle limit">{{item.content}}</div>
                                 <div class="pic">
                                     <img :src="attr" alt="" v-for="attr in item.imgs"/>
                                 </div>
                             </a>
                         </div>
-                        <div class="cd-dynamic-user-info">
-                            <i class="istop" v-if="!item.isTop&&userInfo.uid==detailInfo.ownerID"
-                               @click.stop="isTop(1,item.id)">置顶</i>
-                            <i class="istop" v-if="item.isTop&&userInfo.uid==detailInfo.ownerID"
-                               @click.stop="isTop(0,item.id)">取消置顶</i>
-                        </div>
+                        <!--<div class="cd-dynamic-user-info">-->
+                        <!--<i class="istop" v-if="!item.isTop&&userInfo.uid==detailInfo.ownerID"-->
+                        <!--@click.stop="isTop(1,item.id)">置顶</i>-->
+                        <!--<i class="istop" v-if="item.isTop&&userInfo.uid==detailInfo.ownerID"-->
+                        <!--@click.stop="isTop(0,item.id)">取消置顶</i>-->
+                        <!--</div>-->
                     </li>
                 </ul>
             </div>
@@ -177,7 +177,8 @@
         beforeRouteEnter(to, from, next) {
             next(vm => {
                 vm.id = vm.$route.params.id
-                if (from.name == 'community' || from.name == 'Release') {
+                console.log(vm.id)
+                if (from.name == 'community' || from.name == 'Release' || from.name == 'articleDetail') {
                     vm.refresh()
                     vm.getDetail()
                 } else {
@@ -187,12 +188,6 @@
             })
         },
         mounted() {
-            console.log('1111111');
-            console.log(this.$route);
-            this.getDetail()
-            console.log('2222');
-            console.log(this.$route);
-            
             let that = this
             this.scroll = new MeScroll("dynamicScroll", {
                 down: {
@@ -219,16 +214,19 @@
                     console.log(res)
                     if (res.code !== 0) return
                     let data = res.data
-                    this.articleList = this.articleList.concat(data)
+                    let list = []
+                    data.forEach(item => {
+                        if (item.isTop) {
+                            this.isTopList.push(item)
+                        } else {
+                            list.push(item)
+                        }
+                    })
+                    this.articleList = this.articleList.concat(list)
                     this.totalCount = data.length
                     this.scroll.endSuccess(this.totalCount, this.setLen);
                     if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
-                    if (this.totalCount) this.params.maxID = data[this.totalCount - 1].id
-                    console.log(data)
-                    this.isTopList = []
-                    this.articleList.forEach(item => {
-                        if (item.isTop) this.isTopList.push(item)
-                    })
+                    if (this.totalCount) this.params.minID = data[this.totalCount - 1].id
                 })
             },
             getDetail() {

@@ -41,7 +41,7 @@
                                 <a class="links border1px">
                                     <div class="disLeft">
                                         <span class="icons">置顶</span>
-                                        <span>{{item.content}}</span>
+                                        <span>{{item.title}}</span>
                                     </div>
                                     <div class="disRight">
                                         <span class="iconfont icon-arrow02"></span>
@@ -71,7 +71,7 @@
                             </div>
                             <div class="item_body">
                                 <a>
-                                    <div class="title limit">{{item.content}}</div>
+                                    <div class="title limit">{{item.title}}</div>
                                     <div class="subtitle limit">{{item.content}}</div>
                                     <div class="pic">
                                         <img :src="attr" alt="" v-for="attr in item.imgs"/>
@@ -127,7 +127,7 @@
                     htmlNodata: '<p class="upwarp-nodata">没有更多了</p>'
                 }
             });
-            this.getList()
+            // this.getList()
 
         },
         methods: {
@@ -170,7 +170,6 @@
                         this.scroll.endSuccess(this.totalCount, this.setLen);
                         if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
                         if (this.totalCount) this.params.maxID = data[this.totalCount - 1].id
-
                     })
                 } else {
                     this.getList()
@@ -181,15 +180,19 @@
                     console.log(res)
                     if (res.code !== 0) return
                     let data = res.data
-                    this.articleList = this.articleList.concat(data)
+                    let list = []
+                    data.forEach(item => {
+                        if (item.isTop) {
+                            this.isTopList.push(item)
+                        } else {
+                            list.push(item)
+                        }
+                    })
+                    this.articleList = this.articleList.concat(list)
                     this.totalCount1 = data.length
                     this.scroll.endSuccess(this.totalCount1, this.setLen1);
                     if (this.totalCount1 < this.setLen1) this.scroll.endUpScroll(true)
-                    if (this.totalCount1) this.params1.maxID = data[this.totalCount1 - 1].id
-                    this.isTopList = []
-                    this.articleList.forEach(item => {
-                        if (item.isTop) this.isTopList.push(item)
-                    })
+                    if (this.totalCount1) this.params1.minID = data[this.totalCount1 - 1].id
                 })
             },
             getDetail() {
