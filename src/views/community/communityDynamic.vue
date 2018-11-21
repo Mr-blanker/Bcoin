@@ -168,7 +168,8 @@
                 show2: false,
                 totalCount: -1,
                 isTopList: [],
-                setLen: 20
+                setLen: 20,
+                isOver: true
             }
         },
         computed: {
@@ -203,16 +204,18 @@
         },
         methods: {
             refresh() {
+                if (!this.isOver) return
                 this.isTopList = []
                 this.params = {gid: this.id}
                 this.totalCount = -1
                 this.articleList = []
                 console.log(this.isTopList)
-                this.$nextTick(()=>{
+                this.$nextTick(() => {
                     this.loadDataList()
                 })
             },
             loadDataList() {
+                this.isOver = false
                 this.$store.dispatch(types.COMMUNITY_ARTICLE_LIST, this.params).then(res => {
                     console.log(res)
                     if (res.code !== 0) return
@@ -233,6 +236,7 @@
                     this.scroll.endSuccess(this.totalCount, this.setLen);
                     if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
                     if (this.totalCount && this.totalCount == this.setLen) this.params.minID = data[this.totalCount - 1].id
+                    this.isOver = true
                 })
             },
             getDetail() {

@@ -108,7 +108,7 @@
                 setLen1: 20,
                 isTopList: [],
                 detailInfo: {},
-
+                isOver: true
 
             }
         },
@@ -146,6 +146,7 @@
                 this.initDataList()
             },
             initDataList() {
+                if (!this.isOver) return
                 if (this.index !== 0) {
                     this.params = {len: this.setLen, type: this.type}
                     this.dataList = []
@@ -159,6 +160,7 @@
                 this.loadDataList();
             },
             loadDataList() {
+                this.isOver = false
                 //获取社群列表
                 if (this.index !== 0) {
                     this.$store.dispatch(types.COMMUNITY_LIST, this.params).then(res => {
@@ -170,6 +172,7 @@
                         this.scroll.endSuccess(this.totalCount, this.setLen);
                         if (this.totalCount < this.setLen) this.scroll.endUpScroll(true)
                         if (this.totalCount) this.params.maxID = data[this.totalCount - 1].id
+                        this.isOver = true
                     })
                 } else {
                     this.getList()
@@ -193,6 +196,7 @@
                     this.scroll.endSuccess(this.totalCount1, this.setLen1);
                     if (this.totalCount1 < this.setLen1) this.scroll.endUpScroll(true)
                     if (this.totalCount1) this.params1.minID = data[this.totalCount1 - 1].id
+                    this.isOver = true
                 })
             },
             getDetail() {
