@@ -9,7 +9,7 @@ import {Loading, Confirm} from 'vue-ydui/dist/lib.rem/dialog';
 // axios 配置
 axios.defaults.timeout = 20000;
 //配置请求的地址
-axios.defaults.baseURL = "http://ssl.pandawork.vip";
+axios.defaults.baseURL = "https://www.liansj.com:4433";
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
 // axios.defaults.headers.post['Content-Type'] = 'application/json; charset=UTF-8';
 // http request 拦截器
