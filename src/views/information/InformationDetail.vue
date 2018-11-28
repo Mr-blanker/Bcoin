@@ -350,4 +350,14 @@
         bottom: .88rem;
         overflow: auto;
     }
+    .relatednews_list{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        text-align: left;
+    }
+    .clearfix:after{
+        content: none;
+    }
 </style>
