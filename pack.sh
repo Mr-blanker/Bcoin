@@ -8,8 +8,6 @@ rm -rf ./static index.html
 
 cd -
 
-echo pwd
-
 cp -rf ./static ./index.html /Users/zhenghui/Desktop/Bcoin/bcoin_app/Bcoin 
 
-echo "finished!"
+echo "已更新Bcoin路径的的文件"
