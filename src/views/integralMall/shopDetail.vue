@@ -1,13 +1,11 @@
 <template>
     <div>
-        <div class="shop-header">
-            <div class="market-tab" style="position: relative;">
-                <i class="icon iconfont icon-fanhui" @click="$router.go(-1)"></i>
-                <div class="tab-contianer">
-                    <div>{{detailData.name}}</div>
-                </div>
-                <yd-icon name="" size="20px" color="#fff" style="visibility:hidden;"></yd-icon>
+        <div class="market-tab shop-header">
+            <i class="icon iconfont icon-fanhui reset-style" style="cursor:pointer !important;" @click="$router.go(-1)"></i>
+            <div class="tab-contianer">
+                <div>{{detailData.name}}</div>
             </div>
+            <yd-icon name="" size="20px" color="#fff" style="visibility:hidden;"></yd-icon>
         </div>
         <div>
             <div class="shop-box">
@@ -64,19 +62,20 @@
                     <div @click="auction">竞拍</div>
                 </div>
                 <!-- <div class="hg-footer" v-if="type==2">
-                    <div @click="$router.push(`/createOrder?id=${detailData.id}&name=${detailData.name}`)">换购</div>
-                </div> -->
+                        <div @click="$router.push(`/createOrder?id=${detailData.id}&name=${detailData.name}`)">换购</div>
+                    </div> -->
                 <footer class="addCurrency" v-if="type==2">
                     <div @click="$router.push(`/createOrder?id=${detailData.id}&name=${detailData.name}`)">
                         <a class="btns" @click="goAddTag">
-                                        换购
-                                    </a>
+                                            换购
+                                        </a>
                     </div>
                 </footer>
             </div>
         </div>
     </div>
 </template>
+
 <script>
     import {
         mapGetters,
@@ -133,6 +132,7 @@
         }
     }
 </script>
+
 <style lang="scss" scoped>
     $fcolor: #acacac;
     $bg: #fff; //header   背景颜色   主色调
@@ -160,10 +160,11 @@
         }
     }
     .shop-header {
-        position: fixed;
+        position: absolute;
         top: 0;
         left: 0;
         right: 0;
+        z-index: 9999
     }
     .shop-box {
         padding: .9rem 0 1.1rem 0;
@@ -213,14 +214,14 @@
         }
         &>div:last-child {
             display: flex;
-            flex-direction:column;
-            align-items:flex-start;
-            justify-content:flex-start;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
             min-height: .8rem;
             width: 100%;
             border-bottom: 1px solid #e4e4e4;
             &>div {
-                margin:.1rem 0 0 0;
+                margin: .1rem 0 0 0;
             }
             &:last-child {
                 border-bottom: 0;
@@ -281,5 +282,9 @@
             color: #fff;
             background-color: rgba(32, 142, 219, 1);
         }
+    }
+    .reset-style {
+        z-index: 9999;
+        cursor: pointer !important;
     }
 </style>

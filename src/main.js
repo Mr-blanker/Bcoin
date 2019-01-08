@@ -34,6 +34,12 @@ for (let key in filters[0]) {
   Vue.filter(key, filters[0][key])
 }
 
+Vue.config.errorHandler = function (err, vm, info) {
+  let componentName = vm.$options.name
+  console.log(`%c 组件:${componentName},在${info}发生了异常,信息如下:`,"color:red")
+  console.log(err)
+}
+
 Vue.filter('moment', function (value, formatString) {
   formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
   return moment(value).format(formatString);
