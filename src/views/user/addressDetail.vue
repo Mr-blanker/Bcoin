@@ -5,9 +5,8 @@
             <div class="address-box padt8 address-plz">
                 <ul>
                     <li>
-                        <span class="lab-tittle" style="margin-right: .6rem;">姓名</span><input type="text"
-                                                                                              placeholder="请输入姓名"
-                                                                                              v-model="addressInfo.name"/>
+                        <span class="lab-tittle" style="margin-right: .6rem;">姓名</span>
+                        <input type="text" placeholder="请输入姓名" v-model="addressInfo.name"/>
                     </li>
                     <li>
                         <span class="lab-tittle">联系方式</span>
@@ -32,7 +31,7 @@
             </div>
         </section>
         <AddressSelector
-            api="http://ssl.pandawork.vip/api/area.lists?pid="
+            api="https://www.liansj.com:4433/api/area.lists?pid="
             ref="district"
             v-model="showDistrictChoice"
             @on-choice="onChoiceDistrict"
