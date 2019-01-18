@@ -102,10 +102,7 @@
                         canvas,
                         {maxWidth: 1000, maxHeight: 1000, orientation: orient},
                         () => {
-                            that._httpUploadBase64(
-                                canvas.toDataURL("image/jpg"),
-                                index
-                            );
+                            that._httpUploadBase64(canvas.toDataURL("image/jpeg", .5), index);
                         }
                     );
                 });

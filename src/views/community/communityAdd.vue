@@ -19,14 +19,12 @@
                             </i>
                             <form id="form1">
                                 <input type="button" onclick="f.click()"/>
-                                <br>
                                 <p>
-                                    <input type="file" id="f" name="f" @change="upload_img($event);"
+                                    <input type="file" id="f" name="f" @change="upload_img($event)"
                                            style="display:none"/>
                                 </p>
                             </form>
                         </div>
-
                     </div>
                 </div>
                 <yd-cell-item style="height: 2.5rem;">
@@ -87,13 +85,12 @@
                 let that = this
                 console.log(event)
                 var data = new FormData($('#form1')[0]);
+                console.log(data)
                 $.ajax({
                     url: "https://www.liansj.com:4433/api/upload",
                     type: 'POST',
                     data: data,
-                    headers: {
-                        sid: that.userSid
-                    },
+                    headers: {sid: that.userSid},
                     dataType: 'JSON',
                     cache: false,
                     processData: false,
@@ -106,7 +103,6 @@
                         that.imgUrl = res.path
                     }
                 });
-                return false;
             },
 
             add() {

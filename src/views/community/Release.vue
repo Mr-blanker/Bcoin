@@ -70,7 +70,7 @@
                 console.log(event)
                 var data = new FormData($('#form1')[0]);
                 $.ajax({
-                    url: "http://ssl.pandawork.vip/api/upload",
+                    url: "https://www.liansj.com:4433/api/upload",
                     type: 'POST',
                     data: data,
                     headers: {

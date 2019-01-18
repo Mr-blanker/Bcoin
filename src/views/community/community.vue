@@ -109,13 +109,13 @@
                 isTopList: [],
                 detailInfo: {},
                 isOver: true
-
             }
         },
         computed: {
             ...mapGetters(['userSid', 'userInfo'])
         },
         mounted() {
+            console.log(12345)
             let that = this
             this.scroll = new MeScroll("communityScroll", {
                 down: {
@@ -128,7 +128,6 @@
                 }
             });
             // this.getList()
-
         },
         methods: {
             //tab选择
@@ -146,6 +145,7 @@
                 this.initDataList()
             },
             initDataList() {
+                console.log(123)
                 if (!this.isOver) return
                 if (this.index !== 0) {
                     this.params = {len: this.setLen, type: this.type}
@@ -298,5 +298,4 @@
     .item_body {
         text-align: left;
     }
-
 </style>
